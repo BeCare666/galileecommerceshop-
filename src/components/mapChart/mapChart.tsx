@@ -24,7 +24,11 @@ const MapWithCorridors: React.FC<MapChartProps> = ({ closeModal }, { setMapIsOk 
     useEffect(() => {
         const fetchCorridors = async () => {
             try {
-                const res = await axios.get(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/corridors`, {
+                const API_URL = process.env.NEXT_PUBLIC_REST_API_ENDPOINT;
+                if (!API_URL) {
+                    throw new Error("NEXT_PUBLIC_REST_API_ENDPOINT n'est pas défini !");
+                }
+                const res = await axios.get(`${API_URL}/corridors`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

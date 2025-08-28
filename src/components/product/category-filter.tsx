@@ -80,8 +80,11 @@ export default function CategoryFilterWithPanel({
   const [subSubCategories, setSubSubCategories] = useState<any[] | null>(null);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
-
-  const API_BASE = `${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}`;
+  const API_URL = process.env.NEXT_PUBLIC_REST_API_ENDPOINT;
+  if (!API_URL) {
+    throw new Error("NEXT_PUBLIC_REST_API_ENDPOINT n'est pas défini !");
+  }
+  const API_BASE = `${API_URL}`;
   const headers = { 'Content-Type': 'application/json' };
 
   // Utils pour toggle dans Set (immutability)
