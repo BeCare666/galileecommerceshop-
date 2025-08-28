@@ -1,0 +1,38 @@
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.logo_spinner_container {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo_spinner_circle {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border: 5px solid rgba(147, 197, 253, 0.3);
+  /* bleu clair */
+  border-top: 5px solid rgba(236, 72, 153, 1);
+  /* rose */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  background-color: black;
+}
+
+.logo_spinner_image {
+  width: 45px;
+  height: 45px;
+  z-index: 1;
+
+}
