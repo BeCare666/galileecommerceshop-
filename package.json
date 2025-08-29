@@ -10,6 +10,19 @@
     "lint": "next lint",
     "prepare": "husky install"
   },
+  "resolutions": {
+    "@types/react": "18.3.1",
+    "@types/react-dom": "18.3.1",
+    "@types/react-copy-to-clipboard/@types/react": "18.3.1"
+  },
+  "overrides": {
+    "@types/react-dom": {
+      "@types/react": "18.3.1"
+    },
+    "@types/react-copy-to-clipboard": {
+      "@types/react": "18.3.1"
+    }
+  },
   "dependencies": {
     "@amcharts/amcharts5": "^5.13.3",
     "@amcharts/amcharts5-geodata": "^5.1.5",
@@ -76,7 +89,7 @@
     "@types/lodash": "4.17.13",
     "@types/node": "20.9.4",
     "@types/pluralize": "0.0.33",
-    "@types/react": "18.3.12",
+    "@types/react": "18.3.1",
     "@types/react-copy-to-clipboard": "5.0.7",
     "@types/react-dom": "18.3.1",
     "@types/sanitize-html": "2.13.0",
