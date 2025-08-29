@@ -24,7 +24,7 @@
     }
   },
   "engines": {
-    "node": "16"
+    "node": "18.x"
   },
   "dependencies": {
     "@amcharts/amcharts5": "^5.13.3",
