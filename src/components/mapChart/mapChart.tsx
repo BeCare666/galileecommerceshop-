@@ -7,7 +7,8 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { PageLoader } from '@/components/ui/loader/spinner/spinner';
 // Token pour l'API  <PageLoader showText={false} />
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJiZWNhcmUuZnIuZ2VAZ21haWwuY29tIiwicGVybWlzc2lvbnMiOlsic3RvcmVfb3duZXIiXSwiaWF0IjoxNzUzOTI1MzE3LCJleHAiOjE3NTQ1MzAxMTd9.l0junNZ1Hj1wt1pzHsKNXNPNs_KEIH8hdJ6D9b30xlI"; // 🔁 Remplace par ton token
+import { getAuthToken, removeAuthToken } from '../../data/client/token.utils';
+const token = getAuthToken(); // 🔁 Remplace par ton token
 interface MapChartProps {
     closeModal: () => void;
     setMapIsOk: React.Dispatch<React.SetStateAction<boolean>>;

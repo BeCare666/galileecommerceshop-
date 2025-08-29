@@ -5,7 +5,8 @@ import { useRouter } from 'next/router';
 import FilterIcon from '@/components/icons/filter-icon';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-
+import { getAuthToken, removeAuthToken } from '../../data/client/token.utils';
+const token = getAuthToken(); // 🔁 Remplace par ton token
 const MySwal = withReactContent(Swal);
 export default function CountrySelectorWithModal() {
     const router = useRouter();
@@ -23,7 +24,11 @@ export default function CountrySelectorWithModal() {
                 if (!API_URL) {
                     throw new Error("NEXT_PUBLIC_REST_API_ENDPOINT n'est pas défini !");
                 }
-                const res = await fetch(`${API_URL}/countries`);
+                const res = await fetch(`${API_URL}/countries`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
                 const data = await res.json();
                 setCountries(data);
                 //console.log("var pays =", JSON.stringify(data, null, 2));

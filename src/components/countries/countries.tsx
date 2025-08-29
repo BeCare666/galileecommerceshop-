@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-
+import { getAuthToken, removeAuthToken } from '../../data/client/token.utils';
+const token = getAuthToken();
 type Country = {
     id: number;
     name: string;
@@ -18,7 +19,15 @@ const CountrySelect: React.FC<CountrySelectProps> = ({ value, onChange }) => {
     useEffect(() => {
         async function fetchCountries() {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/countries`);
+                const API_URL = process.env.NEXT_PUBLIC_REST_API_ENDPOINT;
+                if (!API_URL) {
+                    throw new Error("NEXT_PUBLIC_REST_API_ENDPOINT n'est pas défini !");
+                }
+                const res = await fetch(`${API_URL}/countries`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
                 const data = await res.json();
                 setCountries(data);
             } catch (error) {
