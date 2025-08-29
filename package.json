@@ -24,8 +24,9 @@
     }
   },
   "engines": {
-    "node": "18.x"
+    "node": "22.x"
   },
+  "ci": false,
   "dependencies": {
     "@amcharts/amcharts5": "^5.13.3",
     "@amcharts/amcharts5-geodata": "^5.1.5",
