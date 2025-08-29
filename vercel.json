@@ -1,10 +1,10 @@
 {
   "env": {
-    "NEXT_PUBLIC_REST_API_ENDPOINT": "your_api_endpoint",
-    "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "your_stripe_key",
-    "NEXT_PUBLIC_PAYPAL_CLIENT_TOKEN": "your_paypal_client",
-    "NEXT_PUBLIC_WEBSITE_URL": "https://pixer-react-shop.vercel.app/",
-    "NEXT_PUBLIC_ADMIN_URL": "https://pixer-react-admin.vercel.app",
+    "NEXT_PUBLIC_REST_API_ENDPOINT": "https://69d90ceb8e51.ngrok-free.app/api",
+    "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_12345",
+    "NEXT_PUBLIC_PAYPAL_CLIENT_TOKEN": "ton_paypal_client_token",
+    "NEXT_PUBLIC_WEBSITE_URL": "https://galileecommerce-shop.vercel.app/",
+    "NEXT_PUBLIC_ADMIN_URL": "https://galileecommerce-admin.vercel.app",
     "NEXT_PUBLIC_SHOP_URL": "",
     "NEXT_PUBLIC_GOOGLE_MAP_API_KEY": "",
     "NEXT_PUBLIC_AUTH_TOKEN_KEY": "AUTH_CRED",
@@ -15,11 +15,11 @@
   },
   "build": {
     "env": {
-      "NEXT_PUBLIC_REST_API_ENDPOINT": "your_api_endpoint",
-      "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "your_stripe_key",
-      "NEXT_PUBLIC_PAYPAL_CLIENT_TOKEN": "your_paypal_client",
-      "NEXT_PUBLIC_WEBSITE_URL": "https://pixer-react-shop.vercel.app/",
-      "NEXT_PUBLIC_ADMIN_URL": "https://pixer-react-admin.vercel.app",
+      "NEXT_PUBLIC_REST_API_ENDPOINT": "https://69d90ceb8e51.ngrok-free.app/api",
+      "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_12345",
+      "NEXT_PUBLIC_PAYPAL_CLIENT_TOKEN": "ton_paypal_client_token",
+      "NEXT_PUBLIC_WEBSITE_URL": "https://galileecommerce-shop.vercel.app/",
+      "NEXT_PUBLIC_ADMIN_URL": "https://galileecommerce-admin.vercel.app",
       "NEXT_PUBLIC_SHOP_URL": "",
       "NEXT_PUBLIC_GOOGLE_MAP_API_KEY": "",
       "NEXT_PUBLIC_AUTH_TOKEN_KEY": "AUTH_CRED",

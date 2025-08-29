@@ -50,14 +50,35 @@ export default function CategoriesForYouPanel({
                 ))}
             </div>
 
-            <div className="mt-10 text-center">
+            <div>
                 <button
                     onClick={onClose}
-                    className="inline-block px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-600"
+                    className="
+      fixed bottom-6 right-6
+      w-14 h-14
+      bg-pink-500 text-white
+      rounded-full
+      flex items-center justify-center
+      shadow-lg
+      hover:bg-pink-600
+      focus:outline-none focus:ring-2 focus:ring-pink-600
+      transition-transform duration-200
+    "
                 >
-                    Fermer
+                    {/* SVG icon close */}
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-7 h-7"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                    >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
                 </button>
             </div>
+
         </div>
     );
 
