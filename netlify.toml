@@ -12,5 +12,6 @@ APPLICATION_MODE = "production"
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = "pk_12345"
 NEXT_PUBLIC_WEBSITE_URL = "https://735ac9b8a101.ngrok-free.app"
 NEXT_PUBLIC_ADMIN_URL = "https://galileecommerce-admin.vercel.app"
-NEXT_PUBLIC_ENABLE_MULTI_LANG = true
+NEXT_PUBLIC_ENABLE_MULTI_LANG = "true"   # <--- chaîne, pas booléen
 NEXT_PUBLIC_AVAILABLE_LANGUAGES = ["en","ar","zh","fr","de","he","es"]
+
