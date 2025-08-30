@@ -7,11 +7,19 @@
   package = "@netlify/plugin-nextjs"
 
 [build.environment]
-NEXT_PUBLIC_REST_API_ENDPOINT = "https://f283d761be42.ngrok-free.app/api"
-APPLICATION_MODE = "production"
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = "pk_12345"
-NEXT_PUBLIC_WEBSITE_URL = "https://735ac9b8a101.ngrok-free.app"
-NEXT_PUBLIC_ADMIN_URL = "https://galileecommerce-admin.vercel.app"
-NEXT_PUBLIC_ENABLE_MULTI_LANG = "true"   # <--- chaîne, pas booléen
-NEXT_PUBLIC_AVAILABLE_LANGUAGES = ["en","ar","zh","fr","de","he","es"]
+  # 🔹 API backend (via ngrok ou ton serveur NestJS)
+  NEXT_PUBLIC_REST_API_ENDPOINT = "https://f283d761be42.ngrok-free.app/api"
 
+  # 🔹 Mode de l’application
+  APPLICATION_MODE = "production"
+
+  # 🔹 Clé publique Stripe
+  NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = "pk_12345"
+
+  # 🔹 URLs frontend & admin
+  NEXT_PUBLIC_WEBSITE_URL = "https://735ac9b8a101.ngrok-free.app"
+  NEXT_PUBLIC_ADMIN_URL   = "https://galileecommerce-admin.vercel.app"
+
+  # 🔹 Options multi-langues
+  NEXT_PUBLIC_ENABLE_MULTI_LANG = "true"
+  NEXT_PUBLIC_AVAILABLE_LANGUAGES = "en,ar,zh,fr,de,he,es"
