@@ -1,9 +1,12 @@
 const invariant = require('tiny-invariant');
 const path = require('path');
 
+// valeur par défaut si la variable n’existe pas
+const defaultLang = process.env.NEXT_PUBLIC_DEFAULT_LANGUAGE || 'en';
+
 invariant(
-  process.env.NEXT_PUBLIC_DEFAULT_LANGUAGE,
-  'NEXT_PUBLIC_DEFAULT_LANGUAGE is required, but not set, check your .env file'
+  defaultLang,
+  'NEXT_PUBLIC_DEFAULT_LANGUAGE is required, but not set, check your .env file',
 );
 
 const isMultilangEnable =
@@ -12,17 +15,18 @@ const isMultilangEnable =
 
 function generateLocales() {
   if (isMultilangEnable) {
-    console.log("isMultilangEnable = true");
-    const locales = process.env.NEXT_PUBLIC_AVAILABLE_LANGUAGES.split(',').map(l => l.trim());
-    console.log('Locales chargées:', locales); // <--- debug
-    return locales;
+    const locales = process.env.NEXT_PUBLIC_AVAILABLE_LANGUAGES.split(',')
+      .map((l) => l.trim())
+      .filter(Boolean);
+
+    return locales.length > 0 ? locales : [defaultLang];
   }
-  return [process.env.NEXT_PUBLIC_DEFAULT_LANGUAGE];
+  return [defaultLang];
 }
 
 module.exports = {
   i18n: {
-    defaultLocale: process.env.NEXT_PUBLIC_DEFAULT_LANGUAGE ?? 'en',
+    defaultLocale: defaultLang,
     locales: generateLocales(),
     localeDetection: isMultilangEnable,
   },
