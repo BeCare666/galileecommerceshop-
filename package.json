@@ -88,6 +88,7 @@
     "yup": "1.4.0"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^5.12.1",
     "@types/geojson": "^7946.0.16",
     "@types/js-cookie": "3.0.6",
     "@types/lodash": "4.17.13",
