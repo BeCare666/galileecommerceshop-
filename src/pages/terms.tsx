@@ -46,20 +46,24 @@ const TermsPage: NextPageWithLayout = () => {
     <>
       <Seo
         title="Terms & Conditions"
-        description="Fastest digital download template built with React, NextJS, TypeScript, React-Query and Tailwind CSS."
+        description="Read our terms and conditions to understand your rights and responsibilities when using our services."
         url={routes.terms}
       />
       <div className="mx-auto flex h-full w-full max-w-screen-xl flex-col p-4 sm:p-5">
         {!isEmpty(termsAndConditions) ? (
-          <div className="h-full w-full relative bg-center bg-cover mb-7" style={{ backgroundImage: `url(${ImageHomePagebackground.src})` }}>
+          <div
+            className="h-full w-full relative bg-center bg-cover mb-7"
+            style={{ backgroundImage: `url(${ImageHomePagebackground.src})` }}
+          >
             <PageHeading
               title={t('text-terms-page-title')}
-              subtitle={`Last updated on ${getLastUpdateTermsDate
-                ? dayjs(new Date(getLastUpdateTermsDate as string)).format(
-                  'MMMM D, YYYY'
-                )
-                : ''
-                }`}
+              subtitle={`Last updated on ${
+                getLastUpdateTermsDate
+                  ? dayjs(new Date(getLastUpdateTermsDate as string)).format(
+                      'MMMM D, YYYY',
+                    )
+                  : ''
+              }`}
             />
           </div>
         ) : (

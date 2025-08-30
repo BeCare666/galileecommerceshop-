@@ -96,15 +96,17 @@ const AboutPage: NextPageWithLayout = () => {
     <>
       <Seo
         title="About us"
-        description=" Learn more about our company, our mission, and the team behind our success."
+        description="About us - Learn who we are and what we do."
         url={routes.about}
       />
       <div className="mx-auto flex h-full w-full max-w-screen-xl flex-col p-4 sm:p-5 ">
-        { /** <PageHeading
+        {/** <PageHeading
           title={t('about-us-page-title')}
           subtitle={t('about-us-page-subtitle')}
         />**/}
-        <TitleComponent subtitle="Qui nous sommes et ce que nous faisons">À propos de nous</TitleComponent>
+        <TitleComponent subtitle="Qui nous sommes et ce que nous faisons">
+          À propos de nous
+        </TitleComponent>
         <AboutUs />
         <div className="w-full space-y-8 md:space-y-10 lg:space-y-12 xl:px-20 hidden">
           <div className="block">
@@ -181,7 +183,7 @@ const AboutPage: NextPageWithLayout = () => {
             </p>
           </div>
         </div>
-      </div >
+      </div>
       <Footer />
     </>
   );

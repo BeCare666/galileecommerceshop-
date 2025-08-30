@@ -1,0 +1,8 @@
+version: "2"  # obligatoire pour ngrok v5
+tunnels:
+  nextjs:
+    addr: 3000
+    proto: http
+  nestjs:
+    addr: 5000
+    proto: http

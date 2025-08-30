@@ -49,16 +49,19 @@ export default function Grid({
               isGridCompact,
             '2xl:grid-cols-3 3xl:grid-cols-[repeat(auto-fill,minmax(340px,1fr))] 4xl:grid-cols-[repeat(auto-fill,minmax(380px,1fr))]':
               !isGridCompact,
-          }
+          },
         )}
       >
-        {isLoading && !products.length
+        {isLoading && (!products || products.length === 0)
           ? rangeMap(limit, (i) => (
               <ProductCardLoader key={i} uniqueKey={`product-${i}`} />
             ))
-          : products.map((product) => (
-              <Card key={product.id} product={product} />
-            ))}
+          : (products ?? [])
+              .filter(
+                (product): product is Product =>
+                  !!product && product.id !== undefined,
+              )
+              .map((product) => <Card key={product.id} product={product} />)}
       </motion.div>
 
       {hasNextPage && (

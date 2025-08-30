@@ -58,7 +58,7 @@ const PopularProductsPage: NextPageWithLayout = () => {
     <>
       <Seo
         title="Top Products"
-        description="Fastest digital download template built with React, NextJS, TypeScript, React-Query and Tailwind CSS."
+        description="Discover our most popular products based on customer purchases and reviews."
         url={routes.popularProducts}
       />
       <Products />

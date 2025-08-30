@@ -15,11 +15,14 @@ const LicensingPage: NextPageWithLayout = () => {
     <>
       <Seo
         title="Product Licensing"
-        description="Fastest digital download template built with React, NextJS, TypeScript, React-Query and Tailwind CSS."
+        description="Understand the licensing terms and conditions for our products."
         url={routes.licensing}
       />
       <div className="mx-auto flex h-full w-full max-w-screen-xl flex-col p-4 sm:p-5">
-        <div className="h-full w-full relative bg-center bg-cover mb-7" style={{ backgroundImage: `url(${ImageHomePagebackground.src})` }}>
+        <div
+          className="h-full w-full relative bg-center bg-cover mb-7"
+          style={{ backgroundImage: `url(${ImageHomePagebackground.src})` }}
+        >
           <PageHeading
             title={t('text-license-page-title')}
             subtitle={t('text-license-page-subtitle')}
@@ -43,7 +46,7 @@ const LicensingPage: NextPageWithLayout = () => {
             </div>
           ))}
         </GeneralContainer>
-      </div >
+      </div>
     </>
   );
 };

@@ -1,4 +1,3 @@
-
 import PageHeading from '@/components/ui/page-heading';
 import routes from '@/config/routes';
 import Howtowork from '@/components/howtowork/howtowork';
@@ -11,40 +10,43 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import ImageHomePagebackground from '@/assets/images/about-us.jpg';
 
 const ServicesPage: NextPageWithLayout = () => {
-    const { t } = useTranslation('common');
+  const { t } = useTranslation('common');
 
-    return (
-        <>
-            <Seo
-                title="services"
-                description="services"
-                url={routes.terms}
-            />
-            <div className="mx-auto flex h-full w-full max-w-screen-xl flex-col p-4 sm:p-5">
-                <div className="h-full w-full relative bg-center bg-cover mb-7" style={{ backgroundImage: `url(${ImageHomePagebackground.src})` }}>
-                    <PageHeading
-                        title="Comment ça marche ?"
-                        subtitle="Voici comment ça marche chez galileecommerce"
-                    />
-                </div>
+  return (
+    <>
+      <Seo
+        title="How it works"
+        description="Learn how our platform operates and how you can benefit from our services."
+        url={routes.terms}
+      />
+      <div className="mx-auto flex h-full w-full max-w-screen-xl flex-col p-4 sm:p-5">
+        <div
+          className="h-full w-full relative bg-center bg-cover mb-7"
+          style={{ backgroundImage: `url(${ImageHomePagebackground.src})` }}
+        >
+          <PageHeading
+            title="Comment ça marche ?"
+            subtitle="Voici comment ça marche chez galileecommerce"
+          />
+        </div>
 
-                <Howtowork />
-            </div>
-        </>
-    );
+        <Howtowork />
+      </div>
+    </>
+  );
 };
 
 ServicesPage.getLayout = function getLayout(page) {
-    return <GeneralLayout>{page}</GeneralLayout>;
+  return <GeneralLayout>{page}</GeneralLayout>;
 };
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-    return {
-        props: {
-            ...(await serverSideTranslations(locale!, ['common'])),
-        },
-        revalidate: 60, // In seconds
-    };
+  return {
+    props: {
+      ...(await serverSideTranslations(locale!, ['common'])),
+    },
+    revalidate: 60, // In seconds
+  };
 };
 
 export default ServicesPage;

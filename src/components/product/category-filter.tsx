@@ -9,11 +9,19 @@ import { useTranslation } from 'next-i18next';
 import CountrySelector from '@/components/country-selector/country-selector';
 import Image from '@/components/ui/image';
 import CategoriesForYouPanel from '@/components/product/categoriesForYouPanel';
+import { getAuthToken, removeAuthToken } from '../../data/client/token.utils';
+const token = getAuthToken(); // 🔁 Remplace par ton token
 /** Petite icône check inline (SVG) */
 function CheckIcon({ className = 'h-4 w-4' }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M20 6L9 17l-5-5"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -38,8 +46,9 @@ function CategoryItem({
         'button-sawtooth h-[34px] shrink-0 px-3.5 py-1.5 text-sm font-medium rounded-[6px] border flex items-center gap-2 transition',
         {
           'bg-pink-400 text-white': isActive,
-          'bg-white text-gray-700 border border-pink-200 hover:bg-pink-50': !isActive,
-        }
+          'bg-white text-gray-700 border border-pink-200 hover:bg-pink-50':
+            !isActive,
+        },
       )}
     >
       {/* Icône circulaire */}
@@ -54,7 +63,11 @@ function CategoryItem({
       </div>
 
       <span className="truncate max-w-[140px]">{categoryName}</span>
-      {showCaret ? <span aria-hidden className="ml-1 text-xs">▾</span> : null}
+      {showCaret ? (
+        <span aria-hidden className="ml-1 text-xs">
+          ▾
+        </span>
+      ) : null}
     </button>
   );
 }
@@ -66,16 +79,29 @@ export default function CategoryFilterWithPanel({
 }) {
   const router = useRouter();
   const { categories } = useCategories({ limit: 100 });
-  const { sliderEl, sliderPrevBtn, sliderNextBtn, scrollToTheRight, scrollToTheLeft } = useScrollableSlider(defaultActivePath);
+  const {
+    sliderEl,
+    sliderPrevBtn,
+    sliderNextBtn,
+    scrollToTheRight,
+    scrollToTheLeft,
+  } = useScrollableSlider(defaultActivePath);
   const { t } = useTranslation('common');
-  console.log(categories)
+  console.log(categories);
   // selection single for root, multiple for sub & sub-sub
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-  const [selectedSubCategories, setSelectedSubCategories] = useState<Set<number>>(new Set());
-  const [selectedSubSubCategories, setSelectedSubSubCategories] = useState<Set<number>>(new Set());
-  const [openCategoryPanelAllCategory, setOpenCategoryPanelAllCategory] = useState<number | null>(null);
+  const [selectedSubCategories, setSelectedSubCategories] = useState<
+    Set<number>
+  >(new Set());
+  const [selectedSubSubCategories, setSelectedSubSubCategories] = useState<
+    Set<number>
+  >(new Set());
+  const [openCategoryPanelAllCategory, setOpenCategoryPanelAllCategory] =
+    useState<number | null>(null);
   // panel state and lists
-  const [openCategoryPanel, setOpenCategoryPanel] = useState<number | null>(null);
+  const [openCategoryPanel, setOpenCategoryPanel] = useState<number | null>(
+    null,
+  );
   const [subCategories, setSubCategories] = useState<any[] | null>(null);
   const [subSubCategories, setSubSubCategories] = useState<any[] | null>(null);
 
@@ -88,7 +114,10 @@ export default function CategoryFilterWithPanel({
   const headers = { 'Content-Type': 'application/json' };
 
   // Utils pour toggle dans Set (immutability)
-  function toggleSet(setState: React.Dispatch<React.SetStateAction<Set<number>>>, value: number) {
+  function toggleSet(
+    setState: React.Dispatch<React.SetStateAction<Set<number>>>,
+    value: number,
+  ) {
     setState((prev) => {
       const next = new Set(prev);
       if (next.has(value)) next.delete(value);
@@ -102,14 +131,16 @@ export default function CategoryFilterWithPanel({
     setSubCategories(null);
     setSubSubCategories(null);
     try {
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJiZWNhcmUuZnIuZ2VAZ21haWwuY29tIiwicGVybWlzc2lvbnMiOlsic3RvcmVfb3duZXIiXSwiaWF0IjoxNzU0NDY5NDM2LCJleHAiOjE3NTUwNzQyMzZ9.QrXefYMvJMdoUAO6WOKUWoWwhENE0D_ZtnOQvof9UKM'
-
-      const res = await fetch(`${API_BASE}/souscategories/bycategory?categories_id=${categoryId}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
+      const res = await fetch(
+        `${API_BASE}/souscategories/bycategory?categories_id=${categoryId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true',
+          },
         },
-      });
+      );
       if (!res.ok) throw new Error('Failed to load subcategories');
       const payload = await res.json();
       // backend returns { data: [...] } - adapt if different
@@ -124,13 +155,18 @@ export default function CategoryFilterWithPanel({
   async function loadSubSubCategories(subCategoryId: number) {
     setSubSubCategories(null);
     try {
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJiZWNhcmUuZnIuZ2VAZ21haWwuY29tIiwicGVybWlzc2lvbnMiOlsic3RvcmVfb3duZXIiXSwiaWF0IjoxNzU0NDY5NDM2LCJleHAiOjE3NTUwNzQyMzZ9.QrXefYMvJMdoUAO6WOKUWoWwhENE0D_ZtnOQvof9UKM'
-      const res = await fetch(`${API_BASE}/subcategories/bycategory?categories_id=${subCategoryId}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
+      const token =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJiZWNhcmUuZnIuZ2VAZ21haWwuY29tIiwicGVybWlzc2lvbnMiOlsic3RvcmVfb3duZXIiXSwiaWF0IjoxNzU0NDY5NDM2LCJleHAiOjE3NTUwNzQyMzZ9.QrXefYMvJMdoUAO6WOKUWoWwhENE0D_ZtnOQvof9UKM';
+      const res = await fetch(
+        `${API_BASE}/subcategories/bycategory?categories_id=${subCategoryId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true',
+          },
         },
-      });
+      );
       if (!res.ok) throw new Error('Failed to load subsubcategories');
       const payload = await res.json();
       setSubSubCategories(payload?.data ?? []);
@@ -140,7 +176,7 @@ export default function CategoryFilterWithPanel({
     }
   }
   async function handleCategoryAllClick() {
-    setOpenCategoryPanelAllCategory(prev => (prev === null ? 1 : null));
+    setOpenCategoryPanelAllCategory((prev) => (prev === null ? 1 : null));
   }
   // Click on root category
   async function handleCategoryClick(catId: number | string) {
@@ -193,14 +229,17 @@ export default function CategoryFilterWithPanel({
   function applyFilter() {
     const query: any = {};
     if (selectedCategory) query.categories_id = selectedCategory;
-    if (selectedSubCategories.size) query.sous_categories_id = Array.from(selectedSubCategories).join(',');
-    if (selectedSubSubCategories.size) query.sub_categories_id = Array.from(selectedSubSubCategories).join(',');
+    if (selectedSubCategories.size)
+      query.sous_categories_id = Array.from(selectedSubCategories).join(',');
+    if (selectedSubSubCategories.size)
+      query.sub_categories_id = Array.from(selectedSubSubCategories).join(',');
     router.push({ pathname: '/products/forcategory', query });
     setOpenCategoryPanel(null);
   }
 
   // router active highlight
-  const routerActiveCategory = Number(router.query.categories_id || router.query.category || '') || null;
+  const routerActiveCategory =
+    Number(router.query.categories_id || router.query.category || '') || null;
 
   // close on outside click
   useEffect(() => {
@@ -214,37 +253,52 @@ export default function CategoryFilterWithPanel({
     return () => document.removeEventListener('mousedown', onDocClick);
   }, []);
 
-
   return (
     <div ref={containerRef} className="relative">
-
       <div className="app-category-filter-bar sticky top-16  flex min-h-[64px] w-full overflow-visible border-b bg-light-100 px-2 py-4">
-        <CategoryItem categoryName={t('text-category-all')}
+        <CategoryItem
+          categoryName={t('text-category-all')}
           isActive={!routerActiveCategory && !selectedCategory}
           onClick={handleCategoryAllClick}
-        //onMouseEnter={() => setOpenCategoryPanelAllCategory(1)}
-        //onMouseLeave={() => setOpenCategoryPanelAllCategory(null)}
-
+          //onMouseEnter={() => setOpenCategoryPanelAllCategory(1)}
+          //onMouseLeave={() => setOpenCategoryPanelAllCategory(null)}
         />
-        <button title={t('text-prev')} ref={sliderPrevBtn} onClick={scrollToTheLeft} className="invisible">
+        <button
+          title={t('text-prev')}
+          ref={sliderPrevBtn}
+          onClick={scrollToTheLeft}
+          className="invisible"
+        >
           <ChevronLeft className="h-[18px] w-[18px]" />
         </button>
 
         <div className="-mb-4 flex flex-1 items-start overflow-hidden">
-          <div className="-mb-7 flex w-full gap-3 overflow-x-auto scroll-smooth pb-7" ref={sliderEl}>
-
-            {categories
-              .filter((c: any) => c.slug?.toLowerCase() !== 'free')
-              .map((category: any) => (
-                <CategoryItem
-                  key={category.id}
-                  categoryName={category.name}
-                  categoryIcon={category.icon}
-                  isActive={Number(category.id) === (selectedCategory || routerActiveCategory)}
-                  onClick={() => handleCategoryClick(category.id)}
-                  showCaret={!!category.has_children}
-                />
-              ))}
+          <div
+            className="-mb-7 flex w-full gap-3 overflow-x-auto scroll-smooth pb-7"
+            ref={sliderEl}
+          >
+            {categories && categories.length > 0 ? (
+              categories
+                .filter((c: any) => c && c.slug?.toLowerCase() !== 'free') // Vérifie que c existe
+                .map((category: any) => (
+                  <CategoryItem
+                    key={category.id ?? Math.random()} // fallback si id manquant
+                    categoryName={category.name ?? 'Unnamed'}
+                    categoryIcon={category.icon ?? '/placeholder.png'}
+                    isActive={
+                      Number(category.id) ===
+                      (selectedCategory || routerActiveCategory)
+                    }
+                    onClick={() => handleCategoryClick(category.id)}
+                    showCaret={!!category.has_children}
+                  />
+                ))
+            ) : (
+              // Affiche un loader ou message si les catégories ne sont pas encore chargées
+              <div className="text-center py-10 text-gray-500">
+                Chargement des catégories...
+              </div>
+            )}
           </div>
         </div>
         {openCategoryPanelAllCategory && (
@@ -255,7 +309,12 @@ export default function CategoryFilterWithPanel({
           />
         )}
         <div className="ml-auto flex items-center gap-3">
-          <button title={t('text-next')} ref={sliderNextBtn} onClick={scrollToTheRight} className="flex items-center">
+          <button
+            title={t('text-next')}
+            ref={sliderNextBtn}
+            onClick={scrollToTheRight}
+            className="flex items-center"
+          >
             <ChevronRight className="h-[18px] w-[18px]" />
           </button>
           <CountrySelector />
@@ -272,9 +331,15 @@ export default function CategoryFilterWithPanel({
           <div className="flex flex-col md:flex-row gap-4">
             {/* Sub categories column */}
             <div className="flex-1 min-w-[180px] max-h-[320px] overflow-auto">
-              <h4 className="mb-2 font-medium">Subcategories</h4>
-              {!subCategories && <div className="text-sm text-gray-500">Loading…</div>}
-              {subCategories && subCategories.length === 0 && <div className="text-sm text-gray-500">No subcategories</div>}
+              <h4 className="mb-2 font-medium">Les sous categories</h4>
+              {!subCategories && (
+                <div className="text-sm text-gray-500">Loading…</div>
+              )}
+              {subCategories && subCategories.length === 0 && (
+                <div className="text-sm text-gray-500">
+                  Pas de sous categories
+                </div>
+              )}
               {subCategories && subCategories.length > 0 && (
                 <ul className="space-y-1">
                   {subCategories.map((s) => {
@@ -287,7 +352,7 @@ export default function CategoryFilterWithPanel({
                           {
                             'bg-pink-50': selected,
                             'hover:bg-gray-50': !selected,
-                          }
+                          },
                         )}
                         onClick={() => handleSubCategoryClick(s.id)}
                         role="button"
@@ -296,13 +361,26 @@ export default function CategoryFilterWithPanel({
                         <div className="flex items-center gap-3">
                           <div className="flex items-center">
                             {/* checkbox-like square */}
-                            <div className={cn('h-5 w-5 rounded-sm border flex items-center justify-center', { 'bg-pink-500 border-pink-500 text-white': selected, 'bg-white': !selected })}>
-                              {selected ? <CheckIcon className="h-4 w-4" /> : null}
+                            <div
+                              className={cn(
+                                'h-5 w-5 rounded-sm border flex items-center justify-center',
+                                {
+                                  'bg-pink-500 border-pink-500 text-white':
+                                    selected,
+                                  'bg-white': !selected,
+                                },
+                              )}
+                            >
+                              {selected ? (
+                                <CheckIcon className="h-4 w-4" />
+                              ) : null}
                             </div>
                           </div>
                           <span className="truncate">{s.name}</span>
                         </div>
-                        {s.has_children ? <small className="text-gray-400">▸</small> : null}
+                        {s.has_children ? (
+                          <small className="text-gray-400">▸</small>
+                        ) : null}
                       </li>
                     );
                   })}
@@ -312,10 +390,20 @@ export default function CategoryFilterWithPanel({
 
             {/* Sub-sub column */}
             <div className="flex-1 min-w-[180px] max-h-[320px] overflow-auto">
-              <h4 className="mb-2 font-medium">Sub-subcategories</h4>
-              {!selectedSubCategories.size && <div className="text-sm text-gray-500">Select one or more subcategories</div>}
-              {selectedSubCategories.size > 0 && !subSubCategories && <div className="text-sm text-gray-500">Loading…</div>}
-              {subSubCategories && subSubCategories.length === 0 && <div className="text-sm text-gray-500">No additional levels</div>}
+              <h4 className="mb-2 font-medium">Les sous-sous-catégorieories</h4>
+              {!selectedSubCategories.size && (
+                <div className="text-sm text-gray-500">
+                  Selectionnez un ou plusieurs sous sous catégories
+                </div>
+              )}
+              {selectedSubCategories.size > 0 && !subSubCategories && (
+                <div className="text-sm text-gray-500">Chargement…</div>
+              )}
+              {subSubCategories && subSubCategories.length === 0 && (
+                <div className="text-sm text-gray-500">
+                  Pas de niveaux additionnels
+                </div>
+              )}
               {subSubCategories && subSubCategories.length > 0 && (
                 <ul className="space-y-1">
                   {subSubCategories.map((ss) => {
@@ -325,13 +413,24 @@ export default function CategoryFilterWithPanel({
                         key={ss.id}
                         className={cn(
                           'flex items-center gap-3 p-2 rounded-md cursor-pointer transition',
-                          { 'bg-pink-50': selected, 'hover:bg-gray-50': !selected }
+                          {
+                            'bg-pink-50': selected,
+                            'hover:bg-gray-50': !selected,
+                          },
                         )}
                         onClick={() => handleSubSubCategoryClick(ss.id)}
                         role="button"
                         aria-pressed={selected}
                       >
-                        <div className={cn('h-5 w-5 rounded-sm border flex items-center justify-center', { 'bg-pink-500 border-pink-500 text-white': selected })}>
+                        <div
+                          className={cn(
+                            'h-5 w-5 rounded-sm border flex items-center justify-center',
+                            {
+                              'bg-pink-500 border-pink-500 text-white':
+                                selected,
+                            },
+                          )}
+                        >
                           {selected ? <CheckIcon className="h-4 w-4" /> : null}
                         </div>
                         <span className="truncate">{ss.name}</span>
@@ -346,17 +445,29 @@ export default function CategoryFilterWithPanel({
             <div className="w-[200px] flex-shrink-0">
               <h4 className="mb-2 font-medium">Actions</h4>
               <div className="flex flex-row sm:flex-col gap-2">
-                <button onClick={() => setOpenCategoryPanel(null)} className="px-4 py-2 rounded border w-[100%]">
-                  Close
+                <button
+                  onClick={() => setOpenCategoryPanel(null)}
+                  className="px-4 py-2 rounded border w-[100%]"
+                >
+                  Fermer
                 </button>
-                <button onClick={applyFilter} className="px-4 py-2 rounded bg-pink-500 text-white w-[100%]">
-                  Apply
+                <button
+                  onClick={applyFilter}
+                  className="px-4 py-2 rounded bg-pink-500 text-white w-[100%]"
+                >
+                  Appliquer
                 </button>
               </div>
               <div className="mt-4 text-sm text-gray-600 hidden">
                 <div>Catégorie: {selectedCategory ?? '—'}</div>
-                <div>Sous-catégories: {Array.from(selectedSubCategories).join(', ') || '—'}</div>
-                <div>Sous-sous-catégories: {Array.from(selectedSubSubCategories).join(', ') || '—'}</div>
+                <div>
+                  Sous-catégories:{' '}
+                  {Array.from(selectedSubCategories).join(', ') || '—'}
+                </div>
+                <div>
+                  Sous-sous-catégories:{' '}
+                  {Array.from(selectedSubSubCategories).join(', ') || '—'}
+                </div>
               </div>
             </div>
           </div>
@@ -364,4 +475,4 @@ export default function CategoryFilterWithPanel({
       )}
     </div>
   );
-}  
+}

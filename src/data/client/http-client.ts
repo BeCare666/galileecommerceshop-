@@ -15,17 +15,18 @@ const Axios = axios.create({
 Axios.interceptors.request.use(
   (config) => {
     const token = getAuthToken();
-    console.log("🔥 TOKEN ENVOYÉ DANS HEADER :", token);
-    //@ts-ignore 
+    console.log('🔥 TOKEN ENVOYÉ DANS HEADER :', token);
+    //@ts-ignore
     config.headers = {
       ...config.headers,
       Authorization: `Bearer ${token ? token : ''}`,
+      'ngrok-skip-browser-warning': 'true',
     };
     return config;
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 Axios.interceptors.response.use(
@@ -41,7 +42,7 @@ Axios.interceptors.response.use(
       //Router.reload();
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export class HttpClient {
@@ -71,7 +72,7 @@ export class HttpClient {
       .map(([k, v]) =>
         ['type', 'categories', 'tags', 'author', 'manufacturer'].includes(k)
           ? `${k}.slug:${v}`
-          : `${k}:${v}`
+          : `${k}:${v}`,
       )
       .join(';');
   }

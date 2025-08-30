@@ -15,11 +15,14 @@ const PrivacyPage: NextPageWithLayout = () => {
     <>
       <Seo
         title="Privacy Policy"
-        description="Fastest digital download template built with React, NextJS, TypeScript, React-Query and Tailwind CSS."
+        description="Learn about our commitment to protecting your privacy and how we handle your personal information."
         url={routes.privacy}
       />
       <div className="mx-auto flex h-full w-full max-w-screen-xl flex-col p-4 sm:p-5">
-        <div className="h-full w-full relative bg-center bg-cover mb-7" style={{ backgroundImage: `url(${ImageHomePagebackground.src})` }}>
+        <div
+          className="h-full w-full relative bg-center bg-cover mb-7"
+          style={{ backgroundImage: `url(${ImageHomePagebackground.src})` }}
+        >
           <PageHeading
             title={t('text-privacy-page-title')}
             subtitle={t('text-privacy-page-subtitle')}
