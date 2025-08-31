@@ -1,7 +1,7 @@
 [build]
   command = "yarn build"
   publish = ".next"
-
+functions = "netlify/functions"
 [build.environment]
   BRANCH = "main"
   CONTEXT = "production"

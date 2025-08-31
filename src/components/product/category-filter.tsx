@@ -155,8 +155,6 @@ export default function CategoryFilterWithPanel({
   async function loadSubSubCategories(subCategoryId: number) {
     setSubSubCategories(null);
     try {
-      const token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJiZWNhcmUuZnIuZ2VAZ21haWwuY29tIiwicGVybWlzc2lvbnMiOlsic3RvcmVfb3duZXIiXSwiaWF0IjoxNzU0NDY5NDM2LCJleHAiOjE3NTUwNzQyMzZ9.QrXefYMvJMdoUAO6WOKUWoWwhENE0D_ZtnOQvof9UKM';
       const res = await fetch(
         `${API_BASE}/subcategories/bycategory?categories_id=${subCategoryId}`,
         {

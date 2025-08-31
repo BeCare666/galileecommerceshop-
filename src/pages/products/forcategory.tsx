@@ -8,6 +8,8 @@ import type { GetStaticProps } from 'next';
 import CategoryFilter from '@/components/product/category-filter';
 import Seo from '@/layouts/_seo';
 import routes from '@/config/routes';
+import { getAuthToken, removeAuthToken } from '../../data/client/token.utils';
+const token = getAuthToken(); // 🔁 Remplace par ton token
 type Product = {
   id: number;
   slug: string;
@@ -66,7 +68,14 @@ export default function ProductsPage() {
 
       const { data } = await axios.get(
         `${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/products/corridor`,
-        { params },
+        {
+          params,
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true',
+          },
+        },
       );
 
       const fetchedProducts: Product[] = data.data ?? [];

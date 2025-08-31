@@ -23,7 +23,7 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useWindowSize } from 'react-use';
 import HeaderTop from '@/components/header-top/header-top';
-import Navbar from "@/components/menu/menu";
+import Navbar from '@/components/menu/menu';
 interface HeaderProps {
   isCollapse?: boolean;
   showHamburger?: boolean;
@@ -61,14 +61,10 @@ export default function Header({
       )}
       <HeaderTop />
       <header className="app-header sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-light-300 bg-light py-1 px-4 ltr:left-0 rtl:right-0 dark:border-dark-300 dark:bg-dark-250 sm:h-[70px] sm:px-6">
-
         <div className="flex items-center gap-4">
           {showHamburger && (
             <div className="hidden md:block">
-              <Hamburger
-                isToggle={isCollapse}
-                onClick={onClickHamburger}
-              />
+              <Hamburger isToggle={isCollapse} onClick={onClickHamburger} />
             </div>
           )}
           <Logo />
@@ -78,8 +74,8 @@ export default function Header({
         </div>
         <div className="relative flex items-center gap-5 pr-0.5 xs:gap-6 sm:gap-7">
           <SearchButton className="hidden sm:flex" />
-          <ThemeSwitcher />
-          { /**  **/}
+
+          {/** <ThemeSwitcher /> **/}
           <GridSwitcher />
           {asPath !== routes.checkout && (
             <CartButton className="hidden sm:flex" />

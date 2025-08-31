@@ -1,30 +1,35 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Preloader from './loader'; // adapte le chemin selon ton arborescence
+import Preloader from './loader'; // adapte le chemin
 
 const PreloaderWrapper = ({ children }: { children: React.ReactNode }) => {
-    const [showPreloader, setShowPreloader] = useState(false);
+  const [showPreloader, setShowPreloader] = useState(false);
 
-    useEffect(() => {
-        const alreadyShown = sessionStorage.getItem('preloaderShown');
-        if (!alreadyShown) {
-            setShowPreloader(true);
-            sessionStorage.setItem('preloaderShown', 'true');
+  useEffect(() => {
+    // Vérifie si le préloader a déjà été montré dans cette session
+    const alreadyShown = sessionStorage.getItem('preloaderShown');
 
-            const timer = setTimeout(() => {
-                setShowPreloader(false);
-            }, 10000); // 10 secondes
+    if (!alreadyShown) {
+      setShowPreloader(true);
+      sessionStorage.setItem('preloaderShown', 'true');
 
-            return () => clearTimeout(timer);
-        }
-    }, []);
+      // Masque le préloader après 10 secondes
+      const timer = setTimeout(() => {
+        setShowPreloader(false);
+      }, 10000);
 
-    if (showPreloader) {
-        return <Preloader />;
+      return () => clearTimeout(timer);
     }
+  }, []);
 
-    return <>{children}</>;
+  // Si le préloader doit s'afficher, on le retourne
+  if (showPreloader) {
+    return <Preloader />;
+  }
+
+  // Sinon on retourne le contenu normal
+  return <>{children}</>;
 };
 
 export default PreloaderWrapper;

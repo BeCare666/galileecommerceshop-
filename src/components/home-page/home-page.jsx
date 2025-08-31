@@ -1,8 +1,14 @@
-import React from "react";
+'use client';
+import React from 'react';
+import { useRouter } from 'next/router';
 import ImageHomePage from '@/assets/images/ecoute.png';
 import ImageHomePagebackground from '@/assets/images/imgdownload.jpg';
-
+import { useMe } from '@/data/user';
+import { useModalAction } from '@/components/modal-views/context';
 export default function HeroBanner() {
+  const { openModal } = useModalAction();
+  const { me, isAuthorized, isLoading } = useMe();
+  const router = useRouter();
   return (
     <div
       className="w-full py-12 px-4 md:px-6 flex flex-col md:flex-row items-center justify-between min-h-[420px] relative bg-center bg-cover"
@@ -22,17 +28,32 @@ export default function HeroBanner() {
           Connecter les entreprises <br /> aux 54 pays de la ZLECAf
         </h1>
         <p className="text-white/90 mb-8 max-w-lg">
-          Galileecommerce.com vous aide à saisir les opportunités du commerce en Afrique et dans le monde,
-          en optimisant la chaîne de valeur et en simplifiant l’accès aux services financiers innovants.
+          Galileecommerce.com vous aide à saisir les opportunités du commerce en
+          Afrique et dans le monde, en optimisant la chaîne de valeur et en
+          simplifiant l’accès aux services financiers innovants.
         </p>
         <div className="flex items-center gap-4 mt-5">
-          <a
-            href="#"
-            className="bg-pink-500 hover:bg-pink-600 text-white font-semibold px-8 py-3 rounded-md shadow transition"
+          {isAuthorized && me && !isLoading && (
+            <button
+              className="bg-pink-500 hover:bg-pink-600 text-white font-semibold px-8 py-3 rounded-md shadow transition"
+              onClick={() => router.push('products/forcategory')}
+            >
+              Faites ici vos achats
+            </button>
+          )}
+          {!isAuthorized && !me && (
+            <button
+              className="bg-pink-500 hover:bg-pink-600 text-white font-semibold px-8 py-3 rounded-md shadow transition"
+              onClick={() => openModal('REGISTER')}
+            >
+              Inscrivez-vous gratuitement
+            </button>
+          )}
+
+          <button
+            className="flex items-center bg-white shadow px-4 py-3 rounded-full"
+            onClick={() => router.push('/about-us')}
           >
-            Inscrivez-vous gratuitement.
-          </a>
-          <button className="flex items-center bg-white shadow px-4 py-3 rounded-full">
             <span className="w-7 h-7 flex items-center justify-center bg-gray-100 rounded-full mr-2">
               <svg
                 width="18"
@@ -80,8 +101,13 @@ export default function HeroBanner() {
       {/* Animation breathe */}
       <style jsx>{`
         @keyframes breathe {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.06); }
+          0%,
+          100% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.06);
+          }
         }
         .animate-breathe {
           animation: breathe 4s ease-in-out infinite;
