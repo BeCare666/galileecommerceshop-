@@ -15,7 +15,7 @@ class CustomDocument extends Document {
     const dir = getDirection(locale);
     const isShowONe = true;
     return (
-      <Html dir={dir}>
+      <Html dir={dir} className="light">
         <Head>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
@@ -29,10 +29,8 @@ class CustomDocument extends Document {
             crossOrigin="anonymous"
             referrerPolicy="no-referrer"
           />
-
         </Head>
         <body>
-
           <Main />
           <div id="modal-root"></div>
           <NextScript />
