@@ -29,15 +29,6 @@ class CustomDocument extends Document {
             crossOrigin="anonymous"
             referrerPolicy="no-referrer"
           />
-          <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                document.documentElement.classList.remove('dark');
-              })()
-            `,
-          }}
-        />
 
         </Head>
         <body>
