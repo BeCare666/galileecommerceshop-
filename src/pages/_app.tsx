@@ -56,7 +56,7 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
       <Hydrate state={pageProps.dehydratedState}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light"
           enableSystem={false}
         >
           <SearchProvider>
