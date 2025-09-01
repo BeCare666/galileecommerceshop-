@@ -34,7 +34,6 @@ export default function CountrySelectorWithModal() {
         const res = await fetch(`${API_URL}/countries`, {
           headers: {
             Authorization: `Bearer ${token}`,
-            'ngrok-skip-browser-warning': 'true',
           },
         });
 

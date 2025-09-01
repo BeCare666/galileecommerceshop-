@@ -39,7 +39,6 @@ const MapWithCorridors: React.FC<MapChartProps> = (
         const res = await axios.get(`${API_URL}/corridors`, {
           headers: {
             Authorization: `Bearer ${token}`,
-            'ngrok-skip-browser-warning': 'true',
           },
         });
 

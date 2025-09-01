@@ -137,7 +137,6 @@ export default function CategoryFilterWithPanel({
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
-            'ngrok-skip-browser-warning': 'true',
           },
         },
       );
@@ -161,7 +160,6 @@ export default function CategoryFilterWithPanel({
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
-            'ngrok-skip-browser-warning': 'true',
           },
         },
       );
