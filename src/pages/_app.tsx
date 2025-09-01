@@ -56,8 +56,9 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
       <Hydrate state={pageProps.dehydratedState}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
+          defaultTheme="light" // 👈 Light forcé par défaut
+          enableSystem={false} // 👈 N’utilise pas le thème système
+          storageKey="theme" // 👈 Optionnel, mais garde un seul storage key
         >
           <SearchProvider>
             <CartProvider>
@@ -89,7 +90,7 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
         </ThemeProvider>
       </Hydrate>
 
-      { /**<ReactQueryDevtools initialIsOpen={false} position="bottom-right" />**/}
+      {/**<ReactQueryDevtools initialIsOpen={false} position="bottom-right" />**/}
     </QueryClientProvider>
   );
 }
