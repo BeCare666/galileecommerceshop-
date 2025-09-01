@@ -50,6 +50,7 @@ const MapWithCorridors: React.FC<MapChartProps> = (
         const fromCountryIdsNX = fromCountryIdsN[0].map((c: any) => c);
 
         fromCountryIdsNX.forEach((corridor: any) => {
+          setMapIsOk(false);
           if (corridor.from_countries_code)
             countryCodes.add(corridor.from_countries_code);
           if (corridor.to_countries_code)
@@ -93,17 +94,14 @@ const MapWithCorridors: React.FC<MapChartProps> = (
     });
 
     polygonSeries.mapPolygons.template.set('fill', am5.color(0x2196f3));
-
     polygonSeries.mapPolygons.template.adapters.add('fill', (fill, target) => {
       const dataContext = target.dataItem?.dataContext as { id?: string };
       const id = dataContext?.id;
       if (highlightCodes.includes(id as any)) {
-        setMapIsOk(false);
         return am5.color(0xff9900);
       }
       return fill;
     });
-
     polygonSeries.mapPolygons.template.events.on('click', (ev) => {
       const dataContext = ev.target.dataItem?.dataContext as { id?: string };
       const id = dataContext?.id;

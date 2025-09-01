@@ -56,9 +56,8 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
       <Hydrate state={pageProps.dehydratedState}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light" // 👈 Light forcé par défaut
-          enableSystem={false} // 👈 N’utilise pas le thème système
-          storageKey="theme" // 👈 Optionnel, mais garde un seul storage key
+          defaultTheme="system"
+          enableSystem={false}
         >
           <SearchProvider>
             <CartProvider>
