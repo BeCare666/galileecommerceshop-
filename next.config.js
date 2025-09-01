@@ -25,6 +25,7 @@ module.exports = {
       'flagcdn.com',
       'img.icons8.com',
       '192.168.243.170',
+      'galileecommerce.vercel.app',
     ],
     unoptimized: true,
   },
