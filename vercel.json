@@ -1,6 +1,6 @@
 {
   "env": {
-    "NEXT_PUBLIC_REST_API_ENDPOINT": "https://69d90ceb8e51.ngrok-free.app/api",
+    "NEXT_PUBLIC_REST_API_ENDPOINT": "https://galileecommerceshopapi-3.onrender.com/api",
     "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_12345",
     "NEXT_PUBLIC_PAYPAL_CLIENT_TOKEN": "ton_paypal_client_token",
     "NEXT_PUBLIC_WEBSITE_URL": "https://galileecommerce-shop.vercel.app/",
@@ -15,7 +15,7 @@
   },
   "build": {
     "env": {
-      "NEXT_PUBLIC_REST_API_ENDPOINT": "https://69d90ceb8e51.ngrok-free.app/api",
+      "NEXT_PUBLIC_REST_API_ENDPOINT": "https://galileecommerceshopapi-3.onrender.com/api",
       "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_12345",
       "NEXT_PUBLIC_PAYPAL_CLIENT_TOKEN": "ton_paypal_client_token",
       "NEXT_PUBLIC_WEBSITE_URL": "https://galileecommerce-shop.vercel.app/",
