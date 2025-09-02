@@ -36,6 +36,7 @@ const MapWithCorridors: React.FC<MapChartProps> = (
         if (!API_URL) {
           throw new Error("NEXT_PUBLIC_REST_API_ENDPOINT n'est pas défini !");
         }
+
         const res = await axios.get(`${API_URL}/corridors`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -43,19 +44,25 @@ const MapWithCorridors: React.FC<MapChartProps> = (
         });
 
         const corridors = res.data;
-        corridorsTable.push(...corridors);
         console.log('Corridors fetched:', corridors);
+
+        // On stocke dans le tableau global
+        corridorsTable.push(...corridors);
+
         const countryCodes = new Set<string>();
-        const fromCountryIdsN = corridors.map((c: any) => c);
-        const fromCountryIdsNX = fromCountryIdsN[0].map((c: any) => c);
-        if (corridorsTable.length > 0) {
+
+        if (corridors.length > 0) {
           setMapIsOk(true);
         }
-        fromCountryIdsNX.forEach((corridor: any) => {
-          if (corridor.from_countries_code)
+
+        // Parcours direct des corridors
+        corridors.forEach((corridor: any) => {
+          if (corridor.from_countries_code) {
             countryCodes.add(corridor.from_countries_code);
-          if (corridor.to_countries_code)
+          }
+          if (corridor.to_countries_code) {
             countryCodes.add(corridor.to_countries_code);
+          }
         });
 
         setHighlightCodes(Array.from(countryCodes));
