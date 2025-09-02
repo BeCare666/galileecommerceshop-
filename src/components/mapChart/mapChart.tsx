@@ -56,6 +56,7 @@ const MapWithCorridors: React.FC<MapChartProps> = (
         const countryCodes = new Set<string>();
 
         if (corridors.length > 0) {
+          alert('Corridors loaded successfully!');
           setMapIsOk(true);
         }
 
