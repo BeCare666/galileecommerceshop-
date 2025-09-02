@@ -60,7 +60,7 @@ const MapWithCorridors: React.FC<MapChartProps> = (
         }
 
         // Parcours des objets corridor
-        console.log('suis pas');
+        //console.log('suis pas');
         corridors.forEach((corridor: any) => {
           console.log('Corridor:', corridor);
           console.log('from code', corridor.from_countries_code);
