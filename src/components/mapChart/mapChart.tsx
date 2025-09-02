@@ -45,6 +45,7 @@ const MapWithCorridors: React.FC<MapChartProps> = (
         const corridors = res.data;
         corridorsTable.push(...corridors);
         if (corridorsTable.length > 0) {
+          alert('ge ht');
           setMapIsOk(false);
         }
 
