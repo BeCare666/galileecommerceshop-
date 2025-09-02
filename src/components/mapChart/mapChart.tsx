@@ -44,13 +44,14 @@ const MapWithCorridors: React.FC<MapChartProps> = (
 
         const corridors = res.data;
         corridorsTable.push(...corridors);
-
+        console.log('Corridors fetched:', corridors);
         const countryCodes = new Set<string>();
         const fromCountryIdsN = corridors.map((c: any) => c);
         const fromCountryIdsNX = fromCountryIdsN[0].map((c: any) => c);
-
+        if (corridorsTable.length > 0) {
+          setMapIsOk(true);
+        }
         fromCountryIdsNX.forEach((corridor: any) => {
-          setMapIsOk(false);
           if (corridor.from_countries_code)
             countryCodes.add(corridor.from_countries_code);
           if (corridor.to_countries_code)
