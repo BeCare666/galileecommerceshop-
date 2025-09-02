@@ -184,7 +184,7 @@ const MapWithCorridors: React.FC<MapChartProps> = (
           <path d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm0 2a8 8 0 0 1 7.938 7H12V4zm-1 0v5H4.062A8 8 0 0 1 11 4zm0 14v-5h7.938A8 8 0 0 1 11 18zm-7.938-7A8 8 0 0 1 11 6v5H4.062zm7.938 7v-5h7.938A8 8 0 0 1 11 18zM12 12h0" />
           <circle cx="12" cy="12" r="1.5" fill="#60a5fa" />
         </svg>
-        <p>Our trade corridors</p>
+        <p>Nos corridors commerciaux</p>
       </span>
 
       {/* Carte */}
@@ -249,7 +249,7 @@ const MapWithCorridors: React.FC<MapChartProps> = (
                 display: 'flex',
               }}
             >
-              Corridors related to{' '}
+              Couloirs liés à{' '}
               <span
                 style={{
                   color: '#38bdf8',
@@ -504,7 +504,7 @@ const MapWithCorridors: React.FC<MapChartProps> = (
                         'linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6)')
                     }
                   >
-                    Visit this corridor
+                    Visitez ce corridor
                   </button>
                 </div>
               </div>

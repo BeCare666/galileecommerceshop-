@@ -180,7 +180,7 @@ export default function ProductsPage() {
               d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
             />
           </svg>
-          <p className="text-lg font-semibold">Loading...</p>
+          <p className="text-lg font-semibold">Chargement...</p>
         </div>
       )}
 
@@ -224,12 +224,15 @@ export default function ProductsPage() {
               d="M5 13l4 4L19 7"
             />
           </svg>
-          <p className="text-lg font-semibold">No more products.</p>
+          <p className="text-lg font-semibold">Plus aucun produit.</p>
         </div>
       )}
 
       {!loading && products.length === 0 && !error && (
-        <div className="flex flex-col items-center justify-center my-8 space-y-3 text-gray-500">
+        <div
+          className="flex flex-col items-center justify-center h-screen text-gray-500"
+          onClick={() => router.push('products/forcategory')}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-12 w-12"
@@ -253,8 +256,8 @@ export default function ProductsPage() {
               strokeWidth="2"
             />
           </svg>
-          <p className="text-lg font-semibold">
-            No products found with these filters.
+          <p className="text-lg font-semibold mt-3 text-center">
+            Aucun produit ne correspond à ces filtres.
           </p>
         </div>
       )}
