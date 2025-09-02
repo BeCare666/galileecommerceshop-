@@ -45,7 +45,9 @@ const MapWithCorridors: React.FC<MapChartProps> = (
 
         const corridorsNested = res.data; // => [Array(3), Array(14)]
         console.log('Corridors fetched:', corridorsNested);
+        const countryCodes = new Set<string>();
 
+        setHighlightCodes(Array.from(countryCodes));
         // 👉 On ne garde que le premier tableau
         const corridors = corridorsNested[0] || [];
         console.log('Corridors utilisés:', corridors);
@@ -65,10 +67,6 @@ const MapWithCorridors: React.FC<MapChartProps> = (
             countryCodes.add(corridor.to_countries_code);
           }
         });
-
-        const countryCodes = new Set<string>();
-
-        setHighlightCodes(Array.from(countryCodes));
         if (corridors.length > 0) {
           alert('Corridors loaded successfully!');
           setMapIsOk(true);
