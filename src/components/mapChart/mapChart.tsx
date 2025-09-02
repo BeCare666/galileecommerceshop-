@@ -43,8 +43,12 @@ const MapWithCorridors: React.FC<MapChartProps> = (
           },
         });
 
-        const corridors = res.data;
-        console.log('Corridors fetched:', corridors);
+        const corridorsNested = res.data; // => [Array(3), Array(14)]
+        console.log('Corridors fetched:', corridorsNested);
+
+        // 👉 On ne garde que le premier tableau
+        const corridors = corridorsNested[0] || [];
+        console.log('Corridors utilisés:', corridors);
 
         // On stocke dans le tableau global
         corridorsTable.push(...corridors);
@@ -55,7 +59,7 @@ const MapWithCorridors: React.FC<MapChartProps> = (
           setMapIsOk(true);
         }
 
-        // Parcours direct des corridors
+        // Parcours des objets corridor
         corridors.forEach((corridor: any) => {
           if (corridor.from_countries_code) {
             countryCodes.add(corridor.from_countries_code);
