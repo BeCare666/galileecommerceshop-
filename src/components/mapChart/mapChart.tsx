@@ -36,30 +36,29 @@ const MapWithCorridors: React.FC<MapChartProps> = (
         if (!API_URL) {
           throw new Error("NEXT_PUBLIC_REST_API_ENDPOINT n'est pas défini !");
         }
+
         const res = await axios.get(`${API_URL}/corridors`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
-        const corridors = res.data;
+        const corridorsNested = res.data;
+        const corridors = corridorsNested[0] || []; // premier array
+
         corridorsTable.push(...corridors);
+
         if (corridorsTable.length > 0) {
-          alert('ge ht');
           setMapIsOk(false);
         }
 
         const countryCodes = new Set<string>();
-        const fromCountryIdsN = corridors.map((c: any) => c);
-        const fromCountryIdsNX = fromCountryIdsN[0].map((c: any) => c);
-        console.log('fromCountryIdsN:', fromCountryIdsN);
-        console.log('fromCountryIdsNX:', fromCountryIdsNX);
-        fromCountryIdsNX.forEach((corridor: any) => {
+        corridors.forEach((corridor: any) => {
           console.log('Corridor:', corridor);
-          console.log('from code', corridor.from_countries_code);
-          console.log('to code', corridor.to_countries_code);
+
           if (corridor.from_countries_code)
             countryCodes.add(corridor.from_countries_code);
+
           if (corridor.to_countries_code)
             countryCodes.add(corridor.to_countries_code);
         });
