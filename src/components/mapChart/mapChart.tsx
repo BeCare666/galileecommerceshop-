@@ -36,41 +36,31 @@ const MapWithCorridors: React.FC<MapChartProps> = (
         if (!API_URL) {
           throw new Error("NEXT_PUBLIC_REST_API_ENDPOINT n'est pas défini !");
         }
-
         const res = await axios.get(`${API_URL}/corridors`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
-        const corridorsNested = res.data;
-        const corridors = corridorsNested[0] || []; // premier array
+        if (res) {
+          const corridors = res.data;
+          corridorsTable.push(...corridors);
+          const countryCodes = new Set<string>();
+          const fromCountryIdsN = corridors.map((c: any) => c);
+          const fromCountryIdsNX = fromCountryIdsN[0].map((c: any) => c);
 
-        corridorsTable.push(...corridors);
+          fromCountryIdsNX.forEach((corridor: any) => {
+            setMapIsOk(false);
+            if (corridor.from_countries_code)
+              countryCodes.add(corridor.from_countries_code);
+            if (corridor.to_countries_code)
+              countryCodes.add(corridor.to_countries_code);
+          });
 
-        if (corridorsTable.length > 0) {
-          setMapIsOk(false);
+          setHighlightCodes(Array.from(countryCodes));
+        } else {
+          console.log('Une erreur lors du chargement des corridors');
         }
-
-        const countryCodes = new Set<string>();
-        console.log(
-          'corridors type:',
-          typeof corridors,
-          Array.isArray(corridors),
-        );
-        console.log('corridors value:', corridors);
-
-        corridors.forEach((corridor: any) => {
-          console.log('Corridor:', corridor);
-
-          if (corridor.from_countries_code)
-            countryCodes.add(corridor.from_countries_code);
-
-          if (corridor.to_countries_code)
-            countryCodes.add(corridor.to_countries_code);
-        });
-
-        setHighlightCodes(Array.from(countryCodes));
       } catch (error) {
         console.error('Erreur lors du chargement des corridors :', error);
       }
