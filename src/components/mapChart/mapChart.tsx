@@ -36,41 +36,34 @@ const MapWithCorridors: React.FC<MapChartProps> = (
         if (!API_URL) {
           throw new Error("NEXT_PUBLIC_REST_API_ENDPOINT n'est pas défini !");
         }
-
         const res = await axios.get(`${API_URL}/corridors`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
-        const corridorsNested = res.data; // => [Array(3), Array(14)]
-        console.log('Corridors fetched:', corridorsNested);
-        const countryCodes = new Set<string>();
-
-        setHighlightCodes(Array.from(countryCodes));
-        // 👉 On ne garde que le premier tableau
-        const corridors = corridorsNested[0] || [];
-        console.log('Corridors utilisés:', corridors);
-
-        // On stocke dans le tableau global
+        const corridors = res.data;
         corridorsTable.push(...corridors);
-        // Parcours des objets corridor
-        console.log('suis pas');
-        corridors.forEach((corridor: any) => {
+        if (corridorsTable.length > 0) {
+          setMapIsOk(false);
+        }
+
+        const countryCodes = new Set<string>();
+        const fromCountryIdsN = corridors.map((c: any) => c);
+        const fromCountryIdsNX = fromCountryIdsN[0].map((c: any) => c);
+        console.log('fromCountryIdsN:', fromCountryIdsN);
+        console.log('fromCountryIdsNX:', fromCountryIdsNX);
+        fromCountryIdsNX.forEach((corridor: any) => {
           console.log('Corridor:', corridor);
           console.log('from code', corridor.from_countries_code);
           console.log('to code', corridor.to_countries_code);
-          if (corridor.from_countries_code) {
+          if (corridor.from_countries_code)
             countryCodes.add(corridor.from_countries_code);
-          }
-          if (corridor.to_countries_code) {
+          if (corridor.to_countries_code)
             countryCodes.add(corridor.to_countries_code);
-          }
         });
-        if (corridors.length > 0) {
-          alert('Corridors loaded successfully!');
-          setMapIsOk(true);
-        }
+
+        setHighlightCodes(Array.from(countryCodes));
       } catch (error) {
         console.error('Erreur lors du chargement des corridors :', error);
       }
