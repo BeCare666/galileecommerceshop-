@@ -53,6 +53,13 @@ const MapWithCorridors: React.FC<MapChartProps> = (
         }
 
         const countryCodes = new Set<string>();
+        console.log(
+          'corridors type:',
+          typeof corridors,
+          Array.isArray(corridors),
+        );
+        console.log('corridors value:', corridors);
+
         corridors.forEach((corridor: any) => {
           console.log('Corridor:', corridor);
 
