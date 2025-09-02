@@ -200,7 +200,7 @@ export default function CountrySelectorWithModal() {
                 type="text"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
-                placeholder="Search for a country..."
+                placeholder="Rechercher un pays..."
                 className="w-full mb-4 px-3 py-2 border border-pink-200 rounded text-dark-800 dark:text-white dark:bg-dark-400 dark:border-dark-500 focus:outline-none focus:ring-2 focus:ring-pink-300"
                 autoFocus
               />
