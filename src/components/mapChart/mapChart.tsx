@@ -52,14 +52,6 @@ const MapWithCorridors: React.FC<MapChartProps> = (
 
         // On stocke dans le tableau global
         corridorsTable.push(...corridors);
-
-        const countryCodes = new Set<string>();
-
-        if (corridors.length > 0) {
-          alert('Corridors loaded successfully!');
-          setMapIsOk(true);
-        }
-
         // Parcours des objets corridor
         console.log('suis pas');
         corridors.forEach((corridor: any) => {
@@ -74,7 +66,13 @@ const MapWithCorridors: React.FC<MapChartProps> = (
           }
         });
 
+        const countryCodes = new Set<string>();
+
         setHighlightCodes(Array.from(countryCodes));
+        if (corridors.length > 0) {
+          alert('Corridors loaded successfully!');
+          setMapIsOk(true);
+        }
       } catch (error) {
         console.error('Erreur lors du chargement des corridors :', error);
       }
