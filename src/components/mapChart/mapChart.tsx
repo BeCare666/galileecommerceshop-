@@ -84,7 +84,7 @@ const MapWithCorridors: React.FC<MapChartProps> = (
         projection: am5map.geoMercator(),
       }),
     );
-
+    //chart.set("zoomControl", am5map.ZoomControl.new(root, {}));
     const polygonSeries = chart.series.push(
       am5map.MapPolygonSeries.new(root, {
         geoJSON: am5geodata_worldLow,

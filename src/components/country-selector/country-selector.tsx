@@ -113,13 +113,13 @@ export default function CountrySelectorWithModal() {
                 height="16" 
                 style="border-radius: 2px; box-shadow: 0 0 2px rgba(0,0,0,0.2);" 
                 />
-                <span>${country.name} selected</span>
+                <span>${country.name} selectionné</span>
             </div>
             `,
 
       imageAlt: 'Custom image',
-      confirmButtonText: 'Visit this pavilion.',
-      cancelButtonText: 'No thanks',
+      confirmButtonText: 'Visitez ce pavillon.',
+      cancelButtonText: 'Non merci',
       showCancelButton: true,
     }).then((result) => {
       if (result.isConfirmed) {
@@ -182,7 +182,7 @@ export default function CountrySelectorWithModal() {
                       d="M3.75 3.75L10.5 3.75M3.75 3.75L3.75 20.25M3.75 3.75L20.25 3.75M20.25 3.75L20.25 16.5M20.25 16.5L14.25 16.5M20.25 16.5L10.5 3.75"
                     />
                   </svg>
-                  Explore country pavilion
+                  Explorer le pavillon du pays
                 </p>
                 <span
                   className="absolute top-0 right-0 cursor-pointer text-pink-500 text-xl"
@@ -209,7 +209,7 @@ export default function CountrySelectorWithModal() {
               <ul className="max-h-60 overflow-auto">
                 {loading ? (
                   <li className="px-3 py-2 text-sm text-center text-gray-500 dark:text-gray-400">
-                    Loading...
+                    Chargement...
                   </li>
                 ) : filteredCountries.length > 0 ? (
                   filteredCountries.map((country) => (
@@ -230,7 +230,7 @@ export default function CountrySelectorWithModal() {
                   ))
                 ) : (
                   <li className="px-3 py-2 text-sm text-center text-gray-500 dark:text-gray-400">
-                    No results
+                    Aucun résultat
                   </li>
                 )}
               </ul>
