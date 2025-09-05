@@ -1,3 +1,4 @@
+import React, { useEffect, useState, useRef } from 'react';
 import { useDrawer } from '@/components/drawer-views/context';
 import { CloseIcon } from '@/components/icons/close-icon';
 import { DiscoverIcon } from '@/components/icons/discover-icon';
@@ -5,10 +6,12 @@ import { FeedIcon } from '@/components/icons/feed-icon';
 import { HelpIcon } from '@/components/icons/help-icon';
 import { HomeIcon } from '@/components/icons/home-icon';
 import { PaperPlaneIcon } from '@/components/icons/paper-plane-icon';
+import CountrySelector from '@/components/country-selector/country-selector';
 import { PeopleIcon } from '@/components/icons/people-icon';
 import { ProductIcon } from '@/components/icons/product-icon';
 import { SettingIcon } from '@/components/icons/setting-icon';
 import ActiveLink from '@/components/ui/links/active-link';
+import Link from '@/components/ui/link';
 import Logo from '@/components/ui/logo';
 import Scrollbar from '@/components/ui/scrollbar';
 import routes from '@/config/routes';
@@ -16,6 +19,7 @@ import Copyright from '@/layouts/_copyright';
 import cn from 'classnames';
 import { useTranslation } from 'next-i18next';
 import { useWindowSize } from 'react-use';
+import Modal from '@/components/modal/modal';
 import {
   isMultiLangEnable,
   checkIsMaintenanceModeComing,
@@ -27,35 +31,62 @@ import { twMerge } from 'tailwind-merge';
 
 interface NavLinkProps {
   href: string;
-  title: string;
+  title?: string;
   icon: React.ReactNode;
   isCollapse?: boolean;
+  children?: React.ReactNode;
+  onClick?: () => void;
 }
 
-function NavLink({ href, icon, title, isCollapse }: NavLinkProps) {
+function NavLink({
+  href,
+  icon,
+  title,
+  isCollapse,
+  children,
+  onClick,
+}: NavLinkProps) {
   return (
-    <ActiveLink
-      href={href}
-      className="my-0.5 flex items-center gap-1 px-4 py-3 hover:bg-light-300 hover:dark:bg-dark-300 xs:px-6 sm:my-1 sm:gap-1.5 sm:px-7 lg:gap-2 xl:my-0.5"
-      activeClassName="text-dark-100 active-text-dark dark:active-text-light dark:text-light-400 font-medium bg-light-400 dark:bg-dark-400 hover:bg-light-600 hover:dark:bg-dark-500"
-    >
-      <span
-        className={cn(
-          'flex flex-shrink-0 items-center justify-start',
-          isCollapse ? 'w-8 xl:w-auto' : 'w-auto xl:w-8',
-        )}
+    <div className="relative">
+      <ActiveLink
+        href={href}
+        className="my-0.5 flex items-center gap-1 px-4 py-3 hover:bg-light-300 hover:dark:bg-dark-300 xs:px-6 sm:my-1 sm:gap-1.5 sm:px-7 lg:gap-2 xl:my-0.5"
+        activeClassName="text-dark-100 active-text-dark dark:active-text-light dark:text-light-400 font-medium bg-light-400 dark:bg-dark-400 hover:bg-light-600 hover:dark:bg-dark-500"
       >
-        {icon}
-      </span>
-      <span
-        className={cn(
-          'text-dark-100 dark:text-light-400',
-          isCollapse ? 'inline-flex xl:hidden' : 'hidden xl:inline-flex',
+        <span
+          className={cn(
+            'flex flex-shrink-0 items-center justify-start',
+            isCollapse ? 'w-8 xl:w-auto' : 'w-auto xl:w-8',
+          )}
+        >
+          {icon}
+        </span>
+
+        {/* Si title existe, on l’affiche */}
+        {title && (
+          <span
+            className={cn(
+              'text-dark-100 dark:text-light-400',
+              isCollapse ? 'inline-flex xl:hidden' : 'hidden xl:inline-flex',
+            )}
+          >
+            {title}
+          </span>
         )}
-      >
-        {title}
-      </span>
-    </ActiveLink>
+
+        {/* Si children existe, on l’affiche aussi */}
+        {children && (
+          <span
+            className={cn(
+              'text-dark-100 dark:text-light-400',
+              isCollapse ? 'inline-flex xl:hidden' : 'hidden xl:inline-flex',
+            )}
+          >
+            {children}
+          </span>
+        )}
+      </ActiveLink>
+    </div>
   );
 }
 
@@ -70,6 +101,8 @@ export function Sidebar({
   const { width } = useWindowSize();
   const [underMaintenanceIsComing] = useAtom(checkIsMaintenanceModeComing);
   const [isScrolling] = useAtom(checkIsScrollingStart);
+  const [open, setOpen] = useState(false);
+  const [mapIsOk, setMapIsOk] = useState(false);
   return (
     <aside
       className={twMerge(
@@ -88,16 +121,16 @@ export function Sidebar({
           <nav className="flex flex-col gap-1 mt-4">
             {/* Home */}
             <NavLink
-              title="Home"
+              title="Accueil"
               href={routes.home}
               isCollapse={isCollapse}
               icon={<HomeIcon className="h-5 w-5 text-pink-500" />}
             />
 
-
+            {/* About Us */}
             {/* About Us */}
             <NavLink
-              title="About Us"
+              title="A propos"
               href={routes.about}
               isCollapse={isCollapse}
               icon={
@@ -117,6 +150,105 @@ export function Sidebar({
                 </svg>
               }
             />
+
+            {/* Parvions 
+            <NavLink
+              title="Parvions"
+              href="#"
+              icon={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 text-blue-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M2.5 19.5l19-7.5-19-7.5 5 7.5-5 7.5z"
+                  />
+                </svg>
+              }
+            >
+              Parvions
+              <CountrySelector />
+            </NavLink>
+*/}
+            {/* Corridors 
+            <NavLink
+              title="Corridors"
+              href="#"
+              icon={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 text-green-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              }
+              onClick={() => setOpen(true)}>
+              Corridors
+              <Modal isOpen={open} onClose={() => setOpen(false)}
+                mapIsOk={mapIsOk}
+                setMapIsOk={setMapIsOk} />
+            </NavLink>
+*/}
+            {/* Méga centrale d’achat */}
+            <NavLink
+              title="Méga centrale d’achat"
+              href={routes.mega}
+              isCollapse={isCollapse}
+              icon={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 text-purple-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 3h18v4H3V3zm0 6h18v12H3V9z"
+                  />
+                </svg>
+              }
+            />
+
+            {/* Devenir fournisseur */}
+            <NavLink
+              title="Devenir fournisseur"
+              href={routes.becomeSeller}
+              isCollapse={isCollapse}
+              icon={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 text-yellow-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8v10m-6 4h12"
+                  />
+                </svg>
+              }
+            />
+
             {/* Services */}
             <NavLink
               title="Services"
@@ -142,14 +274,14 @@ export function Sidebar({
 
             {/* All Products */}
             <NavLink
-              title="All Products"
+              title="Les produits"
               href={routes.productscategory}
               isCollapse={isCollapse}
               icon={<ProductIcon className="h-5 w-5 text-pink-500" />}
             />
             {/* Top Authors */}
             <NavLink
-              title="Top Authors"
+              title="Les meilleurs vendeurs"
               href={routes.authors}
               isCollapse={isCollapse}
               icon={<PeopleIcon className="h-5 w-5 text-pink-500" />}
@@ -157,7 +289,7 @@ export function Sidebar({
 
             {/* Contact */}
             <NavLink
-              title="Contact"
+              title="Centre d’assistance"
               href={routes.contact}
               isCollapse={isCollapse}
               icon={<PaperPlaneIcon className="h-5 w-5 text-pink-500" />}
@@ -173,7 +305,7 @@ export function Sidebar({
 */}
             {/* Help */}
             <NavLink
-              title="Help"
+              title="Aides"
               href={routes.help}
               isCollapse={isCollapse}
               icon={<HelpIcon className="h-5 w-5 text-pink-500" />}
@@ -192,12 +324,17 @@ export function Sidebar({
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
               }
             />
             <NavLink
-              title="Privacy Policy"
+              title="Politique de confidentialité"
               href={routes.privacy}
               isCollapse={isCollapse}
               icon={
@@ -208,14 +345,29 @@ export function Sidebar({
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 11c0-1.657-1.343-3-3-3s-3 1.343-3 3 1.343 3 3 3 3-1.343 3-3z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 11v10" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 11c0-1.657-1.343-3-3-3s-3 1.343-3 3 1.343 3 3 3 3-1.343 3-3z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 11v10"
+                  />
                 </svg>
               }
             />
 
             {/* Additional pages */}
-            <NavLink title="Licensing Agreement" href={routes.licensing} isCollapse={isCollapse} icon={<ProductIcon className="h-5 w-5 text-pink-500" />} />
+            <NavLink
+              title="Contrat de licence"
+              href={routes.licensing}
+              isCollapse={isCollapse}
+              icon={<ProductIcon className="h-5 w-5 text-pink-500" />}
+            />
             {/* <NavLink title="Shipping Policy" href={routes.privacy} isCollapse={isCollapse} icon={<ProductIcon className="h-5 w-5 text-pink-500" />} />*/}
           </nav>
         </div>
@@ -229,20 +381,28 @@ export function Sidebar({
         )}
       >
         <nav className="flex items-center justify-center gap-5 pb-1.5 text-13px font-medium capitalize tracking-[0.2px]">
-          <ActiveLink href={routes.terms} className="block py-2 text-dark-700 hover:text-dark-100 dark:hover:text-brand">
-            Terms & Conditions
+          <ActiveLink
+            href={routes.terms}
+            className="block py-2 text-dark-700 hover:text-dark-100 dark:hover:text-brand"
+          >
+            Termes & Conditions
           </ActiveLink>
-          <ActiveLink href={routes.privacy} className="block py-2 text-dark-700 hover:text-dark-100 dark:hover:text-brand">
-            Privacy Policy
+          <ActiveLink
+            href={routes.privacy}
+            className="block py-2 text-dark-700 hover:text-dark-100 dark:hover:text-brand"
+          >
+            Politique de confidentialité
           </ActiveLink>
-          <ActiveLink href={routes.help} className="block py-2 text-dark-700 hover:text-dark-100 dark:hover:text-brand">
-            Help
+          <ActiveLink
+            href={routes.help}
+            className="block py-2 text-dark-700 hover:text-dark-100 dark:hover:text-brand"
+          >
+            Aides
           </ActiveLink>
         </nav>
         <Copyright className="px-1 text-xs font-medium text-dark-800/80 dark:text-dark-700" />
       </footer>
     </aside>
-
   );
 }
 

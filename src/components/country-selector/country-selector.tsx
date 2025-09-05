@@ -136,12 +136,11 @@ export default function CountrySelectorWithModal() {
       {/* Bouton avec le drapeau du pays sélectionné */}
       <button
         onClick={() => setModalOpen(true)}
-        className="flex items-center gap-2 px-3 py-1 text-sm font-medium text-dark-800 bg-white border border-pink-200 rounded dark:bg-dark-300 dark:text-white dark:border-dark-500"
+        className="flex items-center gap-2 px-3 py-1 text-white text-sm font-medium text-dark-800 rounded dark:bg-dark-300 dark:text-white dark:border-dark-500"
         style={{ width: '80px', height: '30px' }}
       >
         {selectedCountry && (
           <>
-            <FilterIcon />
             <Image
               src={`https://flagcdn.com/w40/${selectedCountry.code.toLowerCase()}.png`}
               alt={selectedCountry.name}
@@ -149,6 +148,14 @@ export default function CountrySelectorWithModal() {
               height={15}
               className="rounded-sm"
             />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-[11px] h-[11px]"
+              viewBox="0 0 24 24"
+              fill="white"
+            >
+              <path d="M6.5 9.5 12 15l5.5-5.5h-11Z" />
+            </svg>
           </>
         )}
       </button>
@@ -156,7 +163,7 @@ export default function CountrySelectorWithModal() {
       {modalOpen && (
         <ModalPortal>
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]"
+            className="fixed inset-0  flex items-center justify-center z-[9999]"
             onClick={() => {
               setModalOpen(false);
               setSearchInput('');

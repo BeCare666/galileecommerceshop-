@@ -21,10 +21,10 @@ export default function LoginMenu() {
     <Button
       variant="icon"
       aria-label="User"
-      className="flex tr from-pink-400 to-indigo-400 text-light-100 rounded-full h-9 w-9"
+      className="flex tr from-pink-400 to-indigo-400  rounded-full h-9 w-9"
       onClick={() => openModal('LOGIN_VIEW')}
     >
-      <UserIcon className="h-5 w-5 text-pink-500" />
+      <UserIcon className="h-8 w-8 text-white" />
     </Button>
   );
 }

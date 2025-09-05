@@ -1,0 +1,208 @@
+'use client';
+import { useState, useEffect, useRef } from 'react';
+import Link from '@/components/ui/link';
+import {
+  RESPONSIVE_WIDTH,
+  checkIsMaintenanceModeComing,
+  checkIsScrollingStart,
+  isMultiLangEnable,
+} from '@/lib/constants';
+import LanguageSwitcher from '@/components/ui/language-switcher';
+import LoginMenu from '@/components/ui/login-button';
+import { useModalAction } from '@/components/modal-views/context';
+import CategoryFilter from '@/components/product/category-filter';
+import Categorywithoutmenu from '@/components/product/categorywithoutmenu';
+import { useMe } from '@/data/user';
+import { useSearch } from '@/components/search/search-view';
+import { useCart } from '@/components/cart/lib/cart.context';
+import { useDrawer } from '@/components/drawer-views/context';
+import { useIsMounted } from '@/lib/hooks/use-is-mounted';
+export default function Header() {
+  const [openMenu, setOpenMenu] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
+  const categoriesRef = useRef(null);
+  const { openModal } = useModalAction();
+  const { isAuthorized } = useMe();
+  const { openSearch } = useSearch();
+  const isMounted = useIsMounted();
+  const { openDrawer } = useDrawer();
+  const { totalItems } = useCart();
+  useEffect(() => {
+    const handleScroll = () => {
+      if (categoriesRef.current) {
+        // La barre devient sticky si on a scrollé au-delà de sa position initiale
+        setIsSticky(window.scrollY > categoriesRef.current.offsetTop);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  return (
+    <header className="w-full z-50 bg-white shadow-md md:bg-white">
+      {/* Bandeau supérieur */}
+      <div className="hidden md:flex bg-[#111111] text-white text-sm items-center justify-between px-6 py-2">
+        <span>Bienvenu sur Galilé E–commerce !</span>
+        <div className="flex items-center gap-4">
+          {isMultiLangEnable ? (
+            <div className="ltr:ml-auto rtl:mr-auto">
+              <LanguageSwitcher />
+            </div>
+          ) : (
+            ''
+          )}
+          {!isAuthorized && (
+            <>
+              <Link
+                href="#"
+                className="hover:underline"
+                onClick={() => openModal('REGISTER')}
+              >
+                INSCRIPTION
+              </Link>
+              <span className="opacity-60">|</span>
+              <Link
+                href="#"
+                className="hover:underline"
+                onClick={() => openModal('LOGIN_VIEW')}
+              >
+                CONNEXION
+              </Link>
+              <span className="opacity-60">|</span>
+            </>
+          )}
+
+          <div className="flex items-center gap-2 hover:underline">
+            <LoginMenu />
+            {/* user icon 
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 14c-3.866 0-7 2.239-7 5v1h14v-1c0-2.761-3.134-5-7-5Zm0-2a4 4 0 1 0-0.001-8.001A4 4 0 0 0 12 12Z" />
+                        </svg>
+                        */}
+            <span>MON COMPTE</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Logo + Recherche + Assistance */}
+      <div className="bg-black px-4 md:px-6 py-4 flex items-center justify-between gap-4">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-3 text-white shrink-0">
+          <img
+            src="https://galileecommerce.netlify.app/img/logo_galile_pc.png"
+            alt="Logo"
+            className="w-24 h-24 md:w-19 md:h-19 object-contain bg-dark"
+          />
+        </Link>
+
+        {/* Recherche */}
+        <div className="hidden lg:flex w-[50%] flex items-stretch">
+          {/* pseudo select "Tout" */}
+          <button
+            type="button"
+            className="h-11 px-4 rounded-l-md bg-white text-gray-800 text-sm flex items-center gap-2 border border-gray-300"
+          >
+            <span>Tout</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-3.5 h-3.5 text-gray-500"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path d="M6.5 9.5 12 15l5.5-5.5h-11Z" />
+            </svg>
+          </button>
+          <input
+            onClick={openSearch}
+            type="text"
+            placeholder="Je souhaite acheter..."
+            className="h-11 flex-1 px-4 text-sm border-y border-gray-300 outline-none"
+          />
+
+          <button className="h-11 px-5 rounded-r-md bg-[#1f6aa5] text-white text-sm font-medium">
+            Rechercher
+          </button>
+        </div>
+
+        {/* Assistance + icônes */}
+        <div className="flex items-center gap-4 text-white">
+          <div className="hidden md:flex items-center gap-2">
+            {/* phone icon */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 h-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3 5a2 2 0 0 1 2-2h2.2a2 2 0 0 1 1.94 1.5l.82 3.08a2 2 0 0 1-1 2.27l-1.3.73a12.5 12.5 0 0 0 6.7 6.7l.73-1.3a2 2 0 0 1 2.27-1l3.08.82A2 2 0 0 1 21 18.8V21a2 2 0 0 1-2 2h-1C9.82 23 1 14.18 1 4V3a2 2 0 0 1 2-2Z"
+              />
+            </svg>
+            <div className="leading-tight">
+              <div className="text-gray-300 text-xs">Centre d’Assistance</div>
+              <div className="font-bold text-sm">68889983 / 652881058</div>
+            </div>
+          </div>
+
+          {/* Heart */}
+          <Link href="#" className="relative mt-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-7 h-7"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 21s-6.364-4.24-8.485-6.364A5.5 5.5 0 1 1 11 6.05 5.5 5.5 0 1 1 20.485 14.6C18.364 16.76 12 21 12 21Z"
+              />
+            </svg>
+            <span className="absolute -top-2 -right-2 text-[10px] px-1.5 py-0.5 rounded-full bg-[#1f6aa5]">
+              0
+            </span>
+          </Link>
+
+          {/* Bag */}
+          <Link
+            href="#"
+            className="relative mt-3 ml-3"
+            onClick={() => openDrawer('CART_VIEW')}
+          >
+            <svg
+              className="w-8 h-8"
+              viewBox="0 0 20 20"
+              fill="white"
+              height="20"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m-1.646-7.646-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708" />
+            </svg>
+            <span className="absolute -top-2 -right-2 text-[10px] px-1.5 py-0.5 rounded-full bg-[#1f6aa5]">
+              {isMounted && totalItems}
+            </span>
+          </Link>
+
+          {/* Burger menu (mobile) */}
+
+          <div className="lg:hidden flex items-center gap-2 hover:underline  ml-3">
+            <LoginMenu />
+            {/**  user icon
+                            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 14c-3.866 0-7 2.239-7 5v1h14v-1c0-2.761-3.134-5-7-5Zm0-2a4 4 0 1 0-0.001-8.001A4 4 0 0 0 12 12Z" />
+                            </svg>
+                        */}
+          </div>
+        </div>
+      </div>
+      <Categorywithoutmenu />
+      <CategoryFilter />
+    </header>
+  );
+}

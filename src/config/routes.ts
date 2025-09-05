@@ -18,6 +18,7 @@ const routes = {
   terms: '/terms',
   privacy: '/privacy',
   password: '/password',
+  mega: '/mega',
   feed: '/feed',
   wallet: '/wallet',
   products: '/products',

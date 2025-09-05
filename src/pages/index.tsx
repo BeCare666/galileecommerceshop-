@@ -20,7 +20,7 @@ import routes from '@/config/routes';
 import client from '@/data/client';
 import { dehydrate, QueryClient } from 'react-query';
 import { API_ENDPOINTS } from '@/data/client/endpoints';
-import CategoryFilter from '@/components/product/category-filter';
+//import CategoryFilter from '@/components/product/category-filter';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import PreloaderWrapper from '@/components/loader/preloaderWrapper';
 import { GlobeIcon } from '@/components/icons/globe';
@@ -102,7 +102,6 @@ const Home: NextPageWithLayout = () => {
       {/*  */}
 
       <PreloaderWrapper>
-        <CategoryFilter />
         <HomePage />
         <TitleComponent subtitle="Découvrez les nouveautés">
           Nouveautés

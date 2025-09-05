@@ -1,13 +1,13 @@
 import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
-import Header from '@/layouts/_header';
+//import Header from '@/layouts/_header';
+import Header from '@/components/header/header';
 import { fadeInBottom } from '@/lib/framer-motion/fade-in-bottom';
 import { useBreakpoint } from '@/lib/hooks/use-breakpoint';
 import Copyright from '@/layouts/_copyright';
 import { useIsMounted } from '@/lib/hooks/use-is-mounted';
 import Footer from '@/components/footer/footer';
 const BottomNavigation = dynamic(() => import('@/layouts/_bottom-navigation'));
-
 
 export default function GeneralLayout({
   children,
@@ -21,9 +21,8 @@ export default function GeneralLayout({
       exit="exit"
       className="flex min-h-screen w-full flex-col bg-light-300 dark:bg-dark-100"
     >
-
-      <Header showHamburger={false} />
-
+      <Header />
+      {/** <Header showHamburger={false} />**/}
       <motion.div
         variants={fadeInBottom()}
         className="flex flex-1 flex-col justify-between"
@@ -36,7 +35,6 @@ export default function GeneralLayout({
           >
             {children}
           </AnimatePresence>
-
         </main>
 
         <Copyright className="px-4 py-7 text-center font-medium text-dark-700 md:py-10 lg:px-8" />

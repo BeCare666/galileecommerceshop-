@@ -2,7 +2,8 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import cn from 'classnames';
 import { motion } from 'framer-motion';
-import Header from '@/layouts/_header';
+//import Header from '@/layouts/_header';
+import Header from '@/components/header/header';
 import { Sidebar } from '@/layouts/_layout-sidebar';
 import { useBreakpoint } from '@/lib/hooks/use-breakpoint';
 import { useIsMounted } from '@/lib/hooks/use-is-mounted';
@@ -24,19 +25,20 @@ export default function Layout({ children }: React.PropsWithChildren<{}>) {
       exit="exit"
       className="flex min-h-screen w-full flex-col bg-light-300 dark:bg-dark-100"
     >
-      <Header
+      <Header />
+      {/**      <Header
         isCollapse={collapse}
         showHamburger={false}
         onClickHamburger={toggleSidebar}
-      />
-      <div className="flex flex-1 ">
+      />**/}
+      <div className="flex flex-1 mt-3">
         {/** <Sidebar isCollapse={collapse} />**/}
         <main
           className={cn(
             'flex w-full flex-col ',
             collapse
               ? 'ltr:sm:pl-60 rtl:sm:pr-60 ltr:xl:pl-[75px] rtl:xl:pr-[75px]'
-              : 'ltr:sm:pl-[75px] rtl:sm:pr-[75px] ltr:xl:pl-60 rtl:xl:pr-60'
+              : 'ltr:sm:pl-[75px] rtl:sm:pr-[75px] ltr:xl:pl-60 rtl:xl:pr-60',
           )}
         >
           {children}

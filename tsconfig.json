@@ -35,7 +35,7 @@
     "additional.d.ts",
     "src/**/*.ts",
     "src/**/*.tsx"
-  ],
+, "src/components/header/header.jsx"  ],
   "exclude": [
     "node_modules"
   ]

@@ -71,3 +71,63 @@ export default function CategoriesForYouPanel({
 
     return <>{createPortal(portalContent, document.body)}</>;
 }
+
+
+        <div className='hidden'>
+          <button
+            title={t('text-prev')}
+            ref={sliderPrevBtn}
+            onClick={scrollToTheLeft}
+            className="invisible"
+          >
+            <ChevronLeft className="h-[18px] w-[18px]" />
+          </button>
+
+          <div className="-mb-4 flex flex-1 items-start overflow-hidden">
+            <div
+              className="-mb-7 flex w-full gap-3 overflow-x-auto scroll-smooth pb-7"
+              ref={sliderEl}
+            >
+              {categories && categories.length > 0 ? (
+                categories
+                  .filter((c: any) => c && c.slug?.toLowerCase() !== 'free') // Vérifie que c existe
+                  .map((category: any) => (
+                    <CategoryItem
+                      key={category.id ?? Math.random()} // fallback si id manquant
+                      categoryName={category.name ?? 'Unnamed'}
+                      categoryIcon={category.icon ?? '/placeholder.png'}
+                      isActive={
+                        Number(category.id) ===
+                        (selectedCategory || routerActiveCategory)
+                      }
+                      onClick={() => handleCategoryClick(category.id)}
+                      showCaret={!!category.has_children}
+                    />
+                  ))
+              ) : (
+                // Affiche un loader ou message si les catégories ne sont pas encore chargées
+                <div className="text-center py-10 text-gray-500">
+                  Chargement des catégories...
+                </div>
+              )}
+            </div>
+          </div>
+          {openCategoryPanelAllCategory && (
+            <CategoriesForYouPanel
+              categories={categories}
+              onClose={() => setOpenCategoryPanelAllCategory(null)}
+              onSelectCategory={(id) => handleCategoryClick(id)}
+            />
+          )}
+          <div className="ml-auto flex items-center gap-3">
+            <button
+              title={t('text-next')}
+              ref={sliderNextBtn}
+              onClick={scrollToTheRight}
+              className="flex items-center"
+            >
+              <ChevronRight className="h-[18px] w-[18px]" />
+            </button>
+            <CountrySelector />
+          </div>
+        </div>

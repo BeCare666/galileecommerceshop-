@@ -269,107 +269,34 @@ export default function CategoryFilterWithPanel({
   }, []);
 
   return (
-    <div ref={categoriesRef} suppressHydrationWarning className="relative">
+    <div ref={categoriesRef} suppressHydrationWarning className="relative ">
+      {/* Barre bleue + dent de scie */}
       {/* Barre bleue + dent de scie */}
       <div
-        className={`bg-[#1f6aa5] text-white hidden lg:block transition-all duration-300 ${
+        className={`bg-[#1f6aa5] text-white block lg:hidden transition-all duration-300 ${
           isSticky ? 'fixed top-0 left-0 w-full z-[9999] shadow-lg' : 'relative'
         }`}
       >
-        <nav className="px-6 py-3 flex items-center gap-8 text-[15px] font-medium">
-          <CategoryItem
-            categoryName={t('text-category-all')}
-            isActive={!routerActiveCategory && !selectedCategory}
-            onClick={handleCategoryAllClick}
-            //onMouseEnter={() => setOpenCategoryPanelAllCategory(1)}
-            //onMouseLeave={handleCategoryAllClick}
-          />
-          <Link href="/">Accueil</Link>
-          <Link href="products/forcategory">Produits</Link>
-          <div className="relative inline-block text-left group">
-            {/* Bouton Help */}
-            <Link
-              href="about-us"
-              className="flex items-center gap-2 hover:text-blue-600 focus:outline-none"
-            >
-              A propos
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-[11px] h-[11px]"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M6.5 9.5 12 15l5.5-5.5h-11Z" />
-              </svg>
-            </Link>
-
-            {/* Dropdown (apparait au hover du parent) */}
-            <div className="z-[9999] absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-opacity duration-200">
-              <Link
-                href="/about-us"
-                className="block py-2 px-4 text-gray-700 hover:text-blue-600"
-              >
-                A propos
-              </Link>
-              <Link
-                href="/contact-us"
-                className="block py-2 px-4 text-gray-700 hover:text-blue-600"
-              >
-                Centre d’assistance
-              </Link>
-              <Link
-                href="/services"
-                className="block py-2 px-4 text-gray-700 hover:text-blue-600"
-              >
-                Services
-              </Link>
-              <Link
-                href="/terms"
-                className="block py-2 px-4 text-gray-700 hover:text-blue-600"
-              >
-                Termes & Conditions
-              </Link>
-              <Link
-                href="/privacy"
-                className="block py-2 px-4 text-gray-700 hover:text-blue-600"
-              >
-                Politique de confidentialité
-              </Link>
-              <Link
-                href="/licensing"
-                className="block py-2 px-4 text-gray-700 hover:text-blue-600"
-              >
-                Contrat de licence
-              </Link>
-            </div>
-          </div>
-          <Link href="#">Méga centrale d’achat</Link>
-
-          <Link href="#" onClick={handleBecomeSeller}>
-            Devenir fournisseur
-          </Link>
-          <Link
-            href="#"
-            className="flex items-center"
-            onClick={() => setOpen(true)}
-          >
-            Corridors
-            <Modal
-              isOpen={open}
-              onClose={() => setOpen(false)}
-              mapIsOk={mapIsOk}
-              setMapIsOk={setMapIsOk}
+        <nav className="px-6 py-3 flex items-center justify-between text-[15px] font-medium">
+          {/* À gauche */}
+          <div className="flex items-center">
+            <CategoryItem
+              categoryName={t('text-category-all')}
+              isActive={!routerActiveCategory && !selectedCategory}
+              onClick={handleCategoryAllClick}
             />
-          </Link>
-          <Link href="#" className="flex items-center">
-            Pavillons
+          </div>
+
+          {/* À droite */}
+          <div className="flex items-center">
+            <span className="ml-2">Parvillons</span>
             <CountrySelector />
-          </Link>
+          </div>
         </nav>
 
         {/* Dent de scie */}
         <div
-          className=" pointer-events-none absolute left-0 -bottom-[8px] w-full h-2 z-[9999]"
+          className=" pointer-events-none absolute left-0 -bottom-[8px] w-full h-2"
           style={{
             background:
               'linear-gradient(-45deg, transparent 8px, #1f6aa5 0) 0 0/16px 8px repeat-x, linear-gradient(45deg, transparent 8px, #1f6aa5 0) 8px 0/16px 8px repeat-x',
@@ -377,24 +304,10 @@ export default function CategoryFilterWithPanel({
         />
       </div>
 
-      {/* Menu mobile bleu */}
-      {openMenu && (
-        <div className="bg-[#1f6aa5] text-white flex flex-col px-6 py-3 gap-3 lg:hidden">
-          <Link href="#">Les Catégories</Link>
-          <Link href="#">Produits</Link>
-
-          <Link href="#">Pavillons</Link>
-          <Link href="#">Corridors</Link>
-          <Link href="#">Méga centrale d’achat</Link>
-          <Link href="#">Centre d’assistance</Link>
-          <Link href="#">Devenir fournisseur</Link>
-        </div>
-      )}
       {/* PANEL: responsive, centered below the bar, max width + scroll */}
-      {/* PANEL: responsive, centered below the bar, full bg white */}
       {openCategoryPanel && (
         <div
-          className={`bg-white border-t shadow-lg w-full z-[9999] transition-all duration-300 ${
+          className={`bg-white border-t shadow-lg w-full z-[9998] transition-all duration-300 ${
             isSticky ? 'fixed top-[64px] left-0' : 'relative'
           }`}
           role="dialog"
