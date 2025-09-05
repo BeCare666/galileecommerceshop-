@@ -6,7 +6,7 @@ import { useIsMounted } from '@/lib/hooks/use-is-mounted';
 import { useIsDarkMode } from '@/lib/hooks/use-is-dark-mode';
 import { siteSettings } from '@/data/static/site-settings';
 import { useSettings } from '@/data/settings';
-
+import ImageHomePagebackground from '@/assets/images/logo_galile_mobile.png';
 export default function Logo({
   className = 'w-28', // augmente un peu la largeur du logo
   ...props
@@ -21,20 +21,21 @@ export default function Logo({
       href={routes.home}
       className={cn(
         'relative flex items-center text-dark focus:outline-none dark:text-light',
-        className
+        className,
       )}
       {...props}
     >
       <span
-        className="relative overflow-hidden  p-1 shadow-sm"
+        className="relative overflow-hidden  p-1 shadow-sm text-white"
         style={{
           width: '138vh', // ajuste selon ta maquette bg-dark-300
           height: '11vh', // ajuste selon ta maquette
         }}
       >
+        {/**settings?.dark_logo?.original ?? darkLogo**/}
         {isMounted && isDarkMode && (
           <Image
-            src={settings?.dark_logo?.original ?? darkLogo}
+            src={ImageHomePagebackground.src}
             fill
             loading="eager"
             alt={settings?.siteTitle ?? 'Dark Logo'}
@@ -45,7 +46,7 @@ export default function Logo({
         )}
         {isMounted && !isDarkMode && (
           <Image
-            src={settings?.logo?.original ?? lightLogo}
+            src={ImageHomePagebackground.src}
             fill
             loading="eager"
             alt={settings?.siteTitle ?? 'Light Logo'}
@@ -54,7 +55,7 @@ export default function Logo({
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 43vw"
           />
         )}
-
+        galileecommerce.com
       </span>
     </AnchorLink>
   );
