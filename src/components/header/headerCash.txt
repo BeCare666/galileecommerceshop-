@@ -31,6 +31,7 @@ export default function Header() {
     const handleScroll = () => {
       if (categoriesRef.current) {
         // La barre devient sticky si on a scrollé au-delà de sa position initiale
+
         setIsSticky(window.scrollY > categoriesRef.current.offsetTop);
       }
     };

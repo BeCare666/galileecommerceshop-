@@ -11,7 +11,6 @@ import { useRef, useState } from 'react';
 import { ChevronLeft } from '@/components/icons/chevron-left';
 import { ChevronRight } from '@/components/icons/chevron-right';
 import placeholder from '@/assets/images/placeholders/product.svg';
-
 interface Props {
   gallery: any[];
   className?: string;
@@ -52,12 +51,29 @@ export default function ProductThumbnailGallery({
               key={`product-gallery-${item.id}`}
               className="relative flex aspect-[3/2] items-center justify-center bg-light-200 dark:bg-dark-200"
             >
-              <Image
-                fill
-                src={item?.url ?? placeholder}
-                alt={`Product gallery ${item.id}`}
-                className="object-cover"
-              />
+              <div className="w-full h-full overflow-hidden rounded-lg cursor-zoom-in">
+                <div
+                  className="w-full h-full bg-center bg-no-repeat transition-all duration-500 ease-in-out"
+                  style={{
+                    backgroundImage: `url(${item?.url ?? placeholder})`,
+                    backgroundSize: '200%', // zoom 2x
+                  }}
+                  onMouseMove={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / rect.width) * 100;
+                    const y = ((e.clientY - rect.top) / rect.height) * 100;
+                    e.currentTarget.style.backgroundPosition = `${x}% ${y}%`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundPosition = 'center';
+                  }}
+                />
+                <img
+                  src={item?.url ?? placeholder}
+                  alt={`Product gallery ${item.id}`}
+                  className="opacity-0 w-full h-full"
+                />
+              </div>
             </SwiperSlide>
           ))}
         </Swiper>

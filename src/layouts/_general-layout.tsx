@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
 //import Header from '@/layouts/_header';
-import Header from '@/components/header/header';
+import Header from '@/components/header/headers';
 import { fadeInBottom } from '@/lib/framer-motion/fade-in-bottom';
 import { useBreakpoint } from '@/lib/hooks/use-breakpoint';
 import Copyright from '@/layouts/_copyright';

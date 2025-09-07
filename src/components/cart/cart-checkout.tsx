@@ -86,13 +86,13 @@ export default function CartCheckout() {
 
   const totalPrice = verifiedResponse
     ? calculatePaidTotal(
-      {
-        totalAmount: base_amount,
-        tax: verifiedResponse.total_tax,
-        shipping_charge: verifiedResponse.shipping_charge,
-      },
-      0,
-    )
+        {
+          totalAmount: base_amount,
+          tax: verifiedResponse.total_tax,
+          shipping_charge: verifiedResponse.shipping_charge,
+        },
+        0,
+      )
     : 0;
 
   const { price: total } = usePrice(
@@ -132,7 +132,7 @@ export default function CartCheckout() {
       use_wallet_points && payableAmount == 0 ? true : false;
     const gateWay = isFullWalletPayment
       ? PaymentGateway.FULL_WALLET_PAYMENT
-      : payment_gateway;
+      : PaymentGateway.FLUTTERWAVE;
 
     mutate({
       amount: base_amount,
@@ -179,8 +179,7 @@ export default function CartCheckout() {
             walletCurrency={verifiedResponse.wallet_currency}
           />
         </div>
-      )
-      }
+      )}
 
       {/* {use_wallet_points && !Boolean(payableAmount) ? null : <StripePayment />} */}
 
@@ -194,6 +193,6 @@ export default function CartCheckout() {
       >
         {t('text-submit-order')}
       </Button>
-    </div >
+    </div>
   );
 }

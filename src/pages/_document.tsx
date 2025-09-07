@@ -29,6 +29,7 @@ class CustomDocument extends Document {
             crossOrigin="anonymous"
             referrerPolicy="no-referrer"
           />
+          <script src="https://checkout.flutterwave.com/v3.js" />
         </Head>
         <body>
           <Main />

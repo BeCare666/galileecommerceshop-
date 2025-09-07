@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import cn from 'classnames';
 import { motion } from 'framer-motion';
 //import Header from '@/layouts/_header';
-import Header from '@/components/header/header';
+import Header from '@/components/header/headers';
 import { Sidebar } from '@/layouts/_layout-sidebar';
 import { useBreakpoint } from '@/lib/hooks/use-breakpoint';
 import { useIsMounted } from '@/lib/hooks/use-is-mounted';

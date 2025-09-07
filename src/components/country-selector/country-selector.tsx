@@ -137,7 +137,7 @@ export default function CountrySelectorWithModal() {
       <button
         onClick={() => setModalOpen(true)}
         className="flex items-center gap-2 px-3 py-1 text-white text-sm font-medium text-dark-800 rounded dark:bg-dark-300 dark:text-white dark:border-dark-500"
-        style={{ width: '80px', height: '30px' }}
+        style={{ width: '40px', height: '15px' }}
       >
         {selectedCountry && (
           <>

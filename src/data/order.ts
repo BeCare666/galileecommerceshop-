@@ -35,11 +35,13 @@ export function useOrders(options?: OrderQueryOptions) {
     {
       getNextPageParam: ({ current_page, last_page }) =>
         last_page > current_page && { page: current_page + 1 },
-    }
+    },
   );
+
   function handleLoadMore() {
     fetchNextPage();
   }
+
   return {
     orders: data?.pages.flatMap((page) => page.data) ?? [],
     isLoading,
@@ -50,6 +52,7 @@ export function useOrders(options?: OrderQueryOptions) {
     loadMore: handleLoadMore,
   };
 }
+
 export function useDownloadableProductOrders(options?: OrderQueryOptions) {
   const formattedOptions = {
     ...options,
@@ -71,11 +74,13 @@ export function useDownloadableProductOrders(options?: OrderQueryOptions) {
     {
       getNextPageParam: ({ current_page, last_page }) =>
         last_page > current_page && { page: current_page + 1 },
-    }
+    },
   );
+
   function handleLoadMore() {
     fetchNextPage();
   }
+
   return {
     downloadableFiles: data?.pages.flatMap((page) => page.data) ?? [],
     isLoading,
@@ -94,8 +99,9 @@ export function useOrder({ tracking_number }: { tracking_number: string }) {
   >(
     [API_ENDPOINTS.ORDERS, tracking_number],
     () => client.orders.get(tracking_number),
-    { refetchOnWindowFocus: false }
+    { refetchOnWindowFocus: false },
   );
+
   return {
     order: data,
     isFetching,
@@ -119,7 +125,13 @@ export function useGetPaymentIntent({
   const router = useRouter();
   const { openModal } = useModalAction();
 
-  const { data, isLoading, error, refetch, isFetching } = useQuery(
+  const {
+    data,
+    isLoading,
+    error,
+    refetch: getPaymentIntentQuery,
+    isFetching,
+  } = useQuery(
     [
       API_ENDPOINTS.PAYMENT_INTENT,
       { tracking_number, payment_gateway, recall_gateway },
@@ -130,7 +142,6 @@ export function useGetPaymentIntent({
         payment_gateway,
         recall_gateway,
       }),
-    // Make it dynamic for both gql and rest
     {
       enabled: false,
       onSuccess: (item) => {
@@ -141,23 +152,56 @@ export function useGetPaymentIntent({
         } else if (isObject(item)) {
           data = item;
         }
-        if (data?.payment_intent_info?.is_redirect) {
-          return router.push(data?.payment_intent_info?.redirect_url as string);
-        } else {
-          if (recall_gateway) window.location.reload();
-          openModal('PAYMENT_MODAL', {
-            paymentGateway: data?.payment_gateway,
-            paymentIntentInfo: data?.payment_intent_info,
-            trackingNumber: data?.tracking_number,
-          });
+
+        const paymentInfo = data?.payment_intent_info;
+
+        if (!paymentInfo) return;
+
+        // Si redirection classique
+        if (paymentInfo.is_redirect) {
+          return router.push(paymentInfo.redirect_url as string);
         }
+
+        // Si Flutterwave
+        if (payment_gateway === 'flutterwave') {
+          (window as any).FlutterwaveCheckout({
+            public_key: paymentInfo.public_key,
+            tx_ref: paymentInfo.tx_ref,
+            amount: paymentInfo.amount,
+            currency: paymentInfo.currency,
+            payment_options: 'card, mobilemoneyghana, ussd',
+            customer: {
+              email: paymentInfo.customer_email,
+              phone_number: paymentInfo.customer_phone,
+              name: paymentInfo.customer_name,
+            },
+            customizations: {
+              title: paymentInfo.title || 'Payment',
+              description: paymentInfo.description || 'Order Payment',
+            },
+            callback: function (res: any) {
+              if (res.status === 'successful') {
+                // Vérification backend après paiement
+                getPaymentIntentQuery(); // refetch pour mettre à jour status et balances
+              }
+            },
+            onclose: function () {
+              console.log('Payment modal closed');
+            },
+          });
+          return;
+        }
+
+        // Sinon modal interne pour autres gateways
+        if (recall_gateway) window.location.reload();
+        openModal('PAYMENT_MODAL', {});
       },
-    }
+    },
   );
 
   return {
     data,
-    getPaymentIntentQuery: refetch,
+    getPaymentIntentQuery,
     isLoading,
     error,
   };
@@ -169,23 +213,21 @@ export function useOrderPayment() {
   const { mutate: createOrderPayment, isLoading } = useMutation(
     client.orders.payment,
     {
-      onSettled: (data) => {
+      onSettled: () => {
         queryClient.refetchQueries(API_ENDPOINTS.ORDERS);
         queryClient.refetchQueries(API_ENDPOINTS.ORDERS_DOWNLOADS);
       },
-      onError: (error) => {
+      onError: (error: any) => {
         const {
           response: { data },
-        }: any = error ?? {};
-        toast.error(data?.message);
+        } = error ?? {};
+        toast.error(data?.message || 'Payment failed');
       },
-    }
+    },
   );
 
   function formatOrderInput(input: CreateOrderPaymentInput) {
-    const formattedInputs = {
-      ...input,
-    };
+    const formattedInputs = { ...input };
     createOrderPayment(formattedInputs);
   }
 

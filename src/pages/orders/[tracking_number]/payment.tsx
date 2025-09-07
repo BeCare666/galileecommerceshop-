@@ -32,9 +32,10 @@ import { getOrderPaymentSummery } from '@/lib/get-order-payment-summery';
 type Props = {
   title: string;
   details: string | undefined;
+  className?: string;
 };
 
-const Card = ({ title, details }: Props) => {
+const Card = ({ title, details, className }: Props) => {
   return (
     <div className="flex min-h-[6.5rem] items-center rounded border border-gray-200 px-6 py-4 dark:border-[#434343] dark:bg-dark-200">
       <div>
@@ -85,60 +86,71 @@ const OrderView = ({ order, loadingStatus }: OrderViewProps) => {
   const { price: gatewayPayment } = usePrice({ amount: gateway_payment });
 
   return (
-    <div className="p-4 sm:p-8">
+    <div className="p-6 sm:p-10 bg-white dark:bg-dark-900 min-h-screen">
       <div className="mx-auto w-full max-w-screen-lg">
-        <div className="relative overflow-hidden rounded">
+        <div className="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700">
+          {/* Header */}
           <OrderViewHeader
             order={order}
             buttonSize="small"
             loading={loadingStatus}
           />
-          <div className="bg-light px-6 pb-12 pt-9 dark:bg-dark-200 lg:px-8">
-            <div className="mb-6 grid gap-4 sm:grid-cols-2 md:mb-12 lg:grid-cols-4">
+
+          {/* Order Info */}
+          <div className="bg-white dark:bg-dark-800 px-6 py-10 lg:px-10">
+            {/* Order Summary Cards */}
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-10">
               <Card
                 title={t('text-order-number')}
                 details={order?.tracking_number}
+                className="bg-pink-50 text-pink-700 rounded-lg border border-pink-100"
               />
               <Card
                 title={t('text-date')}
                 details={dayjs(order?.created_at).format('MMMM D, YYYY')}
+                className="bg-pink-50 text-pink-700 rounded-lg border border-pink-100"
               />
-              <Card title={t('text-total')} details={total} />
+              <Card
+                title={t('text-total')}
+                details={total}
+                className="bg-pink-50 text-pink-700 rounded-lg border border-pink-100"
+              />
               <Card
                 title={t('text-payment-method')}
                 details={order?.payment_gateway ?? 'N/A'}
+                className="bg-pink-50 text-pink-700 rounded-lg border border-pink-100"
               />
             </div>
 
-            <div className="mt-12 flex flex-col md:flex-row">
-              <div className="w-full md:w-1/2 ltr:md:pl-3 rtl:md:pr-3">
-                <h2 className="mb-6 text-base font-medium dark:text-white">
+            {/* Order Status & Details */}
+            <div className="flex flex-col md:flex-row gap-10">
+              {/* Status */}
+              <div className="w-full md:w-1/2">
+                <h2 className="mb-4 text-lg font-semibold text-pink-600">
                   {t('text-order-status')}
                 </h2>
-                <div>
-                  <OrderStatusProgressBox
-                    orderStatus={order?.order_status as OrderStatus}
-                    paymentStatus={order?.payment_status as PaymentStatus}
-                  />
-                </div>
+                <OrderStatusProgressBox
+                  orderStatus={order?.order_status as OrderStatus}
+                  paymentStatus={order?.payment_status as PaymentStatus}
+                />
               </div>
-              {/* end of order details */}
 
-              <div className="mb-10 w-full md:mb-0 md:w-1/2 ltr:md:pr-3 rtl:md:pl-3">
-                <h2 className="mb-6 text-base font-medium dark:text-white">
+              {/* Details */}
+              <div className="w-full md:w-1/2">
+                <h2 className="mb-4 text-lg font-semibold text-pink-600">
                   {t('text-order-details')}
                 </h2>
-                <div>
+                <div className="flex flex-col gap-3">
                   <Listitem
                     title={t('text-total-item')}
                     details={formatString(
                       order?.products?.length,
-                      t('text-item')
+                      t('text-item'),
                     )}
                   />
                   <Listitem title={t('text-sub-total')} details={sub_total} />
                   <Listitem title={t('text-tax')} details={tax} />
-                  <div className="w-1/2 border-b border-solid border-gray-200 py-1 dark:border-b-[#434343]" />
+                  <div className="border-t border-gray-200 dark:border-gray-700 my-2" />
                   <Listitem title={t('text-total')} details={total} />
                   {wallet_total && (
                     <Listitem
@@ -146,51 +158,31 @@ const OrderView = ({ order, loadingStatus }: OrderViewProps) => {
                       details={wallet_total}
                     />
                   )}
-
-                  {is_payment_gateway_use && is_full_paid && (
+                  {!is_payment_gateway_use && !is_full_paid && (
                     <Listitem
                       title={`${order?.payment_gateway} ${t('payment')}`}
                       details={gatewayPayment}
                     />
                   )}
-
                   <Listitem title={t('text-amount-due')} details={amountDue} />
                 </div>
               </div>
-              {/* end of total amount */}
             </div>
-            <div className="mt-12">
+
+            {/* Order Items */}
+            <div className="mt-10">
               <OrderItems
                 products={order?.products}
                 orderId={order?.id}
                 status={order?.payment_status as PaymentStatus}
               />
             </div>
-            {/* {!isEmpty(order?.children) ? (
-              <div className="mt-10">
-                <h2 className="mb-6 text-base font-medium dark:text-white">
-                  {t('text-sub-orders')}
-                </h2>
-                <div>
-                  <div className="flex items-start p-4 mb-12 border border-gray-200 rounded dark:border-dark-600">
-                    <span className="mt-0.5 flex h-4 w-4 items-center justify-center rounded-sm bg-dark px-2 ltr:mr-3 rtl:ml-3 dark:bg-light">
-                      <CheckMark className="w-2 h-2 shrink-0 text-light dark:text-dark" />
-                    </span>
-                    <p className="text-sm text-heading">
-                      <span className="font-bold">{t('text-note')}:</span>{' '}
-                      {t('message-sub-order')}
-                    </p>
-                  </div>
-                  {Array.isArray(order?.children) && order?.children.length && (
-                    <SuborderItems items={order?.children} />
-                  )}
-                </div>
-              </div>
-            ) : null} */}
           </div>
         </div>
       </div>
-      {order && order.payment_status === PaymentStatus.SUCCESS ? (
+
+      {/* Confetti Celebration */}
+      {order && order.payment_status === PaymentStatus.SUCCESS && (
         <ReactConfetti
           width={width - 10}
           height={height}
@@ -198,8 +190,6 @@ const OrderView = ({ order, loadingStatus }: OrderViewProps) => {
           tweenDuration={8000}
           numberOfPieces={300}
         />
-      ) : (
-        ''
       )}
     </div>
   );
@@ -213,7 +203,7 @@ const OrderPage: NextPageWithLayout = () => {
   });
 
   const { payment_status, payment_intent, tracking_number } = order ?? {};
-
+  console.log('DEBUG OrderPage order data:', order);
   useEffect(() => {
     if (
       payment_status === PaymentStatus.PENDING &&
@@ -248,7 +238,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(
     [API_ENDPOINTS.SETTINGS, { language: locale }],
-    ({ queryKey }) => client.settings.all(queryKey[1] as SettingsQueryOptions)
+    ({ queryKey }) => client.settings.all(queryKey[1] as SettingsQueryOptions),
   );
 
   return {

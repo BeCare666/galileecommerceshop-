@@ -47,28 +47,28 @@ export interface TopShopQueryOptions {
   range: number;
 }
 
-export interface CategoryQueryOptions extends QueryOptions { }
+export interface CategoryQueryOptions extends QueryOptions {}
 
-export interface TypeQueryOptions extends QueryOptions { }
+export interface TypeQueryOptions extends QueryOptions {}
 
-export interface WishlistQueryOptions extends QueryOptions { }
+export interface WishlistQueryOptions extends QueryOptions {}
 
-export interface MyReportsQueryOptions extends QueryOptions { }
+export interface MyReportsQueryOptions extends QueryOptions {}
 
-export interface MyQuestionQueryOptions extends QueryOptions { }
+export interface MyQuestionQueryOptions extends QueryOptions {}
 
 export interface ShopQueryOptions extends QueryOptions {
   is_active?: number;
 }
 
-export interface FollowedShopsQueryOptions extends QueryOptions { }
+export interface FollowedShopsQueryOptions extends QueryOptions {}
 
 export interface OrderQueryOptions extends QueryOptions {
   orderBy: string;
   sortedBy: string;
 }
 
-export interface WishlistQueryOption extends QueryOptions { }
+export interface WishlistQueryOption extends QueryOptions {}
 
 export interface ReviewQueryOptions extends QueryOptions {
   product_id: string;
@@ -354,6 +354,7 @@ export enum PaymentGateway {
   PAYSTACK = 'PAYSTACK',
   BITPAY = 'BITPAY',
   COINBASE = 'COINBASE',
+  FLUTTERWAVE = 'FLUTTERWAVE',
 }
 
 export enum OrderStatus {
@@ -451,7 +452,7 @@ export interface Product {
   external_product_url: string;
   external_product_button_text: string;
   video?: string[];
-  rating?: number; // ⭐ On ajoute cette propriété ici 
+  rating?: number; // ⭐ On ajoute cette propriété ici
   shop_slug?: string;
   shop_name?: string;
 }
@@ -459,9 +460,9 @@ export interface Product {
 export interface CountryData {
   name?: string;
 }
-export interface ProductPaginator extends PaginatorInfo<Product> { }
+export interface ProductPaginator extends PaginatorInfo<Product> {}
 
-export interface ReportsPaginator extends PaginatorInfo<Question> { }
+export interface ReportsPaginator extends PaginatorInfo<Question> {}
 
 export interface Category {
   id: string;
@@ -480,11 +481,11 @@ export interface Type {
   translated_languages: string[];
 }
 
-export interface CategoryPaginator extends PaginatorInfo<Category> { }
+export interface CategoryPaginator extends PaginatorInfo<Category> {}
 
-export interface TypePaginator extends PaginatorInfo<Type> { }
+export interface TypePaginator extends PaginatorInfo<Type> {}
 
-export interface ShopPaginator extends PaginatorInfo<Shop> { }
+export interface ShopPaginator extends PaginatorInfo<Shop> {}
 
 export interface Order {
   id: number | string;
@@ -618,20 +619,20 @@ export interface FAQS {
   updated_at: string;
 }
 
-export interface TagPaginator extends PaginatorInfo<Tag> { }
+export interface TagPaginator extends PaginatorInfo<Tag> {}
 
-export interface OrderPaginator extends PaginatorInfo<Order> { }
+export interface OrderPaginator extends PaginatorInfo<Order> {}
 
-export interface OrderedFilePaginator extends PaginatorInfo<OrderedFile> { }
+export interface OrderedFilePaginator extends PaginatorInfo<OrderedFile> {}
 
-export interface ReviewPaginator extends PaginatorInfo<Review> { }
+export interface ReviewPaginator extends PaginatorInfo<Review> {}
 
-export interface WishlistPaginator extends PaginatorInfo<Wishlist> { }
+export interface WishlistPaginator extends PaginatorInfo<Wishlist> {}
 
-export interface QuestionPaginator extends PaginatorInfo<Question> { }
+export interface QuestionPaginator extends PaginatorInfo<Question> {}
 
 export interface TermsAndConditionsPaginator
-  extends PaginatorInfo<TermsAndConditions> { }
+  extends PaginatorInfo<TermsAndConditions> {}
 
 export interface SettingsQueryOptions extends QueryOptions {
   language?: string;
@@ -740,7 +741,7 @@ export interface DownloadableFile {
 }
 
 export interface DownloadableFilePaginator
-  extends PaginatorInfo<DownloadableFile> { }
+  extends PaginatorInfo<DownloadableFile> {}
 
 export interface FaqsQueryOptions extends QueryOptions {
   faq_title?: string;
@@ -766,7 +767,7 @@ export interface FAQS {
   updated_at: string;
 }
 
-export interface FaqsPaginator extends PaginatorInfo<FAQS> { }
+export interface FaqsPaginator extends PaginatorInfo<FAQS> {}
 
 export interface GoogleMapLocation {
   lat?: number | string;
@@ -888,14 +889,14 @@ export interface Commission {
 export type AlertProps = {
   message: string | null;
   variant?:
-  | 'info'
-  | 'warning'
-  | 'error'
-  | 'success'
-  | 'infoOutline'
-  | 'warningOutline'
-  | 'errorOutline'
-  | 'successOutline';
+    | 'info'
+    | 'warning'
+    | 'error'
+    | 'success'
+    | 'infoOutline'
+    | 'warningOutline'
+    | 'errorOutline'
+    | 'successOutline';
   closeable?: boolean;
   onClose?: React.Dispatch<React.SetStateAction<any>>;
   className?: string;

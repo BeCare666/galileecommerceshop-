@@ -4,10 +4,8 @@ import { useTranslation } from 'next-i18next';
 import { useIsRTL } from '@/lib/locals';
 import Image from '@/components/ui/image';
 import { productPlaceholder } from '@/lib/placeholders';
-// import { useModalAction } from '@/components/ui/modal/modal.context';
 import { useModalAction } from '@/components/modal-views/context';
 import Link from '@/components/ui/link';
-// import { Routes } from '@/config/routes';
 import routes from '@/config/routes';
 import { getReview } from '@/lib/get-reviews';
 import Button from '@/components/ui/button';
@@ -16,18 +14,21 @@ import { useMutation } from 'react-query';
 import client from '@/data/client';
 import { DownloadIcon } from '@/components/icons/download-icon';
 
-//FIXME: need to fix this usePrice hooks issue within the table render we may check with nested property
 const OrderItemList = (_: any, record: any) => {
   const { price } = usePrice({
-    amount: record.pivot?.unit_price,
+    amount: record.unit_price ?? record.pivot?.unit_price,
   });
+
   let name = record.name;
   if (record?.pivot?.variation_option_id) {
     const variationTitle = record?.variation_options?.find(
-      (vo: any) => vo?.id === record?.pivot?.variation_option_id
-    )['title'];
-    name = `${name} - ${variationTitle}`;
+      (vo: any) => vo?.id === record?.pivot?.variation_option_id,
+    )?.title;
+    if (variationTitle) {
+      name = `${name} - ${variationTitle}`;
+    }
   }
+
   return (
     <div className="flex items-center">
       <div className="relative flex h-16 w-16 shrink-0 overflow-hidden rounded">
@@ -62,6 +63,7 @@ const OrderItemList = (_: any, record: any) => {
     </div>
   );
 };
+
 export const OrderItems = ({
   products,
   orderId,
@@ -80,12 +82,11 @@ export const OrderItems = ({
   const { mutate } = useMutation(client.orders.generateDownloadLink, {
     onSuccess: (data, name) => {
       function download(fileUrl: string, fileName: string) {
-        var a = document.createElement('a');
+        const a = document.createElement('a');
         a.href = fileUrl;
         a.setAttribute('download', fileName);
         a.click();
       }
-
       download(data, name);
     },
   });
@@ -116,13 +117,11 @@ export const OrderItems = ({
     },
     {
       title: t('text-quantity'),
-      dataIndex: 'pivot',
-      key: 'pivot',
+      dataIndex: 'quantity', // ✅ on utilise directement "quantity"
+      key: 'quantity',
       align: 'center',
       width: 100,
-      render: function renderQuantity(pivot: any) {
-        return <p className="text-base">{pivot.order_quantity}</p>;
-      },
+      render: (value: number) => <p className="text-base">{value ?? 0}</p>,
     },
     {
       title: ' ',
@@ -139,7 +138,7 @@ export const OrderItems = ({
                   : 'pointer-events-none cursor-not-allowed opacity-70'
               }`}
               onClick={() => (getStatus ? openReviewModal(record) : null)}
-              disabled={getStatus ? false : true}
+              disabled={!getStatus}
             >
               {getReview(record?.my_review, record?.pivot?.order_id)
                 ? t('text-update-review')
@@ -151,7 +150,7 @@ export const OrderItems = ({
                   ? mutate(record?.digital_file?.fileable_id, record?.name)
                   : null
               }
-              disabled={getStatus ? false : true}
+              disabled={!getStatus}
               className="shrink-0"
             >
               <DownloadIcon className="h-auto w-4" />
@@ -162,6 +161,7 @@ export const OrderItems = ({
       },
     },
   ];
+
   return (
     <Table
       //@ts-ignore
