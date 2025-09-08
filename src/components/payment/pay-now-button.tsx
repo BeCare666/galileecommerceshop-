@@ -17,10 +17,13 @@ const PayNowButton: React.FC<Props> = ({
   variant = 'medium',
 }) => {
   const { t } = useTranslation();
+
+  // ✅ on passe bien l'order ici (donc son id est dispo)
   const { isLoading, getPaymentIntentQuery } = useGetPaymentIntent({
     tracking_number: tracking_number as string,
     payment_gateway: order?.payment_gateway as string,
-    recall_gateway: false as boolean,
+    recall_gateway: false,
+    order, // 🔥 on envoie l'objet complet
   });
 
   async function handlePayNow() {

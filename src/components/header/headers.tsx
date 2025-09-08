@@ -156,166 +156,25 @@ export default function GalileeHeader() {
             />
           </div>
 
-          {/* Desktop nav */}
-          <nav className="hidden lg:flex gap-9 text-sm text-gray-200 relative">
-            {/* Liens principaux */}
-            <Link
-              href="#"
-              className={`px-2 py-1 rounded transition-colors ${
-                isHoverCategories
-                  ? 'bg-white text-black'
-                  : 'bg-gray-900 text-white'
-              }`}
-            >
-              Suivi des commandes
-            </Link>
-            <Link
-              href="#"
-              className={`px-2 py-1 flex items-center rounded transition-colors ${
-                isHoverCategories
-                  ? 'bg-white text-black'
-                  : 'bg-gray-900 text-white'
-              }`}
-            >
-              Pavillons
-              <CountrySelector />
-            </Link>
 
-            <Link
-              onClick={() => setOpenC(true)}
-              href="#"
-              className={`px-2 py-1 rounded transition-colors ${
-                isHoverCategories
-                  ? 'bg-white text-black'
-                  : 'bg-gray-900 text-white'
-              }`}
-            >
-              Corridors
-              <Modal
-                isOpen={openC}
-                onClose={() => setOpenC(false)}
-                mapIsOk={mapIsOk}
-                setMapIsOk={setMapIsOk}
-              />
-            </Link>
-
-            {/* Dropdown A propos */}
-            <div
-              className="relative"
-              onMouseEnter={() => setOpenDropdown(true)}
-              onMouseLeave={() => setOpenDropdown(false)}
-            >
-              <button
-                className={`px-2 py-1 rounded transition-colors flex items-center gap-1 ${
-                  isHoverCategories
-                    ? 'bg-white text-black'
-                    : 'bg-gray-900 text-white'
-                }`}
-              >
-                A propos
-                <span
-                  className={`ml-1 transition-transform ${openDropdown ? 'rotate-180' : ''}`}
-                >
-                  ▼
-                </span>
-              </button>
-
-              {openDropdown && (
-                <div className="absolute top-full left-0 mt-1 w-56 rounded-md shadow-lg bg-white z-50">
-                  <ul className="py-2">
-                    <li>
-                      <Link
-                        href={routes.becomeSeller}
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                      >
-                        Devenir fournisseur
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href={routes.mega}
-                        className={`px-2 py-1 rounded transition-colors ${
-                          isHoverCategories
-                            ? 'bg-white text-black'
-                            : 'bg-gray-900 text-white'
-                        }`}
-                      >
-                        Centrale d’achat
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href={routes.services}
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                      >
-                        Services
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href={routes.productscategory}
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                      >
-                        Les produits
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href={routes.authors}
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                      >
-                        Les meilleurs vendeurs
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href={routes.contact}
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                      >
-                        Centre d’assistance
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href={routes.help}
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                      >
-                        Aides
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href={routes.terms}
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                      >
-                        Terms & Conditions
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href={routes.privacy}
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                      >
-                        Politique de confidentialité
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href={routes.licensing}
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                      >
-                        Contrat de licence
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              )}
-            </div>
-          </nav>
         </div>
 
         {/* Right */}
         <div className="flex items-center gap-4">
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Rechercher sur galileecommerce.com ...."
+            className="hidden lg:block max-w-[50px] lg:max-w-[550px] w-full w-[10px] bg-gray-600 flex-1 rounded-full px-4 py-2 text-gray-900 placeholder-gray-500 shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all duration-200"
+            onClick={openSearch}
+          />
+          <div className=" ml-2 lg:hidden" onClick={openSearch}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="6"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+
+          </div>
           <div className="flex items-center gap-2 border border-gray-700 rounded px-2 py-1 hover:border-pink-500 transition-colors group-hover:border-black">
             <LanguageSwitcher />
           </div>
@@ -403,28 +262,221 @@ export default function GalileeHeader() {
         </div>
       </div>
       {/* Search bar */}
-      <div className="bg-gray-800 py-4 relative">
-        <div className="max-w-[1780px] mx-auto px-6 flex items-center h-14 relative">
-          {/* Toutes les catégories */}
-          <div
-            className="absolute flex items-center h-full"
-            onMouseEnter={() => setIsHoverCategories(true)}
-            onMouseLeave={() => setIsHoverCategories(false)}
+      <div className="bg-gray-800 lg:py-4">
+        <div className="lg:px-6 flex items-center h-14 relative">
+          <nav
+            className="
+            flex items-center gap-3 text-xs lg:text-sm text-gray-200 px-2
+            overflow-x-auto overflow-y-visible whitespace-nowrap scrollbar-hide
+            relative left-1
+            lg:left-auto lg:relative lg:right-2 lg:gap-9
+          "
           >
-            <CategoryMegaMenu />
-          </div>
+            <Link
+              href="#"
+              onMouseEnter={() => setIsHoverCategories(true)}
+              onMouseLeave={() => setIsHoverCategories(false)}
+              className="inline-block lg:px-2 py-1"
+            >
+              <CategoryMegaMenu />
+            </Link>
+
+            <Link href="#" className="inline-block px-2 py-1 rounded transition-colors text-white">
+              Suivi des commandes
+            </Link>
+
+            <Link href="#" className="inline-block px-2 py-1 rounded transition-colors text-white">
+              Marchés
+            </Link>
+
+            <Link href="#" className="inline-block px-2 py-1 flex items-center rounded transition-colors text-white">
+              Pavillons
+              <CountrySelector />
+            </Link>
+
+            <Link
+              onClick={() => setOpenC(true)}
+              href="#"
+              className="inline-block px-2 py-1 rounded transition-colors text-white"
+            >
+              Corridors
+              <Modal isOpen={openC} onClose={() => setOpenC(false)} mapIsOk={mapIsOk} setMapIsOk={setMapIsOk} />
+            </Link>
+
+            <Link href="#" className="inline-block px-2 py-1 rounded transition-colors text-white">
+              Centrale d’achat
+            </Link>
+
+            <Link href="#" className="inline-block px-2 py-1 rounded transition-colors text-white">
+              Devenir fournisseur
+            </Link>
+
+            {/* A propos */}
+            <div
+              className="relative inline-block"
+              onMouseEnter={() => setOpenDropdown(true)}
+              onMouseLeave={() => setOpenDropdown(false)}
+            >
+              <button
+                onClick={() => setDrawerOpen(true)}
+                //onClick={() => setOpenDropdown((s) => !s)}
+                className={`px-2 py-1 rounded transition-colors flex items-center gap-1 ${isHoverCategories ? 'bg-white text-black' : 'text-white'} text-xs lg:text-sm`}
+                aria-haspopup="true"
+
+              >
+                A propos
+                <span className={`ml-1 transition-transform ${openDropdown ? 'rotate-180' : ''}`}>▼</span>
+              </button>
+
+              {/*  {openDropdown && (
+                <div className="absolute top-full left-0 mt-1 w-56 max-w-[90vw] lg:w-56 rounded-md shadow-lg bg-white z-[9999] lg:z-50 text-sm">
+                  <ul className="py-2">
+                    <li>
+                      <Link href={routes.becomeSeller} className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                        Devenir fournisseur
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href={routes.mega} className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                        Centrale d’achat
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href={routes.services} className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                        Services
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href={routes.productscategory} className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                        Les produits
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href={routes.authors} className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                        Les meilleurs vendeurs
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href={routes.contact} className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                        Centre d’assistance
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href={routes.help} className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                        Aides
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href={routes.terms} className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                        Terms & Conditions
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href={routes.privacy} className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                        Politique de confidentialité
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              )}*/}
+            </div>
+
+          </nav>
+
+        </div>
+      </div>
+
+      <div className="hidden bg-gray-800 py-4 relative">
+        <div className="px-6 flex items-center h-14 relative">
+          {/* Desktop nav max-w-[1780px]   */}
+          <nav
+            className="
+          flex gap-3 text-xs text-gray-200 h-7 px-2 flex items-center
+          overflow-x-auto whitespace-nowrap scrollbar-hide
+          lg:overflow-visible lg:whitespace-normal lg:gap-9 lg:text-sm lg:relative lg:right-2
+        "
+          >
+            <Link
+              href="#"
+              onMouseEnter={() => setIsHoverCategories(true)}
+              onMouseLeave={() => setIsHoverCategories(false)}
+            >
+              <CategoryMegaMenu />
+            </Link>
+
+            <Link
+              href="#"
+              className={`px-2 py-1 rounded transition-colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
+                }`}
+            >
+              Suivi des commandes
+            </Link>
+
+            <Link
+              href="#"
+              className={`px-2 py-1 rounded transition-colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
+                }`}
+            >
+              Marchés
+            </Link>
+
+            <Link
+              href="#"
+              className={`px-2 py-1 flex items-center rounded transition-colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
+                }`}
+            >
+              Pavillons
+              <CountrySelector />
+            </Link>
+
+            <Link
+              onClick={() => setOpenC(true)}
+              href="#"
+              className={`px-2 py-1 rounded transition-colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
+                }`}
+            >
+              Corridors
+              <Modal
+                isOpen={openC}
+                onClose={() => setOpenC(false)}
+                mapIsOk={mapIsOk}
+                setMapIsOk={setMapIsOk}
+              />
+            </Link>
+
+            <Link
+              href="#"
+              className={`px-2 py-1 rounded transition-colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
+                }`}
+            >
+              Centrale d’achat
+            </Link>
+
+            <Link
+              href="#"
+              className={`px-2 py-1 rounded transition-colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
+                }`}
+            >
+              Devenir fournisseur
+            </Link>
+
+            {/* Ton dropdown reste inchangé */}
+          </nav>
 
           {/* Input + Plus */}
-          <div className="ml-[140px] lg:ml-[5px] flex-1 flex justify-center items-center gap-3 h-full">
+          <div className="hidden ml-[140px] lg:ml-[5px] flex-1 flex justify-center items-center gap-3 h-full">
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Rechercher ...."
-              className="max-w-[150px] lg:max-w-[400px] w-full w-[10px] bg-gray-600 flex-1 rounded-full px-4 py-2 text-gray-900 placeholder-gray-500 shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all duration-200"
+              placeholder="Rechercher sur galileecommerce.com ...."
+              className="max-w-[150px] lg:max-w-[450px] w-full w-[10px] bg-gray-600 flex-1 rounded-full px-4 py-2 text-gray-900 placeholder-gray-500 shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all duration-200"
               onClick={openSearch}
             />
+            <div>
+
+            </div>
             <button
-              className="rounded-[5px] px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-medium shadow-lg hover:scale-105 transition-transform flex items-center gap-1"
+              className="rounded-[5px] px-4 py-2 bg-gray-600 text-white font-medium shadow-lg hover:scale-105 transition-transform flex items-center gap-1"
               onClick={() => setOpen(!open)}
             >
               <span className="hidden lg:block">Plus</span>
@@ -439,12 +491,6 @@ export default function GalileeHeader() {
                 <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
               </svg>
             </button>
-          </div>
-
-          {/* LoginMenu */}
-          <div className="absolute right-6 flex items-center h-full">
-            <span className="hidden lg:block">Mon compte &nbsp;</span>
-            <LoginMenu />
           </div>
         </div>
       </div>
@@ -479,9 +525,8 @@ export default function GalileeHeader() {
           {/* Drawer */}
           <div
             ref={drawerRef}
-            className={`fixed top-0 right-0 w-72 h-full bg-gray-900 text-white shadow-lg transform transition-transform duration-300 ease-in-out z-[1001] ${
-              drawerOpen ? 'translate-x-0' : 'translate-x-full'
-            }`}
+            className={`fixed top-0 right-0 w-72 h-full bg-gray-900 text-white shadow-lg transform transition-transform duration-300 ease-in-out z-[1001] ${drawerOpen ? 'translate-x-0' : 'translate-x-full'
+              }`}
           >
             <div className="flex flex-col h-full">
               {/* Header with logo + close */}
@@ -494,6 +539,7 @@ export default function GalileeHeader() {
                     height={84}
                   />
                 </div>
+                <LoginMenu />
                 <button
                   onClick={() => setDrawerOpen(false)}
                   className="text-gray-400 hover:text-white"

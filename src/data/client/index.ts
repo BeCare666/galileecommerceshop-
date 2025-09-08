@@ -141,6 +141,9 @@ class Client {
       HttpClient.get<OrderPaginator>(API_ENDPOINTS.ORDERS, query),
     get: (tracking_number: string) =>
       HttpClient.get<Order>(`${API_ENDPOINTS.ORDERS}/${tracking_number}`),
+    // nouveau POST pour créer le payment intent
+    createPaymentIntent: (data: { orderId: number; paymentGateway: string }) =>
+      HttpClient.post(`${API_ENDPOINTS.PAYMENT_INTENT}`, data),
     downloadable: (query?: OrderQueryOptions) =>
       HttpClient.get<OrderedFilePaginator>(
         API_ENDPOINTS.ORDERS_DOWNLOADS,

@@ -136,7 +136,7 @@ export default function CountrySelectorWithModal() {
       {/* Bouton avec le drapeau du pays sélectionné */}
       <button
         onClick={() => setModalOpen(true)}
-        className="flex items-center gap-2 px-3 py-1 text-white text-sm font-medium text-dark-800 rounded dark:bg-dark-300 dark:text-white dark:border-dark-500"
+        className="mt-0 flex items-center gap-2 px-3 py-1 text-white text-sm font-medium text-dark-800 rounded dark:bg-dark-300 dark:text-white dark:border-dark-500"
         style={{ width: '40px', height: '15px' }}
       >
         {selectedCountry && (

@@ -17,8 +17,10 @@ import client from '@/data/client';
 import { useRouter } from 'next/router';
 import { useModalAction } from '@/components/modal-views/context';
 import toast from 'react-hot-toast';
-import { isArray, isEmpty, isObject } from 'lodash';
 
+// -------------------------
+// useOrders
+// -------------------------
 export function useOrders(options?: OrderQueryOptions) {
   const {
     data,
@@ -38,10 +40,6 @@ export function useOrders(options?: OrderQueryOptions) {
     },
   );
 
-  function handleLoadMore() {
-    fetchNextPage();
-  }
-
   return {
     orders: data?.pages.flatMap((page) => page.data) ?? [],
     isLoading,
@@ -49,15 +47,15 @@ export function useOrders(options?: OrderQueryOptions) {
     hasNextPage,
     isFetching,
     isLoadingMore: isFetchingNextPage,
-    loadMore: handleLoadMore,
+    loadMore: () => fetchNextPage(),
   };
 }
 
+// -------------------------
+// useDownloadableProductOrders
+// -------------------------
 export function useDownloadableProductOrders(options?: OrderQueryOptions) {
-  const formattedOptions = {
-    ...options,
-    // language: locale
-  };
+  const formattedOptions = { ...options };
 
   const {
     data,
@@ -77,10 +75,6 @@ export function useDownloadableProductOrders(options?: OrderQueryOptions) {
     },
   );
 
-  function handleLoadMore() {
-    fetchNextPage();
-  }
-
   return {
     downloadableFiles: data?.pages.flatMap((page) => page.data) ?? [],
     isLoading,
@@ -88,10 +82,13 @@ export function useDownloadableProductOrders(options?: OrderQueryOptions) {
     hasNextPage,
     isFetching,
     isLoadingMore: isFetchingNextPage,
-    loadMore: handleLoadMore,
+    loadMore: () => fetchNextPage(),
   };
 }
 
+// -------------------------
+// useOrder
+// -------------------------
 export function useOrder({ tracking_number }: { tracking_number: string }) {
   const { data, isLoading, error, isFetching, refetch } = useQuery<
     Order,
@@ -111,19 +108,28 @@ export function useOrder({ tracking_number }: { tracking_number: string }) {
   };
 }
 
-export function useGetPaymentIntent({
-  tracking_number,
-  payment_gateway,
-  recall_gateway,
-  form_change_gateway,
-}: {
+// -------------------------
+// useGetPaymentIntent
+// -------------------------
+interface GetPaymentIntentProps {
   tracking_number: string;
   payment_gateway: string;
   recall_gateway?: boolean;
   form_change_gateway?: boolean;
-}) {
+  order?: Order; // ✅ on passe l'objet order ici
+}
+
+export function useGetPaymentIntent({
+  tracking_number,
+  payment_gateway,
+  recall_gateway,
+  order,
+}: GetPaymentIntentProps) {
   const router = useRouter();
   const { openModal } = useModalAction();
+
+  // ✅ orderId extrait depuis l'objet
+  const orderId = order?.id ? Number(order.id) : undefined;
 
   const {
     data,
@@ -132,38 +138,47 @@ export function useGetPaymentIntent({
     refetch: getPaymentIntentQuery,
     isFetching,
   } = useQuery(
-    [
-      API_ENDPOINTS.PAYMENT_INTENT,
-      { tracking_number, payment_gateway, recall_gateway },
-    ],
-    () =>
-      client.orders.getPaymentIntent({
-        tracking_number,
-        payment_gateway,
-        recall_gateway,
-      }),
+    [API_ENDPOINTS.PAYMENT_INTENT, { tracking_number, payment_gateway }],
+    () => {
+      if (!orderId) throw new Error('Order ID is missing');
+      console.log('createPaymentIntent payload:', {
+        orderId,
+        paymentGateway: 'flutterwave',
+      });
+      return client.orders.createPaymentIntent({
+        orderId,
+        paymentGateway: 'flutterwave',
+      });
+    },
     {
-      enabled: false,
-      onSuccess: (item) => {
-        let data: any = '';
-        if (isArray(item)) {
-          data = { ...item };
-          data = isEmpty(data) ? [] : data[0];
-        } else if (isObject(item)) {
-          data = item;
-        }
+      enabled: Boolean(orderId),
+      retry: false,
+      refetchOnWindowFocus: false,
+      onSuccess: (item: any) => {
+        if (!item) return;
 
-        const paymentInfo = data?.payment_intent_info;
+        let paymentData: Record<string, any> | null = null;
+        if (Array.isArray(item) && item.length > 0) paymentData = item[0];
+        else if (typeof item === 'object') paymentData = item;
+
+        if (!paymentData) return;
+
+        const rawPaymentInfo = paymentData.payment_intent_info;
+        const paymentInfo =
+          rawPaymentInfo && typeof rawPaymentInfo === 'string'
+            ? JSON.parse(rawPaymentInfo)
+            : rawPaymentInfo;
 
         if (!paymentInfo) return;
 
-        // Si redirection classique
-        if (paymentInfo.is_redirect) {
-          return router.push(paymentInfo.redirect_url as string);
+        // 🔗 Redirection classique
+        if (paymentInfo.is_redirect && paymentInfo.redirect_url) {
+          router.push(paymentInfo.redirect_url);
+          return;
         }
 
-        // Si Flutterwave
-        if (payment_gateway === 'flutterwave') {
+        // 🔗 Flutterwave
+        if (payment_gateway.toLowerCase() === 'flutterwave') {
           (window as any).FlutterwaveCheckout({
             public_key: paymentInfo.public_key,
             tx_ref: paymentInfo.tx_ref,
@@ -179,22 +194,19 @@ export function useGetPaymentIntent({
               title: paymentInfo.title || 'Payment',
               description: paymentInfo.description || 'Order Payment',
             },
-            callback: function (res: any) {
+            callback: (res: any) => {
               if (res.status === 'successful') {
-                // Vérification backend après paiement
-                getPaymentIntentQuery(); // refetch pour mettre à jour status et balances
+                getPaymentIntentQuery();
               }
             },
-            onclose: function () {
-              console.log('Payment modal closed');
-            },
+            onclose: () => console.log('Payment modal closed'),
           });
           return;
         }
 
-        // Sinon modal interne pour autres gateways
+        // 🔗 Modal interne autres gateways
         if (recall_gateway) window.location.reload();
-        openModal('PAYMENT_MODAL', {});
+        else openModal('PAYMENT_MODAL', {});
       },
     },
   );
@@ -204,9 +216,13 @@ export function useGetPaymentIntent({
     getPaymentIntentQuery,
     isLoading,
     error,
+    isFetching,
   };
 }
 
+// -------------------------
+// useOrderPayment
+// -------------------------
 export function useOrderPayment() {
   const queryClient = useQueryClient();
 
@@ -226,17 +242,16 @@ export function useOrderPayment() {
     },
   );
 
-  function formatOrderInput(input: CreateOrderPaymentInput) {
-    const formattedInputs = { ...input };
-    createOrderPayment(formattedInputs);
-  }
-
   return {
-    createOrderPayment: formatOrderInput,
+    createOrderPayment: (input: CreateOrderPaymentInput) =>
+      createOrderPayment({ ...input }),
     isLoading,
   };
 }
 
+// -------------------------
+// useSavePaymentMethod
+// -------------------------
 export function useSavePaymentMethod() {
   const {
     mutate: savePaymentMethod,
