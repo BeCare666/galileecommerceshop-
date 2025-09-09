@@ -115,8 +115,7 @@ interface GetPaymentIntentProps {
   tracking_number: string;
   payment_gateway: string;
   recall_gateway?: boolean;
-  form_change_gateway?: boolean;
-  order?: Order; // ✅ on passe l'objet order ici
+  order?: { id: number };
 }
 
 export function useGetPaymentIntent({
@@ -128,8 +127,8 @@ export function useGetPaymentIntent({
   const router = useRouter();
   const { openModal } = useModalAction();
 
-  // ✅ orderId extrait depuis l'objet
-  const orderId = order?.id ? Number(order.id) : undefined;
+  // ID de la commande
+  const orderId = order?.id;
 
   const {
     data,
@@ -139,45 +138,45 @@ export function useGetPaymentIntent({
     isFetching,
   } = useQuery(
     [API_ENDPOINTS.PAYMENT_INTENT, { tracking_number, payment_gateway }],
-    () => {
+    async () => {
       if (!orderId) throw new Error('Order ID is missing');
-      console.log('createPaymentIntent payload:', {
+
+      const response = await client.orders.createPaymentIntent({
         orderId,
-        paymentGateway: 'flutterwave',
+        paymentGateway: payment_gateway,
       });
-      return client.orders.createPaymentIntent({
-        orderId,
-        paymentGateway: 'flutterwave',
-      });
+
+      return response;
     },
     {
-      enabled: Boolean(orderId),
+      enabled: Boolean(orderId), // empêche l'appel sans orderId
       retry: false,
       refetchOnWindowFocus: false,
       onSuccess: (item: any) => {
         if (!item) return;
 
-        let paymentData: Record<string, any> | null = null;
-        if (Array.isArray(item) && item.length > 0) paymentData = item[0];
-        else if (typeof item === 'object') paymentData = item;
+        const paymentData = typeof item === 'object' ? item : null;
 
-        if (!paymentData) return;
+        if (!paymentData?.payment_intent_info) {
+          toast.error('Impossible de récupérer les informations de paiement.');
+          return;
+        }
 
-        const rawPaymentInfo = paymentData.payment_intent_info;
-        const paymentInfo =
-          rawPaymentInfo && typeof rawPaymentInfo === 'string'
-            ? JSON.parse(rawPaymentInfo)
-            : rawPaymentInfo;
+        // 🔒 Vérification : paiement déjà effectué ?
+        if (paymentData.status === 'payment-success') {
+          toast('Cette commande a déjà été payée.');
+          return;
+        }
 
-        if (!paymentInfo) return;
+        const paymentInfo = paymentData.payment_intent_info;
 
-        // 🔗 Redirection classique
+        // Redirection classique
         if (paymentInfo.is_redirect && paymentInfo.redirect_url) {
           router.push(paymentInfo.redirect_url);
           return;
         }
 
-        // 🔗 Flutterwave
+        // Flutterwave modal
         if (payment_gateway.toLowerCase() === 'flutterwave') {
           (window as any).FlutterwaveCheckout({
             public_key: paymentInfo.public_key,
@@ -196,7 +195,8 @@ export function useGetPaymentIntent({
             },
             callback: (res: any) => {
               if (res.status === 'successful') {
-                getPaymentIntentQuery();
+                getPaymentIntentQuery(); // refetch backend pour mettre à jour le statut
+                toast.success('Paiement réussi !');
               }
             },
             onclose: () => console.log('Payment modal closed'),
@@ -204,19 +204,23 @@ export function useGetPaymentIntent({
           return;
         }
 
-        // 🔗 Modal interne autres gateways
+        // Pour d'autres gateways
         if (recall_gateway) window.location.reload();
         else openModal('PAYMENT_MODAL', {});
       },
-    },
+      onError: (err: any) => {
+        console.error('Failed to create payment intent:', err);
+        toast.error(err?.message || 'Failed to initiate payment');
+      },
+    }
   );
 
   return {
     data,
     getPaymentIntentQuery,
     isLoading,
-    error,
     isFetching,
+    error,
   };
 }
 

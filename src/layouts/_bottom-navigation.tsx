@@ -3,7 +3,8 @@ import routes from '@/config/routes';
 import Button from '@/components/ui/button';
 import SearchButton from '@/components/search/search-button';
 import CartButton from '@/components/cart/cart-button';
-import Hamburger from '@/components/ui/hamburger';
+import Aboutus from '@/components/ui/aboutus';
+
 import { HomeIcon } from '@/components/icons/home-icon';
 import { AboutIcon } from '@/components/icons/about-us-icon';
 import { GlobeIcon } from '@/components/icons/globe';
@@ -74,9 +75,10 @@ export default function BottomNavigation() {
         </div>
       </Button>
 
-      <div className="flex flex-col items-center justify-center">
-        <Hamburger onClick={() => openDrawer('MOBILE_MENU')} />
-        <span className="text-xs mt-1">Menu</span>
+      <div className="flex flex-col items-center justify-center"
+      >
+        <Aboutus onClick={() => openDrawer('MOBILE_MENU')} />
+        <span className="text-xs mt-1">A propos</span>
       </div>
     </nav>
 

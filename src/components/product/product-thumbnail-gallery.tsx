@@ -56,7 +56,10 @@ export default function ProductThumbnailGallery({
                   className="w-full h-full bg-center bg-no-repeat transition-all duration-500 ease-in-out"
                   style={{
                     backgroundImage: `url(${item?.url ?? placeholder})`,
-                    backgroundSize: '200%', // zoom 2x
+                    backgroundSize: 'cover', // Normal au départ
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundSize = '200%'; // Zoom activé au survol
                   }}
                   onMouseMove={(e) => {
                     const rect = e.currentTarget.getBoundingClientRect();
@@ -65,7 +68,8 @@ export default function ProductThumbnailGallery({
                     e.currentTarget.style.backgroundPosition = `${x}% ${y}%`;
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundPosition = 'center';
+                    e.currentTarget.style.backgroundSize = 'cover'; // Retour à normal
+                    e.currentTarget.style.backgroundPosition = 'center'; // Reset position
                   }}
                 />
                 <img
@@ -75,6 +79,7 @@ export default function ProductThumbnailGallery({
                 />
               </div>
             </SwiperSlide>
+
           ))}
         </Swiper>
         <div className="absolute top-2/4 z-10 flex w-full items-center justify-between px-2.5 xl:px-4">

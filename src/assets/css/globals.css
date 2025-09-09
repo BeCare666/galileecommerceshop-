@@ -664,3 +664,8 @@ html.dark .react-tel-input .country-list .country:hover {
   /*rgb(237 237 237 / var(--tw-bg-opacity));
   */
 }
+
+/* global.css ou styles.css */
+nav::-webkit-scrollbar {
+  display: none;
+}

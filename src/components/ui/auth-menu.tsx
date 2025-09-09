@@ -13,7 +13,7 @@ export default function AuthorizedMenu({ user }: { user: User }) {
   const { t } = useTranslation('common');
   return (
     <Menu>
-      <Menu.Button className="relative inline-flex h-8 w-8 justify-center rounded-full border border-light-400 bg-light-300 dark:border-dark-500 dark:bg-dark-500">
+      <Menu.Button className="relative inline-flex h-8 w-8 justify-center rounded-full border border-light-400 bg-light-300 dark:border-dark-500 dark:bg-dark-500 text-black">
         <Avatar size="sm" name={user?.name} src={user?.profile?.avatar?.url} />
       </Menu.Button>
       <Transition

@@ -32,6 +32,29 @@ export default function GalileeHeader() {
   const [openC, setOpenC] = useState(false);
   const [mapIsOk, setMapIsOk] = useState(false);
   const { openModal } = useModalAction();
+  const [showSearch, setShowSearch] = useState(false);
+  const items = [
+    { label: 'Les produits les plus récherchés sur galileecommerce :', href: '#' },
+    { label: 'Préfabriqués', href: '/prefabriques' },
+    { label: 'Ligne de production', href: '/ligne-production' },
+    { label: 'Habillement', href: '/habillement' },
+    { label: 'Électronique', href: '/electronique' },
+    { label: 'Maison', href: '/maison' },
+  ];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 150) { // déclenchement après 150px de scroll
+        setShowSearch(true);
+      } else {
+        setShowSearch(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setDrawerOpen(false);
@@ -49,7 +72,7 @@ export default function GalileeHeader() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-
+  {/* Top bar 
   const items = [
     {
       label: 'Préfabriqués',
@@ -132,6 +155,7 @@ export default function GalileeHeader() {
       ),
     },
   ];
+  */ }
   useEffect(() => {
     document.body.style.overflow = drawerOpen ? 'hidden' : '';
   }, [drawerOpen]);
@@ -164,16 +188,36 @@ export default function GalileeHeader() {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Rechercher sur galileecommerce.com ...."
-            className="hidden lg:block max-w-[50px] lg:max-w-[550px] w-full w-[10px] bg-gray-600 flex-1 rounded-full px-4 py-2 text-gray-900 placeholder-gray-500 shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all duration-200"
+            placeholder="Rechercher sur galileecommerce.com ..."
             onClick={openSearch}
+            className={`
+          hidden lg:block   w-full bg-white-600 flex-1 rounded-full px-4 py-2
+          text-gray-900 placeholder-gray-500 shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-500
+          transition-all duration-500 ease-in-out
+          ${showSearch ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"}
+        `}
           />
-          <div className=" ml-2 lg:hidden" onClick={openSearch}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <div
+            className={`
+          ml-2 lg:hidden transition-all duration-500 ease-in-out
+          ${showSearch ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"}
+        `}
+            onClick={openSearch}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <circle cx="11" cy="11" r="6"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-
           </div>
           <div className="flex items-center gap-2 border border-gray-700 rounded px-2 py-1 hover:border-pink-500 transition-colors group-hover:border-black">
             <LanguageSwitcher />
@@ -237,6 +281,11 @@ export default function GalileeHeader() {
                 {isMounted && totalItems}
               </span>
             </div>
+            {isAuthorized && (
+              <div className="hidden lg:block">
+                <LoginMenu />
+              </div>
+            )}
           </div>
 
           {/* Mobile burger */}
@@ -261,16 +310,19 @@ export default function GalileeHeader() {
           </button>
         </div>
       </div>
-      {/* Search bar */}
-      <div className="bg-gray-800 lg:py-4">
+
+      {/* Search bar bg-gray-800*/}
+      <div className="bg-pink-500 lg:py-4 transition-all duration-500 ease-in-out">
         <div className="lg:px-6 flex items-center h-14 relative">
           <nav
-            className="
-            flex items-center gap-3 text-xs lg:text-sm text-gray-200 px-2
-            overflow-x-auto overflow-y-visible whitespace-nowrap scrollbar-hide
+            className={`
+            flex items-center gap-3 text-[10px] lg:text-sm text-gray-200  
+            overflow-x-auto overflow-y-visible whitespace-nowrap
+            scrollbar-hide  /* cache la scrollbar sur mobile/tablette */
             relative left-1
             lg:left-auto lg:relative lg:right-2 lg:gap-9
-          "
+           ${showSearch ? "hidden -translate-y-4 pointer-events-none" : ""}
+        `}
           >
             <Link
               href="#"
@@ -318,7 +370,7 @@ export default function GalileeHeader() {
               onMouseLeave={() => setOpenDropdown(false)}
             >
               <button
-                onClick={() => setDrawerOpen(true)}
+                onClick={() => openDrawer('MOBILE_MENU')}
                 //onClick={() => setOpenDropdown((s) => !s)}
                 className={`px-2 py-1 rounded transition-colors flex items-center gap-1 ${isHoverCategories ? 'bg-white text-black' : 'text-white'} text-xs lg:text-sm`}
                 aria-haspopup="true"
@@ -382,9 +434,28 @@ export default function GalileeHeader() {
             </div>
 
           </nav>
-
-        </div>
-      </div>
+          <nav
+            className={` lg:ml-9
+        flex items-center gap-3 text-[8px] lg:text-sm text-gray-200 px-2
+        overflow-x-auto overflow-y-visible whitespace-nowrap
+        relative left-1
+        lg:left-auto lg:relative lg:right-2 lg:gap-9
+       ${showSearch ? "translate-y-0" : "hidden -translate-y-4 pointer-events-none"}
+        `}
+            style={{ scrollbarWidth: "none" }} // Firefox
+          >
+            {items.map((item, idx) => (
+              <Link
+                key={idx}
+                href={item.href}
+                className="inline-block px-2 py-1 rounded transition-colors text-white"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+        </div >
+      </div >
 
       <div className="hidden bg-gray-800 py-4 relative">
         <div className="px-6 flex items-center h-14 relative">
@@ -469,7 +540,7 @@ export default function GalileeHeader() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Rechercher sur galileecommerce.com ...."
-              className="max-w-[150px] lg:max-w-[450px] w-full w-[10px] bg-gray-600 flex-1 rounded-full px-4 py-2 text-gray-900 placeholder-gray-500 shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all duration-200"
+              className="max-w-[450px] lg:max-w-[650px] w-full bg-gray-600 flex-1 rounded-full px-4 py-2 text-gray-900 placeholder-white shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all duration-200"
               onClick={openSearch}
             />
             <div>
@@ -494,7 +565,7 @@ export default function GalileeHeader() {
           </div>
         </div>
       </div>
-      {/* Dropdown */}
+      {/* Dropdown 
       {open && (
         <div className="absolute right-0 mt-2 w-56 bg-white text-black rounded-md shadow-lg z-50">
           <ul className="py-2 text-sm">
@@ -513,91 +584,94 @@ export default function GalileeHeader() {
           </ul>
         </div>
       )}
+        */}
       {/* Mobile Drawer */}
-      {drawerOpen && (
-        <div className="fixed inset-0 z-[1000] flex">
-          {/* Overlay */}
-          <div
-            className="fixed inset-0 bg-black/50"
-            onClick={() => setDrawerOpen(false)}
-          />
+      {
+        drawerOpen && (
+          <div className="fixed inset-0 z-[1000] flex">
+            {/* Overlay */}
+            <div
+              className="fixed inset-0 bg-black/50"
+              onClick={() => setDrawerOpen(false)}
+            />
 
-          {/* Drawer */}
-          <div
-            ref={drawerRef}
-            className={`fixed top-0 right-0 w-72 h-full bg-gray-900 text-white shadow-lg transform transition-transform duration-300 ease-in-out z-[1001] ${drawerOpen ? 'translate-x-0' : 'translate-x-full'
-              }`}
-          >
-            <div className="flex flex-col h-full">
-              {/* Header with logo + close */}
-              <div className="flex items-center justify-between px-4 py-4 border-b border-gray-700">
-                <div className="flex items-center gap-2">
-                  <Image
-                    src={productPlaceholder}
-                    alt="Logo"
-                    width={164}
-                    height={84}
-                  />
+            {/* Drawer */}
+            <div
+              ref={drawerRef}
+              className={`fixed top-0 right-0 w-72 h-full bg-gray-900 text-white shadow-lg transform transition-transform duration-300 ease-in-out z-[1001] ${drawerOpen ? 'translate-x-0' : 'translate-x-full'
+                }`}
+            >
+              <div className="flex flex-col h-full">
+                {/* Header with logo + close */}
+                <div className="flex items-center justify-between px-4 py-4 border-b border-gray-700">
+                  <div className="flex items-center gap-2">
+                    <Image
+                      src={productPlaceholder}
+                      alt="Logo"
+                      width={164}
+                      height={84}
+                    />
+                  </div>
+                  <LoginMenu />
+                  <button
+                    onClick={() => setDrawerOpen(false)}
+                    className="text-gray-400 hover:text-white"
+                  >
+                    ✕
+                  </button>
                 </div>
-                <LoginMenu />
-                <button
-                  onClick={() => setDrawerOpen(false)}
-                  className="text-gray-400 hover:text-white"
-                >
-                  ✕
-                </button>
+
+                {/* Navigation */}
+                <nav className="flex flex-col gap-4 px-4 py-6">
+                  {[
+                    'Suivi des commandes',
+                    'Marché',
+                    'Pavillons',
+                    'Corridors',
+                    'Centrale d’achat',
+                    'Devenir fournisseur',
+                  ].map((item, idx) => (
+                    <a key={idx} className="hover:text-pink-500 transition">
+                      {item}
+                    </a>
+                  ))}
+                </nav>
+
+                {/* Spacer */}
+                <div className="flex-grow"></div>
+
+                {/* Connexion / Créer un compte */}
+                {isAuthorized && (
+                  <div className="px-4 py-6 border-t border-gray-700 flex flex-col gap-3">
+                    <button className="w-full py-2 px-4 rounded bg-pink-600 hover:bg-pink-700 transition">
+                      Devenir fournisseur
+                    </button>
+                    <button className="w-full py-2 px-4 rounded bg-gray-700 hover:bg-gray-600 transition">
+                      Devenir ambassadeur
+                    </button>
+                  </div>
+                )}
+                {!isAuthorized && (
+                  <div className="px-4 py-6 border-t border-gray-700 flex flex-col gap-3">
+                    <button
+                      className="w-full py-2 px-4 rounded bg-pink-600 hover:bg-pink-700 transition"
+                      onClick={() => openModal('LOGIN_VIEW')}
+                    >
+                      Connexion
+                    </button>
+                    <button
+                      className="w-full py-2 px-4 rounded bg-gray-700 hover:bg-gray-600 transition"
+                      onClick={() => openModal('REGISTER')}
+                    >
+                      Créer un compte
+                    </button>
+                  </div>
+                )}
               </div>
-
-              {/* Navigation */}
-              <nav className="flex flex-col gap-4 px-4 py-6">
-                {[
-                  'Suivi des commandes',
-                  'Marché',
-                  'Pavillons',
-                  'Corridors',
-                  'Centrale d’achat',
-                  'Devenir fournisseur',
-                ].map((item, idx) => (
-                  <a key={idx} className="hover:text-pink-500 transition">
-                    {item}
-                  </a>
-                ))}
-              </nav>
-
-              {/* Spacer */}
-              <div className="flex-grow"></div>
-
-              {/* Connexion / Créer un compte */}
-              {isAuthorized && (
-                <div className="px-4 py-6 border-t border-gray-700 flex flex-col gap-3">
-                  <button className="w-full py-2 px-4 rounded bg-pink-600 hover:bg-pink-700 transition">
-                    Devenir fournisseur
-                  </button>
-                  <button className="w-full py-2 px-4 rounded bg-gray-700 hover:bg-gray-600 transition">
-                    Devenir ambassadeur
-                  </button>
-                </div>
-              )}
-              {!isAuthorized && (
-                <div className="px-4 py-6 border-t border-gray-700 flex flex-col gap-3">
-                  <button
-                    className="w-full py-2 px-4 rounded bg-pink-600 hover:bg-pink-700 transition"
-                    onClick={() => openModal('LOGIN_VIEW')}
-                  >
-                    Connexion
-                  </button>
-                  <button
-                    className="w-full py-2 px-4 rounded bg-gray-700 hover:bg-gray-600 transition"
-                    onClick={() => openModal('REGISTER')}
-                  >
-                    Créer un compte
-                  </button>
-                </div>
-              )}
             </div>
           </div>
-        </div>
-      )}
-    </header>
+        )
+      }
+    </header >
   );
 }
