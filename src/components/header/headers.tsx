@@ -163,7 +163,7 @@ export default function GalileeHeader() {
   return (
     <header
       className={`w-full sticky top-0 z-50 transition-colors duration-300
-    ${isHoverCategories ? 'bg-white text-black' : 'bg-gray-900 text-white'}`}
+    ${isHoverCategories || showSearch ? 'bg-white text-black' : 'bg-gray-900 text-white'}`}
     >
       {' '}
       {/* Top bar */}
@@ -245,7 +245,7 @@ export default function GalileeHeader() {
             <div className="relative hover:scale-110 transition-transform cursor-pointer">
               <svg
                 className={`w-7 h-7   group-hover:text-black
-                            ${isHoverCategories ? 'bg-white text-black' : 'bg-gray-900 text-white'}`}
+                            ${isHoverCategories || showSearch ? 'bg-white text-black' : 'bg-gray-900 text-white'}`}
                 viewBox="0 0 24 24"
                 fill="none"
               >
@@ -267,7 +267,7 @@ export default function GalileeHeader() {
             >
               <svg
                 className={`w-7 h-7   group-hover:text-black
-                            ${isHoverCategories ? 'bg-white text-black' : 'bg-gray-900 text-white'}`}
+                            ${isHoverCategories || showSearch ? 'bg-white text-black' : 'bg-gray-900 text-white'}`}
                 viewBox="0 0 24 24"
                 fill="none"
               >
@@ -312,7 +312,9 @@ export default function GalileeHeader() {
       </div>
 
       {/* Search bar bg-gray-800*/}
-      <div className="bg-pink-500 lg:py-4 transition-all duration-500 ease-in-out">
+      <div className={`bg-pink-500 lg:py-4 transition-all duration-500 ease-in-out
+         ${showSearch ? "bg-white text-black" : ""}
+        `}>
         <div className="lg:px-6 flex items-center h-14 relative">
           <nav
             className={`
@@ -321,7 +323,7 @@ export default function GalileeHeader() {
             scrollbar-hide  /* cache la scrollbar sur mobile/tablette */
             relative left-1
             lg:left-auto lg:relative lg:right-2 lg:gap-9
-           ${showSearch ? "hidden -translate-y-4 pointer-events-none" : ""}
+           ${showSearch ? "hidden -translate-y-4 pointer-events-none bg-white text-black" : ""}
         `}
           >
             <Link
@@ -361,6 +363,9 @@ export default function GalileeHeader() {
 
             <Link href="#" className="inline-block px-2 py-1 rounded transition-colors text-white">
               Devenir fournisseur
+            </Link>
+            <Link href="#" className="inline-block px-2 py-1 rounded transition-colors text-white">
+              Devenir Ambassadeur
             </Link>
 
             {/* A propos */}
@@ -448,7 +453,9 @@ export default function GalileeHeader() {
               <Link
                 key={idx}
                 href={item.href}
-                className="inline-block px-2 py-1 rounded transition-colors text-white"
+                className={`inline-block px-2 py-1 
+                ${showSearch ? "text-black" : ""}
+              `}
               >
                 {item.label}
               </Link>
@@ -477,7 +484,7 @@ export default function GalileeHeader() {
 
             <Link
               href="#"
-              className={`px-2 py-1 rounded transition-colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
+              className={`px - 2 py - 1 rounded transition - colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
                 }`}
             >
               Suivi des commandes
@@ -485,7 +492,7 @@ export default function GalileeHeader() {
 
             <Link
               href="#"
-              className={`px-2 py-1 rounded transition-colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
+              className={`px - 2 py - 1 rounded transition - colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
                 }`}
             >
               Marchés
@@ -493,7 +500,7 @@ export default function GalileeHeader() {
 
             <Link
               href="#"
-              className={`px-2 py-1 flex items-center rounded transition-colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
+              className={`px - 2 py - 1 flex items - center rounded transition - colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
                 }`}
             >
               Pavillons
@@ -503,7 +510,7 @@ export default function GalileeHeader() {
             <Link
               onClick={() => setOpenC(true)}
               href="#"
-              className={`px-2 py-1 rounded transition-colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
+              className={`px - 2 py - 1 rounded transition - colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
                 }`}
             >
               Corridors
@@ -517,7 +524,7 @@ export default function GalileeHeader() {
 
             <Link
               href="#"
-              className={`px-2 py-1 rounded transition-colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
+              className={`px - 2 py - 1 rounded transition - colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
                 }`}
             >
               Centrale d’achat
@@ -525,10 +532,17 @@ export default function GalileeHeader() {
 
             <Link
               href="#"
-              className={`px-2 py-1 rounded transition-colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
+              className={`px - 2 py - 1 rounded transition - colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
                 }`}
             >
               Devenir fournisseur
+            </Link>
+            <Link
+              href="#"
+              className={`px - 2 py - 1 rounded transition - colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
+                }`}
+            >
+              Devenir Ambassadeur
             </Link>
 
             {/* Ton dropdown reste inchangé */}
@@ -598,7 +612,7 @@ export default function GalileeHeader() {
             {/* Drawer */}
             <div
               ref={drawerRef}
-              className={`fixed top-0 right-0 w-72 h-full bg-gray-900 text-white shadow-lg transform transition-transform duration-300 ease-in-out z-[1001] ${drawerOpen ? 'translate-x-0' : 'translate-x-full'
+              className={`fixed top - 0 right - 0 w - 72 h - full bg - gray - 900 text - white shadow - lg transform transition - transform duration - 300 ease -in -out z - [1001] ${drawerOpen ? 'translate-x-0' : 'translate-x-full'
                 }`}
             >
               <div className="flex flex-col h-full">

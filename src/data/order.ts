@@ -17,7 +17,8 @@ import client from '@/data/client';
 import { useRouter } from 'next/router';
 import { useModalAction } from '@/components/modal-views/context';
 import toast from 'react-hot-toast';
-
+import { getAuthToken, removeAuthToken } from '../data/client/token.utils';
+const token = getAuthToken();
 // -------------------------
 // useOrders
 // -------------------------
@@ -169,10 +170,9 @@ export function useGetPaymentIntent({
         }
 
         const paymentInfo = paymentData.payment_intent_info;
-
-        // Redirection classique
+        console.log("🔹 paymentData avant confirm:", paymentData);
         if (paymentInfo.is_redirect && paymentInfo.redirect_url) {
-          router.push(paymentInfo.redirect_url);
+          //window.location.href = paymentInfo.redirect_url; // ✅ vraie redirection
           return;
         }
 
@@ -193,10 +193,47 @@ export function useGetPaymentIntent({
               title: paymentInfo.title || 'Payment',
               description: paymentInfo.description || 'Order Payment',
             },
-            callback: (res: any) => {
-              if (res.status === 'successful') {
-                getPaymentIntentQuery(); // refetch backend pour mettre à jour le statut
-                toast.success('Paiement réussi !');
+            callback: async (res: any) => {
+              try {
+                const API_URL = process.env.NEXT_PUBLIC_REST_API_ENDPOINT;
+
+                // 👀 Log de ce que tu envoies
+                console.log("🔹 Données envoyées au backend:", {
+                  paymentIntentId: paymentData.id,
+                  tx_ref: res?.tx_ref,
+                  transaction_id: res?.transaction_id,
+                });
+
+                const response = await fetch(`${API_URL}/payments/confirm`, {
+                  method: "POST",
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    paymentIntentId: paymentData.id,
+                    tx_ref: res?.tx_ref,
+                    transaction_id: res?.transaction_id,
+                  }),
+                });
+
+                // 👀 Log du status HTTP
+                console.log("🔹 Status de la réponse:", response.status);
+
+                const result = await response.json();
+
+                // 👀 Log du résultat
+                console.log("🔹 Réponse du backend:", result);
+
+                if (result.success) {
+                  toast.success("Paiement confirmé !");
+                  // window.location.href = result.invoiceUrl; // facture ou page de succès
+                } else {
+                  toast.error("Le paiement n’a pas été confirmé.");
+                }
+              } catch (err) {
+                console.error("❌ Erreur lors de la confirmation du paiement:", err);
+                toast.error("Erreur lors de la confirmation du paiement.");
               }
             },
             onclose: () => console.log('Payment modal closed'),

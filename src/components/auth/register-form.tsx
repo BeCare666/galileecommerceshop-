@@ -9,7 +9,7 @@ import { useModalAction } from '@/components/modal-views/context';
 import Input from '@/components/ui/forms/input';
 import client from '@/data/client';
 import Button from '@/components/ui/button';
-import { RegisterBgPattern } from '@/components/auth/register-bg-pattern';
+import SocialLogin from '@/components/sociallogin/sociallogin';
 import { useState } from 'react';
 import useAuth from './use-auth';
 import { useTranslation } from 'next-i18next';
@@ -129,7 +129,7 @@ export default function RegisterUserForm() {
             <span className="mx-2 text-xs text-gray-500 uppercase">or</span>
             <hr className="flex-grow border-t border-gray-300" />
           </div>
-
+          <SocialLogin />
           <div className="flex flex-col gap-3 mt-5 lg:mt-7">
             {/* Google Login Button */}
             <button
@@ -185,6 +185,6 @@ export default function RegisterUserForm() {
 
         </div>
       </div>
-    </div>
+    </div >
   );
 }
