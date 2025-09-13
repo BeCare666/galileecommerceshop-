@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import productPlaceholder from '@/assets/logo/ilogo.png';
+import productPlaceholder from '@/assets/logo/logo_f_1.jpg';
+import productPlaceholderx from '@/assets/logo/logo_f_2.png';
 import LanguageSwitcher from '@/components/ui/language-switcher';
 import CategoryMegaMenu from '@/components/category-ega-enu/category-ega-enu';
 import LoginMenu from '@/components/ui/login-button';
@@ -170,13 +171,14 @@ export default function GalileeHeader() {
       <div className="max-w-[1780px] px-3 py-3 flex items-center justify-between">
         {/* Logo + desktop nav */}
         <div className="flex items-center gap-5">
+
           <div className="flex items-center gap-3">
             <Image
-              src={productPlaceholder}
+              src={isHoverCategories || showSearch ? productPlaceholder : productPlaceholderx}
               alt="Logo"
-              width={164}
-              height={84}
-              className="object-contain group-hover:brightness-0"
+              width={isHoverCategories || showSearch ? 164 : 200}
+            height={isHoverCategories || showSearch ? 130 : 100}
+            className="object-contain group-hover:brightness-0"
             />
           </div>
 
@@ -312,7 +314,7 @@ export default function GalileeHeader() {
       </div>
 
       {/* Search bar bg-gray-800*/}
-      <div className={`bg-pink-500 lg:py-4 transition-all duration-500 ease-in-out
+      <div className={`bg-pink-600 lg:py-4 transition-all duration-500 ease-in-out
          ${showSearch ? "bg-white text-black" : ""}
         `}>
         <div className="lg:px-6 flex items-center h-14 relative">
@@ -357,7 +359,7 @@ export default function GalileeHeader() {
               <Modal isOpen={openC} onClose={() => setOpenC(false)} mapIsOk={mapIsOk} setMapIsOk={setMapIsOk} />
             </Link>
 
-            <Link href="#" className="inline-block px-2 py-1 rounded transition-colors text-white">
+            <Link href="/centrale-achat" className="inline-block px-2 py-1 rounded transition-colors text-white">
               Centrale d’achat
             </Link>
 
@@ -523,7 +525,7 @@ export default function GalileeHeader() {
             </Link>
 
             <Link
-              href="#"
+              href="/centrale-achat"
               className={`px - 2 py - 1 rounded transition - colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
                 }`}
             >

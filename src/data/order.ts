@@ -203,7 +203,7 @@ export function useGetPaymentIntent({
                   tx_ref: res?.tx_ref,
                   transaction_id: res?.transaction_id,
                 });
-
+                console.log("ajouter")
                 const response = await fetch(`${API_URL}/payments/confirm`, {
                   method: "POST",
                   headers: {
@@ -213,7 +213,7 @@ export function useGetPaymentIntent({
                   body: JSON.stringify({
                     paymentIntentId: paymentData.id,
                     tx_ref: res?.tx_ref,
-                    transaction_id: res?.transaction_id,
+                    transaction_id: String(res?.transaction_id),
                   }),
                 });
 

@@ -267,7 +267,7 @@ export default function CategoryMegaMenu() {
 
           {/* Bouton Appliquer */}
           <button
-            className="absolute bottom-4 right-4 px-4 py-2 bg-pink-500 text-white rounded hover:scale-105 transition"
+            className="fixed bottom-4 right-4 w-[120px] h-[48px] bg-pink-500 text-white rounded hover:scale-105 transition flex items-center justify-center shadow-lg"
             onClick={applyFilter}
           >
             Appliquer
