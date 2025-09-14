@@ -53,7 +53,7 @@ const BecomeSellerPage: NextPageWithLayout = () => {
       {/* Bouton retour */}
       <button
         onClick={handleBack}
-        className="fixed top-4 left-4 flex items-center gap-2 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-full shadow-md hover:bg-gray-100 dark:hover:bg-gray-700 transition z-50"
+        className="fixed top-[60px] left-4 flex items-center gap-2 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-full shadow-md hover:bg-gray-100 dark:hover:bg-gray-700 transition z-50"
       >
         {/* SVG flèche gauche */}
         <svg
