@@ -2,7 +2,7 @@ const invariant = require('tiny-invariant');
 const path = require('path');
 
 // valeur par défaut si la variable n’existe pas
-const defaultLang = process.env.NEXT_PUBLIC_DEFAULT_LANGUAGE || 'en';
+const defaultLang = process.env.NEXT_PUBLIC_DEFAULT_LANGUAGE || 'fr';
 
 invariant(
   defaultLang,

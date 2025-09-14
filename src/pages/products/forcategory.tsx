@@ -149,7 +149,6 @@ export default function ProductsPage() {
         description="Explore our products by category."
         url={routes.productscategory}
       />
-      <CategoryFilter />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {products.map((product: any) => (
           <Card key={product.id} product={product} />
@@ -287,9 +286,8 @@ export default function ProductsPage() {
 
           {/* Texte qui apparaît au hover */}
           <span
-            className={`absolute -left-56 w-48 bg-white text-gray-900 px-3 py-2 rounded-lg shadow-lg text-sm font-medium transition-all duration-500 ${
-              hover ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
-            }`}
+            className={`absolute -left-56 w-48 bg-white text-gray-900 px-3 py-2 rounded-lg shadow-lg text-sm font-medium transition-all duration-500 ${hover ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+              }`}
             onClick={handleProductorigincheck}
           >
             Les produits d’origine

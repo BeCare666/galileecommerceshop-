@@ -43,5 +43,5 @@ export const API_ENDPOINTS = {
   TERMS_AND_CONDITIONS: 'terms-and-conditions',
   FAQS: '/faqs',
   USERS_SUBSCRIBE_TO_NEWSLETTER: '/subscribe-to-newsletter',
-  BECAME_SELLER: 'became-seller',
+  BECAME_SELLER: 'users/became-seller',
 };

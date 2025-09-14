@@ -378,17 +378,43 @@ class Client {
         }),
       }),
   };
-  becomeSeller = {
-    get: ({ language }: Pick<QueryOptions, 'language'>) => {
-      return HttpClient.get<BecomeSeller>(
-        API_ENDPOINTS.BECAME_SELLER,
-        { params: { language } }
-      );
-    },
-    post: () => {
-      return HttpClient.post(API_ENDPOINTS.BECAME_SELLER, {}); // ✅ Ajout de data vide
-    },
-  };
+becomeSeller = {
+  get: ({ language }: Pick<QueryOptions, 'language'>) => {
+    return HttpClient.get<BecomeSeller>(
+      API_ENDPOINTS.BECAME_SELLER,
+      { params: { language } }
+    );
+  },
+  post: async () => {
+    try {
+      const response = await HttpClient.post(API_ENDPOINTS.BECAME_SELLER, {}); // ✅ data vide
+      return response;
+    } catch (error: any) {
+      if (error.response) {
+        // ⚠️ Cas particulier : déjà vendeur
+        if (
+          error.response.data?.message === "Vous êtes déjà vendeur sur Galilée Commerce."
+        ) {
+          throw new Error("⚠️ Vous êtes déjà vendeur sur Galilée Commerce.");
+        }
+
+        // ⚠️ Cas particulier : rôle incorrect
+        if (
+          error.response.data?.message === "Seuls les utilisateurs avec le rôle 'customer' peuvent devenir vendeur."
+        ) {
+          throw new Error("🚫 Seuls les clients peuvent devenir vendeur.");
+        }
+
+        // ⚠️ Autres erreurs du backend
+        throw new Error(error.response.data?.message || "Une erreur est survenue.");
+      }
+
+      // ⚠️ Erreur réseau ou autre
+      throw new Error("Impossible de contacter le serveur.");
+    }
+  },
+};
+
 
 
 

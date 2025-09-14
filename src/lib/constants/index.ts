@@ -1,6 +1,5 @@
 import { atom } from 'jotai';
 import routes from '@/config/routes';
-
 export const CART_KEY = 'pixer-cart';
 export const CHECKOUT = 'pixer-checkout';
 export const PRODUCTS_PER_PAGE = 30;

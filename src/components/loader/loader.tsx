@@ -8,7 +8,7 @@ export default function Preloader() {
         alt="logo"
         className={styles.logo}
       />
-      <p className={styles.text}>Bienvenue sur GalileeCommerce !</p>
+      <p className={styles.text}>GalileeCommerce !</p>
       <p className={styles.textspin}></p>
       <p className={styles.textspin}></p>
       <p className={styles.textspin}></p>
