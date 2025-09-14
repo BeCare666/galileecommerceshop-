@@ -27,7 +27,7 @@ const BecomeSellerPage: NextPageWithLayout = () => {
       // Redirection sécurisée côté client après un petit délai
       if (typeof window !== "undefined") {
         setTimeout(() => {
-          window.location.href = "https://galileecommerceadmin-six.vercel.app/login";
+          window.location.href = "https://galileecommerceadmin-six.vercel.app/fr/login";
         }, 1500); // 1.5s pour laisser le toast visible
       }
     },
