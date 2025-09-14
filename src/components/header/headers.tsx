@@ -177,8 +177,8 @@ export default function GalileeHeader() {
               src={isHoverCategories || showSearch ? productPlaceholder : productPlaceholderx}
               alt="Logo"
               width={isHoverCategories || showSearch ? 164 : 200}
-            height={isHoverCategories || showSearch ? 130 : 100}
-            className="object-contain group-hover:brightness-0"
+              height={isHoverCategories || showSearch ? 130 : 100}
+              className="object-contain group-hover:brightness-0"
             />
           </div>
 
@@ -363,7 +363,7 @@ export default function GalileeHeader() {
               Centrale d’achat
             </Link>
 
-            <Link href="#" className="inline-block px-2 py-1 rounded transition-colors text-white">
+            <Link href="/become-seller" className="inline-block px-2 py-1 rounded transition-colors text-white">
               Devenir fournisseur
             </Link>
             <Link href="#" className="inline-block px-2 py-1 rounded transition-colors text-white">
@@ -533,7 +533,7 @@ export default function GalileeHeader() {
             </Link>
 
             <Link
-              href="#"
+              href="/become-seller"
               className={`px - 2 py - 1 rounded transition - colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
                 }`}
             >
@@ -607,7 +607,7 @@ export default function GalileeHeader() {
           <div className="fixed inset-0 z-[1000] flex">
             {/* Overlay */}
             <div
-              className="fixed inset-0 bg-black/50"
+              className="fixed inset-0 bg-gray-800"
               onClick={() => setDrawerOpen(false)}
             />
 
@@ -660,7 +660,9 @@ export default function GalileeHeader() {
                 {isAuthorized && (
                   <div className="px-4 py-6 border-t border-gray-700 flex flex-col gap-3">
                     <button className="w-full py-2 px-4 rounded bg-pink-600 hover:bg-pink-700 transition">
-                      Devenir fournisseur
+                      <Link href="/become-seller">
+                        Devenir fournisseur
+                      </Link>
                     </button>
                     <button className="w-full py-2 px-4 rounded bg-gray-700 hover:bg-gray-600 transition">
                       Devenir ambassadeur

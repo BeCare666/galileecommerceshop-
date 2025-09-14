@@ -140,7 +140,7 @@ export default function ProductsPage() {
     };
   }, [loading, hasMore, fetchProducts]);
   async function handleProductorigincheck() {
-    router.push('/products/forcategory?categories_id=22');
+    router.push('/forcategory?categories_id=22');
   }
   return (
     <>
