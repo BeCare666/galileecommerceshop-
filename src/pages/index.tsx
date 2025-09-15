@@ -4,7 +4,8 @@ import type {
   ProductQueryOptions,
   SettingsQueryOptions,
 } from '@/types';
-import HomePage from '@/components/home-page/home-page';
+//import HomePage from '@/components/home-page/home-page';
+import HomePage from '@/components/home-page/homepage';
 import FreeShipping from '@/components/free-shipping/free-shipping';
 import LimitedOffer from '@/components/limited-offer/limited-offer';
 import PromoBannier from '@/components/promo-bannier/promo-bannier';

@@ -639,10 +639,12 @@ html.dark .react-tel-input .country-list .country:hover {
 /* @import './rich-text-editor.css';
 */
 
-
+.mt-3 {
+  margin-top: 0 !important;
+}
 
 .ltr\:sm\:pl-\[75px\]:where([dir="ltr"], [dir="ltr"] *) {
-  padding-left: 5px !important;
+  padding-left: 0px !important;
 }
 
 

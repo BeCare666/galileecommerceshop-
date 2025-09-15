@@ -1,58 +1,46 @@
-"use client";
-import Image from "next/image";
-import Centrale_img4 from "@/assets/images/centrale-achat/centrale_img4.png";
+// components/Step1Background.tsx
+import React from "react";
+import Menu3 from "@/assets/images/centrale-achat/menu3.png"; // ou utilisez une URL publique
 
-export default function Etape2() {
+export default function Step1Background() {
     return (
-        <section className="w-full px-4 md:px-8 py-10">
-            <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start gap-8">
-                {/* Gauche : numéro + titre + liste */}
-                <div className="w-full md:w-1/2">
-                    <div className="relative">
-                        {/* grand cercle blanc contenant "02" */}
-                        <div className="w-36 h-36 md:w-56 md:h-56 rounded-full bg-white shadow-[0_12px_30px_rgba(0,0,0,0.12)] flex items-center justify-center">
-                            <span className="text-[#F4C300] md:text-[104px] text-4xl font-extrabold leading-none">02</span>
-                        </div>
+        <section
+            className="relative h-screen w-full bg-center bg-cover bg-no-repeat"
+            style={{ backgroundImage: `url(${Menu3.src})` }}
+            aria-label="Étape 1 - Choisir une campagne"
+            id="chooseId2">
+            {/* Overlay bleu foncé semi-transparent (derrière le texte) */}
+            <div className="absolute inset-0 bg-[#1B2232] opacity-60" />
 
-                        {/* cartouche titre */}
-                        <div className="absolute left-28 md:left-40 top-4 md:top-8 bg-white shadow-lg rounded px-4 py-3 max-w-xs">
-                            <h2 className="text-lg md:text-2xl font-bold">Étape 2. Formalités et assurance</h2>
-                        </div>
+            {/* Contenu (au-dessus de l'overlay) */}
+            <div className="relative z-10 h-full flex items-center">
+                {/* Le wrapper contrôle l'alignement et la largeur du bloc texte.
+            - mobile : texte centré
+            - md+ : texte aligné à gauche avec large padding (comme sur ta maquette) */}
+                <div className="w-full px-6 py-12 md:pl-16 md:pr-6 lg:pl-28 lg:pr-8">
+                    <div className="max-w-xl mx-auto md:mx-0 text-white">
+                        <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl leading-tight mb-6 text-center md:text-left">
+                            Étape 1. <br />
+                            Choisir une <br />
+                            campagne
+                        </h2>
 
-                        {/* petite pastille jaune (desktop) */}
-                        <div className="hidden md:block absolute left-[calc(28rem-10px)] top-1/2 transform -translate-y-1/2">
-                            <div className="w-4 h-4 bg-[#F4C300] rounded-full shadow-sm"></div>
-                        </div>
-                    </div>
+                        <p className="text-sm md:text-base leading-relaxed mb-6 text-center md:text-left">
+                            La sélection des produits se fait dans le cadre des campagnes
+                            périodiques d’achats internationaux organisés par la centrale
+                            d’achat de Galileecommerce.com. Nous permettons aux adhérents de
+                            saisir les opportunités de marché et de trouver des produits ou
+                            services à des standards de qualité spécifiques ou élevés, et à des
+                            coûts défiant toute concurrence.
+                        </p>
 
-                    {/* Liste */}
-                    <ul className="mt-40 md:mt-28 list-disc pl-5 space-y-2 text-justify">
-                        <li>Compte adhérent (centrale d’achat de Galileecommerce.com)</li>
-                        <li>Informations produits, quantités et détails de l’envoi vers un point de réception</li>
-                        <li>Implémentation des règles Incoterms, code SH…</li>
-                        <li>Assurance de cargaison</li>
-                        <li>Facture commerciale</li>
-                        <li>Contrat et autres formalités administratives et douanières</li>
-                    </ul>
-                </div>
-
-                {/* Droite : image avec bande jaune */}
-                <div className="w-full md:w-1/2 flex justify-center">
-                    <div className="relative flex flex-col items-center w-11/12 md:w-4/5 max-w-md">
-                        {/* Image au-dessus */}
-                        <Image
-                            src={Centrale_img4}
-                            alt="formalites"
-                            className="relative z-10 object-cover w-full rounded-t-lg"
-                            priority
-                        />
-
-                        {/* Bande jaune collée */}
-                        <div className="w-full h-14 md:h-20 bg-[#F7C400] rounded-b-lg"></div>
+                        <p className="text-sm md:text-base font-semibold leading-relaxed text-center md:text-left">
+                            Choisissez l’une des campagnes d’achat international de
+                            Galileecommerce et sélectionnez les produits de votre choix.
+                        </p>
                     </div>
                 </div>
-
             </div>
-        </section>
+        </section >
     );
 }

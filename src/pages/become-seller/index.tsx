@@ -51,23 +51,7 @@ const BecomeSellerPage: NextPageWithLayout = () => {
       <Seo title="Devenir fournisseur" url={routes.becomeSeller} />
 
       {/* Bouton retour */}
-      <button
-        onClick={handleBack}
-        className="fixed top-[60px] left-4 flex items-center gap-2 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-full shadow-md hover:bg-gray-100 dark:hover:bg-gray-700 transition z-50"
-      >
-        {/* SVG flèche gauche */}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={2}
-          stroke="currentColor"
-          className="w-5 h-5"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-        </svg>
-        <span>Retour</span>
-      </button>
+
 
       {/* Section principale */}
       <section className="relative py-16 px-6 md:px-12 lg:px-20 h-full">
@@ -89,6 +73,23 @@ const BecomeSellerPage: NextPageWithLayout = () => {
               et développez vos ventes dès aujourd’hui !
             </p>
             <div className="flex justify-center lg:justify-start gap-4">
+              <button
+                onClick={handleBack}
+                className="flex items-center gap-2 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-full shadow-md hover:bg-gray-100 dark:hover:bg-gray-700 transition z-50"
+              >
+                {/* SVG flèche gauche */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  className="w-5 h-5"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+                <span>Retour</span>
+              </button>
               <button
                 onClick={() => becomeSeller()}
                 disabled={isLoading}
