@@ -200,6 +200,7 @@
   "text-terms-nine-title": "Contact us",
   "text-terms-nine-desc": "<p>We are always happy to chat. A good way to reach us here. <a href=\"/contact-us\" class=\"underline hover:text-brand-dark hover:no-underline\">Contact us</a></p>",
   "text-welcome-back": "Welcome Back, Get Login",
+  "text-welcome-back-register": "Create your Galileecommerce account",
   "text-create-an-account": "Create your account. Already have account?",
   "text-login": "Login here",
   "text-register": "Register",

@@ -11,13 +11,15 @@ import { setAuthCredentials } from '@/data/client/token.utils';
 import type { LoginUserInput } from '@/types';
 import { useTranslation } from 'next-i18next';
 import type { SubmitHandler } from 'react-hook-form';
+import Image from "next/image";
 import toast from 'react-hot-toast';
 import { useMutation } from 'react-query';
 import * as yup from 'yup';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 //import withReactContent from 'sweetalert2-react-content';
-
+import Logo from "@/assets/logo/IMG-20250914-WA0029.jpg";
+import { useRouter } from "next/router";
 const loginValidationSchema = yup.object().shape({
   email: yup.string().email().required(),
   password: yup.string().required(),
@@ -27,15 +29,19 @@ export default function LoginUserForm() {
   const { t } = useTranslation('common');
   const { openModal, closeModal } = useModalAction();
   const { authorize } = useAuth();
+  const router = useRouter();
   const { mutate: login, isLoading } = useMutation(client.users.login, {
     onSuccess: (data) => {
       Swal.fire({
-        title: "Login successful !",
-        text: "Welcome to the Galileecommerce platform",
+        title: "Connexion réussie !",
+        text: "Bienvenue sur la plateforme Galileecommerce",
         icon: "success",
         timer: 5000,
         timerProgressBar: true,
-        showConfirmButton: false
+        showConfirmButton: false,
+        willClose: () => {
+          router.push("/"); // redirection côté client
+        }
       });
 
       if (!data.token) {
@@ -75,6 +81,12 @@ export default function LoginUserForm() {
       <div className="relative z-10 flex items-center">
         <div className="w-full shrink-0 text-left md:w-[380px]">
           <div className="flex flex-col pb-5 text-center xl:pb-6 xl:pt-2">
+            {/*  <Image
+              src={Logo}
+              alt="Hero background"
+              width={23}
+              height={10}
+            />*/}
             <h2 className="text-lg font-medium tracking-[-0.3px] text-dark dark:text-light lg:text-xl">
               {t('text-welcome-back')}
             </h2>
@@ -139,13 +151,13 @@ export default function LoginUserForm() {
             </button>
           </div>
 
-          <div className="flex items-center my-3">
+          <div className="hidden flex items-center my-3">
             <hr className="flex-grow border-t border-gray-300" />
             <span className="mx-2 text-xs text-gray-500 uppercase">or</span>
             <hr className="flex-grow border-t border-gray-300" />
           </div>
 
-          <div className="flex flex-col gap-3 mt-5 lg:mt-7">
+          <div className="hidden flex flex-col gap-3 mt-5 lg:mt-7">
             {/* Google Login Button */}
             <button
               type="button"

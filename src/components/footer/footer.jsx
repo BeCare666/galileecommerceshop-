@@ -85,7 +85,7 @@ export default function Footer() {
     return (
         <footer className="bg-white border-t mt-10 text-gray-800">
             {/* Grille supérieure */}
-            <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-12">
+            <div className="hidden max-w-7xl mx-auto px-6 lg:px-12 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-12">
                 {/* Contact */}
                 <div>
                     <h3 className="text-xl font-semibold mb-5">Contactez-nous</h3>

@@ -12,20 +12,21 @@ export { getStaticPaths, getStaticProps };
 const ShopPage: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ shop }) => {
-  const { name, logo, cover_image, slug } = shop;
-
+  const { name, logo_image_url, cover_image_url, slug } = shop;
+  console.log("shop", name, logo_image_url, cover_image_url, slug)
+  console.log("shopddd", shop)
   return (
     <>
       <Banner
-        coverImage={cover_image?.original}
-        logo={logo?.original}
+        coverImage={cover_image_url}
+        logo={logo_image_url}
         name={name}
         shopId={shop?.id}
       />
       <Nav slug={slug} />
       <motion.div
         variants={fadeInBottom()}
-        className="mx-auto h-full w-full max-w-screen-xl px-4 py-6 focus:outline-none md:px-6 md:py-8 lg:py-10 lg:px-8"
+        className=" mx-auto h-full w-full max-w-screen-xl px-4 py-6 focus:outline-none md:px-6 md:py-8 lg:py-10 lg:px-8"
       >
         <Contact shop={shop} />
       </motion.div>

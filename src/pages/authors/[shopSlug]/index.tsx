@@ -10,12 +10,12 @@ export { getStaticPaths, getStaticProps };
 const ShopPage: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ shop }) => {
-  const { name, logo, cover_image, slug } = shop;
+  const { name, logo_image_url, cover_image_url, slug } = shop;
   return (
     <>
       <Banner
-        coverImage={cover_image?.original}
-        logo={logo?.original}
+        coverImage={cover_image_url}
+        logo={logo_image_url}
         name={name}
         shopId={shop?.id}
       />

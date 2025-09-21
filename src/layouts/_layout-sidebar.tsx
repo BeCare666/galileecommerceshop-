@@ -103,12 +103,13 @@ export function Sidebar({
   const [isScrolling] = useAtom(checkIsScrollingStart);
   const [open, setOpen] = useState(false);
   const [mapIsOk, setMapIsOk] = useState(false);
+  //sm:w-60
   return (
     <aside
       className={twMerge(
         cn(
           'h-full flex-col justify-between overflow-y-auto border-r border-light-400 bg-light-100 pt-[92px] text-dark-900 dark:border-0 dark:bg-dark-200',
-          isCollapse ? 'sm:w-60 xl:w-[75px]' : 'sm:w-[75px] xl:w-60',
+          isCollapse ? 'xl:w-[75px]' : 'sm:w-[75px] xl:w-60',
           width >= RESPONSIVE_WIDTH && underMaintenanceIsComing && !isScrolling
             ? 'pt-[9.625rem]'
             : '',
@@ -203,7 +204,7 @@ export function Sidebar({
                 setMapIsOk={setMapIsOk} />
             </NavLink>
 */}
-            {/* Méga centrale d’achat */}
+            {/* Méga centrale d’achat 
             <NavLink
               title="Méga centrale d’achat"
               href={routes.mega}
@@ -225,8 +226,8 @@ export function Sidebar({
                 </svg>
               }
             />
-
-            {/* Devenir fournisseur */}
+*/}
+            {/* Devenir fournisseur 
             <NavLink
               title="Devenir fournisseur"
               href={routes.becomeSeller}
@@ -247,9 +248,9 @@ export function Sidebar({
                   />
                 </svg>
               }
-            />
+            />*/}
 
-            {/* Services */}
+            {/* Services 
             <NavLink
               title="Services"
               href={routes.services}
@@ -271,7 +272,7 @@ export function Sidebar({
                 </svg>
               }
             />
-
+*/}
             {/* All Products */}
             <NavLink
               title="Les produits"

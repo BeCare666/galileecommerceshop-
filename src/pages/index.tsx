@@ -102,75 +102,75 @@ const Home: NextPageWithLayout = () => {
       />
       {/*  */}
 
-      <PreloaderWrapper>
-        <HomePage />
-        <TitleComponent subtitle="Découvrez les nouveautés">
-          Nouveautés
-        </TitleComponent>
-        <Products />
-        <TitleComponent subtitle="Qui nous sommes et ce que nous faisons">
-          À propos de nous
-        </TitleComponent>
-        <AboutUs />
-        <FreeShipping />
-        <TitleComponent subtitle="Découvrez nos offres limitées">
-          Offre Limitée
-        </TitleComponent>
-        <LimitedOffer />
-        <TitleComponent subtitle="Découvrez comment ça marche chez galileecommerce">
-          Comment ça marche ?
-        </TitleComponent>
-        <Howtowork />
-        <TitleComponent subtitle="Voici nos meilleurs produits en promotion">
-          Promotions
-        </TitleComponent>
-        <PromoBannier />
-        <TitleComponent subtitle="Découvrez nos produits les plus populaires">
-          Meilleures Ventes
-        </TitleComponent>
-        <BestHomeSellers />
-        <TitleComponent subtitle="Voici nos services">
-          Nos services
-        </TitleComponent>
-        <Services />
-        <TitleComponent subtitle="Découvrez les nouveautés">
-          Nouveautés
-        </TitleComponent>
-        <Products />
-        <Footer />
-        <button
-          className="flex items-center bg-white shadow px-4 py-3 rounded-full hidden md:flex fixed bottom-4 right-4 z-[9999]"
-          onClick={() => setOpen(true)}
-        >
-          <span className="w-7 h-7 flex items-center justify-center bg-gray-100 rounded-full mr-2">
-            <svg
-              className={`animate-spin-slow  h-9 w-9 text-pink-500`}
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10
-                    10-4.477 10-10S17.523 2 12 2zm0 0c-2.5 2-4 5.5-4 10s1.5 8 4 10m0-20c2.5 2 4 5.5 4 10s-1.5 8-4 10m-8-10h16m-14.5 4h13m-13-8h13"
-              />
-            </svg>
-          </span>
-          <span className="text-gray-700 font-medium">Nos Corridors</span>
-          <Modal
-            isOpen={open}
-            onClose={() => setOpen(false)}
-            mapIsOk={mapIsOk}
-            setMapIsOk={setMapIsOk}
-          />
-        </button>
 
-        {/** Uncomment the line below to enable the promotional slider */}
-        {/**<PromotionalSlider /> * */}
-      </PreloaderWrapper>
+      <HomePage />
+      <TitleComponent subtitle="Découvrez les nouveautés">
+        Nouveautés
+      </TitleComponent>
+      <Products />
+      <TitleComponent subtitle="Qui nous sommes et ce que nous faisons">
+        À propos de nous
+      </TitleComponent>
+      <AboutUs />
+      <FreeShipping />
+      <TitleComponent subtitle="Découvrez nos offres limitées">
+        Offre Limitée
+      </TitleComponent>
+      <LimitedOffer />
+      <TitleComponent subtitle="Découvrez comment ça marche chez galileecommerce">
+        Comment ça marche ?
+      </TitleComponent>
+      <Howtowork />
+      <TitleComponent subtitle="Voici nos meilleurs produits en promotion">
+        Promotions
+      </TitleComponent>
+      <PromoBannier />
+      <TitleComponent subtitle="Découvrez nos produits les plus populaires">
+        Meilleures Ventes
+      </TitleComponent>
+      <BestHomeSellers />
+      <TitleComponent subtitle="Voici nos services">
+        Nos services
+      </TitleComponent>
+      <Services />
+      <TitleComponent subtitle="Découvrez les nouveautés">
+        Nouveautés
+      </TitleComponent>
+      <Products />
+      <Footer />
+      <button
+        className="mb-[30px] flex items-center bg-white shadow px-4 py-3 rounded-full hidden md:flex fixed bottom-4 right-4 z-[9999]"
+        onClick={() => setOpen(true)}
+      >
+        <span className="w-7 h-7 flex items-center justify-center bg-gray-100 rounded-full mr-2">
+          <svg
+            className={`animate-spin-slow  h-9 w-9 text-pink-500`}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10
+                    10-4.477 10-10S17.523 2 12 2zm0 0c-2.5 2-4 5.5-4 10s1.5 8 4 10m0-20c2.5 2 4 5.5 4 10s-1.5 8-4 10m-8-10h16m-14.5 4h13m-13-8h13"
+            />
+          </svg>
+        </span>
+        <span className="text-gray-700 font-medium">Nos Corridors</span>
+        <Modal
+          isOpen={open}
+          onClose={() => setOpen(false)}
+          mapIsOk={mapIsOk}
+          setMapIsOk={setMapIsOk}
+        />
+      </button>
+
+      {/** Uncomment the line below to enable the promotional slider */}
+      {/**<PromotionalSlider /> * */}
+
     </>
   );
 };

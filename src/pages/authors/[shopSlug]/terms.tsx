@@ -20,7 +20,7 @@ import { fadeInBottom } from '@/lib/framer-motion/fade-in-bottom';
 const ShopPage: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ shop }) => {
-  const { name, logo, cover_image, slug } = shop;
+  const { name, logo_image_url, cover_image_url, slug } = shop;
   const router = useRouter();
   const {
     termsAndConditions,
@@ -59,8 +59,8 @@ const ShopPage: NextPageWithLayout<
   return (
     <>
       <Banner
-        coverImage={cover_image?.original}
-        logo={logo?.original}
+        coverImage={cover_image_url}
+        logo={logo_image_url}
         name={name}
         shopId={shop?.id}
       />
@@ -71,13 +71,12 @@ const ShopPage: NextPageWithLayout<
           className="mx-auto flex h-full w-full max-w-screen-xl flex-col py-6 focus:outline-none md:py-8 lg:py-10"
         >
           {!isEmpty(termsAndConditions) ? (
-            <p className="pb-20 text-center font-medium">{`Last updated on ${
-              getLastUpdateTermsDate
-                ? dayjs(new Date(getLastUpdateTermsDate as string)).format(
-                    'MMMM D, YYYY'
-                  )
-                : ''
-            }`}</p>
+            <p className="pb-20 text-center font-medium">{`Last updated on ${getLastUpdateTermsDate
+              ? dayjs(new Date(getLastUpdateTermsDate as string)).format(
+                'MMMM D, YYYY'
+              )
+              : ''
+              }`}</p>
           ) : (
             ''
           )}

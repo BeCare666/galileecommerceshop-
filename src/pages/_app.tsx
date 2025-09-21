@@ -15,7 +15,7 @@ import DrawersContainer from '@/components/drawer-views/container';
 import SearchView from '@/components/search/search-view';
 import DefaultSeo from '@/layouts/_default-seo';
 import { SearchProvider } from '@/components/search/search.context';
-
+import PreloaderWrapper from '@/components/loader/preloaderWrapper';
 // base css file
 import '@/assets/css/scrollbar.css';
 import '@/assets/css/swiper-carousel.css';
@@ -69,13 +69,15 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
                   <>
                     <DefaultSeo />
                     <Maintenance>
-                      {authenticationRequired ? (
-                        <PrivateRoute>
-                          {getLayout(<Component {...pageProps} />)}
-                        </PrivateRoute>
-                      ) : (
-                        getLayout(<Component {...pageProps} />)
-                      )}
+                      <PreloaderWrapper>
+                        {authenticationRequired ? (
+                          <PrivateRoute>
+                            {getLayout(<Component {...pageProps} />)}
+                          </PrivateRoute>
+                        ) : (
+                          getLayout(<Component {...pageProps} />)
+                        )}
+                      </PreloaderWrapper>
                     </Maintenance>
                     <SearchView />
                     <ModalsContainer />

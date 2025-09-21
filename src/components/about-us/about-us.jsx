@@ -16,7 +16,7 @@ import Swal from 'sweetalert2';
 export default function HeroStats() {
     const { openModal } = useModalAction();
     const { me, isAuthorized, isLoading } = useMe();
-
+    console.log("me", me)
     const showAlert = () => {
         Swal.fire({
             title: "✅ Félicitations !",

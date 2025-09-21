@@ -14,7 +14,7 @@ import { fadeInBottom } from '@/lib/framer-motion/fade-in-bottom';
 const ShopPage: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ shop }) => {
-  const { name, logo, cover_image, slug } = shop;
+  const { name, logo_image_url, cover_image_url, slug } = shop;
   const { faqs, isLoading, error, loadMore, hasNextPage, isLoadingMore } =
     useFAQs({
       faq_type: 'shop',
@@ -30,8 +30,8 @@ const ShopPage: NextPageWithLayout<
   return (
     <>
       <Banner
-        coverImage={cover_image?.original}
-        logo={logo?.original}
+        coverImage={cover_image_url}
+        logo={logo_image_url}
         name={name}
         shopId={shop?.id}
       />

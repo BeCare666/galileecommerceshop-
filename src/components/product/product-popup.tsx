@@ -110,7 +110,7 @@ export default function ProductPopupDetails() {
                 dangerouslySetInnerHTML={{
                   __html:
                     content?.length > 200
-                      ? content?.substring(0, 200) + '...'
+                      ? content?.substring(0, 700) + '...'
                       : content,
                 }}
               />

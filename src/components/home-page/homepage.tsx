@@ -20,7 +20,7 @@ export default function Hero() {
             {/* Contenu */}
             <div className="relative z-10 max-w-7xl mx-auto h-full flex items-center px-3 lg:px-6">
                 <div className="text-white space-y-6 max-w-2xl">
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-snug">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl font-bold leading-snug">
                         Décuplez votre performance ! <br />
                         Réinventons les solutions digitales du commerce
                     </h1>

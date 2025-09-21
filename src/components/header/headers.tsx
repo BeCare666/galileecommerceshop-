@@ -34,6 +34,24 @@ export default function GalileeHeader() {
   const [mapIsOk, setMapIsOk] = useState(false);
   const { openModal } = useModalAction();
   const [showSearch, setShowSearch] = useState(false);
+  const [isHoverCategoriesx, setIsHoverCategoriesx] = useState(false);
+
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current); // annule le hide si en cours
+      timeoutRef.current = null;
+    }
+    setIsHoverCategoriesx(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setIsHoverCategoriesx(false);
+      timeoutRef.current = null;
+    }, 300); // délai avant de cacher
+  };
   const items = [
     { label: 'Les produits les plus récherchés sur galileecommerce :', href: '#' },
     { label: 'Préfabriqués', href: '/prefabriques' },
@@ -194,8 +212,8 @@ export default function GalileeHeader() {
               placeholder="Rechercher sur galileecommerce.com ..."
               onClick={openSearch}
               className={`
-          hidden lg:block   w-full bg-white-600 flex-1 rounded-full px-4 py-2
-          text-gray-900 placeholder-gray-500 shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-500
+          hidden lg:block w-full bg-white-600 flex-1 rounded-full  
+          text-gray-900 placeholder-gray-500  focus:outline-none focus:ring-2 focus:ring-pink-500
           transition-all duration-500 ease-in-out
           ${showSearch ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"}
         `}
@@ -360,7 +378,10 @@ export default function GalileeHeader() {
                 <Modal isOpen={openC} onClose={() => setOpenC(false)} mapIsOk={mapIsOk} setMapIsOk={setMapIsOk} />
               </Link>
 
-              <Link href="/centrale-achat" className="inline-block px-2 py-1 rounded transition-colors text-white">
+              <Link href="#" className="inline-block px-2 py-1 rounded transition-colors text-white"
+                onMouseEnter={handleMouseEnter}   // si on survole le menu → annule hide
+                onMouseLeave={handleMouseLeave}   // si on quitte → démarre le hide
+              >
                 Centrale d’achat
               </Link>
 
@@ -373,7 +394,7 @@ export default function GalileeHeader() {
 
               {/* A propos */}
               <div
-                className="relative inline-block"
+                className="hidden  relative inline-block lg:block"
                 onMouseEnter={() => setOpenDropdown(true)}
                 onMouseLeave={() => setOpenDropdown(false)}
               >
@@ -526,9 +547,10 @@ export default function GalileeHeader() {
               </Link>
 
               <Link
-                href="/centrale-achat"
+                href=""
                 className={`px - 2 py - 1 rounded transition - colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
                   }`}
+
               >
                 Centrale d’achat
               </Link>
@@ -557,7 +579,7 @@ export default function GalileeHeader() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Rechercher sur galileecommerce.com ...."
-                className="max-w-[450px] lg:max-w-[650px] w-full bg-gray-600 flex-1 rounded-full px-4 py-2 text-gray-900 placeholder-white shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all duration-200"
+                className="max-w-[450px] w-full bg-gray-600 flex-1 rounded-full px-4 py-2 text-gray-900 placeholder-white  focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all duration-200"
                 onClick={openSearch}
               />
               <div>
@@ -692,34 +714,41 @@ export default function GalileeHeader() {
           )
         }
       </header >
-      <div className={`grid grid-cols-4 w-full text-white
+      {isMounted && isHoverCategoriesx && (
+        <div className={`grid grid-cols-4 w-full text-white
      ${isHoverCategories ? 'block bg-white text-black' : ''}`}
-      >
-        <button className="w-full px-2 py-3 bg-[#1a0f1f] text-[10px] sm:text-xs md:text-sm lg:text-base font-semibold">
-          <Link href="/centrale-achat#chooseId1">
-            Centrale d’achat
-          </Link>
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
 
-        </button>
-        <button className="w-full px-2 py-3 bg-[#2b3243] text-[10px] sm:text-xs md:text-sm lg:text-base font-semibold">
-          <Link href="/centrale-achat#chooseId1">
-            Choisir une campagne
-          </Link>
+        >
+          <button className="w-full px-2 py-3 bg-[#1a0f1f] text-[10px] sm:text-xs md:text-sm lg:text-base font-semibold">
+            <Link href="/centrale-achat#chooseId1">
+              Centrale d’achat
+            </Link>
 
-        </button>
-        <button className="w-full px-2 py-3 bg-[#1a0b15] text-[10px] sm:text-xs md:text-sm lg:text-base font-semibold">
-          <Link href="/centrale-achat#chooseId3">
-            Formalités et assurance
-          </Link>
+          </button>
+          <button className="w-full px-2 py-3 bg-[#2b3243] text-[10px] sm:text-xs md:text-sm lg:text-base font-semibold">
+            <Link href="/centrale-achat#chooseId1">
+              Choisir une campagne
+            </Link>
 
-        </button>
-        <button className="w-full px-2 py-3 bg-[#3b4b60] text-[10px] sm:text-xs md:text-sm lg:text-base font-semibold">
-          <Link href="/centrale-achat#chooseId4">
-            Payer sur Galileecommerce.com
-          </Link>
+          </button>
+          <button className="w-full px-2 py-3 bg-[#1a0b15] text-[10px] sm:text-xs md:text-sm lg:text-base font-semibold">
+            <Link href="/centrale-achat#chooseId3">
+              Formalités et assurance
+            </Link>
 
-        </button>
-      </div >
+          </button>
+          <button className="w-full px-2 py-3 bg-[#3b4b60] text-[10px] sm:text-xs md:text-sm lg:text-base font-semibold">
+            <Link href="/centrale-achat#chooseId4">
+              Payer sur Galileecommerce.com
+            </Link>
+
+          </button>
+
+        </div >
+      )}
+
     </>
   );
 }

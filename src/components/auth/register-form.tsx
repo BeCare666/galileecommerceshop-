@@ -13,7 +13,7 @@ import SocialLogin from '@/components/sociallogin/sociallogin';
 import { useState } from 'react';
 import useAuth from './use-auth';
 import { useTranslation } from 'next-i18next';
-
+import Swal from 'sweetalert2';
 const registerUserValidationSchema = yup.object().shape({
   name: yup.string().max(20).required(),
   email: yup.string().email().required(),
@@ -28,20 +28,30 @@ export default function RegisterUserForm() {
 
   const { mutate, isLoading } = useMutation(client.users.register, {
     onSuccess: (res) => {
-      toast.success(
-        "Thank you for registering. Please check your email and click on the confirmation link to activate your account.",
-        {
-          duration: 15000, // 15 secondes
-        }
-      );
+      // Vérification du résultat
       if (!res) {
-        toast.error(<b>{t('text-profile-page-error-toast')}</b>, {
-          className: '-mt-10 xs:mt-0',
+        Swal.fire({
+          title: "Erreur !",
+          text: "Une erreur est survenue lors du traitement de votre profil.",
+          icon: "error",
+          confirmButtonText: "OK",
         });
         return;
       }
-      authorize(res.token);
-      closeModal();
+
+      // SweetAlert pour succès
+      Swal.fire({
+        title: "Inscription réussie !",
+        text: "Merci pour votre inscription. Veuillez vérifier votre email et cliquer sur le lien de confirmation pour activer votre compte.",
+        icon: "success",
+        timer: 15000,          // 15 secondes
+        timerProgressBar: true,
+        showConfirmButton: false,
+        willClose: () => {
+          authorize(res.token);
+          closeModal();
+        }
+      });
     },
     onError: (err: any) => {
       const msg =
@@ -65,7 +75,7 @@ export default function RegisterUserForm() {
         <div className="w-full shrink-0 text-left md:w-[380px]">
           <div className="flex flex-col pb-5 text-center lg:pb-9 xl:pb-10 xl:pt-2">
             <h2 className="text-lg font-medium tracking-[-0.3px] text-dark dark:text-light lg:text-xl">
-              {t('text-welcome-back')}
+              {t('text-welcome-back-register')}
             </h2>
 
           </div>
@@ -124,13 +134,13 @@ export default function RegisterUserForm() {
             </button>
           </div>
 
-          <div className="flex items-center my-3">
+          <div className="hidden flex items-center my-3">
             <hr className="flex-grow border-t border-gray-300" />
             <span className="mx-2 text-xs text-gray-500 uppercase">or</span>
             <hr className="flex-grow border-t border-gray-300" />
           </div>
 
-          <div className="flex flex-col gap-3 mt-5 lg:mt-7">
+          <div className="hidden flex flex-col gap-3 mt-5 lg:mt-7">
             {/* Google Login Button */}
             <button
               type="button"

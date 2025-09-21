@@ -98,7 +98,7 @@ const ProfilePage: NextPageWithLayout = () => {
                     <span className="block cursor-pointer pb-2.5 font-normal text-dark/70 dark:text-light/70">
                       {t('text-profile-avatar')}
                     </span>
-                    <div className="text-xs">
+                    <div className="hidden text-xs">
                       <Uploader {...rest} multiple={false} />
                     </div>
                   </div>

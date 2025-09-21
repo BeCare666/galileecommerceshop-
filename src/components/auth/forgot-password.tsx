@@ -48,7 +48,7 @@ function EmailForm({
   const { openModal } = useModalAction();
   return (
     <div className="bg-light px-6 pt-10 pb-8 dark:bg-dark-300 sm:px-8 lg:p-12">
-      <RegisterBgPattern className="absolute bottom-0 left-0 text-light dark:text-dark-300 dark:opacity-60" />
+
       <div className="relative z-10 flex items-center">
         <div className="w-full shrink-0 text-left md:w-[380px]">
           <div className="flex flex-col pb-5 text-center lg:pb-9 xl:pb-10 xl:pt-2">
@@ -125,15 +125,15 @@ function TokenForm({
 }) {
   return (
     <div className="px-6 pt-10 pb-8 sm:px-8 lg:p-12">
-      <RegisterBgPattern className="absolute bottom-0 left-0 text-light dark:text-dark-300 dark:opacity-60" />
+
       <div className="relative z-10">
         {message && (
           <div className="flex flex-col pb-5 text-center lg:pb-9 xl:pb-10 xl:pt-2">
             <h2 className="text-lg font-medium tracking-[-0.3px] text-dark dark:text-light lg:text-xl">
-              Check Your Email
+              Vérifiez votre boîte mail
             </h2>
             <div className="mt-1.5 text-13px leading-6 tracking-[0.2px] dark:text-light-900 lg:mt-2.5 xl:mt-3">
-              We sent you a token to reset your password
+              Nous vous avons envoyé un code pour réinitialiser votre mot de passe.
             </div>
           </div>
         )}
@@ -155,14 +155,14 @@ function TokenForm({
               />
               <div className="mt-7 grid grid-cols-2 gap-5 text-13px">
                 <Button type="reset" variant="outline" onClick={onBack}>
-                  Back
+                  Retour
                 </Button>
                 <Button
                   type="submit"
                   isLoading={isLoading}
                   disabled={isLoading}
                 >
-                  Verify Token
+                  Vérifier le code
                 </Button>
               </div>
             </div>
@@ -183,15 +183,15 @@ function PasswordForm({
   onBack: () => void;
 }) {
   return (
-    <div className="px-6 pt-10 pb-8 sm:px-8 lg:p-12">
-      <RegisterBgPattern className="absolute bottom-0 left-0 text-light dark:text-dark-300 dark:opacity-60" />
+    <div className="px-6 pt-10 pb-8 sm:px-8 lg:p-12 bg-white">
+
       <div className="relative z-10">
         <div className="flex flex-col pb-5 text-center lg:pb-9 xl:pb-10 xl:pt-2">
           <h2 className="text-lg font-medium tracking-[-0.3px] text-dark dark:text-light lg:text-xl">
-            Reset Password
+            Réinitialiser le mot de passe
           </h2>
           <div className="mt-1.5 text-13px leading-6 tracking-[0.2px] dark:text-light-900 lg:mt-2.5 xl:mt-3">
-            Almost there to reset your password
+            Vous êtes presque prêt à réinitialiser votre mot de passe
           </div>
         </div>
         <Form<Pick<ResetPasswordInput, 'password'>>
@@ -204,21 +204,21 @@ function PasswordForm({
           {({ register, formState: { errors } }) => (
             <div className="w-full xs:w-[380px]">
               <Password
-                label="New Password"
+                label="Nouveau mot de passe"
                 {...register('password')}
                 error={errors.password?.message}
                 className="text-left"
               />
               <div className="mt-7 grid grid-cols-2 gap-5 text-13px">
                 <Button type="reset" variant="outline" onClick={onBack}>
-                  Back
+                  Retour
                 </Button>
                 <Button
                   type="submit"
                   isLoading={isLoading}
                   disabled={isLoading}
                 >
-                  Send
+                  Enyover
                 </Button>
               </div>
             </div>
@@ -276,7 +276,7 @@ function RenderFormSteps() {
             actions.updateFormState({
               ...initialState,
             });
-            toast.success(<b>Password successfully reset!</b>, {
+            toast.success(<b>Mot de passe réinitialisé avec succès !</b>, {
               className: '-mt-10 xs:mt-0',
             });
             openModal('LOGIN_VIEW');
@@ -311,7 +311,7 @@ function RenderFormSteps() {
     });
   }
   return (
-    <div>
+    <div className='bg-white'>
       {state.step === 'Email' && (
         <EmailForm
           email={state.email}
@@ -337,7 +337,7 @@ function RenderFormSteps() {
           onBack={() => backToPreviousStep('Token')}
         />
       )}
-    </div>
+    </ div>
   );
 }
 
