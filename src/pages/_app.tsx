@@ -69,15 +69,15 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
                   <>
                     <DefaultSeo />
                     <Maintenance>
-                      <PreloaderWrapper>
-                        {authenticationRequired ? (
-                          <PrivateRoute>
-                            {getLayout(<Component {...pageProps} />)}
-                          </PrivateRoute>
-                        ) : (
-                          getLayout(<Component {...pageProps} />)
-                        )}
-                      </PreloaderWrapper>
+                      {/** <PreloaderWrapper> **/}
+                      {authenticationRequired ? (
+                        <PrivateRoute>
+                          {getLayout(<Component {...pageProps} />)}
+                        </PrivateRoute>
+                      ) : (
+                        getLayout(<Component {...pageProps} />)
+                      )}
+                      {/** </PreloaderWrapper> **/}
                     </Maintenance>
                     <SearchView />
                     <ModalsContainer />
@@ -92,7 +92,7 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
       </Hydrate>
 
       {/**<ReactQueryDevtools initialIsOpen={false} position="bottom-right" />**/}
-    </QueryClientProvider>
+    </QueryClientProvider >
   );
 }
 

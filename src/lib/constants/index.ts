@@ -43,7 +43,7 @@ export const AuthorizedMenuItems = [
     icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="#ec4899" viewBox="0 0 24 24" class="w-5 h-5"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M12 11V7a4 4 0 118 0v4"/></svg>`,
   },
   {
-    label: 'become seller',
+    label: 'text-become-seller',
     path: routes.becomeSeller,
     icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="#ec4899" viewBox="0 0 24 24" class="w-5 h-5"><path d="M12 2l9 21H3L12 2z"/></svg>`,
   },

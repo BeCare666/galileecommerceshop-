@@ -24,6 +24,7 @@ const CountrySelect: React.FC<CountrySelectProps> = ({ value, onChange }) => {
                 }
                 const res = await fetch(`${API_URL}/countries`);
                 const data = await res.json();
+                console.log(data)
                 setCountries(data);
             } catch (error) {
                 console.error('Erreur de chargement des pays:', error);

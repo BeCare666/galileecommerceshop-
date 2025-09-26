@@ -170,7 +170,7 @@ const OrderView = ({ order, loadingStatus }: OrderViewProps) => {
             </div>
 
             {/* Order Items */}
-            <div className="mt-10">
+            <div className="hidden mt-10">
               <OrderItems
                 products={order?.products}
                 orderId={order?.id}

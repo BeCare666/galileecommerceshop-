@@ -86,13 +86,13 @@ export default function CartCheckout() {
 
   const totalPrice = verifiedResponse
     ? calculatePaidTotal(
-        {
-          totalAmount: base_amount,
-          tax: verifiedResponse.total_tax,
-          shipping_charge: verifiedResponse.shipping_charge,
-        },
-        0,
-      )
+      {
+        totalAmount: base_amount,
+        tax: verifiedResponse.total_tax,
+        shipping_charge: verifiedResponse.shipping_charge,
+      },
+      0,
+    )
     : 0;
 
   const { price: total } = usePrice(
@@ -181,9 +181,9 @@ export default function CartCheckout() {
         </div>
       )}
 
-      {/* {use_wallet_points && !Boolean(payableAmount) ? null : <StripePayment />} */}
+      {/* {use_wallet_points && !Boolean(payableAmount) ? null : <StripePayment />} <PaymentGrid />*/}
 
-      {use_wallet_points && !Boolean(payableAmount) ? null : <PaymentGrid />}
+      {use_wallet_points && !Boolean(payableAmount) ? null : ''}
 
       <Button
         disabled={isLoading}

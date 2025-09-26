@@ -51,7 +51,7 @@ export default function CountrySelectorWithModal() {
 
         const data = await res.json();
         setCountries(data);
-
+        //console.log("data", data)
         // sélection auto
         if (router.query.countries_id) {
           const found = data.find(
@@ -248,3 +248,5 @@ export default function CountrySelectorWithModal() {
     </>
   );
 }
+
+

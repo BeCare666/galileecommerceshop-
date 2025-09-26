@@ -169,39 +169,40 @@ const PaymentGrid: React.FC<{ className?: string; theme?: 'bw' }> = ({
   const Component = PaymentMethod?.component ?? PaymentOnline;
   return (
     <div className={className}>
-      {errorMessage ? (
-        <Alert
-          message={t(`common:${errorMessage}`)}
-          variant="error"
-          closeable={true}
-          className="mt-5"
-          onClose={() => setErrorMessage(null)}
-        />
-      ) : null}
+      <div className="hidden">
+        {errorMessage ? (
+          <Alert
+            message={t(`common:${errorMessage}`)}
+            variant="error"
+            closeable={true}
+            className="mt-5"
+            onClose={() => setErrorMessage(null)}
+          />
+        ) : null}
 
-      <RadioGroup value={gateway} onChange={setGateway}>
-        <RadioGroup.Label className="mb-5 block text-13px font-medium dark:text-white">
-          {t('text-choose-payment')}
-        </RadioGroup.Label>
+        <RadioGroup value={gateway} onChange={setGateway}>
+          <RadioGroup.Label className="mb-5 block text-13px font-medium dark:text-white">
+            {t('text-choose-payment')}
+          </RadioGroup.Label>
 
-        <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-3">
-          {settings?.useEnableGateway &&
-            availableGateway &&
-            availableGateway.map((gateway: any, index: any) => {
-              return (
-                <Fragment key={index}>
-                  <PaymentGroupOption
-                    theme={theme}
-                    payment={
-                      AVAILABLE_PAYMENT_METHODS_MAP[
+          <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-3">
+            {settings?.useEnableGateway &&
+              availableGateway &&
+              availableGateway.map((gateway: any, index: any) => {
+                return (
+                  <Fragment key={index}>
+                    <PaymentGroupOption
+                      theme={theme}
+                      payment={
+                        AVAILABLE_PAYMENT_METHODS_MAP[
                         gateway?.name.toUpperCase() as PaymentGateway
-                      ]
-                    }
-                  />
-                </Fragment>
-              );
-            })}
-          {/* {settings?.paymentGateway && (
+                        ]
+                      }
+                    />
+                  </Fragment>
+                );
+              })}
+            {/* {settings?.paymentGateway && (
             <PaymentGroupOption
               theme={theme}
               payment={
@@ -211,11 +212,12 @@ const PaymentGrid: React.FC<{ className?: string; theme?: 'bw' }> = ({
               }
             />
           )} */}
-        </div>
-      </RadioGroup>
-      {/* <div className="mb-5">
+          </div>
+        </RadioGroup>
+        {/* <div className="mb-5">
         <Component />
       </div> */}
+      </div>
     </div>
   );
 };
