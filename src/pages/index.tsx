@@ -29,7 +29,7 @@ import Button from '@/components/ui/button';
 import Modal from '@/components/modal/modal';
 import React, { useState } from 'react';
 import Footer from '@/components/footer/footer';
-import Services from '@/components/services/services';
+import Services from '@/components/services/servicesx';
 import Howtowork from '@/components/howtowork/howtowork';
 import AboutUs from '@/components/about-us/about-section';
 export const getStaticProps: GetStaticProps = async ({ locale }) => {

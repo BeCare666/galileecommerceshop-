@@ -1,6 +1,6 @@
 import PageHeading from '@/components/ui/page-heading';
 import routes from '@/config/routes';
-import Services from '@/components/services/services';
+import Services from '@/components/services/servicesx';
 import Seo from '@/layouts/_seo';
 import type { NextPageWithLayout } from '@/types';
 import GeneralLayout from '@/layouts/_general-layout';
