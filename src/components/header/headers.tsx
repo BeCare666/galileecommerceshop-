@@ -360,8 +360,8 @@ export default function GalileeHeader() {
         </div>
 
         {/* Search bar bg-gray-800 bg-pink-600*/}
-        <div className={`bg-gradient-to-b from-[#222034] to-[#0d0d14]  lg:py-4 transition-all duration-500 ease-in-out
-         ${showSearch ? "bg-white text-black" : ""}
+        <div className={`lg:py-4 transition-all duration-500 ease-in-out
+         ${showSearch ? "bg-white text-black" : "bg-gradient-to-b from-[#222034] to-[#0d0d14] text-white"}
         `}>
           <div className="lg:px-6 flex items-center h-14 relative">
             <nav
@@ -526,7 +526,7 @@ export default function GalileeHeader() {
         overflow-x-auto overflow-y-visible whitespace-nowrap
         relative left-1
         lg:left-auto lg:relative lg:right-2 lg:gap-9
-       ${showSearch ? "translate-y-0" : "hidden -translate-y-4 pointer-events-none"}
+       ${showSearch ? " translate-y-0" : "hidden -translate-y-4 pointer-events-none"}
         `}
               style={{ scrollbarWidth: "none" }} // Firefox
             >
