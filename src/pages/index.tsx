@@ -32,6 +32,7 @@ import Footer from '@/components/footer/footer';
 import Services from '@/components/services/servicesx';
 import Howtowork from '@/components/howtowork/howtowork';
 import AboutUs from '@/components/about-us/about-section';
+import Suiteaccueil from '@/components/suiteaccueil/suiteaccueil';
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const queryClient = new QueryClient();
   try {
@@ -104,6 +105,7 @@ const Home: NextPageWithLayout = () => {
 
 
       <HomePage />
+      <Suiteaccueil />
       <TitleComponent subtitle="Découvrez les nouveautés">
         Nouveautés
       </TitleComponent>
@@ -133,10 +135,10 @@ const Home: NextPageWithLayout = () => {
         Nos services
       </TitleComponent>
       <Services />
-      <TitleComponent subtitle="Découvrez les nouveautés">
+      {/** <TitleComponent subtitle="Découvrez les nouveautés">
         Nouveautés
       </TitleComponent>
-      <Products />
+      <Products />**/}
       <Footer />
       <button
         className="mb-[30px] flex items-center bg-white shadow px-4 py-3 rounded-full hidden md:flex fixed bottom-4 right-4 z-[9999]"

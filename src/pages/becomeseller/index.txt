@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 import { useMutation } from 'react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-
+import { Banner } from '@/components/banner/index'
 const Glow = ({ className = "" }: { className?: string }) => (
   <span
     className={`absolute h-[200px] blur-[120px] rounded-full -z-10 ${className}`}
@@ -63,6 +63,7 @@ const BecomeSellerPage: NextPageWithLayout = () => {
         <div className="relative z-10 max-w-[94.75rem] mx-auto h-full flex flex-col lg:flex-row items-center justify-center gap-10">
           {/* Texte */}
           <div className="max-w-xl mx-auto text-center lg:text-left space-y-6">
+            <Banner />
             <h1 className="text-brand text-3xl md:text-4xl xl:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white leading-tight">
               Lancez votre activité en ligne avec{" "}
               <span className="text-pink-600">Galilé E-commerce</span>.

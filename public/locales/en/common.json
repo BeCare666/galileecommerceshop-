@@ -254,7 +254,7 @@
   "PIXER_ERROR.WITHDRAW_MUST_BE_ATTACHED_TO_SHOP": "Withdraw must be attached to shop",
   "PIXER_ERROR.PLEASE_LOGIN_USING_FACEBOOK_OR_GOOGLE": "Please login using Facebook or Google",
   "PIXER_ERROR.ACTION_NOT_VALID": "Action not valid",
-  "PIXER_ERROR.SHOP_NOT_APPROVED": "Shop not approved",
+  "PIXER_ERROR.SHOP_NOT_APPROVED": "B space not approved",
   "PIXER_MESSAGE.NOT_FOUND": "Not Found",
   "PIXER_MESSAGE.CHECK_INBOX_FOR_PASSWORD_RESET_EMAIL": "Check inbox for password reset email",
   "PIXER_MESSAGE.SOMETHING_WENT_WRONG": "Something went wrong",

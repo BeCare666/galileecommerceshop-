@@ -21,7 +21,7 @@ const ServicesPage: NextPageWithLayout = () => {
       />
       <div className="mx-auto flex h-full w-full max-w-screen-xl flex-col p-4 sm:p-5">
         <div
-          className="h-full w-full relative bg-center bg-cover mb-7"
+          className="hidden h-full w-full relative bg-center bg-cover mb-7"
           style={{ backgroundImage: `url(${ImageHomePagebackground.src})` }}
         >
           <PageHeading title="Nos services" subtitle="Voici nos services" />

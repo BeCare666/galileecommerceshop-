@@ -2,14 +2,14 @@
 import Image from "next/image";
 import Servicesimg from "@/assets/images/services/service.png";
 import Servicesimgx from "@/assets/images/services/servicesx.png";
-
+import Link from 'next/link';
 export default function ServicesSections() {
     return (
-        <div className="w-full flex flex-col gap-10">
-            {/* --- Section 1 (fond noir + image) --- */}
-            <section className="relative w-full bg-black text-white flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-12">
+        <div className="w-full flex flex-col ">
+            {/* --- Section 1 (fond noir + image) --- gap-10*/}
+            <section className="relative w-full bg-black text-white flex flex-col md:flex-row items-center justify-between px-6 md:px-20  ">
                 {/* Texte gauche */}
-                <div className="w-full md:w-1/2 text-center md:text-left space-y-4 transition-all duration-700 ease-in-out">
+                <div className="w-full md:w-1/2 text-center md:text-left space-y-4 transition-all duration-700 ease-in-out z-10">
                     <h2 className="text-2xl md:text-3xl font-semibold leading-snug">
                         Profitez d’un secteur des services en <br /> pleine expansion dans
                         le monde
@@ -30,16 +30,17 @@ export default function ServicesSections() {
                     <Image
                         src={Servicesimg}
                         alt="Secteur des services"
-                        width={600}
-                        height={600}
-                        className="object-contain"
+                        width={700}
+                        height={700}
+                        className="object-cover w-full h-[50vh] sm:h-[70vh] md:object-contain md:w-auto md:h-auto"
                         priority
                     />
                 </div>
             </section>
+
             {/* --- Section 2 (fond image) --- */}
             <section
-                className="h-[80vh] relative w-full flex items-center px-6 md:px-20 py-12 text-black"
+                className="h-[80vh] relative w-full flex items-center px-6 md:px-20   text-black"
                 style={{
                     backgroundImage: `url(${Servicesimgx.src})`,
                     backgroundSize: "cover",
@@ -56,10 +57,13 @@ export default function ServicesSections() {
                     "
                 >
                     <p className="text-2xl md:text-3xl font-medium leading-snug bg-white/70 p-4 rounded-xl inline-block">
-                        Cliquez pour <br />
-                        découvrir des <br />
-                        milliers d’offres de <br />
-                        services commerciaux
+                        <Link href="/become-seller" className="inline-block px-2 py-1 rounded transition-colors text-white">
+                            Cliquez pour <br />
+                            découvrir des <br />
+                            milliers d’offres de <br />
+                            services commerciaux
+                        </Link>
+
                     </p>
                 </div>
             </section>

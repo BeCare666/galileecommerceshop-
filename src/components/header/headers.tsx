@@ -46,6 +46,19 @@ export default function GalileeHeader() {
     }
     setIsHoverCategoriesx(true);
   };
+  const [openMarches, setOpenMarches] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Ferme le dropdown si clic en dehors
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setOpenMarches(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
@@ -373,10 +386,40 @@ export default function GalileeHeader() {
               <Link href="#" className="inline-block px-2 py-1 rounded transition-colors text-white">
                 Suivi des commandes
               </Link>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setOpenMarches((prev) => !prev);
+                }}
+                className="inline-block px-2 py-1 rounded transition-colors text-white"
+              >
+                Marchés <span className={`ml-1 transition-transform ${openMarches ? "rotate-180" : ""}`}>▼</span>
+              </button>
 
-              <Link href="#" className="inline-block px-2 py-1 rounded transition-colors text-white">
-                Marchés
-              </Link>
+              {openMarches && (
+                <div className="absolute top-full left-0 mt-1 w-48 bg-white text-black rounded shadow-lg z-50">
+                  <ul className="py-2">
+                    <li>
+                      <Link
+                        href="/produits"
+                        className="block px-4 py-2 hover:bg-gray-100"
+                        onClick={() => setOpenMarches(false)}
+                      >
+                        Produits
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/services"
+                        className="block px-4 py-2 hover:bg-gray-100"
+                        onClick={() => setOpenMarches(false)}
+                      >
+                        Services
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              )}
 
               <Link href="#" className="inline-block px-2 py-1 flex items-center rounded transition-colors text-white">
                 Pavillons
@@ -528,14 +571,54 @@ export default function GalileeHeader() {
                 Suivi des commandes
               </Link>
 
-              <Link
-                href="#"
-                className={`px - 2 py - 1 rounded transition - colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
-                  }`}
-              >
-                Marchés
-              </Link>
+              <div className="relative inline-block" ref={dropdownRef}>
+                {/* Bouton */}
+                <Link
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setOpenMarches((prev) => !prev);
+                  }}
+                  className="inline-block px-2 py-1 rounded transition-colors text-white"
+                >
+                  Marchés{" "}
+                  <span
+                    className={`ml-1 transition-transform duration-300 ${openMarches ? "rotate-180" : ""
+                      }`}
+                  >
+                    ▼
+                  </span>
+                </Link>
 
+                {/* Dropdown */}
+                <div
+                  className={`absolute top-full left-0 mt-2 w-48 bg-white text-black rounded-md shadow-lg z-50 transition-all duration-300 origin-top transform ${openMarches
+                    ? "scale-y-100 opacity-100"
+                    : "scale-y-0 opacity-0 pointer-events-none"
+                    }`}
+                >
+                  <ul className="py-2">
+                    <li>
+                      <Link
+                        href="/produits"
+                        className="block px-4 py-2 hover:bg-gray-100"
+                        onClick={() => setOpenMarches(false)}
+                      >
+                        Produits
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/services"
+                        className="block px-4 py-2 hover:bg-gray-100"
+                        onClick={() => setOpenMarches(false)}
+                      >
+                        Services
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              </div>
               <Link
                 href="#"
                 className={`px - 2 py - 1 flex items - center rounded transition - colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'

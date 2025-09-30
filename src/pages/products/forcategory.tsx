@@ -4673,6 +4673,7 @@ export default function ProductsPage() {
     sous_categories_id,
     sub_categories_id,
     search,
+    is_origin, // ✅ maintenant reconnu
   } = router.query;
 
   const [products, setProducts] = useState<Product[]>([]);
@@ -4702,7 +4703,7 @@ export default function ProductsPage() {
       if (sous_categories_id) params.sous_categories_id = sous_categories_id;
       if (sub_categories_id) params.sub_categories_id = sub_categories_id;
       if (search) params.search = search;
-
+      if (is_origin) params.is_origin = is_origin === 'true';
       const { data } = await axios.get(
         `${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/products/corridor`,
         {
