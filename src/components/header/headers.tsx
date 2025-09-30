@@ -359,8 +359,8 @@ export default function GalileeHeader() {
           </div>
         </div>
 
-        {/* Search bar bg-gray-800*/}
-        <div className={`bg-pink-600 lg:py-4 transition-all duration-500 ease-in-out
+        {/* Search bar bg-gray-800 bg-pink-600*/}
+        <div className={`bg-gradient-to-b from-[#222034] to-[#0d0d14]  lg:py-4 transition-all duration-500 ease-in-out
          ${showSearch ? "bg-white text-black" : ""}
         `}>
           <div className="lg:px-6 flex items-center h-14 relative">

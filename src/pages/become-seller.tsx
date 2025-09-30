@@ -1,6 +1,4 @@
 "use client";
-
-import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import banner1 from "@/assets/images/banner/banner1.jpg";
@@ -8,6 +6,13 @@ import banner2 from "@/assets/images/banner/banner2.jpg";
 import banner3 from "@/assets/images/banner/banner3.png";
 import supplier from "@/assets/images/banner/supplier.png";
 import Header from '@/components/header/headers';
+import routes from '@/config/routes';
+import { useIsRTL } from '@/lib/locals';
+import client from '@/data/client';
+import toast from 'react-hot-toast';
+import { useMutation } from 'react-query';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 export default function MonComposant() {
     const ref1 = useRef(null);
     const ref3 = useRef(null);
@@ -23,7 +28,25 @@ export default function MonComposant() {
         offset: ["start end", "end start"],
     });
     const y3 = useTransform(scrollY3, [0, 1], ["0%", "0%"]);
+    const { isRTL } = useIsRTL();
+    const router = useRouter();
 
+    const { mutate: becomeSeller, isLoading } = useMutation(client.becomeSeller.post, {
+        onSuccess: (data: any) => {
+            // Affiche un toast de succès
+            //toast.success(data?.message || "Vous êtes désormais fournisseur !");
+
+            // Redirection sécurisée côté client après un petit délai
+            if (typeof window !== "undefined") {
+                setTimeout(() => {
+                    window.location.href = "https://galileecommerceadmin-six.vercel.app/fr/shops/create";
+                }, 1500); // 1.5s pour laisser le toast visible
+            }
+        },
+        onError: (error: any) => {
+            toast.error(error?.message || "Une erreur est survenue.");
+        },
+    });
     return (
         <>
             <Header />
@@ -146,7 +169,8 @@ export default function MonComposant() {
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             className="bg-yellow-500 text-white font-semibold px-6 py-3  shadow-lg transition-all hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300"
-                        >
+                         onClick={() => becomeSeller()}
+                        disabled={isLoading}>
                             INSCRIVEZ – VOUS MAINTENANT !
                         </motion.button>
 
