@@ -217,7 +217,7 @@ export default function GalileeHeader() {
             </p>
 
             {/* Message droite */}
-            <p className="text-[10px] md:text-base font-medium">
+            <p className="text-[10px] md:text-base font-medium mb-0">
               Acheter n'a jamais été aussi simple
             </p>
           </div>
