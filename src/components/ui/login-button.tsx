@@ -24,7 +24,7 @@ export default function LoginMenu() {
       className="flex tr from-pink-400 to-indigo-400  rounded-full h-9 w-9"
       onClick={() => openModal('LOGIN_VIEW')}
     >
-      <UserIcon className="h-8 w-8 text-white" />
+      <UserIcon className="h-8 w-8 text-pink-500" />
     </Button>
   );
 }

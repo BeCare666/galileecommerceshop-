@@ -742,13 +742,13 @@ export default function GalileeHeader() {
                   <div className="flex items-center justify-between px-4 py-4 border-b border-gray-700">
                     <div className="flex items-center gap-2">
                       <Image
-                        src={productPlaceholder}
+                        src={productPlaceholderx}
                         alt="Logo"
                         width={164}
                         height={84}
                       />
                     </div>
-                    <LoginMenu />
+                    {/** <LoginMenu />**/}
                     <button
                       onClick={() => setDrawerOpen(false)}
                       className="text-gray-400 hover:text-white"

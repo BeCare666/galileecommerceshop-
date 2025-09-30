@@ -4,7 +4,7 @@ import Button from '@/components/ui/button';
 import SearchButton from '@/components/search/search-button';
 import CartButton from '@/components/cart/cart-button';
 import Aboutus from '@/components/ui/aboutus';
-
+import LoginMenu from '@/components/ui/login-button';
 import { HomeIcon } from '@/components/icons/home-icon';
 import { AboutIcon } from '@/components/icons/about-us-icon';
 import { GlobeIcon } from '@/components/icons/globe';
@@ -38,7 +38,7 @@ export default function BottomNavigation() {
           <span className="text-xs mt-1">A propos</span>
         </div>
       </Button>**/}
-      <Button
+      {/** <Button
         variant="icon"
         aria-label="Products"
       //onClick={() => router.push(routes.products)}
@@ -47,7 +47,7 @@ export default function BottomNavigation() {
           <SearchButton />
           <span className="text-xs mt-1">Recherche</span>
         </div>
-      </Button>
+      </Button>**/}
 
       <Button
         variant="icon"
@@ -80,6 +80,16 @@ export default function BottomNavigation() {
         <Aboutus onClick={() => openDrawer('MOBILE_MENU')} />
         <span className="text-xs mt-1">A propos</span>
       </div>
+      <Button
+        variant="icon"
+        aria-label="Products"
+      //onClick={() => router.push(routes.products)}
+      >
+        <div className="flex flex-col items-center justify-center">
+          <LoginMenu />
+          <span className="text-xs mt-1">Compte</span>
+        </div>
+      </Button>
     </nav>
 
   );

@@ -168,10 +168,10 @@ export default function MonComposant() {
                         <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="bg-yellow-500 text-white font-semibold px-6 py-3  shadow-lg transition-all hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300"
-                         onClick={() => becomeSeller()}
-                        disabled={isLoading}>
-                            INSCRIVEZ – VOUS MAINTENANT !
+                            className="bg-yellow-600 text-white font-semibold px-6 py-3  shadow-lg transition-all hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300"
+                            onClick={() => becomeSeller()}
+                            disabled={isLoading}>
+                            REJOIGNEZ NOUS EN TANT QUE FOURNISSEUR !
                         </motion.button>
 
                         <p className="text-lg md:text-xl">Accédez à des millions d’acheteurs</p>
