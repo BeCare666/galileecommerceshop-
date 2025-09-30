@@ -208,6 +208,20 @@ export default function GalileeHeader() {
       >
         {' '}
         {/* Top bar */}
+        <div className={`w-full 
+       ${isHoverCategories || showSearch ? 'bg-white text-black' : 'bg-pink-700 text-white'}`}>
+          <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-2">
+            {/* Message gauche */}
+            <p className="text-[10px] md:text-base font-medium">
+              Le leader africain de l'e-commerce
+            </p>
+
+            {/* Message droite */}
+            <p className="text-[10px] md:text-base font-medium">
+              Acheter n'a jamais été aussi simple
+            </p>
+          </div>
+        </div>
         <div className="max-w-[1780px] px-3 py-3 flex items-center justify-between">
           {/* Logo + desktop nav */}
           <div className="flex items-center gap-5">
