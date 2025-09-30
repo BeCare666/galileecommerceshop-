@@ -209,7 +209,7 @@ export default function GalileeHeader() {
         {' '}
         {/* Top bar */}
         <div className={`w-full 
-       ${isHoverCategories || showSearch ? 'bg-white text-black' : 'bg-pink-700 text-white'}`}>
+       ${isHoverCategories || showSearch ? 'hidden' : 'block bg-pink-700 text-white'}`}>
           <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-2">
             {/* Message gauche */}
             <p className="text-[10px] md:text-base font-medium">
