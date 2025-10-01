@@ -39,7 +39,8 @@ export default function MonComposant() {
             // Redirection sécurisée côté client après un petit délai
             if (typeof window !== "undefined") {
                 setTimeout(() => {
-                    window.location.href = "https://galileecommerceadmin-six.vercel.app/fr/login";
+                    let become_seller = 1
+                    window.location.href = `https://galileecommerceadmin-six.vercel.app/fr/login?become_seller=${become_seller}`;
                 }, 1500); // 1.5s pour laisser le toast visible
             }
         },
