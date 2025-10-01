@@ -26,12 +26,12 @@ export default function AuthorizedMenu({ user }: { user: User }) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute  top-[5%] md:top-16 z-[9999] mt-4 w-56 rounded-md bg-light py-1.5 text-dark shadow-dropdown ltr:right-0 ltr:origin-top-right rtl:left-0 rtl:origin-top-left dark:bg-dark-250 dark:text-light">
+        <Menu.Items className="absolute bottom-[15%] lg:top-[135px] md:top-16 z-[9999] mt-4 w-56 rounded-md bg-white py-1.5 text-dark shadow-dropdown ltr:right-0 ltr:origin-top-right rtl:left-0 rtl:origin-top-left dark:bg-dark-250 dark:text-light">
           {AuthorizedMenuItems?.map((item) => (
             <Menu.Item key={item.label}>
               <ActiveLink
                 href={item.path}
-                className="transition-fill-colors flex w-full items-center gap-2 px-5 py-2.5 hover:bg-light-400 dark:hover:bg-dark-600"
+                className="transition-fill-colors bg-white flex w-full items-center z-[9999] gap-2 px-5 py-2.5 hover:bg-light-400 dark:hover:bg-dark-600"
               >
                 {/* Affichage du SVG comme HTML */}
                 <span dangerouslySetInnerHTML={{ __html: item.icon }} />
@@ -42,7 +42,7 @@ export default function AuthorizedMenu({ user }: { user: User }) {
           <Menu.Item>
             <button
               type="button"
-              className="flex items-centertransition-fill-colors w-full px-5 py-2.5 hover:bg-light-400 ltr:text-left rtl:text-right dark:hover:bg-dark-600"
+              className="flex bg-white items-centertransition-fill-colors w-full px-5 py-2.5 hover:bg-light-400 ltr:text-left rtl:text-right dark:hover:bg-dark-600"
               onClick={() => logout()}
             >
               <svg

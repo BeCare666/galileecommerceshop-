@@ -212,12 +212,12 @@ export default function GalileeHeader() {
        ${isHoverCategories || showSearch ? 'hidden' : 'block bg-pink-700 text-white'}`}>
           <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-2">
             {/* Message gauche */}
-            <p className="text-[10px] md:text-base font-medium">
+            <p className="text-[10px] md:text-base font-medium mt-5">
               Le leader africain de l'e-commerce
             </p>
 
             {/* Message droite */}
-            <p className="text-[10px] md:text-base font-medium mb-0">
+            <p className="text-[10px] md:text-base font-medium ">
               Acheter n'a jamais été aussi simple
             </p>
           </div>
