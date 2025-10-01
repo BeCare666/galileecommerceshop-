@@ -141,7 +141,7 @@ const Home: NextPageWithLayout = () => {
       <Products />**/}
       <Footer />
       <button
-        className="mb-[30px] flex items-center bg-white shadow px-4 py-3 rounded-full hidden md:flex fixed bottom-4 right-4 z-[9999]"
+        className="mb-[30px] flex items-center bg-white shadow px-4 py-3 rounded-full hidden md:flex fixed bottom-4 right-4 z-30"
         onClick={() => setOpen(true)}
       >
         <span className="w-7 h-7 flex items-center justify-center bg-gray-100 rounded-full mr-2">
