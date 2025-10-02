@@ -33,7 +33,7 @@ export default function MonComposant() {
         <>
             <section className="w-full max-h-screen bg-white flex flex-col items-center justify-center px-4 md:px-12 lg:px-24 overflow-hidden">
                 {/* Titre principal avec animation */}
-                <h1 className="scroll-animate text-center text-xl md:text-2xl lg:text-5xl font-bold text-purple-900 leading-snug mb-4 opacity-0">
+                <h1 className="scroll-animate text-center text-4xl md:text-4xl lg:text-5xl font-bold text-purple-900 leading-snug mb-4 opacity-0">
                     Découvrez les pavillons digitaux de <br />
                     <span className="block">Galiléecommerce.com</span>
                 </h1>
