@@ -22,7 +22,7 @@ export default function Hero() {
                 <div className="text-white space-y-6 max-w-2xl">
                     <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-snug">
                         L'incontournable plateforme  <br />
-                        digitale pour lecommerce en Afrique.
+                        digitale pour le commerce en Afrique.
                     </h1>
 
                     <p className="text-base sm:text-lg md:text-xl text-gray-200">
