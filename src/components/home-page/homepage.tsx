@@ -4,8 +4,8 @@ import Homepage1 from "@/assets/images/homepage1.png";
 
 export default function Hero() {
     return (
-        <section className="relative h-[80vh] w-full mt-0">
-            {/* Background image */}
+        <section className="relative  w-full mt-0 pb-7">
+            {/* Background image h-[80vh]*/}
             <Image
                 src={Homepage1}
                 alt="Hero background"
@@ -20,13 +20,13 @@ export default function Hero() {
             {/* Contenu */}
             <div className="relative z-10 max-w-7xl mx-auto h-full flex items-center px-3 lg:px-6">
                 <div className="text-white space-y-6 max-w-2xl">
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-snug">
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-bold leading-snug">
                         L'incontournable plateforme  <br />
                         digitale pour le commerce en Afrique.
                     </h1>
 
                     <p className="text-base sm:text-lg md:text-xl text-gray-200">
-                        Des solutions digitales pour l’acheteur. <br className="hidden sm:block" />
+                        Des solutions digitales pour l’acheteur <br className="hidden sm:block" />
                         Des solutions digitales pour le vendeur.
                     </p>
 
