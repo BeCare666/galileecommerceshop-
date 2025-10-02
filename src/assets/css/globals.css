@@ -671,3 +671,78 @@ html.dark .react-tel-input .country-list .country:hover {
 nav::-webkit-scrollbar {
   display: none;
 }
+
+
+
+/* Animations personnalisées */
+@layer utilities {
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .animate-fadeInUp {
+    animation: fadeInUp 1s ease-out forwards;
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 1.5s ease-out forwards;
+  }
+}
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Animation fade-in */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation zoom-in */
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Classes utilitaires */
+.animate-fadeInUp {
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+.animate-zoomIn {
+  animation: zoomIn 1s ease-out forwards;
+}

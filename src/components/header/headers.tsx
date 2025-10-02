@@ -435,7 +435,7 @@ export default function GalileeHeader() {
                 </div>
               )}
 
-              <Link href="#" className="inline-block px-2 py-1 flex items-center rounded transition-colors text-white">
+              <Link href="/pavillons" className="inline-block px-2 py-1 flex items-center rounded transition-colors text-white">
                 Pavillons
                 <CountrySelector />
               </Link>
@@ -634,7 +634,7 @@ export default function GalileeHeader() {
                 </div>
               </div>
               <Link
-                href="#"
+                href="/pavillons"
                 className={`px - 2 py - 1 flex items - center rounded transition - colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
                   }`}
               >
