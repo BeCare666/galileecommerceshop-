@@ -108,8 +108,8 @@ export default function ServicesSections() {
                     transition-all duration-700 ease-in-out
                     "
                 >
-                    <p className="text-2xl md:text-3xl font-medium leading-snug bg-white/70 p-4 rounded-xl inline-block">
-                        <Link href="/become-seller" className="inline-block px-2 py-1 rounded transition-colors text-white">
+                    <p className="text-3xl md:text-3xl font-medium leading-snug bg-white/70 p-4 rounded-xl inline-block">
+                        <Link href="/become-seller" className="inline-block px-2 py-1 rounded transition-colors text-gray-900">
                             Cliquez pour <br />
                             découvrir des <br />
                             milliers d’offres de <br />
