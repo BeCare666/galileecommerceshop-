@@ -90,7 +90,7 @@ export default function MonComposant() {
                     </div>
 
                     {/* Bloc du bas : Texte + Dame */}
-                    <div className="pl-5 pt-5 scroll-animate flex flex-col md:flex-row items-center justify-center gap-10 opacity-0 border border-gray-300">
+                    <div className="pl-5 pt-5 pr-5 lg:pr-0 scroll-animate flex flex-col md:flex-row items-center justify-center gap-10 opacity-0 border border-gray-300">
                         {/* Texte à gauche */}
                         <div className="flex-1 flex flex-col items-center md:items-start justify-center text-center md:text-left">
                             <p className="text-4xl font-semibold text-purple-800">
