@@ -4,7 +4,7 @@ import Homepage1 from "@/assets/images/homepage1.png";
 
 export default function Hero() {
     return (
-        <section className="relative  w-full mt-0 pb-7">
+        <section className="relative  w-full mt-0 pb-7 lg:pb-15 md:pb-12">
             {/* Background image h-[80vh]*/}
             <Image
                 src={Homepage1}
@@ -14,14 +14,14 @@ export default function Hero() {
                 className="object-cover"
             />
 
-            {/* Overlay sombre pour contraste (facultatif mais conseillé) */}
+            {/* Overlay sombre pour contraste (facultatif mais conseillé) max-w-3xl*/}
             <div className="absolute inset-0 bg-black/50"></div>
 
             {/* Contenu */}
             <div className="relative z-10 max-w-7xl mx-auto h-full flex items-center px-3 lg:px-6">
-                <div className="text-white space-y-6 max-w-2xl">
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-bold leading-snug">
-                        L'incontournable plateforme  <br />
+                <div className="text-white space-y-6 ">
+                    <h1 className="text-3xl md:text-5xl font-bold leading-snug">
+                        L'incontournable plateforme
                         digitale pour le commerce en Afrique.
                     </h1>
 
