@@ -10,7 +10,7 @@ import Pavillons4 from "@/assets/images/pavillons/pavillons4.png";
 import Pavillons5 from "@/assets/images/pavillons/paviilons5.png";
 import Pavillons51 from "@/assets/images/pavillons/pavillons5.1.png";
 import Pavillons6 from "@/assets/images/pavillons/pavillons6.png";
-
+import Link from 'next/link';
 // Composant principal
 export default function MonComposant() {
     useEffect(() => {
@@ -213,10 +213,12 @@ export default function MonComposant() {
                         notre assistance <br />
                         spécialisée
                     </h2>
-                    <p className="text-black text-4xl md:text-4xl font-medium mb-6 text-center md:text-left ">
-                        Visitez les pavillons <br />
-                        de Galiléecommerce.com
-                    </p>
+                    <Link href="/pavillons_">
+                        <p className="text-black text-4xl md:text-4xl font-medium mb-6 text-center md:text-left ">
+                            Visitez les pavillons <br />
+                            de Galiléecommerce.com
+                        </p>
+                    </Link>
                 </div>
             </section>
         </>

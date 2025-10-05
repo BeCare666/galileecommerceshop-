@@ -1,7 +1,7 @@
 // app/components/Hero.tsx
 import Image from "next/image";
 import Homepage1 from "@/assets/images/homepage1.png";
-
+import Homepage2 from "@/assets/images/homepage2.png";
 export default function Hero() {
     return (
         <section className="relative  w-full mt-0 pb-7 lg:pb-15 md:pb-12">
@@ -11,9 +11,15 @@ export default function Hero() {
                 alt="Hero background"
                 fill
                 priority
-                className="object-cover"
+                className="object-cover hidden lg:block md:block"
             />
-
+            <Image
+                src={Homepage2}
+                alt="Hero background mobile"
+                fill
+                priority
+                className="object-cover block md:hidden"
+            />
             {/* Overlay sombre pour contraste (facultatif mais conseillé) max-w-3xl*/}
             <div className="absolute inset-0 bg-black/50"></div>
 
