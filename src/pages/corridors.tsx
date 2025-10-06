@@ -7,243 +7,386 @@ import Img31 from "@/assets/images/corridors/corridors3.1.png";
 import Img4 from "@/assets/images/corridors/corridors4.jpg";
 import Img41 from "@/assets/images/corridors/corridors4.1.png";
 import Img5 from "@/assets/images/corridors/corridors5.jpg";
+import Corridorssuite1 from "@/assets/images/corridors/suite1.jpg";
+import Corridorssuite2 from "@/assets/images/corridors/suite2.png";
+import Corridorssuite3 from "@/assets/images/corridors/suite3.jpg";
+import Corridorsmobile from "@/assets/images/corridors/corridorsmobile.png";
+import { motion } from "framer-motion";
 export default function MonComposant() {
     return (
-        <div className="w-full flex flex-col space-y-16">
-            {/* SECTION 1 */}
-            <section className="relative w-full h-[90vh] flex items-center justify-center">
-                {/* Image de fond */}
-                <Image
-                    src={Img1} // ⚠️ Mets ici ton image de fond (corridors3.png renommée)
-                    alt="Corridor digital"
-                    fill
-                    className="object-cover brightness-75"
-                    priority
-                />
+        <>
 
-                {/* Texte superposé */}
-                <div className="relative z-10 text-white px-6 md:px-16 lg:px-24 max-w-5xl">
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                        Qu’est-ce qu’un corridor digital de Galiléecommerce.com?
-                    </h2>
-                    <ul className="space-y-2 text-lg md:text-xl">
-                        <li>✔️ Optimisez vos coûts de transactions</li>
-                        <li>✔️ Réduisez vos délais de livraison</li>
-                        <li>✔️ Stimulez le développement de vos produits et services</li>
-                    </ul>
-                    <p className="mt-6 text-sm md:text-base text-gray-200">
-                        En fournissant des outils et des solutions sur mesure, nous permettons une circulation plus
-                        rapide et plus économique de vos marchandises.
-                    </p>
-                </div>
-            </section>
+            <div className="w-full flex flex-col space-y-16">
 
+                {/* SECTION 1 */}
+                <section className="relative w-full h-[90vh] flex items-center justify-center">
+                    {/* Image de fond */}
+                    <Image
+                        src={Img1} // ⚠️ Mets ici ton image de fond (corridors3.png renommée)
+                        alt="Corridor digital"
+                        fill
+                        className="object-cover brightness-75"
+                        priority
+                    />
 
-            {/* SECTION 2 */}
-            <section className="w-full bg-[#071322] text-white py-10">
-                <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+                    {/* Texte superposé */}
+                    <div className="relative z-10 text-white px-6 md:px-16 lg:px-24 max-w-5xl">
+                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+                            Qu’est-ce qu’un corridor digital de Galiléecommerce.com?
+                        </h2>
+                        <ul className="space-y-2 text-lg md:text-xl">
+                            <li>✔️ Optimisez vos coûts de transactions</li>
+                            <li>✔️ Réduisez vos délais de livraison</li>
+                            <li>✔️ Stimulez le développement de vos produits et services</li>
+                        </ul>
+                        <p className="mt-6 text-sm md:text-base text-gray-200">
+                            En fournissant des outils et des solutions sur mesure, nous permettons une circulation plus
+                            rapide et plus économique de vos marchandises.
+                        </p>
+                    </div>
+                </section>
+                <div className="w-full flex justify-center bg-[#07131F] overflow-hidden">
+                    <div className="w-full max-w-[1200px]">
+                        {/* -------------------- SECTION 1 -------------------- */}
 
-                    {/* ---------- IMAGE EN HAUT (centrée) ---------- */}
-                    <div className="w-full flex justify-center">
-                        {/* Conteneur image avec effet hover zoom */}
-                        <div
-                            className="w-full max-w-4xl overflow-hidden shadow-lg
-                       transform transition-transform duration-700 ease-out hover:scale-105"
-                            aria-hidden
+                        <section
+                            className="relative flex flex-col md:flex-row items-center justify-start px-6 md:px-[40px] py-[32px] overflow-hidden bg-[#07131F] min-h-[380px] md:min-h-[420px]"
                         >
+                            {/* Image de fond */}
                             <Image
-                                src={Img2}
-                                alt="Développement commercial - image"
-                                width={1400}
-                                height={520}
-                                className="w-full h-auto object-cover"
+                                src={Corridorssuite1}
+                                alt="corridorssuite3"
+                                fill
+                                className="object-cover z-0"
                                 priority
                             />
-                        </div>
+
+                            {/* Overlay global léger */}
+                            <div className="absolute inset-0 bg-black/40 z-0" />
+
+                            {/* Bande noire + dégradé fluide */}
+                            <div className="absolute top-0 left-0 h-full w-[30%] bg-gradient-to-r from-[#000000]/95 via-[#000000]/80 to-transparent z-[1]" />
+
+                            {/* Bloc texte (toute hauteur mais compact) */}
+                            <div className="relative z-10 flex items-center h-full w-full md:w-[30%] text-white p-6 md:p-10 bg-gradient-to-r from-[#000000]/95 via-[#000000]/80 to-transparent">
+                                <div>
+                                    <div className="w-[40px] h-[6px] bg-[#FF7A2D] mb-3" />
+                                    <h3 className="font-extrabold text-[24px] md:text-[30px] leading-[30px] md:leading-[36px] mb-3">
+                                        Les corridors digitaux de Galiléecommerce.com
+                                    </h3>
+
+                                    <div className="h-[2px] w-[80px] bg-white/15 mb-3" />
+
+                                    <p className="text-[#D1D5DB] text-[14px] leading-[20px]">
+                                        Les corridors de Galiléecommerce.com sont des dispositifs et ressources fortement connectés
+                                        à la Zone de Libre-échange continentale africaine (ZLECAF), intégrés à la mondialisation,
+                                        caractérisés par des flux économiques importants et un maillage commercial croissant.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+
+
+                        {/* -------------------- SECTION 2 -------------------- */}
+                        <section
+                            className="relative flex flex-col md:flex-row items-center justify-start px-6 md:px-[40px] py-6 overflow-hidden bg-[#242733] h-[400px] md:h-[450px]"
+                        >
+                            {/* Image de fond */}
+                            <Image
+                                src={Corridorssuite2}
+                                alt="corridorssuite2"
+                                fill
+                                className="object-cover z-0"
+                                priority
+                            />
+
+                            {/* Overlay global léger */}
+                            <div className="absolute inset-0 bg-black/40 z-0" />
+
+                            {/* Bande noire + dégradé fluide à gauche (30%) */}
+                            <div className="absolute top-0 left-0 h-full w-[30%] bg-gradient-to-r from-[#242733]/95 via-[#242733]/80 to-transparent z-[1]" />
+
+                            {/* Bloc texte */}
+                            <div className="relative z-10 flex items-center h-full w-full md:w-[30%] text-white p-4 md:p-6 bg-gradient-to-r from-[#242733]/95 via-[#242733]/80 to-transparent">
+                                <div className="flex flex-col justify-center h-full">
+                                    <div className="w-[40px] h-[6px] bg-[#FF7A2D] mb-2" />
+                                    <h3 className="font-extrabold text-[24px] md:text-[28px] leading-[28px] md:leading-[32px] mb-2">
+                                        Un moteur clé du développement de <br className="hidden md:block" /> votre potentiel commercial
+                                    </h3>
+
+                                    <div className="h-[2px] w-[80px] bg-white/15 mb-2" />
+
+                                    <p className="text-[#F59E0B] font-semibold text-[13px] mb-2">
+                                        Des corridors digitaux pour booster votre potentiel commercial
+                                    </p>
+
+                                    <p className="text-[#D1D5DB] text-[13px] leading-[18px]">
+                                        Galiléecommerce.com facilite l’accès mondial au marché de la{" "}
+                                        <span className="text-white font-semibold">ZLECAF</span> et accompagne les dynamiques
+                                        commerciales de la ZLECAF vers le monde. Grâce à ses ressources techniques,
+                                        technologiques, juridiques, digitales, informationnelles et physiques,
+                                        Galiléecommerce.com vous offre des solutions visant le développement de votre potentiel commercial.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+
+
+                        {/* -------------------- SECTION 3 -------------------- */}
+                        <section className="flex flex-col md:flex-row items-start justify-between bg-[#14141A] px-6 md:px-[40px] py-[48px] relative overflow-hidden">
+                            {/* Texte à gauche */}
+                            <div className="relative w-full md:w-[520px] text-white z-30 mb-8 md:mb-0">
+                                {/* Gradient à droite du texte */}
+                                <div className="absolute inset-y-0 right-0 w-[30%] bg-gradient-to-r from-[#14141A] to-transparent pointer-events-none" />
+
+                                <h2 className="font-extrabold text-[26px] md:text-[32px] leading-[32px] md:leading-[38px] mb-4 relative">
+                                    Comment ça marche ?
+                                </h2>
+
+                                <ul className="text-[#D1D5DB] text-[14px] md:text-[15px] leading-[22px] space-y-2 relative">
+                                    <li>• Spécifiez vos catégories de produits, leurs caractéristiques et les quantités requises.</li>
+                                    <li>
+                                        • Indiquez la nature des besoins pour lesquels vous sollicitez l’aide du centre de ressources pour corridors de{" "}
+                                        <span className="text-white font-semibold">Galiléecommerce.com</span>{" "}
+                                        (importation, exportation, recherche de débouchés économiques, représentation de produits…)
+                                    </li>
+                                    <li>• Sélectionnez les corridors digitaux adéquats.</li>
+                                    <li>• Effectuez le paiement des frais d’assistance.</li>
+                                    <li>• Le centre de ressources pour corridors vous contactera dans les 48 heures avec des solutions concrètes.</li>
+                                </ul>
+                            </div>
+
+                            {/* Image à droite */}
+                            <div className="relative w-full md:w-[720px] h-[240px] md:h-[406px] overflow-hidden">
+                                <Image
+                                    src={Corridorssuite3}
+                                    alt="corridorssuite1"
+                                    fill
+                                    className="object-cover"
+                                    priority
+                                />
+                                {/* Dégradé sur 30% à gauche de l’image */}
+                                <div className="absolute inset-y-0 left-0 w-[30%] bg-gradient-to-r from-[#07131F]/90 to-transparent" />
+                            </div>
+                        </section>
                     </div>
+                </div>
 
-                    {/* ---------- DEUX BLOCS EN DESSOUS (grid) ---------- */}
-                    {/* Sur mobile grid-cols-1 (stack), sur md grid-cols-2 (deux colonnes) */}
-                    <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                {/* SECTION 2 */}
+                <section className="w-full bg-[#071322] text-white py-10">
+                    <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
 
-                        {/* ----- GAUCHE : bloc centré DANS SA COLONNE ----- */}
-                        <div className="flex items-center justify-center">
-                            {/* 
-              - Le texte est centré horizontalement et verticalement dans la colonne gauche.
-              - Utilisation d'une police monospace/typographique (font-mono) pour reproduire l'effet visuel.
-            */}
-                            <h2
-                                className="font-mono font-extrabold leading-tight text-3xl md:text-4xl lg:text-5xl
-                         text-center md:text-center"
-                                aria-label="Titre principal gauche"
-                            >
-                                Un moteur clé
-                                <br />
-                                du développement
-                                <br />
-                                commercial
-                            </h2>
-                        </div>
-
-                        {/* ----- DROITE : bloc aligné à droite (titre + paragraphe) ----- */}
-                        <div className="flex items-start justify-end">
-                            {/* 
-              - Le contenu est aligné à droite (text-right) afin de correspondre strictement à l'image fournie.
-              - Le conteneur possède un léger lift au hover pour interaction.
-            */}
+                        {/* ---------- IMAGE EN HAUT (centrée) ---------- */}
+                        <div className="w-full flex justify-center">
+                            {/* Conteneur image avec effet hover zoom */}
                             <div
-                                className="w-full max-w-xl transition-transform duration-300 ease-in-out hover:-translate-y-1"
-                                tabIndex={0} // permet focus keyboard et montre l'effet : accessible
+                                className="w-full max-w-4xl overflow-hidden shadow-lg
+                       transform transition-transform duration-700 ease-out hover:scale-105"
+                                aria-hidden
                             >
-                                <h3 className="text-xl md:text-2xl font-semibold mb-3 text-right">
-                                    Booster votre <span className="italic font-bold">potentiel</span> commercial
-                                </h3>
-
-                                <p className="text-sm md:text-base leading-relaxed text-gray-200 text-right">
-                                    Galileecommerce.com facilite votre accès au marché de la Zone de Libre-échange
-                                    continentale africaine (ZLECAF). Grâce à ses ressources techniques,
-                                    informationnelles et physiques, Galileecommerce.com offre des solutions visant
-                                    l’amélioration de votre efficacité commerciale à tous les niveaux, local,
-                                    national et international.
-                                </p>
+                                <Image
+                                    src={Img2}
+                                    alt="Développement commercial - image"
+                                    width={1400}
+                                    height={520}
+                                    className="w-full h-auto object-cover"
+                                    priority
+                                />
                             </div>
                         </div>
 
+                        {/* ---------- DEUX BLOCS EN DESSOUS (grid) ---------- */}
+                        {/* Sur mobile grid-cols-1 (stack), sur md grid-cols-2 (deux colonnes) */}
+                        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+
+                            {/* ----- GAUCHE : bloc centré DANS SA COLONNE ----- */}
+                            <div className="flex items-center justify-center">
+                                {/* 
+              - Le texte est centré horizontalement et verticalement dans la colonne gauche.
+              - Utilisation d'une police monospace/typographique (font-mono) pour reproduire l'effet visuel.
+            */}
+                                <h2
+                                    className="font-mono font-extrabold leading-tight text-3xl md:text-4xl lg:text-5xl
+                         text-center md:text-center"
+                                    aria-label="Titre principal gauche"
+                                >
+                                    Un moteur clé
+                                    <br />
+                                    du développement
+                                    <br />
+                                    commercial
+                                </h2>
+                            </div>
+
+                            {/* ----- DROITE : bloc aligné à droite (titre + paragraphe) ----- */}
+                            <div className="flex items-start justify-end">
+                                {/* 
+              - Le contenu est aligné à droite (text-right) afin de correspondre strictement à l'image fournie.
+              - Le conteneur possède un léger lift au hover pour interaction.
+            */}
+                                <div
+                                    className="w-full max-w-xl transition-transform duration-300 ease-in-out hover:-translate-y-1"
+                                    tabIndex={0} // permet focus keyboard et montre l'effet : accessible
+                                >
+                                    <h3 className="text-xl md:text-2xl font-semibold mb-3 text-right">
+                                        Booster votre <span className="italic font-bold">potentiel</span> commercial
+                                    </h3>
+
+                                    <p className="text-sm md:text-base leading-relaxed text-gray-200 text-right">
+                                        Galileecommerce.com facilite votre accès au marché de la Zone de Libre-échange
+                                        continentale africaine (ZLECAF). Grâce à ses ressources techniques,
+                                        informationnelles et physiques, Galileecommerce.com offre des solutions visant
+                                        l’amélioration de votre efficacité commerciale à tous les niveaux, local,
+                                        national et international.
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
-            </section>
-            {/* Style scoped */}
-            <style jsx>{`
+                </section>
+                {/* Style scoped */}
+                <style jsx>{`
         .space-y-16 > :not([hidden]) ~ :not([hidden]) {
            
           margin-top: 0 !important; 
         }
       `}</style>
-            {/* SECTION 3 */}
-            <section className="w-full flex flex-col items-center px-6 md:px-16 lg:px-24 py-12">
-                {/* Titre */}
-                <h2 className="text-center text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-10 leading-snug">
-                    <span className="font-bold">
-                        Trouvez des solutions <br /> adaptées à vos besoins
-                    </span>
-                </h2>
-
-                {/* Deux cercles */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl w-full">
-                    {/* Carte 1 */}
-                    <div className="flex flex-col items-center text-center">
-                        <div className="rounded-full border border-gray-400 flex flex-col items-center justify-center w-72 h-72 p-6 transition-transform duration-500 hover:scale-105">
-                            {/* Titre avec retour de ligne forcé et taille ajustée */}
-                            <h3 className="text-base md:text-lg font-bold text-purple-900 mb-2 leading-tight text-center break-words">
-                                Solutions pour <br /> faciliter les échanges
-                            </h3>
-
-                            <Image
-                                src={Img3}
-                                alt="Solutions échanges"
-                                width={80}
-                                height={80}
-                                className="mb-3"
-                            />
-
-                            <p className="text-xs md:text-sm text-purple-900 leading-snug text-center">
-                                Réduire les barrières normatives, <br />
-                                informationnelles, physiques et logistiques.
-                            </p>
-                        </div>
-                    </div>
-
-
-                    {/* Carte 2 */}
-                    <div className="flex flex-col items-center text-center">
-                        <div className="rounded-full border border-gray-400 flex flex-col items-center justify-center w-72 h-72 p-6 transition-transform duration-500 hover:scale-105">
-                            <h3 className="text-lg font-bold text-purple-900 mb-2">
-                                Renforcer l’intégration
-                            </h3>
-                            <Image
-                                src={Img31}
-                                alt="Renforcer intégration"
-                                width={100}
-                                height={100}
-                                className="mb-3"
-                            />
-                            <p className="text-sm text-purple-900 leading-snug">
-                                Assurer la liaison entre plusieurs pays <br /> et accompagner l’intégration commerciale.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* SECTION 3 */}
-            <section className="w-full flex flex-col items-center px-6 md:px-16 lg:px-24 py-12">
-                {/* Deux cercles */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl w-full">
-                    {/* Carte 1 */}
-                    <div className="flex flex-col items-center text-center">
-                        <div className="rounded-full border border-gray-400 flex flex-col items-center justify-center w-72 h-72 p-6 transition-transform duration-500 hover:scale-105">
-                            {/* Titre avec retour de ligne forcé et taille ajustée */}
-                            <h3 className="text-base md:text-lg font-bold text-purple-900 mb-2 leading-tight text-center break-words">
-                                Compétitivité <br /> des entreprises
-
-                            </h3>
-
-                            <Image
-                                src={Img4}
-                                alt="Solutions échanges"
-                                width={80}
-                                height={80}
-                                className="mb-3"
-                            />
-
-                            <p className="text-xs md:text-sm text-purple-900 leading-snug text-center">
-                                Faire baisser les dépenses <br />liées aux transactions
-                                et optimiser <br />les délais de livraison.
-                            </p>
-                        </div>
-                    </div>
-
-
-                    {/* Carte 2 */}
-                    <div className="flex flex-col items-center text-center">
-                        <div className="rounded-full border border-gray-400 flex flex-col items-center justify-center w-72 h-72 p-6 transition-transform duration-500 hover:scale-105">
-                            <h3 className="text-lg font-bold text-purple-900 mb-2">
-                                Moderniser les axes de transport
-                            </h3>
-                            <Image
-                                src={Img41}
-                                alt="Renforcer intégration"
-                                width={100}
-                                height={100}
-                                className="mb-3"
-                            />
-                            <p className="text-sm text-purple-900 leading-snug">
-                                Soutenir et accompagner le <br /> développement  du capital spatial
-
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section className="relative w-full h-[90vh] flex items-center justify-center">
-                {/* Image de fond */}
-                <Image
-                    src={Img5} // ⚠️ Mets ici ton image de fond (corridors3.png renommée)
-                    alt="Corridor digital"
-                    fill
-                    className="object-cover brightness-75"
-                    priority
-                />
-
-                {/* Texte superposé */}
-                <div className="relative z-10 text-white px-6 md:px-16 lg:px-24 max-w-5xl">
-                    <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-6 text-center items-center ">
-                        Prenez contact avec l’équipe technique pour assistance
-
+                {/* SECTION 3 */}
+                <section className="w-full flex flex-col items-center px-6 md:px-16 lg:px-24 py-12">
+                    {/* Titre */}
+                    <h2 className="text-center text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-10 leading-snug">
+                        <span className="font-bold">
+                            Trouvez des solutions <br /> adaptées à vos besoins
+                        </span>
                     </h2>
 
-                </div>
-            </section>
-        </div>
+                    {/* Deux cercles */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl w-full">
+                        {/* Carte 1 */}
+                        <div className="flex flex-col items-center text-center">
+                            <div className="rounded-full border border-gray-400 flex flex-col items-center justify-center w-72 h-72 p-6 transition-transform duration-500 hover:scale-105">
+                                {/* Titre avec retour de ligne forcé et taille ajustée */}
+                                <h3 className="text-base md:text-lg font-bold text-purple-900 mb-2 leading-tight text-center break-words">
+                                    Solutions pour <br /> faciliter les échanges
+                                </h3>
+
+                                <Image
+                                    src={Img3}
+                                    alt="Solutions échanges"
+                                    width={80}
+                                    height={80}
+                                    className="mb-3"
+                                />
+
+                                <p className="text-xs md:text-sm text-purple-900 leading-snug text-center">
+                                    Réduire les barrières normatives, <br />
+                                    informationnelles, physiques et logistiques.
+                                </p>
+                            </div>
+                        </div>
+
+
+                        {/* Carte 2 */}
+                        <div className="flex flex-col items-center text-center">
+                            <div className="rounded-full border border-gray-400 flex flex-col items-center justify-center w-72 h-72 p-6 transition-transform duration-500 hover:scale-105">
+                                <h3 className="text-lg font-bold text-purple-900 mb-2">
+                                    Renforcer l’intégration
+                                </h3>
+                                <Image
+                                    src={Img31}
+                                    alt="Renforcer intégration"
+                                    width={100}
+                                    height={100}
+                                    className="mb-3"
+                                />
+                                <p className="text-sm text-purple-900 leading-snug">
+                                    Assurer la liaison entre plusieurs pays <br /> et accompagner l’intégration commerciale.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* SECTION 3 */}
+                <section className="w-full flex flex-col items-center px-6 md:px-16 lg:px-24 py-12">
+                    {/* Deux cercles */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl w-full">
+                        {/* Carte 1 */}
+                        <div className="flex flex-col items-center text-center">
+                            <div className="rounded-full border border-gray-400 flex flex-col items-center justify-center w-72 h-72 p-6 transition-transform duration-500 hover:scale-105">
+                                {/* Titre avec retour de ligne forcé et taille ajustée */}
+                                <h3 className="text-base md:text-lg font-bold text-purple-900 mb-2 leading-tight text-center break-words">
+                                    Compétitivité <br /> des entreprises
+
+                                </h3>
+
+                                <Image
+                                    src={Img4}
+                                    alt="Solutions échanges"
+                                    width={80}
+                                    height={80}
+                                    className="mb-3"
+                                />
+
+                                <p className="text-xs md:text-sm text-purple-900 leading-snug text-center">
+                                    Faire baisser les dépenses <br />liées aux transactions
+                                    et optimiser <br />les délais de livraison.
+                                </p>
+                            </div>
+                        </div>
+
+
+                        {/* Carte 2 */}
+                        <div className="flex flex-col items-center text-center">
+                            <div className="rounded-full border border-gray-400 flex flex-col items-center justify-center w-72 h-72 p-6 transition-transform duration-500 hover:scale-105">
+                                <h3 className="text-lg font-bold text-purple-900 mb-2">
+                                    Moderniser les axes de transport
+                                </h3>
+                                <Image
+                                    src={Img41}
+                                    alt="Renforcer intégration"
+                                    width={100}
+                                    height={100}
+                                    className="mb-3"
+                                />
+                                <p className="text-sm text-purple-900 leading-snug">
+                                    Soutenir et accompagner le <br /> développement  du capital spatial
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section className="relative w-full h-[90vh] flex items-center justify-center">
+                    {/* Image de fond */}
+                    <Image
+                        src={Img5} // ⚠️ Mets ici ton image de fond (corridors3.png renommée)
+                        alt="Corridor digital"
+                        fill
+                        className="object-cover brightness-75 hidden md:block"
+                        priority
+                    />
+                    <Image
+                        src={Corridorsmobile} // ⚠️ Mets ici ton image de fond (corridors3.png renommée)
+                        alt="Corridor digital"
+                        fill
+                        className="object-cover brightness-75 md:hidden"
+                        priority
+                    />
+
+                    {/* Texte superposé */}
+                    <div className="relative z-10 text-white px-6 md:px-16 lg:px-24 max-w-5xl">
+                        <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-6 text-center items-center ">
+                            Prenez contact avec l’équipe technique pour assistance
+
+                        </h2>
+
+                    </div>
+                </section>
+            </div>
+        </>
     );
 }
