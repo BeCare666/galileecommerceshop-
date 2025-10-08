@@ -249,7 +249,7 @@ const MapWithCorridors: React.FC<MapChartProps> = (
                 display: 'flex',
               }}
             >
-              Couloirs liés à{' '}
+              {/** Couloirs liés à{' '}
               <span
                 style={{
                   color: '#38bdf8',
@@ -259,7 +259,7 @@ const MapWithCorridors: React.FC<MapChartProps> = (
                 }}
               >
                 {selectedCountryCode}
-              </span>
+              </span>**/}
               <button
                 onClick={() => setSelectedCorridors(null)}
                 style={{
