@@ -30,14 +30,20 @@ export default function MonComposant() {
                     />
 
                     {/* Texte superposé */}
-                    <div className="relative z-10 text-white px-6 md:px-16 lg:px-24 max-w-5xl">
+                    <div className="relative z-10 text-white px-6 md:px-16 lg:px-24 text-left">
                         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
                             Qu’est-ce qu’un corridor digital de Galiléecommerce.com?
                         </h2>
                         <ul className="space-y-2 text-lg md:text-xl">
-                            <li>✔️ Optimisez vos coûts de transactions</li>
-                            <li>✔️ Réduisez vos délais de livraison</li>
-                            <li>✔️ Stimulez le développement de vos produits et services</li>
+                            <li className="before:content-['✔'] before:text-white before:mr-2 before:inline-block">
+                                Optimisez vos coûts de transactions
+                            </li>
+                            <li className="before:content-['✔'] before:text-white before:mr-2 before:inline-block">
+                                Réduisez vos délais de livraison
+                            </li>
+                            <li className="before:content-['✔'] before:text-white before:mr-2 before:inline-block">
+                                Stimulez le développement de vos produits et services
+                            </li>
                         </ul>
                         <p className="mt-6 text-sm md:text-base text-gray-200">
                             En fournissant des outils et des solutions sur mesure, nous permettons une circulation plus
@@ -117,7 +123,7 @@ export default function MonComposant() {
 
                                     <div className="h-[2px] w-[80px] bg-white/15 mb-2" />
 
-                                    <p className="text-[#F59E0B] font-semibold text-[13px] mb-2">
+                                    <p className="text-white font-semibold text-[13px] mb-2">
                                         Des corridors digitaux pour booster votre potentiel commercial
                                     </p>
 
@@ -175,16 +181,13 @@ export default function MonComposant() {
                 </div>
 
                 {/* SECTION 2 */}
-                <section className="w-full bg-[#071322] text-white py-10">
-                    <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+                <section className="w-full bg-[#071322] text-white py-12  ">
+                    <div className=" mx-auto px-6  ">
 
-                        {/* ---------- IMAGE EN HAUT (centrée) ---------- */}
+                        {/* ---------- IMAGE EN HAUT ---------- */}
                         <div className="w-full flex justify-center">
-                            {/* Conteneur image avec effet hover zoom */}
                             <div
-                                className="w-full max-w-4xl overflow-hidden shadow-lg
-                       transform transition-transform duration-700 ease-out hover:scale-105"
-                                aria-hidden
+                                className="w-full  overflow-hidden   shadow-lg transform transition-transform duration-700 ease-out hover:scale-105"
                             >
                                 <Image
                                     src={Img2}
@@ -193,53 +196,41 @@ export default function MonComposant() {
                                     height={520}
                                     className="w-full h-auto object-cover"
                                     priority
+                                    quality={100}
                                 />
                             </div>
                         </div>
 
-                        {/* ---------- DEUX BLOCS EN DESSOUS (grid) ---------- */}
-                        {/* Sur mobile grid-cols-1 (stack), sur md grid-cols-2 (deux colonnes) */}
-                        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                        {/* ---------- BLOCS DE TEXTE EN DESSOUS ---------- */}
+                        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
 
-                            {/* ----- GAUCHE : bloc centré DANS SA COLONNE ----- */}
-                            <div className="flex items-center justify-center">
-                                {/* 
-              - Le texte est centré horizontalement et verticalement dans la colonne gauche.
-              - Utilisation d'une police monospace/typographique (font-mono) pour reproduire l'effet visuel.
-            */}
+                            {/* ----- COLONNE GAUCHE ----- */}
+                            <div className="flex text-left">
                                 <h2
-                                    className="font-mono font-extrabold leading-tight text-3xl md:text-4xl lg:text-5xl
-                         text-center md:text-center"
-                                    aria-label="Titre principal gauche"
+                                    className="font-extrabold leading-tight text-3xl md:text-4xl lg:text-5xl text-left md:text-left font-mono"
                                 >
-                                    Un moteur clé
-                                    <br />
-                                    du développement
-                                    <br />
+                                    Un moteur clé <br className="hidden md:block" />
+                                    du développement <br className="hidden md:block" />
                                     commercial
                                 </h2>
                             </div>
 
-                            {/* ----- DROITE : bloc aligné à droite (titre + paragraphe) ----- */}
+                            {/* ----- COLONNE DROITE ----- */}
                             <div className="flex items-start justify-end">
-                                {/* 
-              - Le contenu est aligné à droite (text-right) afin de correspondre strictement à l'image fournie.
-              - Le conteneur possède un léger lift au hover pour interaction.
-            */}
                                 <div
-                                    className="w-full max-w-xl transition-transform duration-300 ease-in-out hover:-translate-y-1"
-                                    tabIndex={0} // permet focus keyboard et montre l'effet : accessible
+                                    className="w-full max-w-xl text-right transition-transform duration-300 ease-in-out hover:-translate-y-1"
+                                    tabIndex={0}
                                 >
-                                    <h3 className="text-xl md:text-2xl font-semibold mb-3 text-right">
-                                        Booster votre <span className="italic font-bold">potentiel</span> commercial
+                                    <h3 className="text-xl md:text-2xl font-semibold mb-4">
+                                        Booster votre <span className="italic font-bold text-[#F59E0B]">potentiel</span> commercial
                                     </h3>
 
-                                    <p className="text-sm md:text-base leading-relaxed text-gray-200 text-right">
-                                        Galileecommerce.com facilite votre accès au marché de la Zone de Libre-échange
-                                        continentale africaine (ZLECAF). Grâce à ses ressources techniques,
-                                        informationnelles et physiques, Galileecommerce.com offre des solutions visant
-                                        l’amélioration de votre efficacité commerciale à tous les niveaux, local,
-                                        national et international.
+                                    <p className="text-sm md:text-base leading-relaxed text-gray-300">
+                                        <span className="text-white font-semibold">Galileecommerce.com</span> facilite votre accès au marché de la{" "}
+                                        <span className="text-white font-semibold">Zone de Libre-échange Continentale Africaine (ZLECAF)</span>.
+                                        Grâce à ses ressources techniques, informationnelles et physiques,
+                                        Galileecommerce.com vous offre des solutions visant l’amélioration de votre efficacité commerciale
+                                        à tous les niveaux : local, national et international.
                                     </p>
                                 </div>
                             </div>
@@ -255,20 +246,30 @@ export default function MonComposant() {
         }
       `}</style>
                 {/* SECTION 3 */}
-                <section className="w-full flex flex-col items-center px-6 md:px-16 lg:px-24 py-12">
+                <section className="w-full flex flex-col items-start px-6 md:px-16 lg:px-24 py-12">
                     {/* Titre */}
-                    <h2 className="text-center text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-10 leading-snug">
+                    <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-10 leading-tight text-left">
                         <span className="font-bold">
-                            Trouvez des solutions <br /> adaptées à vos besoins
+                            Trouvez des solutions  adaptées à vos besoins
                         </span>
                     </h2>
 
-                    {/* Deux cercles */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl w-full">
+                    {/* Grille des 4 cercles */}
+                    <div
+                        className="
+                        grid 
+                        grid-cols-1 
+                        sm:grid-cols-2 
+                        lg:grid-cols-4 
+                        gap-10 
+                        w-full 
+                        justify-items-center
+                        place-items-center
+                        "
+                    >
                         {/* Carte 1 */}
                         <div className="flex flex-col items-center text-center">
-                            <div className="rounded-full border border-gray-400 flex flex-col items-center justify-center w-72 h-72 p-6 transition-transform duration-500 hover:scale-105">
-                                {/* Titre avec retour de ligne forcé et taille ajustée */}
+                            <div className="rounded-full border border-gray-400 flex flex-col items-center justify-center w-64 h-64 md:w-72 md:h-72 p-6 transition-transform duration-500 hover:scale-105 bg-white">
                                 <h3 className="text-base md:text-lg font-bold text-purple-900 mb-2 leading-tight text-center break-words">
                                     Solutions pour <br /> faciliter les échanges
                                 </h3>
@@ -288,13 +289,13 @@ export default function MonComposant() {
                             </div>
                         </div>
 
-
                         {/* Carte 2 */}
                         <div className="flex flex-col items-center text-center">
-                            <div className="rounded-full border border-gray-400 flex flex-col items-center justify-center w-72 h-72 p-6 transition-transform duration-500 hover:scale-105">
-                                <h3 className="text-lg font-bold text-purple-900 mb-2">
+                            <div className="rounded-full border border-gray-400 flex flex-col items-center justify-center w-64 h-64 md:w-72 md:h-72 p-6 transition-transform duration-500 hover:scale-105 bg-white">
+                                <h3 className="text-base md:text-lg font-bold text-purple-900 mb-2 leading-tight">
                                     Renforcer l’intégration
                                 </h3>
+
                                 <Image
                                     src={Img31}
                                     alt="Renforcer intégration"
@@ -302,16 +303,62 @@ export default function MonComposant() {
                                     height={100}
                                     className="mb-3"
                                 />
-                                <p className="text-sm text-purple-900 leading-snug">
-                                    Assurer la liaison entre plusieurs pays <br /> et accompagner l’intégration commerciale.
+
+                                <p className="text-xs md:text-sm text-purple-900 leading-snug text-center">
+                                    Assurer la liaison entre plusieurs pays <br /> et accompagner
+                                    l’intégration commerciale.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Carte 3 */}
+                        <div className="flex flex-col items-center text-center">
+                            <div className="rounded-full border border-gray-400 flex flex-col items-center justify-center w-64 h-64 md:w-72 md:h-72 p-6 transition-transform duration-500 hover:scale-105 bg-white">
+                                <h3 className="text-base md:text-lg font-bold text-purple-900 mb-2 leading-tight text-center break-words">
+                                    Compétitivité <br /> des entreprises
+                                </h3>
+
+                                <Image
+                                    src={Img4}
+                                    alt="Compétitivité entreprises"
+                                    width={80}
+                                    height={80}
+                                    className="mb-3"
+                                />
+
+                                <p className="text-xs md:text-sm text-purple-900 leading-snug text-center">
+                                    Faire baisser les dépenses  liées aux transactions <br /> et optimiser
+                                    les <br />délais de livraison.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Carte 4 */}
+                        <div className="flex flex-col items-center text-center">
+                            <div className="rounded-full border border-gray-400 flex flex-col items-center justify-center w-64 h-64 md:w-72 md:h-72 p-6 transition-transform duration-500 hover:scale-105 bg-white">
+                                <h3 className="text-base md:text-lg font-bold text-purple-900 mb-2 leading-tight">
+                                    Moderniser les axes de transport
+                                </h3>
+
+                                <Image
+                                    src={Img41}
+                                    alt="Moderniser transport"
+                                    width={100}
+                                    height={100}
+                                    className="mb-3"
+                                />
+
+                                <p className="text-xs md:text-sm text-purple-900 leading-snug text-center">
+                                    Soutenir et accompagner le <br /> développement du capital spatial.
                                 </p>
                             </div>
                         </div>
                     </div>
                 </section>
 
+
                 {/* SECTION 3 */}
-                <section className="w-full flex flex-col items-center px-6 md:px-16 lg:px-24 py-12">
+                <section className="hidden w-full flex flex-col items-center px-6 md:px-16 lg:px-24 py-12">
                     {/* Deux cercles */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl w-full">
                         {/* Carte 1 */}
@@ -339,7 +386,7 @@ export default function MonComposant() {
                         </div>
 
 
-                        {/* Carte 2 */}
+                        {/* Carte  */}
                         <div className="flex flex-col items-center text-center">
                             <div className="rounded-full border border-gray-400 flex flex-col items-center justify-center w-72 h-72 p-6 transition-transform duration-500 hover:scale-105">
                                 <h3 className="text-lg font-bold text-purple-900 mb-2">

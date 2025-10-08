@@ -161,7 +161,7 @@ const MapWithCorridors: React.FC<MapChartProps> = (
         alignItems: 'center',
         gap: 20,
       }}
-    >
+    >{/*
       <span
         style={{
           display: 'flex',
@@ -187,7 +187,7 @@ const MapWithCorridors: React.FC<MapChartProps> = (
         <p>Nos corridors commerciaux</p>
       </span>
 
-      {/* Carte */}
+       Carte */}
       <div
         ref={chartRef}
         style={{
@@ -279,12 +279,12 @@ const MapWithCorridors: React.FC<MapChartProps> = (
                   right: 30,
                 }}
                 onMouseEnter={(e) =>
-                  (e.currentTarget.style.background =
-                    'linear-gradient(90deg, #60a5fa, #3b82f6, #60a5fa)')
+                (e.currentTarget.style.background =
+                  'linear-gradient(90deg, #60a5fa, #3b82f6, #60a5fa)')
                 }
                 onMouseLeave={(e) =>
-                  (e.currentTarget.style.background =
-                    'linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6)')
+                (e.currentTarget.style.background =
+                  'linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6)')
                 }
               >
                 x
@@ -496,12 +496,12 @@ const MapWithCorridors: React.FC<MapChartProps> = (
                       transition: 'background 0.3s ease',
                     }}
                     onMouseEnter={(e) =>
-                      (e.currentTarget.style.background =
-                        'linear-gradient(90deg, #60a5fa, #3b82f6, #60a5fa)')
+                    (e.currentTarget.style.background =
+                      'linear-gradient(90deg, #60a5fa, #3b82f6, #60a5fa)')
                     }
                     onMouseLeave={(e) =>
-                      (e.currentTarget.style.background =
-                        'linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6)')
+                    (e.currentTarget.style.background =
+                      'linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6)')
                     }
                   >
                     Visitez ce corridor

@@ -32,6 +32,7 @@ import Footer from '@/components/footer/footer';
 import Services from '@/components/services/servicesx';
 import Howtowork from '@/components/howtowork/howtowork';
 import AboutUs from '@/components/about-us/aboutuse';
+import Piliers from '@/components/piliers/piliers';
 import Suiteaccueil from '@/components/suiteaccueil/suiteaccueil';
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const queryClient = new QueryClient();
@@ -112,6 +113,7 @@ const Home: NextPageWithLayout = () => {
       <Products />
 
       <AboutUs />
+      <Piliers />
       <FreeShipping />
       <TitleComponent subtitle="Découvrez nos offres limitées">
         Offre Limitée
@@ -124,7 +126,7 @@ const Home: NextPageWithLayout = () => {
       <TitleComponent subtitle="Voici nos meilleurs produits en promotion">
         Promotions
       </TitleComponent>
-      <PromoBannier /> 
+      <PromoBannier />
       <Services />
       {/**  <TitleComponent subtitle="Découvrez nos produits les plus populaires">
         Meilleures Ventes
