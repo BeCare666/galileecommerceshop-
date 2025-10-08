@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import productPlaceholder from '@/assets/logo/logo_f_1.jpg';
-import productPlaceholderx from '@/assets/logo/logo_f_2.png';
+import productPlaceholder from '@/assets/logo/logo_red.png';
+import productPlaceholderx from '@/assets/logo/logo_white.png';
 import LanguageSwitcher from '@/components/ui/language-switcher';
 import CategoryMegaMenu from '@/components/category-ega-enu/category-ega-enu';
 import LoginMenu from '@/components/ui/login-button';

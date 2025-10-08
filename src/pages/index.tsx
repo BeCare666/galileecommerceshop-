@@ -6,7 +6,7 @@ import type {
 } from '@/types';
 //import HomePage from '@/components/home-page/home-page';
 import HomePage from '@/components/home-page/homepage';
-import FreeShipping from '@/components/free-shipping/free-shipping';
+import FreeShipping from '@/components/free-shipping/suiteabout';
 import LimitedOffer from '@/components/limited-offer/limited-offer';
 import PromoBannier from '@/components/promo-bannier/promo-bannier';
 import TitleComponent from '@/components/title-component/title-component';
@@ -31,7 +31,7 @@ import React, { useState } from 'react';
 import Footer from '@/components/footer/footer';
 import Services from '@/components/services/servicesx';
 import Howtowork from '@/components/howtowork/howtowork';
-import AboutUs from '@/components/about-us/about-section';
+import AboutUs from '@/components/about-us/aboutuse';
 import Suiteaccueil from '@/components/suiteaccueil/suiteaccueil';
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const queryClient = new QueryClient();
@@ -110,9 +110,7 @@ const Home: NextPageWithLayout = () => {
         Nouveautés
       </TitleComponent>
       <Products />
-      <TitleComponent subtitle="Qui nous sommes et ce que nous faisons">
-        À propos de nous
-      </TitleComponent>
+
       <AboutUs />
       <FreeShipping />
       <TitleComponent subtitle="Découvrez nos offres limitées">
@@ -126,19 +124,20 @@ const Home: NextPageWithLayout = () => {
       <TitleComponent subtitle="Voici nos meilleurs produits en promotion">
         Promotions
       </TitleComponent>
-      <PromoBannier />
-      <TitleComponent subtitle="Découvrez nos produits les plus populaires">
+      <PromoBannier /> 
+      <Services />
+      {/**  <TitleComponent subtitle="Découvrez nos produits les plus populaires">
         Meilleures Ventes
       </TitleComponent>
       <BestHomeSellers />
-      <TitleComponent subtitle="Voici nos services">
-        Nos services
-      </TitleComponent>
-      <Services />
-      {/** <TitleComponent subtitle="Découvrez les nouveautés">
+      <TitleComponent subtitle="Découvrez les nouveautés">
         Nouveautés
       </TitleComponent>
-      <Products />**/}
+      <Products /> 
+   
+       <TitleComponent subtitle="Voici nos services">
+        Nos services
+      </TitleComponent>**/}
       <Footer />
       <button
         className="mb-[30px] flex items-center bg-white shadow px-4 py-3 rounded-full hidden md:flex fixed bottom-4 right-4 z-30"

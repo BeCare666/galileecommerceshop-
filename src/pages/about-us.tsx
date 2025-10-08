@@ -20,7 +20,7 @@ import teamThumbThree from '@/assets/images/team/3.png';
 import teamThumbFour from '@/assets/images/team/4.png';
 import teamThumbFive from '@/assets/images/team/5.png';
 import teamThumbSix from '@/assets/images/team/6.png';
-import AboutUs from '@/components/about-us/about-us';
+import AboutUs from '@/components/about-us/aboutuse';
 import Footer from '@/components/footer/footer';
 import TitleComponent from '@/components/title-component/title-component';
 const featuredData = [
@@ -96,17 +96,17 @@ const AboutPage: NextPageWithLayout = () => {
     <>
       <Seo
         title="About us"
-        description="About us - Learn who we are and what we do."
+        description="About us "
         url={routes.about}
       />
       <div className="mx-auto flex h-full w-full max-w-screen-xl flex-col p-4 sm:p-5 ">
         {/** <PageHeading
           title={t('about-us-page-title')}
           subtitle={t('about-us-page-subtitle')}
-        />**/}
-        <TitleComponent subtitle="Qui nous sommes et ce que nous faisons">
+        />         <TitleComponent subtitle="Qui nous sommes et ce que nous faisons">
           À propos de nous
-        </TitleComponent>
+        </TitleComponent>**/}
+
         <AboutUs />
         <div className="w-full space-y-8 md:space-y-10 lg:space-y-12 xl:px-20 hidden">
           <div className="block">

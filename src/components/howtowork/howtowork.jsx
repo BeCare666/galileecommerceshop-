@@ -4,7 +4,7 @@ export default function Services() {
     return (
         <section className="bg-white text-black py-16 px-6 md:px-12">
             {/* Header */}
-            <div className="text-center mb-12">
+            <div className="hidden text-center mb-12">
                 <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
                     GalileeCommerce simplifie le e-commerce panafricain. Découvrez nos services conçus pour
                     booster vos activités et connecter les corridors commerciaux.
@@ -59,7 +59,7 @@ export default function Services() {
             </div>
 
             {/* Bottom Stats */}
-            <div className="bg-black text-white rounded-2xl mt-16 p-10 grid grid-cols-1 md:grid-cols-3 gap-8 text-center relative overflow-hidden">
+            <div className="bg-black text-white mt-16 p-10 grid grid-cols-1 md:grid-cols-3 gap-8 text-center relative overflow-hidden">
                 {/* motif décoratif simple */}
                 <div className="absolute top-0 right-0 w-48 h-48 rounded-full border-4 border-pink-500 opacity-20 translate-x-1/3 -translate-y-1/3"></div>
                 <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full border-4 border-pink-500 opacity-20 -translate-x-1/3 translate-y-1/3"></div>
