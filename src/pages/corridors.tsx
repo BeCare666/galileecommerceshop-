@@ -30,7 +30,7 @@ export default function MonComposant() {
                     />
 
                     {/* Texte superposé */}
-                    <div className="relative z-10 text-white px-6 md:px-16 lg:px-24 text-left">
+                    <div className="relative z-10 text-white px-6 md:px-16 lg:px-24 text-left mt-14">
                         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
                             Qu’est-ce qu’un corridor digital de Galiléecommerce.com?
                         </h2>
@@ -73,11 +73,11 @@ export default function MonComposant() {
                             {/* Bande noire + dégradé fluide */}
                             <div className="absolute top-0 left-0 h-full w-[30%] bg-gradient-to-r from-[#000000]/95 via-[#000000]/80 to-transparent z-[1]" />
 
-                            {/* Bloc texte (toute hauteur mais compact) */}
-                            <div className="relative z-10 flex items-center h-full w-full md:w-[30%] text-white p-6 md:p-10 bg-gradient-to-r from-[#000000]/95 via-[#000000]/80 to-transparent">
+                            {/* Bloc texte (toute hauteur mais compact) flex font-extrabold text-[24px] md:text-[30px] leading-[30px] md:leading-[36px] mb-3*/}
+                            <div className="relative z-10 flex items-center h-full w-full md:w-[70%] text-white p-6 md:p-10 bg-gradient-to-r from-[#000000]/95 via-[#000000]/80 to-transparent">
                                 <div>
-                                    <div className="w-[40px] h-[6px] bg-[#FF7A2D] mb-3" />
-                                    <h3 className="font-extrabold text-[24px] md:text-[30px] leading-[30px] md:leading-[36px] mb-3">
+                                    <div className="h-[6px] bg-[#FF7A2D] mb-3" />
+                                    <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
                                         Les corridors digitaux de Galiléecommerce.com
                                     </h3>
 
@@ -114,10 +114,10 @@ export default function MonComposant() {
                             <div className="absolute top-0 left-0 h-full w-[30%] bg-gradient-to-r from-[#242733]/95 via-[#242733]/80 to-transparent z-[1]" />
 
                             {/* Bloc texte */}
-                            <div className="relative z-10 flex items-center h-full w-full md:w-[30%] text-white p-4 md:p-6 bg-gradient-to-r from-[#242733]/95 via-[#242733]/80 to-transparent">
+                            <div className="relative z-10 flex items-center h-full w-full md:w-[70%] text-white p-4 md:p-6 bg-gradient-to-r from-[#242733]/95 via-[#242733]/80 to-transparent">
                                 <div className="flex flex-col justify-center h-full">
                                     <div className="w-[40px] h-[6px] bg-[#FF7A2D] mb-2" />
-                                    <h3 className="font-extrabold text-[24px] md:text-[28px] leading-[28px] md:leading-[32px] mb-2">
+                                    <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
                                         Un moteur clé du développement de <br className="hidden md:block" /> votre potentiel commercial
                                     </h3>
 
@@ -207,7 +207,7 @@ export default function MonComposant() {
                             {/* ----- COLONNE GAUCHE ----- */}
                             <div className="flex text-left">
                                 <h2
-                                    className="font-extrabold leading-tight text-3xl md:text-4xl lg:text-5xl text-left md:text-left font-mono"
+                                    className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
                                 >
                                     Un moteur clé <br className="hidden md:block" />
                                     du développement <br className="hidden md:block" />
@@ -222,7 +222,7 @@ export default function MonComposant() {
                                     tabIndex={0}
                                 >
                                     <h3 className="text-xl md:text-2xl font-semibold mb-4">
-                                        Booster votre <span className="italic font-bold text-[#F59E0B]">potentiel</span> commercial
+                                        Booster votre potentiel commercial
                                     </h3>
 
                                     <p className="text-sm md:text-base leading-relaxed text-gray-300">
@@ -248,7 +248,7 @@ export default function MonComposant() {
                 {/* SECTION 3 */}
                 <section className="w-full flex flex-col items-start px-6 md:px-16 lg:px-24 py-12">
                     {/* Titre */}
-                    <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-10 leading-tight text-left">
+                    <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-10 leading-tight text-left">
                         <span className="font-bold">
                             Trouvez des solutions  adaptées à vos besoins
                         </span>

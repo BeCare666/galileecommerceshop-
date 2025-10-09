@@ -45,7 +45,7 @@ export default function AproposSection() {
 
                         <button
                             onClick={() => setOpen(true)}
-                            className="inline-flex items-center gap-2 bg-[#FF7A2D] hover:bg-[#ff8b48] text-white font-semibold px-5 py-2.5 rounded-full transition-all duration-300 hover:scale-105"
+                            className="inline-flex items-center gap-2 bg-red hover:bg-[#ff8b48] text-white font-semibold px-5 py-2.5 rounded-full transition-all duration-300 hover:scale-105"
                         >
                             <span>En savoir plus</span>
                             <svg

@@ -459,7 +459,7 @@ export default function GalileeHeader() {
               <Link href="/become-seller" className="inline-block px-2 py-1 rounded transition-colors text-white">
                 Devenir fournisseur
               </Link>
-              <Link href="#" className="inline-block px-2 py-1 rounded transition-colors text-white">
+              <Link href="#" className="hidden inline-block px-2 py-1 rounded transition-colors text-white">
                 Devenir Ambassadeur
               </Link>
 
@@ -675,7 +675,7 @@ export default function GalileeHeader() {
               </Link>
               <Link
                 href="#"
-                className={`px - 2 py - 1 rounded transition - colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
+                className={`hidden px - 2 py - 1 rounded transition - colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
                   }`}
               >
                 Devenir Ambassadeur
@@ -798,7 +798,7 @@ export default function GalileeHeader() {
                           Devenir fournisseur
                         </Link>
                       </button>
-                      <button className="w-full py-2 px-4 rounded bg-gray-700 hover:bg-gray-600 transition">
+                      <button className="hidden w-full py-2 px-4 rounded bg-gray-700 hover:bg-gray-600 transition">
                         Devenir ambassadeur
                       </button>
                     </div>

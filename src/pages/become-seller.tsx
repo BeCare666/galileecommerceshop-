@@ -13,6 +13,9 @@ import toast from 'react-hot-toast';
 import { useMutation } from 'react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+const MySwal = withReactContent(Swal);
 export default function MonComposant() {
     const ref1 = useRef(null);
     const ref3 = useRef(null);
@@ -45,7 +48,35 @@ export default function MonComposant() {
             }
         },
         onError: (error: any) => {
-            toast.error(error?.message || "Une erreur est survenue.");
+            if (error?.message === "Unauthorized") {
+                MySwal.fire({
+                    title: "Vous n'êtes pas autorisé",
+                    html: `
+                    <p>Vous n'êtes pas autorisé à devenir fournisseur sur <strong>GaliléeCommerce</strong>.</p>
+                    <p>Veuillez vous connecter si vous avez déjà un compte, ou créer un compte si vous n’en possédez pas encore.</p>
+                    `,
+                    showCancelButton: true,
+                    showDenyButton: true,
+                    confirmButtonText: "Créer un compte",
+                    denyButtonText: "Connexion",
+                    cancelButtonText: "Annuler",
+                    imageUrl: "https://unsplash.it/400/200",
+                    imageWidth: 400,
+                    imageHeight: 200,
+                    imageAlt: "Custom image",
+                    allowOutsideClick: false,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Redirection vers la page de création de compte
+                        router.push("/register");
+                    } else if (result.isDenied) {
+                        // Redirection vers la page de connexion
+                        router.push("/login");
+                    }
+                    // Si annulé, ne rien faire
+                });
+            }
+            //toast.error(error?.message || "Une erreur est survenue.");
         },
     });
     return (
@@ -101,7 +132,7 @@ export default function MonComposant() {
                             viewport={{ once: true }}
                             className="px-6 md:px-16 lg:px-24 max-w-4xl"
                         >
-                            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-snug drop-shadow-lg text-black">
+                            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-snug drop-shadow-lg text-black md:w-[50%]">
                                 Galiléecommerce.com vous offre des B Spaces captivantes
                                 <br className="hidden md:inline" />
                                 pour promouvoir et vendre vos produits
