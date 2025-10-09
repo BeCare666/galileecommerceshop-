@@ -41,7 +41,7 @@ export default function AproposSection() {
                             Galiléecommerce.com, incontournable plateforme digitale pour le commerce en Afrique,
                             offre des solutions intégrées pour le B2B, B2C, C2B et C2C, avec une expertise de premier plan
                             en sourcing et en technologies avancées.
-                        </p>
+                        </p><br />
 
                         <button
                             onClick={() => setOpen(true)}
@@ -84,9 +84,9 @@ export default function AproposSection() {
                     className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300"
                 >
                     <div
-                        className="relative bg-[#0B0E17] text-white rounded-2xl shadow-2xl max-w-3xl w-[90%] p-8 overflow-y-auto max-h-[85vh] animate-fadeIn border border-white/10"
+                        className="relative bg-white text-black  rounded-2xl shadow-2xl max-w-3xl w-[90%] p-8 overflow-y-auto max-h-[85vh] animate-fadeIn border border-white/10"
                     >
-                        {/* Bouton fermer */}
+                        {/* Bouton fermer [#0B0E17]*/}
                         <button
                             onClick={() => setOpen(false)}
                             className="absolute top-4 right-4 text-gray-400 hover:text-white transition"
@@ -104,7 +104,7 @@ export default function AproposSection() {
                             </svg>
                         </button>
 
-                        <h2 className="text-[24px] font-bold mb-4 text-[#FF7A2D]">
+                        <h2 className="text-[24px] font-bold mb-4 text-black">
                             À propos de Galiléecommerce.com
                         </h2>
 

@@ -8,7 +8,7 @@ import Pilier2Num from "@/assets/images/pilliers/pilliers2.png";
 import Pilier3Num from "@/assets/images/pilliers/pilliers3.png";
 import Pilier4Num from "@/assets/images/pilliers/pilliers4.png";
 
-import Pilier1Img from "@/assets/images/pilliers/pilliers1.1.png";
+import Pilier1Img from "@/assets/images/pilliers/pilliers1x.png";
 import Pilier2Img from "@/assets/images/pilliers/pilliers2.1.jpg";
 import Pilier3Img from "@/assets/images/pilliers/pilliers3.1.png";
 import Pilier4Img from "@/assets/images/pilliers/pilliers4.1.png";
@@ -27,24 +27,25 @@ export default function MonComposant() {
             texte: `
             Galiléecommerce.com propose une assistance technique globale, allant du conseil à la formation, en passant par les études, les interventions sur le terrain et les missions de veille, destinées à répondre aux problématiques de capacité et de performance commerciale, tant pour les consommateurs que pour les entreprises et les États.
 
-            Les principales divisions d’assistance technique de Galiléecommerce comprennent :
+            Les principales divisions d’assistance technique de Galiléecommerce comprennent : <br />
 
-           Le centre de ressources Pavillons  
+          <strong> Le centre de ressources Pavillons  </strong> <br />
             Destiné aux pays et aux entreprises occupant leurs pavillons digitaux, le centre de ressources pavillons de Galiléecommerce fournit des instructions sur l’utilisation optimale des Business Space (boutique en ligne). 
             Ainsi, dans un environnement mondial en perpétuelle évolution et soumis à des chocs négatifs, le centre de ressources pavillons de Galiléecommerce éduque ses utilisateurs pour garantir une utilisation efficace et sans interruption des outils technologiques, en leur donnant les moyens de saisir toutes les opportunités numériques et de booster leurs performances.
-
-            Le centre de ressources normatives
+<br />
+            <strong> Le centre de ressources normatives </strong> <br />
             Le centre de ressources normatives de Galiléecommerce joue un rôle crucial dans l’harmonisation des pratiques garantissant la qualité, la sécurité et la conformité des produits et services commercialisés. En collaboration étroite avec ses partenaires, ses responsabilités normatives se structurent autour de trois missions : la mission d’encadrement des entreprises souscriptrices aux normes, le contrôle et la vérification des pratiques via des évaluations et certifications, et la mission de promotion et de régulation, qui comprend à la fois des actions consultatives, de promotion de la conformité et de régulation stricte vis-à-vis de la réglementation.
-
-            Le centre de ressources pour corridors
+<br />
+            <strong> Le centre de ressources pour corridors </strong> <br />
             Le centre de ressources pour corridors a pour objectif d'aider les entreprises à promouvoir leur savoir-faire et à mettre en place des solutions visant à réduire les coûts, les délais de transport et à améliorer leur connectivité logistique, aussi bien à l'importation qu'à l'exportation. Il facilite l'accès aux marchés pour tous types de produits et services, et soutient la croissance et la coopération entre les acteurs économiques.
-
-            Le centre de ressource pour support client
+<br />
+            <strong> Le centre de ressource pour support client </strong> <br />
             Galiléecommerce accompagne ses clients dans la résolution des problèmes liés aux offres de ses fournisseurs. Son support répond aux questions des acheteurs, guide l'utilisation des produits et services et joue un rôle clé dans l'amélioration de l'expérience client et la fidélisation. Il intervient à toutes les étapes de la chaîne d’achat et de livraison et prend en charge les retours, les échanges, les garanties et les réparations. Les supports offerts comprennent le support technique, commercial, après-vente, en ligne, téléphonique et par mail.
-
-            Le centre de ressources du dernier kilomètre
+<br />
+            <strong> Le centre de ressources du dernier kilomètre </strong> <br />
             Conscients des défis d'enclavement auxquels font face de nombreuses régions africaines, le centre offre des solutions stratégiques telles que des avions cargos et des trains de fret à faible empreinte carbone, des entrepôts écologiques, des véhicules propres et des drones de livraison. Les principaux objectifs visés par le centre sont de garantir des expéditions rapides, d’optimiser les coûts et de minimiser l'empreinte écologique des livraisons.
                 `,
+            imgSize: { mobile: { w: 120, h: 320 }, desktop: { w: 250, h: 320 } },
         },
         {
             id: 2,
@@ -56,6 +57,7 @@ export default function MonComposant() {
             texte: `
 Pour garantir que les produits et services commercialisés sur sa plateforme respectent des normes strictes de qualité, de sécurité, de durabilité et d'efficacité, Galiléecommerce exige de ses fournisseurs qu'ils se conforment aux standards définis par les autorités compétentes. La plateforme encourage le respect des normes et procède à des tests rigoureux de qualité et de fiabilité avant de valider les offres des fournisseurs. Son centre de ressources normatives, en partenariat avec les organismes de normalisation, fournit une assistance aux entreprises souhaitant obtenir des certifications.
       `,
+            imgSize: { mobile: { w: 120, h: 110 }, desktop: { w: 150, h: 120 } },
         },
         {
             id: 3,
@@ -67,6 +69,7 @@ Pour garantir que les produits et services commercialisés sur sa plateforme res
             texte: `
 En plus de ses exigences de qualité, Galiléecommerce encourage ses fournisseurs à privilégier une politique de grands volumes. Il leur recommande donc de fixer des prix attractifs pour des ventes massives stimulant une augmentation significative de leurs parts de marché et de leur chiffre d'affaires.
       `,
+            imgSize: { mobile: { w: 120, h: 140 }, desktop: { w: 200, h: 220 } },
         },
         {
             id: 4,
@@ -78,6 +81,7 @@ En plus de ses exigences de qualité, Galiléecommerce encourage ses fournisseur
             texte: `
 L'accès difficile aux nombreuses zones enclavées d’Afrique rend les processus de livraison particulièrement coûteuses aux acteurs logistiques. Le dernier kilomètre, en plus de constituer une part significative des coûts logistiques, représente un défi important à surmonter. Galiléecommerce offre un sentier du dernier kilomètre composé de trois étapes : les points de distribution de proximité (entrepôts et magasins stratégiques), les centres de tri pour les zones enclavées (entrepôts et magasins de tri spécialisés) et les points relais (lieux de retrait pour les destinataires).
       `,
+            imgSize: { mobile: { w: 120, h: 140 }, desktop: { w: 200, h: 220 } },
         },
     ];
 
@@ -112,12 +116,13 @@ L'accès difficile aux nombreuses zones enclavées d’Afrique rend les processu
                                     </h3>
                                 </div>
 
-                                <div className="absolute right-0 top-10 md:top-17 w-[120px] md:w-[200px] h-[140px] md:h-[220px] flex items-center justify-center z-10">
+                                <div className="absolute right-0 top-10 md:top-9 w-[120px] md:w-[300px] h-[140px] md:h-[220px] flex items-center justify-center z-10">
                                     <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
                                         <Image
                                             src={c.bg}
                                             alt={c.title}
-                                            fill
+                                            width={c.imgSize.desktop.w}
+                                            height={c.imgSize.desktop.h}
                                             className="object-contain brightness-[0.9] transition-transform duration-500 group-hover:scale-105"
                                         />
                                     </div>
@@ -145,9 +150,9 @@ L'accès difficile aux nombreuses zones enclavées d’Afrique rend les processu
                 >
                     <div
                         onClick={(e) => e.stopPropagation()}
-                        className="relative bg-[#0B0E17] text-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] p-6 md:p-8 overflow-y-auto border border-white/10 transform scale-95 animate-[fadeZoomIn_0.35s_ease-out_forwards]"
+                        className="relative bg-white text-black rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] p-6 md:p-8 overflow-y-auto border border-white/10 transform scale-95 animate-[fadeZoomIn_0.35s_ease-out_forwards]"
                     >
-                        {/* Bouton fermer */}
+                        {/* Bouton fermer [#0B0E17]*/}
                         <button
                             onClick={() => setOpenId(null)}
                             className="absolute top-4 right-4 text-gray-400 hover:text-white transition z-50"
@@ -157,17 +162,18 @@ L'accès difficile aux nombreuses zones enclavées d’Afrique rend les processu
                         </button>
 
                         {/* Titre */}
-                        <h2 className="text-[24px] md:text-[28px] font-bold mb-6 text-[#FF7A2D] sticky top-0 bg-[#0B0E17] pt-4">
+                        <h2 className="text-[24px] md:text-[28px] font-bold mb-6 text-black sticky top-0 bg-white pt-4">
                             {cards.find((c) => c.id === openId)?.title}
                         </h2>
 
                         {/* Contenu */}
                         <div
-                            className="text-left text-[#D1D5DB] text-[15px] md:text-[16px] leading-[24px] whitespace-pre-wrap"
+                            className="prose prose-sm text-left text-black !max-w-full !mx-0 !px-0 [&_*]:m-0"
                             dangerouslySetInnerHTML={{
                                 __html: cards.find((c) => c.id === openId)?.texte || "",
                             }}
                         />
+
                     </div>
                 </div>
             )}
