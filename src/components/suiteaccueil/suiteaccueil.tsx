@@ -131,7 +131,7 @@ export default function CubeStatique() {
             <section className="w-full bg-white flex flex-col md:flex-row items-start justify-between px-6 md:px-20 py-10">
                 {/* --- Bloc texte à gauche --- */}
                 <div className="w-full  text-left mb-8 md:mb-0">
-                    <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 leading-tight">
+                    <h2 className="text-2xl md:text-4xl font-extrabold text-gray-900 leading-tight">
                         Explorez une vaste sélection de produits <br />
                         répartis sur plus de <br />
                         <span className="font-bold text-[#8B005D]">150 pavillons digitaux.</span>
@@ -146,14 +146,14 @@ export default function CubeStatique() {
                             <Image src={Suite1} alt="Icône Produits" width={40} height={40} />
                             <Image src={Suite12} alt="Icône Produits" width={40} height={40} />
                         </div>
-                        <p className="text-[22px] md:text-[26px] font-semibold">+ 50 millions</p>
+                        <p className="text-[22px] md:text-3xl font-semibold">+ 50 millions</p>
                         <span className="text-black text-[19px] font-extrabold">Produits</span>
                     </div>
 
                     {/* Carte Fournisseurs */}
                     <div className="flex flex-col items-start space-y-1 transition-transform duration-300 hover:scale-105">
                         <Image src={Suite2} alt="Icône Fournisseurs" width={40} height={40} className="mb-2" />
-                        <p className="text-[22px] md:text-[26px] font-semibold">+ 50 000</p>
+                        <p className="text-[22px] md:text-3xl font-semibold">+ 50 000</p>
                         <span className="text-black text-[19px] font-extrabold">Fournisseurs</span>
                     </div>
 

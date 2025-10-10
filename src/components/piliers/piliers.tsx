@@ -20,7 +20,8 @@ export default function MonComposant() {
         {
             id: 1,
             num: Pilier1Num,
-            title: "Piliers 1 : Assistance technique",
+            title: "Piliers 1 : Assistance <br /> technique",
+            titlex: "Piliers 1 : Assistance technique",
             bg: Pilier1Img,
             excerpt:
                 "Galiléecommerce.com propose une assistance technique globale, allant du conseil à la formation...",
@@ -50,7 +51,8 @@ export default function MonComposant() {
         {
             id: 2,
             num: Pilier2Num,
-            title: "Piliers 2: Le respect des normes",
+            title: "Piliers 2: Le respect <br /> des normes",
+            titlex: "Piliers 2: Le respect des normes",
             bg: Pilier2Img,
             excerpt:
                 "Pour garantir que les produits et services commercialisés sur sa plateforme respectent des normes strictes de qualité...",
@@ -62,7 +64,8 @@ Pour garantir que les produits et services commercialisés sur sa plateforme res
         {
             id: 3,
             num: Pilier3Num,
-            title: "Piliers 3 : La compétitivité prix",
+            title: "Piliers 3 : La compétitivité <br /> prix",
+            titlex: "Piliers 3 : La compétitivité prix",
             bg: Pilier3Img,
             excerpt:
                 "En plus de ses exigences de qualité, Galiléecommerce encourage ses fournisseurs à privilégier une politique de grands volumes...",
@@ -74,7 +77,8 @@ En plus de ses exigences de qualité, Galiléecommerce encourage ses fournisseur
         {
             id: 4,
             num: Pilier4Num,
-            title: "Piliers 4 : Le dernier kilomètre",
+            title: "Piliers 4 : Le dernier <br /> kilomètre",
+            titlex: "Piliers 4 : Le dernier kilomètre",
             bg: Pilier4Img,
             excerpt:
                 "L'accès difficile aux nombreuses zones enclavées d’Afrique rend les processus de livraison particulièrement coûteuses ...",
@@ -98,22 +102,25 @@ L'accès difficile aux nombreuses zones enclavées d’Afrique rend les processu
                             key={c.id}
                             className="group relative overflow-hidden rounded-md shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl border border-gray-100"
                         >
-                            <div className="relative bg-[#b51b5f] h-[177px] md:h-[260px] flex items-start overflow-hidden">
+                            <div className="relative bg-pink-700 h-[177px] md:h-[260px] flex items-start overflow-hidden">
                                 <div className="hidden md:flex items-start justify-center px-6 pt-4 z-20">
-                                    <div className="w-[120px] h-[120px] relative">
+                                    <div className="w-[150px] h-[150px] relative">
                                         <Image src={c.num} alt={`num-${c.id}`} fill className="object-contain" />
                                     </div>
                                 </div>
 
-                                <div className="flex flex-1 items-start justify-start px-6 md:px-4 pt-4 relative z-30">
+                                <div className="flex flex-1 items-start justify-start px-6 md:px-1 pt-4 relative z-30">
                                     <div className="flex md:hidden items-start justify-start mr-3">
                                         <div className="w-10 h-10 relative">
                                             <Image src={c.num} alt={`num-${c.id}`} fill className="object-contain" />
                                         </div>
                                     </div>
-                                    <h3 className="text-white text-[19px] font-semibold leading-tight md:leading-snug drop-shadow-lg w-full">
-                                        {c.title}
-                                    </h3>
+                                    <h3
+                                        className="text-white text-[22px] font-semibold leading-tight md:leading-snug drop-shadow-lg w-full prose prose-sm !max-w-full !mx-0 !px-0 [&_*]:m-0"
+                                        dangerouslySetInnerHTML={{
+                                            __html: c.title || "",
+                                        }}
+                                    />
                                 </div>
 
                                 <div className="absolute right-0 top-10 md:top-9 w-[120px] md:w-[300px] h-[140px] md:h-[220px] flex items-center justify-center z-10">
@@ -162,8 +169,8 @@ L'accès difficile aux nombreuses zones enclavées d’Afrique rend les processu
                         </button>
 
                         {/* Titre */}
-                        <h2 className="text-[24px] md:text-[28px] font-bold mb-6 text-black sticky top-0 bg-white pt-4">
-                            {cards.find((c) => c.id === openId)?.title}
+                        <h2 className="text-[24px] md:text-[28px] font-bold mb-6 text-pink-700 sticky top-0 bg-white pt-4">
+                            {cards.find((c) => c.id === openId)?.titlex}
                         </h2>
 
                         {/* Contenu */}

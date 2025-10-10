@@ -11,8 +11,8 @@ export default function ServicesSections() {
             {/* --- Section 1 (fond noir + image) --- gap-10*/}
             <section className="relative w-full bg-black text-white flex flex-col md:flex-row items-center justify-between px-6 md:px-10  ">
                 {/* Texte gauche */}
-                <div className="w-full md:w-1/2 text-left space-y-4 transition-all duration-700 ease-in-out z-10">
-                    <h2 className="text-2xl md:text-2xl font-extrabold text-white mb-4 leading-tight">
+                <div className="w-full md:w-1/2 text-left space-y-4 transition-all duration-700 ease-in-out z-10 mt-0">
+                    <h2 className="text-2xl md:text-4xl font-extrabold text-white mb-4 leading-tight">
                         Profitez d’un secteur des services en <br /> pleine expansion dans
                         le monde
                     </h2>

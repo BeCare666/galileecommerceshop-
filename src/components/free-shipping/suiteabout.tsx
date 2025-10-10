@@ -24,11 +24,11 @@ export default function MonComposant() {
     ];
 
     return (
-        <section className="w-full px-6 md:px-12 py-12 bg-white">
+        <section className="w-full px-6 md:px-12 py-6 bg-white">
             {/* === Titre principal === */}
-            <h2 className="text-2xl md:text-2xl font-extrabold text-gray-900 mb-4 leading-tight">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 leading-tight">
                 Profitez des innovations de Galiléecommerce.com
-            </h2>
+            </h2><br />
 
             {/* === Grille des cartes === */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">

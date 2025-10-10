@@ -88,10 +88,10 @@ export default function MonComposant() {
 
             {/* SECTION 2 : Pavillons Africains */}
             <section className="py-10 px-6 md:px-16 bg-gray-50">
-                <h2 className="text-5xl md:text-4xl font-bold mb-8">
+                <h2 className="text-5xl md:text-4xl font-bold mb-8 ml-10">
                     Trouvez les fournisseurs par pavillon
                 </h2>
-                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-8 text-center">
+                <div className="items-start grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-8 text-center ml-0">
                     {flagsAfrica.map((flag, i) => (
                         <div
                             key={i}
@@ -104,7 +104,7 @@ export default function MonComposant() {
                                 height={40}
                                 className="w-14 h-10 object-contain shadow-sm"
                             />
-                            <p className="text-sm font-medium">{flag.name}</p>
+                            <p className="text-sm font-medium ">{flag.name}</p>
                         </div>
                     ))}
                 </div>
@@ -142,7 +142,7 @@ export default function MonComposant() {
 
                     {/* Liste des régions */}
                     <ul className="space-y-4 text-base md:text-lg font-medium text-gray-900">
-                        {["Made in Africa", "Made in Asia", "Made in Canada", "Made in Europe"].map((region, index) => (
+                        {["Made in Africa", "Made in Asia", "Made in America", "Made in Europe"].map((region, index) => (
                             <li
                                 key={index}
                                 className="relative cursor-pointer transition-all duration-300 hover:text-purple-700 hover:translate-x-2"
