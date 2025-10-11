@@ -70,15 +70,15 @@ export default function MonComposant() {
                     />
                 </div>
 
-                {/* Overlay pour contraste du texte 
-                <div className="absolute inset-0 bg-black/40" />
-                    */}
+                {/* ✅ Overlay sombre pour contraste */}
+                <div className="absolute inset-0 bg-black/60 md:bg-black/50" />
+
                 {/* Contenu texte */}
                 <div className="relative z-10 px-6 md:px-20 max-w-xl">
-                    <h2 className="text-4xl md:text-5xl font-extrabold leading-tight mb-6">
+                    <h2 className="text-4xl md:text-5xl font-extrabold leading-tight mb-6 drop-shadow-lg">
                         Visitez les pavillons pays <br /> déjà fonctionnels.
                     </h2>
-                    <p className="text-lg md:text-xl font-medium">
+                    <p className="text-lg md:text-xl font-medium drop-shadow-md">
                         De nouveaux pavillons en cours d’aménagement ouvriront prochainement
                     </p>
                 </div>
@@ -86,9 +86,10 @@ export default function MonComposant() {
 
 
 
+
             {/* SECTION 2 : Pavillons Africains */}
-            <section className="py-10 px-6 md:px-16 bg-gray-50">
-                <h2 className="text-5xl md:text-4xl font-bold mb-8 ml-10">
+            <section className="py-10 px-6 md:px-10 bg-gray-50">
+                <h2 className="text-5xl md:text-4xl font-bold mb-8 ml-5">
                     Trouvez les fournisseurs par pavillon
                 </h2>
                 <div className="items-start grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-8 text-center ml-0">

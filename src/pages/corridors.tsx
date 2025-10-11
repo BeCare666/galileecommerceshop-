@@ -19,7 +19,7 @@ export default function MonComposant() {
             <div className="w-full flex flex-col space-y-16">
 
                 {/* SECTION 1 */}
-                <section className="relative w-full h-[90vh] flex items-center justify-center">
+                <section className=" relative w-full h-[90vh] flex items-center justify-center">
                     {/* Image de fond */}
                     <Image
                         src={Img1} // ⚠️ Mets ici ton image de fond (corridors3.png renommée)
