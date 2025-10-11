@@ -131,7 +131,7 @@ export default function MonComposant() {
                 </div>
             </section>
 
-            <section className="w-full bg-white text-black px-6 md:px-16 lg:px-32 py-12">
+            <section className="w-full bg-white text-black px-11 md:px-[110px] py-12">
                 {/* Bloc principal */}
                 <div className="max-w-5xl mx-auto flex flex-col">
                     {/* Titre principal */}
@@ -156,7 +156,7 @@ export default function MonComposant() {
                 </div>
             </section>
 
-            <section className="w-full bg-white text-black px-6 md:px-16 lg:px-32 py-12">
+            <section className="w-full bg-white text-black px-11 md:px-11 lg:px-[110px] py-12">
                 {/* Conteneur principal */}
                 <div className="max-w-6xl mx-auto">
                     {/* Titre principal */}
@@ -165,7 +165,7 @@ export default function MonComposant() {
                         d’origine par pays
                     </h1>
 
-                    {/* Grille des pays */}
+                    {/* Grille des pays ***/}
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-y-4 gap-x-16 text-base md:text-lg font-medium">
                         {/* Colonne gauche */}
                         <div className="space-y-4">

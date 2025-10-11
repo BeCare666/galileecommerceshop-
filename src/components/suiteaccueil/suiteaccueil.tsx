@@ -130,7 +130,7 @@ export default function CubeStatique() {
             </section >
             <section className="w-full bg-white flex flex-col md:flex-row items-start justify-between px-6 md:px-20 py-10">
                 {/* --- Bloc texte à gauche --- */}
-                <div className="w-full  text-left mb-8 md:mb-0">
+                <div className="w-full  text-left mb-8 mt-0 lg:mt-[66px]">
                     <h2 className="text-2xl md:text-4xl font-extrabold text-gray-900 leading-tight">
                         Explorez une vaste sélection de produits <br />
                         répartis sur plus de <br />

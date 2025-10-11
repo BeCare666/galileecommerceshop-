@@ -59,7 +59,7 @@ export default function MonComposant() {
             texte: `
 Pour garantir que les produits et services commercialisés sur sa plateforme respectent des normes strictes de qualité, de sécurité, de durabilité et d'efficacité, Galiléecommerce exige de ses fournisseurs qu'ils se conforment aux standards définis par les autorités compétentes. La plateforme encourage le respect des normes et procède à des tests rigoureux de qualité et de fiabilité avant de valider les offres des fournisseurs. Son centre de ressources normatives, en partenariat avec les organismes de normalisation, fournit une assistance aux entreprises souhaitant obtenir des certifications.
       `,
-            imgSize: { mobile: { w: 120, h: 110 }, desktop: { w: 150, h: 120 } },
+            imgSize: { mobile: { w: 75, h: 50 }, desktop: { w: 150, h: 120 } },
         },
         {
             id: 3,
@@ -72,7 +72,7 @@ Pour garantir que les produits et services commercialisés sur sa plateforme res
             texte: `
 En plus de ses exigences de qualité, Galiléecommerce encourage ses fournisseurs à privilégier une politique de grands volumes. Il leur recommande donc de fixer des prix attractifs pour des ventes massives stimulant une augmentation significative de leurs parts de marché et de leur chiffre d'affaires.
       `,
-            imgSize: { mobile: { w: 120, h: 140 }, desktop: { w: 200, h: 220 } },
+            imgSize: { mobile: { w: 255, h: 260 }, desktop: { w: 255, h: 250 } },
         },
         {
             id: 4,
@@ -85,7 +85,7 @@ En plus de ses exigences de qualité, Galiléecommerce encourage ses fournisseur
             texte: `
 L'accès difficile aux nombreuses zones enclavées d’Afrique rend les processus de livraison particulièrement coûteuses aux acteurs logistiques. Le dernier kilomètre, en plus de constituer une part significative des coûts logistiques, représente un défi important à surmonter. Galiléecommerce offre un sentier du dernier kilomètre composé de trois étapes : les points de distribution de proximité (entrepôts et magasins stratégiques), les centres de tri pour les zones enclavées (entrepôts et magasins de tri spécialisés) et les points relais (lieux de retrait pour les destinataires).
       `,
-            imgSize: { mobile: { w: 120, h: 140 }, desktop: { w: 200, h: 220 } },
+            imgSize: { mobile: { w: 120, h: 140 }, desktop: { w: 220, h: 220 } },
         },
     ];
 
@@ -123,14 +123,21 @@ L'accès difficile aux nombreuses zones enclavées d’Afrique rend les processu
                                     />
                                 </div>
 
-                                <div className="absolute right-0 top-10 md:top-9 w-[120px] md:w-[300px] h-[140px] md:h-[220px] flex items-center justify-center z-10">
+                                <div className="absolute right-0 top-[54px] md:top-12 w-[150px] md:w-[300px] h-[140px] md:h-[220px] flex items-center justify-center z-10">
                                     <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
                                         <Image
                                             src={c.bg}
                                             alt={c.title}
                                             width={c.imgSize.desktop.w}
                                             height={c.imgSize.desktop.h}
-                                            className="object-contain brightness-[0.9] transition-transform duration-500 group-hover:scale-105"
+                                            className="hidden lg:block object-contain brightness-[0.9] transition-transform duration-500 group-hover:scale-105"
+                                        />
+                                        <Image
+                                            src={c.bg}
+                                            alt={c.title}
+                                            width={c.imgSize.mobile.w}
+                                            height={c.imgSize.mobile.h}
+                                            className="lg:hidden object-contain brightness-[0.9] transition-transform duration-500 group-hover:scale-105 "
                                         />
                                     </div>
                                 </div>

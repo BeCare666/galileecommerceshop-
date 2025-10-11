@@ -70,14 +70,14 @@ export default function MonComposant() {
                             {/* Overlay global léger */}
                             <div className="absolute inset-0 bg-black/40 z-0" />
 
-                            {/* Bande noire + dégradé fluide */}
-                            <div className="absolute top-0 left-0 h-full w-[30%] bg-gradient-to-r from-[#000000]/95 via-[#000000]/80 to-transparent z-[1]" />
+                            {/* Bande noire + dégradé fluide **/}
+                            <div className="absolute top-0 left-0 h-full w-[30%]  bg-gradient-to-r from-[#000000]/95 via-[#000000]/80 to-transparent z-[1]" />
 
                             {/* Bloc texte (toute hauteur mais compact) flex font-extrabold text-[24px] md:text-[30px] leading-[30px] md:leading-[36px] mb-3*/}
-                            <div className="relative z-10 flex items-center h-full w-full md:w-[70%] text-white p-6 md:p-10 bg-gradient-to-r from-[#000000]/95 via-[#000000]/80 to-transparent">
+                            <div className="relative z-10 flex items-center h-full w-full md:w-[70%] text-white p-6 md:p-10 bg-black lg:bg-gradient-to-r from-[#000000]/95 via-[#000000]/80 to-transparent">
                                 <div>
                                     <div className="h-[6px] bg-[#FF7A2D] mb-3" />
-                                    <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+                                    <h3 className="text-[12px] md:text-3xl lg:text-3xl font-bold mb-6">
                                         Les corridors digitaux de Galiléecommerce.com
                                     </h3>
 

@@ -104,11 +104,11 @@ export default function AproposSection() {
                             </svg>
                         </button>
 
-                        <h2 className="text-[24px] font-bold mb-4 text-black">
+                        <h2 className="text-[24px] font-bold mb-4 text-pink-700">
                             À propos de Galiléecommerce.com
                         </h2>
 
-                        <div className="text-[#D1D5DB] text-[15px] leading-[24px] space-y-3 overflow-y-auto pr-2">
+                        <div className="text-black text-[15px] leading-[24px] space-y-3 overflow-y-auto pr-2">
                             <p>
                                 Galiléecommerce.com, incontournable plateforme digitale pour le commerce en Afrique, offre des solutions intégrées pour le B2B, B2C, C2B et C2C, avec une expertise de premier plan en sourcing et en technologies avancées.
                             </p>
