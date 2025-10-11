@@ -22,6 +22,8 @@ export default function MonComposant() {
         { src: "https://flagcdn.com/w40/id.png", name: "Indonésie" },
         { src: "https://flagcdn.com/w40/ca.png", name: "Canada" },
         { src: "https://flagcdn.com/w40/us.png", name: "États-Unis" },
+
+
     ];
 
     // === DRAPEAUX AFRICAINS ===
@@ -44,6 +46,23 @@ export default function MonComposant() {
         { src: "https://flagcdn.com/w40/bf.png", name: "Burkina Faso" },
         { src: "https://flagcdn.com/w40/ne.png", name: "Niger" },
         { src: "https://flagcdn.com/w40/tn.png", name: "Tunisie" },
+        { src: "https://flagcdn.com/w40/cn.png", name: "Chine" },
+        { src: "https://flagcdn.com/w40/tr.png", name: "Turquie" },
+        { src: "https://flagcdn.com/w40/in.png", name: "Inde" },
+        { src: "https://flagcdn.com/w40/il.png", name: "Israël" },
+        { src: "https://flagcdn.com/w40/kr.png", name: "Corée du Sud" },
+        { src: "https://flagcdn.com/w40/my.png", name: "Malaisie" },
+        { src: "https://flagcdn.com/w40/th.png", name: "Thaïlande" },
+        { src: "https://flagcdn.com/w40/fr.png", name: "France" },
+        { src: "https://flagcdn.com/w40/de.png", name: "Allemagne" },
+        { src: "https://flagcdn.com/w40/it.png", name: "Italie" },
+        { src: "https://flagcdn.com/w40/ma.png", name: "Maroc" },
+        { src: "https://flagcdn.com/w40/za.png", name: "Afrique du Sud" },
+        { src: "https://flagcdn.com/w40/es.png", name: "Espagne" },
+        { src: "https://flagcdn.com/w40/br.png", name: "Brésil" },
+        { src: "https://flagcdn.com/w40/id.png", name: "Indonésie" },
+        { src: "https://flagcdn.com/w40/ca.png", name: "Canada" },
+        { src: "https://flagcdn.com/w40/us.png", name: "États-Unis" },
     ];
 
     return (
@@ -74,7 +93,7 @@ export default function MonComposant() {
                 <div className="absolute inset-0 bg-black/60 md:bg-black/50" />
 
                 {/* Contenu texte */}
-                <div className="relative z-10 px-6 md:px-20 max-w-xl">
+                <div className="relative z-10 px-6 md:px-6 max-w-xl">
                     <h2 className="text-4xl md:text-5xl font-extrabold leading-tight mb-6 drop-shadow-lg">
                         Visitez les pavillons pays <br /> déjà fonctionnels.
                     </h2>
@@ -88,8 +107,8 @@ export default function MonComposant() {
 
 
             {/* SECTION 2 : Pavillons Africains */}
-            <section className="py-10 px-6 md:px-10 bg-gray-50">
-                <h2 className="text-5xl md:text-4xl font-bold mb-8 ml-5">
+            <section className="py-10 px-6 md:px-13 bg-gray-50 md:ml-12">
+                <h2 className="text-5xl md:text-4xl font-bold mb-8 ml-5 md:ml-12">
                     Trouvez les fournisseurs par pavillon
                 </h2>
                 <div className="items-start grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-8 text-center ml-0">
@@ -112,7 +131,7 @@ export default function MonComposant() {
             </section>
 
             {/* SECTION 3 : Pavillons fonctionnels */}
-            <section className="py-10 px-6 md:px-16 bg-white">
+            <section className="hidden py-10 px-6 md:px-16 bg-white">
                 <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-8 text-center">
                     {flagsIntl.map((flag, i) => (
                         <div
