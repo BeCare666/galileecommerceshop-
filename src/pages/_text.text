@@ -1,0 +1,312 @@
+"unauthorized-description1":"Vous n'êtes pas autorisé à devenir fournisseur sur <strong>GaliléeCommerce</strong>.",
+"unauthorized-description2":"Veuillez vous connecter si vous avez déjà un compte, ou créer un compte si vous n’en possédez pas encore.",
+"unauthorized-createAccount":"Créer un compte",
+"unauthorized-login":"Connexion",
+"unauthorized-cancel":"Annuler",
+"become_id_1":" Connectez-vous à des millions d’acheteurs grâce au B Space de Galiléecommerce.com",
+"become_id_2":"Les B Spaces, abréviation de Business Space, correspondent à vos boutiques en ligne sur Galileecommerce.com",
+"become_id_3":"Galiléecommerce.com vous offre des B Spaces captivantes",
+"become_id_4":"pour promouvoir et vendre vos produits",
+  "joinUsSection": {
+    "items": [
+      {
+        "title": "Rejoignez-nous en tant que fournisseur de services",
+        "text": "Les B Spaces de Galileecommerce.com sont conçus pour accueillir un large éventail de services : conseils, études, maintenance, santé, communication, logistique, finance, éducation, numérique, transport…"
+      },
+      {
+        "title": "Devenez fournisseur de produits physiques",
+        "text": "Les B Spaces de Galileecommerce.com proposent des espaces personnalisés pour les fabricants, distributeurs, détaillants, importateurs, exportateurs, ainsi que pour les fournisseurs de matières premières dans tous les secteurs industriels."
+      },
+      {
+        "title": "Faites découvrir vos produits d’origine",
+        "text": "La notion de produit d’origine est cruciale en commerce international (tarifs, accords commerciaux). Fournissez les informations sur l’origine de vos biens pour bénéficier de conditions avantageuses."
+      }
+    ]
+  },
+  "become_id_5":"Galileecommerce.com",
+  "become_id_6":"REJOIGNEZ NOUS EN TANT QUE FOURNISSEUR !",
+  "become_id_7":"Accédez à des millions d’acheteurs",
+  "become_id_7":" Indiquez votre identité exacte. Une fois validé en tant que fournisseur sur Galileecommerce.com, fournissez les informations relatives à votre conformité aux normes et à vos certifications par des organismes externes afin d’obtenir le statut de fournisseur vérifié (Verified Supplier).",
+"corridors_id_1":"Qu’est-ce qu’un corridor digital de Galiléecommerce.com?",
+"corridors_id_2":"Optimisez vos coûts de transactions",
+"corridors_id_3":"Réduisez vos délais de livraison",
+"corridors_id_4":"Stimulez le développement de vos produits et services",
+"corridors_id_5":"En fournissant des outils et des solutions sur mesure, nous permettons une circulation plus rapide et plus économique de vos marchandises.",
+"corridors_id_6":"Les corridors digitaux de Galiléecommerce.com",
+"corridors_id_7":` Les corridors de Galiléecommerce.com sont des dispositifs et ressources fortement connectés
+                                        à la Zone de Libre-échange continentale africaine (ZLECAF), intégrés à la mondialisation,
+                                        caractérisés par des flux économiques importants et un maillage commercial croissant.`,
+"corridors_id_8":"Un moteur clé du développement de <br className="hidden md:block" /> votre potentiel commercial", 
+"corridors_id_9":"Des corridors digitaux pour booster votre potentiel commercial",   
+:` "corridors_id_10":Galiléecommerce.com facilite l’accès mondial au marché de la{" "}
+                                        <span className="text-white font-semibold">ZLECAF</span> et accompagne les dynamiques
+                                        commerciales de la ZLECAF vers le monde. Grâce à ses ressources techniques,
+                                        technologiques, juridiques, digitales, informationnelles et physiques,
+                                        Galiléecommerce.com vous offre des solutions visant le développement de votre potentiel commercial.`,
+"corridors_id_11":"Comment ça marche ?",  
+"corridors_id_12":` <li>• Spécifiez vos catégories de produits, leurs caractéristiques et les quantités requises.</li>
+                                    <li>
+                                        • Indiquez la nature des besoins pour lesquels vous sollicitez l’aide du centre de ressources pour corridors de{" "}
+                                        <span className="text-white font-semibold">Galiléecommerce.com</span>{" "}
+                                        (importation, exportation, recherche de débouchés économiques, représentation de produits…)
+                                    </li>
+                                    <li>• Sélectionnez les corridors digitaux adéquats.</li>
+                                    <li>• Effectuez le paiement des frais d’assistance.</li>
+                                    <li>• Le centre de ressources pour corridors vous contactera dans les 48 heures avec des solutions concrètes.</li>
+                                 `,    
+"corridors_id_13":` Un moteur clé <br className="hidden md:block" />
+                                    du développement <br className="hidden md:block" />
+                                    commercial`,  
+"corridors_id_14":`  <h3 className="text-xl md:text-2xl font-semibold mb-4">
+                                        Booster votre potentiel commercial
+                                    </h3>
+
+                                    <p className="text-sm md:text-base leading-relaxed text-gray-300">
+                                        <span className="text-white font-semibold">Galileecommerce.com</span> facilite votre accès au marché de la{" "}
+                                        <span className="text-white font-semibold">Zone de Libre-échange Continentale Africaine (ZLECAF)</span>.
+                                        Grâce à ses ressources techniques, informationnelles et physiques,
+                                        Galileecommerce.com vous offre des solutions visant l’amélioration de votre efficacité commerciale
+                                        à tous les niveaux : local, national et international.
+                                    </p>`,   
+ "corridors_id_15":"Trouvez des solutions  adaptées à vos besoins",  
+ "corridors_id_16":" Solutions pour <br /> faciliter les échanges", 
+ "corridors_id_17":` Réduire les barrières normatives, <br /> informationnelles, physiques et logistiques.`, 
+ "corridors_id_18":"Renforcer l’intégration",
+ "corridors_id_19":` Assurer la liaison entre plusieurs pays <br /> et accompagner l’intégration commerciale.`,
+ "corridors_id_20":" Compétitivité <br /> des entreprises",
+ "corridors_id_21":`Faire baisser les dépenses  liées aux transactions <br /> et optimiser les <br />délais de livraison.`
+ "corridors_id_22":"Moderniser les axes de transport",
+ "corridors_id_23":"Soutenir et accompagner le <br /> développement du capital spatial.",
+ "corridors_id_24":" Compétitivité <br /> des entreprises",
+ "corridors_id_25":"` Faire baisser les dépenses <br />liées aux transactions et optimiser <br />les délais de livraison.`,
+ "corridors_id_26":"Moderniser les axes de transport",
+ "corridors_id_27":" Soutenir et accompagner le <br /> développement  du capital spatial",
+ "corridors_id_28":"Prenez contact avec l’équipe technique pour assistance.",
+ "index_id_1":"Découvrez nos produits",
+ "index_id_2":"Nos produits",
+"limited_offer_title": "Offre Limitée",
+"index_id_1":"Nos produits",
+"limited_offer_subtitle": "Découvrez nos <strong>offres limitées</strong> du moment !",
+"how_it_works_title": "Comment ça marche ?",
+"how_it_works_subtitle": "Découvrez comment ça fonctionne chez Galileecommerce.",
+"promotions_title": "Promotions",
+"promotions_subtitle": "Voici nos meilleurs produits en promotion.",
+"pavillons_id_1":`                    <h2 className="text-4xl md:text-5xl font-extrabold leading-tight mb-6 drop-shadow-lg">
+                        Visitez les pavillons pays <br /> déjà fonctionnels.
+                    </h2>
+                    <p className="text-lg md:text-xl font-medium drop-shadow-md">
+                        De nouveaux pavillons en cours d’aménagement ouvriront prochainement
+                    </p>`,
+"pavillons_id_2":`Trouvez les fournisseurs par pavillon`,  
+"pavillons_id_3":`Rechercher les produits d’origine selon <br /> les régions du monde`, 
+"pavillons_id_4":"Rechercher les produits <br /> d’origine par pays",
+"pavillons_id_5":`Découvrez les pavillons digitaux de <br /> <span className="block">Galiléecommerce.com</span>`,
+"pavillons_id_6":` Des millions de produits venant de <br /> plus de 120 pays à travers le monde`,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import type {
+  CategoryQueryOptions,
+  NextPageWithLayout,
+  ProductQueryOptions,
+  SettingsQueryOptions,
+} from '@/types';
+//import HomePage from '@/components/home-page/home-page';
+import HomePage from '@/components/home-page/homepage';
+import FreeShipping from '@/components/free-shipping/suiteabout';
+import LimitedOffer from '@/components/limited-offer/limited-offer';
+import PromoBannier from '@/components/promo-bannier/promo-bannier';
+import TitleComponent from '@/components/title-component/title-component';
+import BestHomeSellers from '@/components/best-home-sellers/best-home-sellers';
+import type { GetStaticProps } from 'next';
+import Layout from '@/layouts/_layout';
+import { useProducts } from '@/data/product';
+import Grid from '@/components/product/grid';
+import { useRouter } from 'next/router';
+import Seo from '@/layouts/_seo';
+import routes from '@/config/routes';
+import client from '@/data/client';
+import { dehydrate, QueryClient } from 'react-query';
+import { API_ENDPOINTS } from '@/data/client/endpoints';
+//import CategoryFilter from '@/components/product/category-filter';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import PreloaderWrapper from '@/components/loader/preloaderWrapper';
+import { GlobeIcon } from '@/components/icons/globe';
+import Button from '@/components/ui/button';
+import Modal from '@/components/modal/modal';
+import React, { useState } from 'react';
+import Footer from '@/components/footer/footer';
+import Services from '@/components/services/servicesx';
+import Howtowork from '@/components/howtowork/howtowork';
+import AboutUs from '@/components/about-us/aboutuse';
+import Piliers from '@/components/piliers/piliers';
+import Suiteaccueil from '@/components/suiteaccueil/suiteaccueil';
+import Link from 'next/link';
+import { useTranslation } from 'next-i18next'; 
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  
+  try {
+    await Promise.all([
+      queryClient.prefetchQuery(
+        [API_ENDPOINTS.SETTINGS, { language: locale }],
+        ({ queryKey }) =>
+          client.settings.all(queryKey[1] as SettingsQueryOptions),
+      ),
+
+      queryClient.prefetchInfiniteQuery(
+        [API_ENDPOINTS.CATEGORIES, { limit: 100, language: locale }],
+        ({ queryKey }) =>
+          client.categories.all(queryKey[1] as CategoryQueryOptions),
+      ),
+      queryClient.prefetchInfiniteQuery(
+        [API_ENDPOINTS.PRODUCTS, { language: locale }],
+        ({ queryKey }) =>
+          client.products.all(queryKey[1] as ProductQueryOptions),
+      ),
+    ]);
+    return {
+      props: {
+        ...(await serverSideTranslations(locale!, ['common'])),
+        dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
+      },
+      revalidate: 60, // In seconds
+    };
+  } catch (error) {
+    //* if we get here, the product doesn't exist or something else went wrong
+    return {
+      notFound: true,
+    };
+  }
+};
+
+function Products() {
+  const { query } = useRouter();
+  const { products, loadMore, hasNextPage, isLoadingMore, isLoading } =
+    useProducts({
+      ...(query.category && { categories: query.category }),
+      ...(query.price && { price: query.price }),
+      sortedBy: 'DESC',
+    });
+  console.log('Products', products);
+  return (
+    <Grid
+      products={products}
+      limit={30}
+      onLoadMore={loadMore}
+      hasNextPage={hasNextPage}
+      isLoadingMore={isLoadingMore}
+      isLoading={isLoading}
+    />
+  );
+}
+
+// TODO: SEO text gulo translation ready hobe kina? r seo text gulo static thakbe or dynamic?
+const Home: NextPageWithLayout = () => {
+  const [open, setOpen] = useState(false);
+  const [mapIsOk, setMapIsOk] = useState(false);
+  const queryClient = new QueryClient();
+  const { t } = useTranslation('common'); 
+    async function goTocorridors() {
+    router.push('/corridors_');
+  }
+  return (
+    <>
+      <Seo
+        title="galileecommerce"
+        description="L'incontournable plateforme digitale pour le commerce en Afrique"
+        url={routes.home}
+      />
+      {/*  */}
+
+
+      <HomePage />
+      <Suiteaccueil />
+      <TitleComponent subtitle={t('index_id_1')} >
+        {t('index_id_2')}
+      </TitleComponent>
+      <Products />
+
+      <AboutUs />
+      <Piliers />
+      <FreeShipping />
+      <TitleComponent subtitle={t('index_id_3')}>
+        {t('limited_offer_title')}
+      </TitleComponent>
+      <LimitedOffer />
+      <TitleComponent subtitle={t('how_it_works_subtitle')}>
+        {t('how_it_works_title')}
+      </TitleComponent>
+      <Howtowork />
+      <TitleComponent subtitle={t('promotions_subtitle')}>
+        {t('promotions_title')}
+      </TitleComponent>
+      <PromoBannier />
+      <Services />
+      {/**  <TitleComponent subtitle="Découvrez nos produits les plus populaires">
+        Meilleures Ventes
+      </TitleComponent>
+      <BestHomeSellers />
+      <TitleComponent subtitle="Découvrez les nouveautés">
+        Nouveautés
+      </TitleComponent>
+      <Products /> 
+   
+       <TitleComponent subtitle="Voici nos services">
+        Nos services
+      </TitleComponent>**/}
+      <Footer />
+     
+      <button
+        className="mb-[30px] flex items-center bg-white shadow px-4 py-3 rounded-full hidden md:flex fixed bottom-4 right-4 z-30"
+        onClick={goTocorridors}
+      >
+        <span className="w-7 h-7 flex items-center justify-center bg-gray-100 rounded-full mr-2">
+          <svg
+            className={`animate-spin-slow  h-9 w-9 text-pink-500`}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10
+                    10-4.477 10-10S17.523 2 12 2zm0 0c-2.5 2-4 5.5-4 10s1.5 8 4 10m0-20c2.5 2 4 5.5 4 10s-1.5 8-4 10m-8-10h16m-14.5 4h13m-13-8h13"
+            />
+          </svg>
+        </span>
+        <span className="text-gray-700 font-medium">Nos Corridors</span>
+        
+      </button>
+
+      {/** Uncomment the line below to enable the promotional slider */}
+      {/**<PromotionalSlider /> <Modal
+          isOpen={open}
+          onClose={() => setOpen(false)}
+          mapIsOk={mapIsOk}
+          setMapIsOk={setMapIsOk}
+        />* */}
+
+    </>
+  );
+};
+
+Home.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>;
+};
+
+export default Home;
