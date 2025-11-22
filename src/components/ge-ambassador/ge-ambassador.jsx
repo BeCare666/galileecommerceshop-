@@ -52,9 +52,9 @@ export default function AproposSection() {
                     <div className="relative z-20 text-white max-w-[500px]">
 
 
-                        <h3 className="text-left font-extrabold text-[24px] md:text-[30px] leading-[32px] md:leading-[38px] mb-3 ">
+                        <h3 className="w-full pt-[25px] md:pt-[3px] text-left font-extrabold text-[24px] md:text-[30px] leading-[32px] md:leading-[38px] mb-3 ">
                             GE AMBASSADOR<br />
-                            Devenez ambassadeur de galileecommerce.com
+                            Devenez Ambassadeur de galileecommerce.com
                         </h3>
 
                         <div className="h-[2px] w-[80px] bg-white/15 mb-3 mx-auto md:mx-0" />
@@ -137,27 +137,28 @@ export default function AproposSection() {
                     {/* Divider */}
                     <div className="w-full h-[2px] bg-white/30 mb-6"></div>
 
+                    <div className="bg-black text-white p-5">
+                        {/* Text content */}
+                        <p className="text-[14px] md:text-[16px] leading-[22px] md:leading-[26px] text-white mb-4 ">
+                            Le Programme Galilée Ecommerce Ambassador (GE Ambassador) sur inscription
+                            est destiné aux personnes ayant des affinités avec des réseaux familiaux,
+                            communautaires, amicaux ou professionnels, souhaitant revendre nos produits
+                            et services dans ces différents réseaux. Les ambassadeurs agissent comme
+                            des partenaires d’affaires de galileecommerce.com pour promouvoir,
+                            proposer et commercialiser ses offres auprès d’un large éventail de clients.
+                        </p>
 
-                    {/* Text content */}
-                    <p className="text-[14px] md:text-[16px] leading-[22px] md:leading-[26px] text-gray-200 mb-4">
-                        Le Programme Galilée Ecommerce Ambassador (GE Ambassador) sur inscription
-                        est destiné aux personnes ayant des affinités avec des réseaux familiaux,
-                        communautaires, amicaux ou professionnels, souhaitant revendre nos produits
-                        et services dans ces différents réseaux. Les ambassadeurs agissent comme
-                        des partenaires d’affaires de galileecommerce.com pour promouvoir,
-                        proposer et commercialiser ses offres auprès d’un large éventail de clients.
-                    </p>
 
-
-                    <p className="text-[14px] md:text-[16px] leading-[22px] md:leading-[26px] text-gray-200">
-                        Le contrat des ambassadeurs repose sur leurs compétences en matière de
-                        marketing relationnel, d’expertise en développement commercial, de capacités
-                        opérationnelles et de couverture réseau. En rejoignant le programme Galilée
-                        Ambassador, vous bénéficierez de primes de performance, d’outils et de
-                        ressources dédiés, de fonds pour développer votre réseau, de programmes de
-                        formation et d’un encadrement sur mesure donnant lieu à des partenariats
-                        bénéfiques, et des certifications.
-                    </p>
+                        <p className="text-[14px] md:text-[16px] leading-[22px] md:leading-[26px] text-white">
+                            Le contrat des ambassadeurs repose sur leurs compétences en matière de
+                            marketing relationnel, d’expertise en développement commercial, de capacités
+                            opérationnelles et de couverture réseau. En rejoignant le programme Galilée
+                            Ambassador, vous bénéficierez de primes de performance, d’outils et de
+                            ressources dédiés, de fonds pour développer votre réseau, de programmes de
+                            formation et d’un encadrement sur mesure donnant lieu à des partenariats
+                            bénéfiques, et des certifications.
+                        </p>
+                    </div>
                 </div>
             </section>
 
@@ -287,12 +288,11 @@ export default function AproposSection() {
                     />
 
                     <div className="relative z-20 text-white max-w-[500px]">
-                        <div className="w-[140px] h-[6px] bg-[#FF7A2D] mb-3 rounded-full mx-auto md:mx-0" />
+                        <div className="w-[35px] h-[6px] bg-orange-500 rounded-full mb-6"></div>
 
-                        <h3 className="text-black text-left font-extrabold text-[24px] md:text-[30px] leading-[32px] md:leading-[38px] mb-3">
+                        <h3 className="text-black text-left font-extrabold text-[24px] md:text-[30px] leading-[32px] md:leading-[38px] mb-3 uppercase">
                             COMMENT<br />
-                            ça<br />
-                            MARCHE<br />
+                            ça MARCHE<br />
 
                         </h3>
 
@@ -353,7 +353,7 @@ export default function AproposSection() {
                         </p>
 
 
-                        <p className="italic font-semibold text-[14px] mb-6 cursor-pointer color-blue" onClick={handlGotoregister}>
+                        <p className="italic font-semibold text-[14px] mb-6 cursor-pointer text-[blue]" onClick={handlGotoregister}>
                             Devenez GE Ambassador
                         </p>
 
@@ -394,7 +394,7 @@ export default function AproposSection() {
                         </ul>
 
 
-                        <h2 className="font-bold text-[18px] mb-4">COMMENT ÇA MARCHE ?</h2>
+                        <h2 className="hidden font-bold text-[18px] mb-4">COMMENT ÇA MARCHE ?</h2>
 
 
                         <div className="w-full flex  mt-4">

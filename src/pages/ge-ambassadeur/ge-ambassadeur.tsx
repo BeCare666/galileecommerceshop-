@@ -15,26 +15,27 @@ const schema = z.object({
     pays: z.string().optional(),
     ville: z.string().optional(),
     adresse: z.string().optional(),
-    reseaux: z.string().optional(),
+    reseaux: z.array(z.string()).optional(), // ← MULTIPLE CHOICES
 });
 
-// Type du formulaire généré automatiquement
 type FormValues = z.infer<typeof schema>;
 
 export default function RegisterAmbassador() {
-    // Typage strict du formulaire
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<FormValues>({
         resolver: zodResolver(schema),
-    });
+        defaultValues: {
+            reseaux: [], // ← rien de coché au chargement
+        },
+    })
 
     const onSubmit = (data: FormValues) => console.log(data);
 
     // -------------------------
-    // INPUT COMPONENT TIPÉ
+    // INPUT STANDARD
     // -------------------------
     const InputField = <T extends keyof FormValues>({
         label,
@@ -56,22 +57,65 @@ export default function RegisterAmbassador() {
                 <input
                     type={type}
                     {...register(name)}
-                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/70 border border-gray-200 focus:border-blue-500 outline-none shadow-sm peer placeholder-transparent"
+                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/70 border border-gray-200 
+                               focus:border-blue-500 outline-none shadow-sm peer placeholder-transparent"
                     placeholder={label}
                 />
 
                 <label
                     className="absolute left-12 top-1/2 -translate-y-1/2 text-gray-500 transition-all pointer-events-none
-                    peer-placeholder-shown:top-1/2 
-                    peer-placeholder-shown:text-base 
-                    peer-placeholder-shown:text-gray-400 
-                    peer-focus:-top-2 
-                    peer-focus:text-sm 
-                    peer-focus:text-blue-600 
-                    bg-white px-1"
+                        peer-placeholder-shown:top-1/2 
+                        peer-placeholder-shown:text-base 
+                        peer-placeholder-shown:text-gray-400 
+                        peer-focus:-top-2 
+                        peer-focus:text-sm 
+                        peer-focus:text-blue-600 
+                        bg-white px-1"
                 >
                     {label} {required && "*"}
                 </label>
+            </div>
+
+            {errors[name] && (
+                <p className="text-pink-600 text-sm mt-1">
+                    {(errors[name]?.message as string) ?? ""}
+                </p>
+            )}
+        </div>
+    );
+
+    // -------------------------
+    // CHECKBOX GROUP (MULTI-SÉLECTION)
+    // -------------------------
+    const CheckboxGroup = <T extends keyof FormValues>({
+        name,
+        icon: Icon,
+        label,
+        options,
+    }: {
+        name: T;
+        icon: any;
+        label: string;
+        options: { value: string; label: string }[];
+    }) => (
+        <div className="flex flex-col w-full">
+            <div className="flex items-center gap-2 mb-2">
+                <Icon className="text-blue-500" size={18} />
+                <span className="font-medium text-gray-700">{label}</span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pl-6">
+                {options.map((opt) => (
+                    <label key={opt.value} className="flex items-center gap-2">
+                        <input
+                            type="checkbox"
+                            value={opt.value}
+                            {...register(name)}
+                            className="w-4 h-4 accent-blue-600"
+                        />
+                        <span>{opt.label}</span>
+                    </label>
+                ))}
             </div>
 
             {errors[name] && (
@@ -110,11 +154,18 @@ export default function RegisterAmbassador() {
                     <InputField label="Pays" name="pays" icon={MapPin} />
                     <InputField label="Ville" name="ville" icon={Home} />
 
+                    {/* MULTI SELECT → CHECKBOXES */}
                     <div className="md:col-span-2">
-                        <InputField
-                            label="Vos réseaux (familial, professionnel, communautaire...)"
+                        <CheckboxGroup
+                            label="Vos réseaux (sélection multiple)"
                             name="reseaux"
                             icon={Network}
+                            options={[
+                                { label: "Familial", value: "familial" },
+                                { label: "Professionnel", value: "professionnel" },
+                                { label: "Communautaire", value: "communautaire" },
+                                { label: "Autre", value: "autre" },
+                            ]}
                         />
                     </div>
 

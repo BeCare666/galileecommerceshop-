@@ -95,8 +95,8 @@ const AboutPage: NextPageWithLayout = () => {
     return (
         <>
             <Seo
-                title="About us"
-                description="About us "
+                title="GE AMBASSADOR"
+                description="GE AMBASSADOR"
                 url={routes.about}
             />
             <div className="mx-auto flex h-full w-full flex-col">
