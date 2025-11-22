@@ -4,7 +4,7 @@ import Homepage1 from "@/assets/images/homepage1.png";
 import Homepage2 from "@/assets/images/homepage2.png";
 export default function Hero() {
     return (
-        <section className="relative  w-full mt-0 pb-7 lg:pb-15 md:pb-12">
+        <section className="relative  w-full mt-0 pb-7 lg:pb-10 md:pb-8 mt-[76px] md:mt-[50px]">
             {/* Background image h-[80vh]*/}
             <Image
                 src={Homepage1}
@@ -24,7 +24,7 @@ export default function Hero() {
             <div className="absolute inset-0 bg-black/50"></div>
 
             {/* Contenu */}
-            <div className="relative z-10 max-w-7xl mx-auto h-full flex items-center px-3 lg:px-6">
+            <div className="relative z-10 max-w-7xl mx-auto h-full flex items-center px-3 lg:px-6 ">
                 <div className="text-white space-y-6 ">
                     <h1 className="text-3xl md:text-5xl font-bold leading-snug">
                         L'incontournable plateforme

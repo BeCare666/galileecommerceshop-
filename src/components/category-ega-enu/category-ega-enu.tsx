@@ -141,7 +141,7 @@ export default function CategoryMegaMenu() {
       </div>
 
       {openMenu && (
-        <div className="fixed top-[64px] left-0 right-0 z-50 bg-white text-gray-900 flex flex-col md:flex-row py-6 px-4 md:px-12 gap-6 max-h-[calc(100vh-64px)] overflow-y-auto shadow-lg"
+        <div className="fixed top-[124px] md:top-[174px] left-0 right-0 z-50 bg-white text-gray-900 flex flex-col md:flex-row py-6 px-4 md:px-12 gap-6 max-h-[calc(100vh-64px)] overflow-y-auto shadow-lg"
           onMouseLeave={() => window.innerWidth >= 768 && setOpenMenu(false)}
         >
           {/* --- Desktop 3 colonnes --- */}

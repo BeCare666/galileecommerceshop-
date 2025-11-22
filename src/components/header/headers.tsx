@@ -46,10 +46,34 @@ export default function GalileeHeader() {
     }
     setIsHoverCategoriesx(true);
   };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setIsHoverCategoriesx(false);
+      timeoutRef.current = null;
+    }, 300); // délai avant de cacher
+  };
+
+  const handleMouseEnterNox = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current); // annule le hide si en cours
+      timeoutRef.current = null;
+    }
+    //setIsHoverCategoriesx(true);
+    setIsHoverCategories(true)
+  };
+
+  const handleMouseLeaveNox = () => {
+    timeoutRef.current = setTimeout(() => {
+      //setIsHoverCategoriesx(false);
+      setIsHoverCategories(false)
+      timeoutRef.current = null;
+    }, 300); // délai avant de cacher
+  };
   const [openMarches, setOpenMarches] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Ferme le dropdown si clic en dehors
+  // Ferme le dropdown si clic en dehors.
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -60,12 +84,10 @@ export default function GalileeHeader() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleMouseLeave = () => {
-    timeoutRef.current = setTimeout(() => {
-      setIsHoverCategoriesx(false);
-      timeoutRef.current = null;
-    }, 300); // délai avant de cacher
-  };
+
+
+
+
   const items = [
     { label: 'Les produits les plus récherchés sur galileecommerce :', href: '#' },
     { label: 'Préfabriqués', href: '/prefabriques' },
@@ -203,7 +225,7 @@ export default function GalileeHeader() {
   return (
     <>
       <header
-        className={`w-full sticky top-0 z-50 transition-colors duration-300
+        className={`w-full sticky top-0 z-50 transition-colors duration-300 h-[140px] md:h-[210px] transition-none
        ${isHoverCategories || showSearch ? 'bg-white text-black' : 'bg-gray-900 text-white'}`}
       >
         {' '}
@@ -390,8 +412,8 @@ export default function GalileeHeader() {
             >
               <Link
                 href="#"
-                onMouseEnter={() => setIsHoverCategories(true)}
-                onMouseLeave={() => setIsHoverCategories(false)}
+                onMouseEnter={handleMouseEnterNox}
+                onMouseLeave={handleMouseLeaveNox}
                 className="inline-block lg:px-2 py-1"
               >
                 <CategoryMegaMenu />
@@ -459,20 +481,20 @@ export default function GalileeHeader() {
               <Link href="/become-seller" className="inline-block px-2 py-1 rounded transition-colors text-white">
                 Devenir fournisseur
               </Link>
-              <Link href="#" className="hidden inline-block px-2 py-1 rounded transition-colors text-white">
+              <Link href="ge-ambassador" className="inline-block px-2 py-1 rounded transition-colors text-white">
                 Devenir Ambassadeur
               </Link>
 
               {/* A propos */}
               <div
-                className="hidden  relative inline-block lg:block"
+                className="hidden  relative inline-block lg:block hidden"
                 onMouseEnter={() => setOpenDropdown(true)}
                 onMouseLeave={() => setOpenDropdown(false)}
               >
                 <button
                   onClick={() => openDrawer('MOBILE_MENU')}
                   //onClick={() => setOpenDropdown((s) => !s)}
-                  className={`px-2 py-1 rounded transition-colors flex items-center gap-1 ${isHoverCategories ? 'bg-white text-black' : 'text-white'} text-xs lg:text-sm`}
+                  className={`hidden px-2 py-1 rounded transition-colors flex items-center gap-1 ${isHoverCategories ? 'bg-white text-black' : 'text-white'} text-xs lg:text-sm`}
                   aria-haspopup="true"
 
                 >
@@ -571,8 +593,8 @@ export default function GalileeHeader() {
             >
               <Link
                 href="#"
-                onMouseEnter={() => setIsHoverCategories(true)}
-                onMouseLeave={() => setIsHoverCategories(false)}
+                onMouseEnter={handleMouseEnterNox}
+                onMouseLeave={handleMouseLeaveNox}
               >
                 <CategoryMegaMenu />
               </Link>
@@ -674,8 +696,8 @@ export default function GalileeHeader() {
                 Devenir fournisseur
               </Link>
               <Link
-                href="#"
-                className={`hidden px - 2 py - 1 rounded transition - colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
+                href="ge-ambassador"
+                className={` px - 2 py - 1 rounded transition - colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
                   }`}
               >
                 Devenir Ambassadeur
@@ -798,7 +820,7 @@ export default function GalileeHeader() {
                           Devenir fournisseur
                         </Link>
                       </button>
-                      <button className="hidden w-full py-2 px-4 rounded bg-gray-700 hover:bg-gray-600 transition">
+                      <button className=" w-full py-2 px-4 rounded bg-gray-700 hover:bg-gray-600 transition">
                         Devenir ambassadeur
                       </button>
                     </div>
@@ -826,7 +848,7 @@ export default function GalileeHeader() {
         }
       </header >
       {mounted && isHoverCategoriesx && (
-        <div className={`grid grid-cols-4 w-full text-white
+        <div className={`grid grid-cols-4 w-full text-white z-100
      ${isHoverCategories ? 'block bg-white text-black' : ''}`}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}

@@ -1,6 +1,6 @@
 // MonComposant.jsx
 import Image from "next/image";
-import Pavillons from "@/assets/images/pavillons/pav1.jpg";
+import Pavillons from "@/assets/images/pavillons/pavi.jpg";
 import Pavillonsx from "@/assets/images/pavillons/hommeblackred.jpg";
 export default function MonComposant() {
     // === DRAPEAUX INTERNATIONAUX (avec liens en ligne) ===
@@ -68,7 +68,7 @@ export default function MonComposant() {
     return (
         <div className="w-full">
             {/* SECTION 1 : Drapeaux Internationaux */}
-            <section className="relative w-full h-[100vh] flex items-center justify-start text-white overflow-hidden">
+            <section className="relative w-full h-[80vh] flex items-center justify-start text-white overflow-hidden">
                 {/* Image de fond responsive */}
                 <div className="absolute inset-0">
                     <Image
