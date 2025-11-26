@@ -1,4 +1,4 @@
-// pages/login.tsx
+// pages/login.tsx 
 import React from "react";
 import Image from "next/image";
 import { motion, Variants } from "framer-motion";
@@ -9,6 +9,7 @@ import { useMutation } from "react-query";
 import client from "@/data/client";
 import { setAuthCredentials } from "@/data/client/token.utils";
 import useAuth from "@/components/auth/use-auth";
+import AuthSwitch from "@/components/authswish/authswish";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -126,7 +127,7 @@ export default function LoginPage() {
                                 {isLoading ? "Connexion..." : <><LogIn size={16} className="inline-block mr-2" />Se connecter</>}
                             </motion.button>
                         </motion.div>
-
+                        <AuthSwitch mode="login" />
                         <motion.div variants={fieldVariants} className="flex items-center gap-3 pt-2">
                             <div className="flex-grow h-px bg-gray-200" />
                             <div className="text-sm text-gray-500">ou</div>

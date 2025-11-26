@@ -9,6 +9,7 @@ import { useMutation } from "react-query";
 import client from "@/data/client";
 import { setAuthCredentials } from "@/data/client/token.utils";
 import useAuth from "@/components/auth/use-auth";
+import AuthSwitch from "@/components/authswish/authswish";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -133,7 +134,7 @@ export default function RegisterPage() {
                                 {isLoading ? "Création..." : "Créer mon compte"}
                             </motion.button>
                         </motion.div>
-
+                        <AuthSwitch mode="register" />
                         {/* SEPARATOR */}
                         <motion.div variants={fieldVariants} className="flex items-center gap-3 pt-2">
                             <div className="flex-grow h-px bg-gray-200" />

@@ -858,7 +858,7 @@ export default function GalileeHeader() {
         }
       </header >
       {mounted && isHoverCategoriesx && (
-        <div className={`grid grid-cols-4 w-full text-white z-100
+        <div className={`grid grid-cols-4 w-full text-white z-100 mt-[200px]
      ${isHoverCategories ? 'block bg-white text-black' : ''}`}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
