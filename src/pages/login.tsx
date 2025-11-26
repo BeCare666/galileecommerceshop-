@@ -38,6 +38,7 @@ export default function LoginPage() {
 
     const { mutate: login, isLoading } = useMutation(client.users.login, {
         onSuccess: (data: any) => {
+            console.log("data", data)
             if (!data?.token) {
                 toast.error("Email ou mot de passe invalide");
                 return;

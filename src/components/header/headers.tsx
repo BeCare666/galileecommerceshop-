@@ -306,13 +306,17 @@ export default function GalileeHeader() {
               <div className="hidden md:flex gap-4 items-center text-sm">
                 <button
                   className="hover:scale-105 transition-transform group-hover:text-black"
-                  onClick={() => openModal('LOGIN_VIEW')}
+                  onClick={() => //openModal('LOGIN_VIEW')
+                    router.push('/login')
+                  }
                 >
                   Connexion
                 </button>
                 <button
                   className="hover:scale-105 transition-transform group-hover:text-black"
-                  onClick={() => openModal('REGISTER')}
+                  onClick={() => //openModal('REGISTER')
+                    router.push('/register')
+                  }
                 >
                   Créer un compte
                 </button>

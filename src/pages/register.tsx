@@ -39,13 +39,7 @@ export default function RegisterPage() {
     // 🔥 Mutation REGISTER
     const { mutate: registerUser, isLoading } = useMutation(client.users.register, {
         onSuccess: (data: any) => {
-            if (!data?.token) {
-                toast.error("Erreur d’inscription");
-                return;
-            }
-            authorize(data.token);
-            setAuthCredentials(data.token, data.permissions);
-            toast.success("Iinscription avec succès");
+            toast.success("Inscription réussie ! Vérifiez votre email.");
             router.push("/smsafterregister/smsafterregister");
         },
         onError: (err) => {
@@ -54,6 +48,7 @@ export default function RegisterPage() {
             toast.error(msg);
         },
     });
+
 
     const onSubmit = (d: FormValues) => registerUser(d);
 
