@@ -47,7 +47,12 @@ export default function BottomNavigation() {
           <SearchButton />
           <span className="text-xs mt-1">Recherche</span>
         </div>
-      </Button>**/}
+      </Button>
+      <Modal isOpen={open} onClose={() => setOpen(false)}
+            mapIsOk={mapIsOk}
+            setMapIsOk={setMapIsOk} />
+      
+      **/}
 
       <Button
         variant="icon"
@@ -64,14 +69,14 @@ export default function BottomNavigation() {
       <Button
         variant="icon"
         aria-label="Globe"
-        onClick={() => setOpen(true)}
+        onClick={() => //setOpen(true)
+          router.push('/corridors_')
+        }
       >
         <div className="flex flex-col items-center justify-center">
           <GlobeIcon className="h-8 w-8 p-2" />
           <span className="text-xs mt-1">Corridors</span>
-          <Modal isOpen={open} onClose={() => setOpen(false)}
-            mapIsOk={mapIsOk}
-            setMapIsOk={setMapIsOk} />
+
         </div>
       </Button>
 
@@ -90,7 +95,7 @@ export default function BottomNavigation() {
           <span className="text-xs mt-1">Compte</span>
         </div>
       </Button>
-    </nav>
+    </nav >
 
   );
 }

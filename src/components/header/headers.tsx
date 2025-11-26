@@ -15,6 +15,7 @@ import { useIsMounted } from '@/lib/hooks/use-is-mounted';
 import Modal from '@/components/modal/modal';
 import CountrySelector from '@/components/country-selector/country-selector';
 import { useModalAction } from '@/components/modal-views/context';
+import { useRouter } from 'next/router';
 import routes from '@/config/routes';
 export default function GalileeHeader() {
   const [query, setQuery] = useState('');
@@ -36,9 +37,9 @@ export default function GalileeHeader() {
   const { openModal } = useModalAction();
   const [showSearch, setShowSearch] = useState(false);
   const [isHoverCategoriesx, setIsHoverCategoriesx] = useState(false);
-
+  const router = useRouter()
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
+  console.log("isAuthorized", isAuthorized)
   const handleMouseEnter = () => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current); // annule le hide si en cours
@@ -481,7 +482,7 @@ export default function GalileeHeader() {
               <Link href="/become-seller" className="inline-block px-2 py-1 rounded transition-colors text-white">
                 Devenir fournisseur
               </Link>
-              <Link href="ge-ambassador" className="inline-block px-2 py-1 rounded transition-colors text-white">
+              <Link href="/ge-ambassador" className="inline-block px-2 py-1 rounded transition-colors text-white">
                 Devenir Ambassadeur
               </Link>
 
@@ -829,13 +830,18 @@ export default function GalileeHeader() {
                     <div className="px-4 py-6 border-t border-gray-700 flex flex-col gap-3">
                       <button
                         className="w-full py-2 px-4 rounded bg-pink-600 hover:bg-pink-700 transition"
-                        onClick={() => openModal('LOGIN_VIEW')}
+                        onClick={() => //openModal('LOGIN_VIEW')
+                          router.push('/login')
+
+                        }
                       >
                         Connexion
                       </button>
                       <button
                         className="w-full py-2 px-4 rounded bg-gray-700 hover:bg-gray-600 transition"
-                        onClick={() => openModal('REGISTER')}
+                        onClick={() => //openModal('REGISTER')
+                          router.push('/register')
+                        }
                       >
                         Créer un compte
                       </button>

@@ -33,7 +33,6 @@ export default function MonComposant() {
     const y3 = useTransform(scrollY3, [0, 1], ["0%", "0%"]);
     const { isRTL } = useIsRTL();
     const router = useRouter();
-
     const { mutate: becomeSeller, isLoading } = useMutation(client.becomeSeller.post, {
         onSuccess: (data: any) => {
             // Affiche un toast de succès
@@ -201,7 +200,7 @@ export default function MonComposant() {
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             className="bg-yellow-600 text-white font-semibold px-6 py-3  shadow-lg transition-all hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300"
-                            onClick={() => becomeSeller()}
+                            onClick={() => router.push('/become_seller/become_seller')}
                             disabled={isLoading}>
                             REJOIGNEZ NOUS EN TANT QUE FOURNISSEUR !
                         </motion.button>

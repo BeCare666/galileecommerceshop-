@@ -26,7 +26,7 @@ export default function AuthorizedMenu({ user }: { user: User }) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute bottom-[15%] lg:top-[135px] md:top-16 z-[9999] mt-4 w-56 rounded-md bg-white py-1.5 text-dark shadow-dropdown ltr:right-0 ltr:origin-top-right rtl:left-0 rtl:origin-top-left dark:bg-dark-250 dark:text-light">
+        <Menu.Items className="absolute bottom-[15%] lg:top-[139px] md:top-16 z-[9999] mt-4 w-56 rounded-md bg-white py-1.5 text-dark shadow-dropdown ltr:right-0 ltr:origin-top-right rtl:left-0 rtl:origin-top-left dark:bg-dark-250 dark:text-light">
           {AuthorizedMenuItems?.map((item) => (
             <Menu.Item key={item.label}>
               <ActiveLink

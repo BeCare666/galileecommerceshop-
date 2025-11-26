@@ -33,6 +33,6 @@ const routes = {
     return `/products/${encodeURIComponent(slug)}`;
   },
   cards: '/cards',
-  becomeSeller: '/become-seller',
+  becomeSeller: '/become_seller/become_seller',
 };
 export default routes;

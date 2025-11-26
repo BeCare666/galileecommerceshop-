@@ -89,7 +89,7 @@ export default function Header() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 text-white shrink-0">
           <img
-            src="https://galileecommerce.netlify.app/img/logo_galile_pc.png"
+            src="https://galileecommerce.com/img/logo_red.png"
             alt="Logo"
             className="w-24 h-24 md:w-19 md:h-19 object-contain bg-dark"
           />

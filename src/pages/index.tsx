@@ -36,6 +36,7 @@ import Piliers from '@/components/piliers/piliers';
 import Suiteaccueil from '@/components/suiteaccueil/suiteaccueil';
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const queryClient = new QueryClient();
+
   try {
     await Promise.all([
       queryClient.prefetchQuery(
@@ -78,6 +79,7 @@ function Products() {
       ...(query.price && { price: query.price }),
       sortedBy: 'DESC',
     });
+
   console.log('Products', products);
   return (
     <Grid
@@ -95,6 +97,7 @@ function Products() {
 const Home: NextPageWithLayout = () => {
   const [open, setOpen] = useState(false);
   const [mapIsOk, setMapIsOk] = useState(false);
+  const router = useRouter()
   return (
     <>
       <Seo
@@ -143,7 +146,9 @@ const Home: NextPageWithLayout = () => {
       <Footer />
       <button
         className="mb-[30px] flex items-center bg-white shadow px-4 py-3 rounded-full hidden md:flex fixed bottom-4 right-4 z-30"
-        onClick={() => setOpen(true)}
+        onClick={() => //setOpen(true)
+          router.push('/corridors_')
+        }
       >
         <span className="w-7 h-7 flex items-center justify-center bg-gray-100 rounded-full mr-2">
           <svg
@@ -163,16 +168,17 @@ const Home: NextPageWithLayout = () => {
           </svg>
         </span>
         <span className="text-gray-700 font-medium">Nos Corridors</span>
+
+      </button>
+
+      {/** Uncomment the line below to enable the promotional slider */}
+      {/**<PromotionalSlider /> 
         <Modal
           isOpen={open}
           onClose={() => setOpen(false)}
           mapIsOk={mapIsOk}
           setMapIsOk={setMapIsOk}
-        />
-      </button>
-
-      {/** Uncomment the line below to enable the promotional slider */}
-      {/**<PromotionalSlider /> * */}
+        />* * */}
 
     </>
   );

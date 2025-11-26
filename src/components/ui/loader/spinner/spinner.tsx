@@ -20,7 +20,7 @@ const Spinner = ({ className, showText = true, text = 'Chargement...', simple }:
       <div className={styles.logo_spinner_container}>
         <div className={styles.logo_spinner_circle}></div>
         <img
-          src="https://galileecommerce.netlify.app/img/logo_galile_pc.png"
+          src="https://galileecommerce.com/img/logo_red.png"
           alt="Galilée Commerce"
           className={styles.logo_spinner_image}
         />
