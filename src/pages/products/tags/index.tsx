@@ -1,12 +1,12 @@
-export function getStaticProps() {
-    return {
-        redirect: {
-            destination: '/',
-            permanent: false,
-        },
-    };
-}
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 export default function TagsIndex() {
+    const router = useRouter();
+
+    useEffect(() => {
+        router.replace("/");
+    }, []);
+
     return null;
 }
