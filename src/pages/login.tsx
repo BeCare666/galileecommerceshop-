@@ -112,7 +112,7 @@ export default function LoginPage() {
                                 <span>Se souvenir de moi</span>
                             </label>
 
-                            <button type="button" className="text-sm font-medium text-pink-600 hover:underline" onClick={() => signIn("email")}>
+                            <button type="button" className="text-sm font-medium text-pink-600 hover:underline" onClick={() => router.push('/forgot-password')}>
                                 Mot de passe oublié ?
                             </button>
                         </motion.div>
