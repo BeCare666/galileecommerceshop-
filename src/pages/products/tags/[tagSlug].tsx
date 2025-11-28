@@ -1,45 +1,41 @@
+// src/pages/products/tags/[tagSlug].tsx
+import { GetStaticPaths, GetStaticProps } from 'next';
+import { dehydrate, QueryClient } from 'react-query';
+import invariant from 'tiny-invariant';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
-import type { NextPageWithLayout, ProductQueryOptions, Tag } from '@/types';
-import type {
-  GetStaticPaths,
-  GetStaticProps,
-  InferGetStaticPropsType,
-} from 'next';
-import Grid from '@/components/product/grid';
+
 import client from '@/data/client';
 import { API_ENDPOINTS } from '@/data/client/endpoints';
 import { useProducts } from '@/data/product';
+import Grid from '@/components/product/grid';
 import Layout from '@/layouts/_layout';
-import { dehydrate, QueryClient } from 'react-query';
-import invariant from 'tiny-invariant';
+import type { NextPageWithLayout, ProductQueryOptions, Tag } from '@/types';
 
-// This function gets called at build time
 type ParsedQueryParams = {
   tagSlug: string;
+};
+
+type PageProps = {
+  tag: Tag;
 };
 
 export const getStaticPaths: GetStaticPaths<ParsedQueryParams> = async ({
   locales,
 }) => {
-  // locales peut être undefined pendant next export
   const safeLocales = Array.isArray(locales) && locales.length ? locales : ['fr'];
 
-  // Typage explicite pour éviter l'erreur TS7034
-  let data: Array<{ slug: string }> = [];
-
+  let tags: Array<{ slug: string }> = [];
   try {
     const res = await client.tags.all({ limit: 100 });
-    data = (res?.data ?? []) as Array<{ slug: string }>;
+    tags = (res?.data ?? []) as Array<{ slug: string }>;
   } catch (err) {
-    console.error("Erreur récupération tags dans getStaticPaths:", err);
-    data = [];
+    console.error('Erreur récupération tags:', err);
+    tags = [];
   }
 
-  // Toujours un tableau, même vide
   const paths =
-    data.length > 0
-      ? data.flatMap((tag) =>
+    tags.length > 0
+      ? tags.flatMap((tag) =>
         safeLocales.map((locale) => ({
           params: { tagSlug: tag.slug },
           locale,
@@ -49,62 +45,46 @@ export const getStaticPaths: GetStaticPaths<ParsedQueryParams> = async ({
 
   return {
     paths,
-    fallback: 'blocking',
+    fallback: 'blocking', // permet de générer à la volée si pas dans paths
   };
 };
 
-
-
-type PageProps = {
-  tag: Tag;
-};
-export const getStaticProps: GetStaticProps<
-  PageProps,
-  ParsedQueryParams
-> = async ({ params, locale }) => {
+export const getStaticProps: GetStaticProps<PageProps, ParsedQueryParams> = async ({
+  params,
+  locale,
+}) => {
   const queryClient = new QueryClient();
-  const { tagSlug } = params!; //* we know it's required because of getStaticPaths
+  const { tagSlug } = params!;
+
   try {
-    const [tag] = await Promise.all([
-      client.tags.get({ slug: tagSlug, language: locale }),
-      queryClient.prefetchInfiniteQuery(
-        [API_ENDPOINTS.PRODUCTS, { tags: tagSlug, language: locale }],
-        ({ queryKey }) =>
-          client.products.all(queryKey[1] as ProductQueryOptions)
-      ),
-    ]);
+    const tag = await client.tags.get({ slug: tagSlug, language: locale });
+    if (!tag) {
+      return { notFound: true };
+    }
+
+    await queryClient.prefetchInfiniteQuery(
+      [API_ENDPOINTS.PRODUCTS, { tags: tagSlug, language: locale }],
+      ({ queryKey }) => client.products.all(queryKey[1] as ProductQueryOptions)
+    );
+
     return {
       props: {
         tag,
         dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
         ...(await serverSideTranslations(locale!, ['common'])),
       },
-      revalidate: 60, // In seconds
+      revalidate: 60,
     };
   } catch (error) {
-    //* if we get here, the product doesn't exist or something else went wrong
-    return {
-      notFound: true,
-    };
+    console.error('Erreur getStaticProps [tagSlug]:', error);
+    return { notFound: true };
   }
 };
-const TagPage: NextPageWithLayout<
-  InferGetStaticPropsType<typeof getStaticProps>
-> = ({ tag }) => {
-  const { t } = useTranslation('common');
-  const {
-    products,
-    paginatorInfo,
-    isLoading,
-    loadMore,
-    hasNextPage,
-    isLoadingMore,
-  } = useProducts(
-    { tags: tag.slug },
-    {
-      staleTime: Infinity,
-    }
-  );
+
+const TagPage: NextPageWithLayout<PageProps> = ({ tag }) => {
+  const { products, paginatorInfo, isLoading, loadMore, hasNextPage, isLoadingMore } =
+    useProducts({ tags: tag.slug }, { staleTime: Infinity });
+
   return (
     <>
       <div className="flex flex-col items-center justify-between gap-1.5 px-4 pt-5 xs:flex-row md:px-6 md:pt-6 lg:px-7 3xl:px-8">
@@ -112,7 +92,7 @@ const TagPage: NextPageWithLayout<
           #{tag.name}
         </h2>
         <div>
-          {t('text-total')} {paginatorInfo?.total} {t('text-product-found')}
+          Total {paginatorInfo?.total} produit(s) trouvé(s)
         </div>
       </div>
       <Grid
@@ -129,4 +109,5 @@ const TagPage: NextPageWithLayout<
 TagPage.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
+
 export default TagPage;
