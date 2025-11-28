@@ -22,17 +22,38 @@ type ParsedQueryParams = {
 export const getStaticPaths: GetStaticPaths<ParsedQueryParams> = async ({
   locales,
 }) => {
-  invariant(locales, 'locales is not defined');
-  const { data } = await client.tags.all({ limit: 100 });
+  // locales peut être undefined pendant next export
+  const safeLocales = Array.isArray(locales) && locales.length ? locales : ['fr'];
 
-  const paths = data?.flatMap((tag) =>
-    locales?.map((locale) => ({ params: { tagSlug: tag.slug }, locale }))
-  );
+  // Typage explicite pour éviter l'erreur TS7034
+  let data: Array<{ slug: string }> = [];
+
+  try {
+    const res = await client.tags.all({ limit: 100 });
+    data = (res?.data ?? []) as Array<{ slug: string }>;
+  } catch (err) {
+    console.error("Erreur récupération tags dans getStaticPaths:", err);
+    data = [];
+  }
+
+  // Toujours un tableau, même vide
+  const paths =
+    data.length > 0
+      ? data.flatMap((tag) =>
+        safeLocales.map((locale) => ({
+          params: { tagSlug: tag.slug },
+          locale,
+        }))
+      )
+      : [];
+
   return {
     paths,
     fallback: 'blocking',
   };
 };
+
+
 
 type PageProps = {
   tag: Tag;
