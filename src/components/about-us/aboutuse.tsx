@@ -69,7 +69,7 @@ export default function AproposSection() {
                             Les quatre piliers de Galiléecommerce.com
                         </h4>
                         <ul className="space-y-2 text-[15px] text-[#E5E7EB] list-disc list-inside">
-                            <li>L’assistance technique</li>
+                            <li>L&apos;assistance technique</li>
                             <li>Le respect des normes</li>
                             <li>La compétitivité-prix</li>
                             <li>Le dernier kilomètre</li>
@@ -113,10 +113,10 @@ export default function AproposSection() {
                                 Galiléecommerce.com, incontournable plateforme digitale pour le commerce en Afrique, offre des solutions intégrées pour le B2B, B2C, C2B et C2C, avec une expertise de premier plan en sourcing et en technologies avancées.
                             </p>
                             <p>
-                                L’entreprise Galiléecommerce est l’une des filiales du groupe Galilé (fondé en 2010 par Raoul Nougoum), dont le siège est à Douala, au Cameroun.
+                                L&apos;entreprise Galiléecommerce est l&apos;une des filiales du groupe Galilé (fondé en 2010 par Raoul Nougoum), dont le siège est à Douala, au Cameroun.
                             </p>
                             <p>
-                                La mission de Galiléecommerce est de faciliter les affaires entre les pays de la Zone de Libre-échange continentale africaine (ZLECAf) et d’élargir leur accès au commerce mondial.
+                                La mission de Galiléecommerce est de faciliter les affaires entre les pays de la Zone de Libre-échange continentale africaine (ZLECAf) et d&apos;élargir leur accès au commerce mondial.
                             </p>
                             <p>
                                 Galiléecommerce.com propose un écosystème visant à bâtir l'infrastructure commerciale de l'avenir de l'Afrique, offrant des solutions complètes qui facilitent l'accès des consommateurs aux produits et services mondiaux et africains, tout en assurant la prospérité des entreprises à l'ère numérique.
@@ -127,8 +127,8 @@ export default function AproposSection() {
                             <ul className="list-disc list-inside ml-3 space-y-1">
                                 <li>Les pavillons digitaux</li>
                                 <li>Les corridors digitaux</li>
-                                <li>Les solutions alimentées par l’IA</li>
-                                <li>L’inspection normative</li>
+                                <li>Les solutions alimentées par l&apos;IA</li>
+                                <li>L&apos;inspection normative</li>
                                 <li>Les paiements numériques ultrasécurisés</li>
                                 <li>Le cloud computing</li>
                                 <li>La logistique et le divertissement numérique</li>
