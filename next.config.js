@@ -3,18 +3,17 @@ const { i18n } = require('./next-i18next.config');
 
 module.exports = {
   reactStrictMode: true,
-
   i18n: {
-    locales: ['fr'], // Tu utilises seulement FR
+    locales: ['fr'],
     defaultLocale: 'fr',
   },
-
-  // 🚫 Empêcher Next Export d'essayer d'exporter /products/tags
-  exportPathMap: async function (defaultPathMap) {
-    delete defaultPathMap['/products/tags'];
+  pageExtensions: ['ts', 'tsx', 'js', 'jsx'], // 🔹 détecte src/pages
+  exportPathMap: async function (defaultPathMap) { // 🔹 exclut /products/tags
+    if (defaultPathMap['/products/tags']) {
+      delete defaultPathMap['/products/tags'];
+    }
     return defaultPathMap;
   },
-
   images: {
     domains: [
       'localhost',
@@ -33,13 +32,8 @@ module.exports = {
     ],
     unoptimized: true,
   },
-
   ...(process.env.APPLICATION_MODE === 'production' && {
-    typescript: {
-      ignoreBuildErrors: true,
-    },
-    eslint: {
-      ignoreDuringBuilds: true,
-    },
+    typescript: { ignoreBuildErrors: true },
+    eslint: { ignoreDuringBuilds: true },
   }),
 };
