@@ -1,19 +1,20 @@
 /** @type {import('next').NextConfig} */
 const { i18n } = require('./next-i18next.config');
 
-// const runtimeCaching = require('next-pwa/cache');
-// const withPWA = require('next-pwa')({
-//   disable: process.env.NODE_ENV === 'development',
-//   dest: 'public',
-//   runtimeCaching,
-// });
-
 module.exports = {
   reactStrictMode: true,
+
   i18n: {
-    locales: ['fr'], // , 'en',langues supportées
-    defaultLocale: 'fr',         // langue par défaut
+    locales: ['fr'], // Tu utilises seulement FR
+    defaultLocale: 'fr',
   },
+
+  // 🚫 Empêcher Next Export d'essayer d'exporter /products/tags
+  exportPathMap: async function (defaultPathMap) {
+    delete defaultPathMap['/products/tags'];
+    return defaultPathMap;
+  },
+
   images: {
     domains: [
       'localhost',
@@ -32,6 +33,7 @@ module.exports = {
     ],
     unoptimized: true,
   },
+
   ...(process.env.APPLICATION_MODE === 'production' && {
     typescript: {
       ignoreBuildErrors: true,
