@@ -13,7 +13,7 @@ import AuthSwitch from "@/components/authswish/authswish";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import axios from "axios";
-
+import { useModalAction } from '@/components/modal-views/context';
 type FormValues = { email: string; password: string };
 
 const containerVariants: Variants = {
@@ -36,7 +36,7 @@ export default function LoginPage() {
     const { authorize } = useAuth();
     const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
     const [showPassword, setShowPassword] = React.useState(false);
-
+    const { openModal, closeModal } = useModalAction();
     const { mutate: login, isLoading } = useMutation(client.users.login, {
         onSuccess: (data: any) => {
             console.log("data", data)
@@ -112,7 +112,7 @@ export default function LoginPage() {
                                 <span>Se souvenir de moi</span>
                             </label>
 
-                            <button type="button" className="text-sm font-medium text-pink-600 hover:underline" onClick={() => router.push('/forgot-password')}>
+                            <button type="button" className="text-sm font-medium text-pink-600 hover:underline" onClick={() => openModal('FORGOT_PASSWORD_VIEW')}>
                                 Mot de passe oublié ?
                             </button>
                         </motion.div>

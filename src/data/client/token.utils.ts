@@ -19,7 +19,7 @@ export const ownerAndStaffOnly = [STORE_OWNER, STAFF];
 export const adminOnly = [SUPER_ADMIN];
 
 export const getAuthToken = () => {
-  if (typeof window === undefined) {
+  if (typeof window === "undefined") {
     return null;
   }
   return Cookies.get(AUTH_TOKEN_KEY);

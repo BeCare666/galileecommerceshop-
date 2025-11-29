@@ -170,8 +170,11 @@ export interface Shop {
   name: string;
   slug: string;
   description: string;
+  is_active: boolean;
+  documents: string;
   orders_count: number;
   products_count: number;
+  commerce_register: string;
   logo: Attachment;
   logo_image_url: string;
   cover_image: Attachment;

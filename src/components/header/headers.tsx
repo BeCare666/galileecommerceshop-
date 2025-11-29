@@ -226,7 +226,7 @@ export default function GalileeHeader() {
   return (
     <>
       <header
-        className={`w-full sticky top-0 z-50 transition-colors duration-300 h-[140px] md:h-[210px] transition-none
+        className={`w-full sticky top-0 z-50 transition-colors duration-300 h-[140px] md:h-[210px] transition-none mb-[56px] md:mb-[50px]
        ${isHoverCategories || showSearch ? 'bg-white text-black' : 'bg-gray-900 text-white'}`}
       >
         {' '}
@@ -245,7 +245,7 @@ export default function GalileeHeader() {
             </p>
           </div>
         </div>
-        <div className="max-w-[1780px] px-3 py-3 flex items-center justify-between">
+        <div className="max-w-[1780px] px-3 lg:py-3 md:py-3 flex items-center justify-between">
           {/* Logo + desktop nav */}
           <div className="flex items-center gap-5">
 
@@ -404,7 +404,7 @@ export default function GalileeHeader() {
         <div className={`lg:py-4 transition-all duration-500 ease-in-out
          ${showSearch ? "bg-white text-black" : "bg-gradient-to-b from-[#222034] to-[#0d0d14] text-white"}
         `}>
-          <div className="lg:px-6 flex items-center h-14 relative">
+          <div className="lg:px-6 flex items-center h-16 relative">
             <nav
               className={`
             flex items-center gap-3 text-[10px] lg:text-sm text-gray-200  
@@ -424,7 +424,7 @@ export default function GalileeHeader() {
                 <CategoryMegaMenu />
               </Link>
 
-              <Link href="#" className="inline-block px-2 py-1 rounded transition-colors text-white">
+              <Link href="/suivi_orders" className="inline-block px-2 py-1 rounded transition-colors text-white">
                 Suivi des commandes
               </Link>
               <button
@@ -482,7 +482,21 @@ export default function GalileeHeader() {
               >
                 Centrale d’achat
               </Link>
-
+              <Link href="/termes_conditions" className="inline-block px-2 py-1 rounded transition-colors text-white">
+                Conditions générales
+              </Link>
+              <Link href="/policy" className="inline-block px-2 py-1 rounded transition-colors text-white">
+                Politique de confidentialité
+              </Link>
+              <Link href="/charte" className="inline-block px-2 py-1 rounded transition-colors text-white">
+                Charte des vendeurs
+              </Link>
+              <Link href="/guide" className="inline-block px-2 py-1 rounded transition-colors text-white">
+                Le guide
+              </Link>
+              <Link href="/faq" className="inline-block px-2 py-1 rounded transition-colors text-white">
+                F.A.Q
+              </Link>
               <Link href="/become-seller" className="inline-block px-2 py-1 rounded transition-colors text-white">
                 Devenir fournisseur
               </Link>
@@ -605,13 +619,27 @@ export default function GalileeHeader() {
               </Link>
 
               <Link
-                href="#"
+                href="/suivi_orders"
                 className={`px - 2 py - 1 rounded transition - colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
                   }`}
               >
                 Suivi des commandes
               </Link>
-
+              <Link href="/termes_conditions" className="inline-block px-2 py-1 rounded transition-colors text-white">
+                Conditions générales
+              </Link>
+              <Link href="/policy" className="inline-block px-2 py-1 rounded transition-colors text-white">
+                Politique de confidentialité
+              </Link>
+              <Link href="/charte" className="inline-block px-2 py-1 rounded transition-colors text-white">
+                Charte des vendeurs
+              </Link>
+              <Link href="/guide" className="inline-block px-2 py-1 rounded transition-colors text-white">
+                Le guide
+              </Link>
+              <Link href="/faq" className="inline-block px-2 py-1 rounded transition-colors text-white">
+                F.A.Q
+              </Link>
               <div className="relative inline-block" ref={dropdownRef}>
                 {/* Bouton */}
                 <Link
@@ -858,8 +886,8 @@ export default function GalileeHeader() {
         }
       </header >
       {mounted && isHoverCategoriesx && (
-        <div className={`grid grid-cols-4 w-full text-white z-100 mt-[200px]
-     ${isHoverCategories ? 'block bg-white text-black' : ''}`}
+        <div className={` grid grid-cols-4 w-full text-white z-100 mt-[9px]
+         ${isHoverCategories ? 'block bg-white text-black' : ''}`}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
 
