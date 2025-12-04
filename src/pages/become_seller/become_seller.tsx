@@ -275,8 +275,8 @@ export default function RegisterShopPage() {
     );
 
     return (
-        <div className="min-h-screen md:h-[100vh] lg:h-[100vh] bg-gradient-to-br from-white to-slate-50 flex items-center justify-center md:p-6 lg:p-6">
-            <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="min-h-screen md:h-[100vh] lg:h-[100vh] bg-gradient-to-br from-white to-slate-50 flex items-center justify-center">
+            <div className="w-full  grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 {/* LEFT HERO **/}
                 <aside className="lg:col-span-5 bg-gradient-to-b from-indigo-700 via-indigo-600 to-indigo-500 text-white md:rounded-[5px] lg:rounded-[5px] overflow-hidden shadow-[5px] relative">
                     <div className="p-8 md:p-10 flex flex-col h-full">
@@ -286,7 +286,7 @@ export default function RegisterShopPage() {
                             </div>
                             <div>
                                 <h2 className="text-xl font-extrabold leading-tight">Devenir fournisseur GalileeCommerce</h2>
-                                <p className="text-sm opacity-90 mt-1">Inscrivez-vous et lancez votre B space en quelques minutes. Design premium, paiements sécurisés.</p>
+                                <p className="text-sm opacity-90 mt-1">Inscrivez-vous et lancez votre B space en quelques minutes. Paiements sécurisés.</p>
                             </div>
                         </div>
 

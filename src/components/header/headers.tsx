@@ -15,6 +15,7 @@ import { useIsMounted } from '@/lib/hooks/use-is-mounted';
 import Modal from '@/components/modal/modal';
 import CountrySelector from '@/components/country-selector/country-selector';
 import { useModalAction } from '@/components/modal-views/context';
+import HeaderMenu from "./headerMenu";
 import { useRouter } from 'next/router';
 import routes from '@/config/routes';
 export default function GalileeHeader() {
@@ -37,6 +38,7 @@ export default function GalileeHeader() {
   const { openModal } = useModalAction();
   const [showSearch, setShowSearch] = useState(false);
   const [isHoverCategoriesx, setIsHoverCategoriesx] = useState(false);
+  const productPlaceholderx = productPlaceholder.src;
   const router = useRouter()
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   console.log("isAuthorized", isAuthorized)
@@ -794,93 +796,21 @@ export default function GalileeHeader() {
         {
           drawerOpen && (
             <div className="fixed inset-0 z-[1000] flex">
-              {/* Overlay */}
-              <div
-                className="fixed inset-0 bg-gray-800"
-                onClick={() => setDrawerOpen(false)}
+              <HeaderMenu
+                drawerOpen={drawerOpen}
+                setDrawerOpen={setDrawerOpen}
+                isAuthorized={isAuthorized}
+                openMarches={openMarches}
+                setOpenMarches={setOpenMarches}
+                openC={openC}
+                setOpenC={setOpenC}
+                mapIsOk={mapIsOk}
+                setMapIsOk={setMapIsOk}
+                CountrySelector={CountrySelector}
+                productPlaceholderx={productPlaceholderx}
+                router={router}
               />
 
-              {/* Drawer */}
-              <div
-                ref={drawerRef}
-                className={`fixed top - 0 right - 0 w - 72 h - full bg - gray - 900 text - white shadow - lg transform transition - transform duration - 300 ease -in -out z - [1001] ${drawerOpen ? 'translate-x-0' : 'translate-x-full'
-                  }`}
-              >
-                <div className="flex flex-col h-full">
-                  {/* Header with logo + close */}
-                  <div className="flex items-center justify-between px-4 py-4 border-b border-gray-700">
-                    <div className="flex items-center gap-2">
-                      <Image
-                        src={productPlaceholderx}
-                        alt="Logo"
-                        width={164}
-                        height={84}
-                      />
-                    </div>
-                    {/** <LoginMenu />**/}
-                    <button
-                      onClick={() => setDrawerOpen(false)}
-                      className="text-gray-400 hover:text-white"
-                    >
-                      ✕
-                    </button>
-                  </div>
-
-                  {/* Navigation */}
-                  <nav className="flex flex-col gap-4 px-4 py-6">
-                    {[
-                      'Suivi des commandes',
-                      'Marché',
-                      'Pavillons',
-                      'Corridors',
-                      'Centrale d’achat',
-                      'Devenir fournisseur',
-                    ].map((item, idx) => (
-                      <a key={idx} className="hover:text-pink-500 transition">
-                        {item}
-                      </a>
-                    ))}
-                  </nav>
-
-                  {/* Spacer */}
-                  <div className="flex-grow"></div>
-
-                  {/* Connexion / Créer un compte */}
-                  {isAuthorized && (
-                    <div className="px-4 py-6 border-t border-gray-700 flex flex-col gap-3">
-                      <button className="w-full py-2 px-4 rounded bg-pink-600 hover:bg-pink-700 transition">
-                        <Link href="/become-seller">
-                          Devenir fournisseur
-                        </Link>
-                      </button>
-                      <button className=" w-full py-2 px-4 rounded bg-gray-700 hover:bg-gray-600 transition">
-                        Devenir ambassadeur
-                      </button>
-                    </div>
-                  )}
-                  {!isAuthorized && (
-                    <div className="px-4 py-6 border-t border-gray-700 flex flex-col gap-3">
-                      <button
-                        className="w-full py-2 px-4 rounded bg-pink-600 hover:bg-pink-700 transition"
-                        onClick={() => //openModal('LOGIN_VIEW')
-                          router.push('/login')
-
-                        }
-                      >
-                        Connexion
-                      </button>
-                      <button
-                        className="w-full py-2 px-4 rounded bg-gray-700 hover:bg-gray-600 transition"
-                        onClick={() => //openModal('REGISTER')
-                          router.push('/register')
-                        }
-                      >
-                        Créer un compte
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
             </div>
           )
         }

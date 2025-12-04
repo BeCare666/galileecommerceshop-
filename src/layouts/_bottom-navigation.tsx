@@ -82,8 +82,8 @@ export default function BottomNavigation() {
 
       <div className="flex flex-col items-center justify-center"
       >
-        <Aboutus onClick={() => openDrawer('MOBILE_MENU')} />
-        <span className="text-xs mt-1">A propos</span>
+        <Aboutus onClick={() => router.push('/products/forcategory')} />
+        <span className="text-xs mt-1">Nos Produits</span>
       </div>
       <Button
         variant="icon"

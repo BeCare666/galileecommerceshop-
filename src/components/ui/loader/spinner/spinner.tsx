@@ -19,11 +19,7 @@ const Spinner = ({ className, showText = true, text = 'Chargement...', simple }:
     <div className={cn('flex h-screen w-full flex-col items-center justify-center', className)}>
       <div className={styles.logo_spinner_container}>
         <div className={styles.logo_spinner_circle}></div>
-        <img
-          src="https://galileecommerce.com/img/logo_red.png"
-          alt="Galilée Commerce"
-          className={styles.logo_spinner_image}
-        />
+
       </div>
       {showText && (
         <h3 className="text-body text-lg font-semibold italic text-blue-600 mt-4">

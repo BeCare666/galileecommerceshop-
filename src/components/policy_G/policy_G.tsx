@@ -3,8 +3,8 @@ import { ShieldCheck, Lock, Globe, Database, Key, FileText, Users, MapPin, Info 
 
 export default function PrivacyPolicy() {
     return (
-        <div className="w-full max-w-5xl mx-auto px-4 py-12 space-y-10">
-            <header className="text-center">
+        <div className="w-full max-w-5xl mx-auto px-4 space-y-10 lg:mt-5">
+            <header className="lg:text-center md:text-center text-left">
                 <h1 className="text-3xl md:text-4xl font-extrabold">POLITIQUE DE CONFIDENTIALITÉ ET DE PROTECTION DES DONNÉES</h1>
                 <p className="text-gray-600 mt-2">Plateforme : GALILÉECOMMERCE.COM</p>
                 <p className="text-gray-500 text-sm mt-1">Entité Responsable : Galiléecommerce (Groupe Galilé) — Siège Social : Douala, Cameroun</p>
@@ -14,7 +14,7 @@ export default function PrivacyPolicy() {
             {/* Card 1 */}
             <section className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 md:p-8">
                 <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow">
+                    <div className="w-12 h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow hidden lg:flex md:flex hidden lg:flex md:flex">
                         <ShieldCheck className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
@@ -42,7 +42,7 @@ export default function PrivacyPolicy() {
             {/* Card 2 */}
             <section className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 md:p-8">
                 <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-green-600 text-white flex items-center justify-center shadow">
+                    <div className="w-12 h-12 rounded-xl bg-green-600 text-white flex items-center justify-center shadow hidden lg:flex md:flex">
                         <Lock className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
@@ -86,7 +86,7 @@ export default function PrivacyPolicy() {
             {/* Card 3 */}
             <section className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 md:p-8">
                 <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow">
+                    <div className="w-12 h-12 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow hidden lg:flex md:flex">
                         <Globe className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
@@ -108,7 +108,7 @@ export default function PrivacyPolicy() {
             {/* Card 4 */}
             <section className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 md:p-8">
                 <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-rose-600 text-white flex items-center justify-center shadow">
+                    <div className="w-12 h-12 rounded-xl bg-rose-600 text-white flex items-center justify-center shadow hidden lg:flex md:flex">
                         <Database className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
@@ -143,7 +143,7 @@ export default function PrivacyPolicy() {
             {/* Card 5 */}
             <section className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 md:p-8">
                 <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-yellow-600 text-white flex items-center justify-center shadow">
+                    <div className="w-12 h-12 rounded-xl bg-yellow-600 text-white flex items-center justify-center shadow hidden lg:flex md:flex">
                         <Key className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
@@ -166,7 +166,7 @@ export default function PrivacyPolicy() {
             {/* Card 6 */}
             <section className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 md:p-8">
                 <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-teal-600 text-white flex items-center justify-center shadow">
+                    <div className="w-12 h-12 rounded-xl bg-teal-600 text-white flex items-center justify-center shadow hidden lg:flex md:flex">
                         <FileText className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
@@ -187,7 +187,7 @@ export default function PrivacyPolicy() {
             {/* Card 7 */}
             <section className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 md:p-8">
                 <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow">
+                    <div className="w-12 h-12 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow hidden lg:flex md:flex">
                         <Users className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
@@ -209,7 +209,7 @@ export default function PrivacyPolicy() {
             {/* Card 8 */}
             <section className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 md:p-8">
                 <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-amber-500 text-white flex items-center justify-center shadow">
+                    <div className="w-12 h-12 rounded-xl bg-amber-500 text-white flex items-center justify-center shadow hidden lg:flex md:flex">
                         <MapPin className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
@@ -230,7 +230,7 @@ export default function PrivacyPolicy() {
             {/* Card 9 */}
             <section className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 md:p-8">
                 <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-gray-700 text-white flex items-center justify-center shadow">
+                    <div className="w-12 h-12 rounded-xl bg-gray-700 text-white flex items-center justify-center shadow hidden lg:flex md:flex">
                         <Info className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
