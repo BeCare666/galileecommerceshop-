@@ -15,9 +15,13 @@ import { useIsMounted } from '@/lib/hooks/use-is-mounted';
 import Modal from '@/components/modal/modal';
 import CountrySelector from '@/components/country-selector/country-selector';
 import { useModalAction } from '@/components/modal-views/context';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import HeaderMenu from "./headerMenu";
 import { useRouter } from 'next/router';
 import routes from '@/config/routes';
+import { Globe, Sparkles } from 'lucide-react';
+
 export default function GalileeHeader() {
   const [query, setQuery] = useState('');
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -49,6 +53,24 @@ export default function GalileeHeader() {
     }
     setIsHoverCategoriesx(true);
   };
+  const isHomePage = router.pathname === '/';
+  const navMainRef = useRef<HTMLDivElement | null>(null);
+  const navStickyRef = useRef<HTMLDivElement | null>(null);
+  const scrollNav = (direction: 'left' | 'right') => {
+    const target =
+      navStickyRef.current &&
+        navStickyRef.current.offsetParent !== null
+        ? navStickyRef.current
+        : navMainRef.current;
+
+    if (!target) return;
+
+    target.scrollBy({
+      left: direction === 'left' ? -300 : 300,
+      behavior: 'smooth',
+    });
+  };
+
 
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
@@ -65,7 +87,7 @@ export default function GalileeHeader() {
     //setIsHoverCategoriesx(true);
     setIsHoverCategories(true)
   };
-
+  const MySwal = withReactContent(Swal);
   const handleMouseLeaveNox = () => {
     timeoutRef.current = setTimeout(() => {
       //setIsHoverCategoriesx(false);
@@ -228,25 +250,47 @@ export default function GalileeHeader() {
   return (
     <>
       <header
-        className={`w-full sticky top-0 z-50 transition-colors duration-300 h-[140px] md:h-[210px] transition-none mb-[56px] md:mb-[50px]
+        className={`w-full sticky top-0 z-50 transition-colors duration-300 h-[140px] md:h-[210px] transition-none mb-[0px] md:mb-[12px]
        ${isHoverCategories || showSearch ? 'bg-white text-black' : 'bg-gray-900 text-white'}`}
       >
         {' '}
         {/* Top bar */}
-        <div className={`w-full 
-       ${isHoverCategories || showSearch ? 'hidden' : 'block bg-pink-700 text-white'}`}>
-          <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-2">
-            {/* Message gauche */}
-            <p className="text-[10px] md:text-base font-medium mt-5">
-              Le leader africain de l'e-commerce
-            </p>
+        {isHomePage && (
+          <div
+            className={`w-full 
+    ${isHoverCategories || showSearch ? 'hidden' : 'block bg-pink-700 text-white'}`}
+          >
+            <div
+              className="
+        max-w-7xl mx-auto
+        flex items-center justify-between
+        flex-nowrap
+        px-4 py-2
+      "
+            >
 
-            {/* Message droite */}
-            <p className="text-[10px] md:text-base font-medium ">
-              Acheter n'a jamais été aussi simple
-            </p>
+              {/* Message gauche  Le leader africain de l&apos;e-commerce */}
+              <div className="flex items-center gap-2 flex-shrink-0 whitespace-nowrap">
+                <Globe className="w-4 h-4 md:w-5 md:h-5 text-white/90" />
+                <span className="text-[10px] md:text-base font-medium">
+                  Le leader de l&apos;e-commerce
+                </span>
+              </div>
+
+              {/* Message droite Acheter n&apos;a jamais été aussi simple */}
+              <div className="flex items-center gap-2 flex-shrink-0 whitespace-nowrap">
+                <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-white/90" />
+                <span className="text-[10px] md:text-base font-medium">
+                  Acheter n&apos;est jamais simple
+                </span>
+              </div>
+
+            </div>
           </div>
-        </div>
+        )}
+
+
+
         <div className="max-w-[1780px] px-3 lg:py-3 md:py-3 flex items-center justify-between">
           {/* Logo + desktop nav */}
           <div className="flex items-center gap-5">
@@ -407,7 +451,18 @@ export default function GalileeHeader() {
          ${showSearch ? "bg-white text-black" : "bg-gradient-to-b from-[#222034] to-[#0d0d14] text-white"}
         `}>
           <div className="lg:px-6 flex items-center h-16 relative">
+            {/* ⬅️ Bouton scroll gauche */}
+            <button
+              type="button"
+              onClick={() => scrollNav('left')}
+              className="absolute left-0 z-10 h-full px-2 bg-gradient-to-r from-black/70 to-transparent text-white hover:scale-110 transition"
+            >
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M15.5 19L8.5 12L15.5 5" />
+              </svg>
+            </button>
             <nav
+              ref={navMainRef}
               className={`
             flex items-center gap-3 text-[10px] lg:text-sm text-gray-200  
             overflow-x-auto overflow-y-visible whitespace-nowrap
@@ -425,7 +480,9 @@ export default function GalileeHeader() {
               >
                 <CategoryMegaMenu />
               </Link>
-
+              <Link href="/" className="inline-block px-2 py-1 rounded transition-colors text-white">
+                Accueil
+              </Link>
               <Link href="/suivi_orders" className="inline-block px-2 py-1 rounded transition-colors text-white">
                 Suivi des commandes
               </Link>
@@ -464,18 +521,40 @@ export default function GalileeHeader() {
                 </div>
               )}
 
-              <Link href="/pavillons" className="inline-block px-2 py-1 flex items-center rounded transition-colors text-white">
+              <Link href="#" className="inline-block px-2 py-1 flex items-center rounded transition-colors text-white">
                 Pavillons
                 <CountrySelector />
               </Link>
 
               <Link
-                onClick={() => setOpenC(true)}
+
                 href="#"
                 className="inline-block px-2 py-1 rounded transition-colors text-white"
               >
-                Corridors
-                <Modal isOpen={openC} onClose={() => setOpenC(false)} mapIsOk={mapIsOk} setMapIsOk={setMapIsOk} />
+                <button
+                  type="button"
+                  onClick={() => {
+                    MySwal.fire({
+                      icon: 'info',
+                      title: 'Corridors',
+                      text: 'Souhaitez-vous en savoir plus ou visiter les corridors ?',
+                      confirmButtonText: 'Visiter les corridors',
+                      cancelButtonText: 'En savoir plus',
+                      showCancelButton: true,
+                      reverseButtons: true,
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        router.push('/corridors_');
+                      } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        router.push('/corridors');
+                      }
+                    });
+                  }}
+                  className="inline-block px-2 py-1 rounded transition-colors text-white hover:bg-white/10"
+                >
+                  Corridors
+                </button>
+
               </Link>
 
               <Link href="#" className="inline-block px-2 py-1 rounded transition-colors text-white"
@@ -499,8 +578,31 @@ export default function GalileeHeader() {
               <Link href="/faq" className="inline-block px-2 py-1 rounded transition-colors text-white">
                 F.A.Q
               </Link>
-              <Link href="/become-seller" className="inline-block px-2 py-1 rounded transition-colors text-white">
-                Devenir fournisseur
+              <Link href="#" className="inline-block px-2 py-1 rounded transition-colors text-white">
+                <button
+                  type="button"
+                  onClick={() => {
+                    MySwal.fire({
+                      icon: 'info',
+                      title: 'Devenir fournisseur',
+                      text: 'Souhaitez-vous en savoir plus ou devenir fournisseur ?',
+                      confirmButtonText: 'Devenir fournisseur',
+                      cancelButtonText: 'En savoir plus',
+                      showCancelButton: true,
+                      reverseButtons: true,
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        router.push('//become_seller/become_seller');
+                      } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        router.push('/become-seller');
+                      }
+                    });
+                  }}
+                  className="inline-block px-2 py-1 rounded transition-colors text-white hover:bg-white/10"
+                >
+                  Devenir fournisseur
+                </button>
+
               </Link>
               <Link href="/ge-ambassador" className="inline-block px-2 py-1 rounded transition-colors text-white">
                 Devenir Ambassadeur
@@ -577,7 +679,10 @@ export default function GalileeHeader() {
               </div>
 
             </nav>
+            {/* ➡️ Bouton scroll droite */}
+
             <nav
+              ref={navStickyRef}
               className={` lg:ml-9
         flex items-center gap-3 text-[8px] lg:text-sm text-gray-200 px-2
         overflow-x-auto overflow-y-visible whitespace-nowrap
@@ -599,11 +704,21 @@ export default function GalileeHeader() {
                 </Link>
               ))}
             </nav>
+            <button
+              type="button"
+              onClick={() => scrollNav('right')}
+              className="absolute right-0 z-10 h-full px-2 bg-gradient-to-l from-black/70 to-transparent text-white hover:scale-110 transition"
+            >
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8.5 5L15.5 12L8.5 19" />
+              </svg>
+            </button>
           </div >
         </div >
 
         <div className="hidden bg-gray-800 py-4 relative">
           <div className="px-6 flex items-center h-14 relative">
+
             {/* Desktop nav max-w-[1780px]   */}
             <nav
               className="
@@ -691,7 +806,7 @@ export default function GalileeHeader() {
                 </div>
               </div>
               <Link
-                href="/pavillons"
+                href="#"
                 className={`px - 2 py - 1 flex items - center rounded transition - colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
                   }`}
               >
@@ -700,18 +815,35 @@ export default function GalileeHeader() {
               </Link>
 
               <Link
-                onClick={() => setOpenC(true)}
+
                 href="#"
                 className={`px - 2 py - 1 rounded transition - colors ${isHoverCategories ? 'bg-white text-black' : 'text-white'
                   }`}
               >
-                Corridors
-                <Modal
-                  isOpen={openC}
-                  onClose={() => setOpenC(false)}
-                  mapIsOk={mapIsOk}
-                  setMapIsOk={setMapIsOk}
-                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    MySwal.fire({
+                      icon: 'info',
+                      title: 'Corridors',
+                      text: 'Souhaitez-vous en savoir plus ou visiter les corridors ?',
+                      confirmButtonText: 'Visiter les corridors',
+                      cancelButtonText: 'En savoir plus',
+                      showCancelButton: true,
+                      reverseButtons: true,
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        router.push('/corridors_');
+                      } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        router.push('/corridors');
+                      }
+                    });
+                  }}
+                  className="inline-block px-2 py-1 rounded transition-colors text-white hover:bg-white/10"
+                >
+                  Corridors
+                </button>
+
               </Link>
 
               <Link

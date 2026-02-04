@@ -174,7 +174,6 @@ export default function PremiumDrawer({
 
                             <DrawerItem
                                 icon={<Globe2 />}
-                                href="/pavillons"
                                 label="Pavillons"
                                 rightElement={<CountrySelector />}
                             />

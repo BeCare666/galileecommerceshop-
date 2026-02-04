@@ -73,7 +73,7 @@ export default function ProductDetailsPaper({ product, className }: Props) {
             </h2>
           </div>
           {!is_external && (
-            <div className="flex space-x-6 border-y border-light-500 py-3 rtl:space-x-reverse dark:border-dark-400 sm:py-4 lg:border-0 lg:py-0">
+            <div className="hidden flex space-x-6 border-y border-light-500 py-3 rtl:space-x-reverse dark:border-dark-400 sm:py-4 lg:border-0 lg:py-0">
               {!isFreeItem && (
                 <div className="flex items-center tracking-[.1px] text-dark dark:text-light">
                   <ShoppingCartIcon className="h-[18px] w-[18px] text-dark-900 ltr:mr-2.5 rtl:ml-2.5 dark:text-light-900" />

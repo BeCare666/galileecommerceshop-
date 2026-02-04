@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import ModalPortal from '@/components/modal/ModalPortal';
 import { useRouter } from 'next/router';
-import FilterIcon from '@/components/icons/filter-icon';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import { getAuthToken, removeAuthToken } from '../../data/client/token.utils';
-const token = getAuthToken(); // 🔁 Remplace par ton token
+import { getAuthToken } from '../../data/client/token.utils';
+
+const token = getAuthToken();
 const MySwal = withReactContent(Swal);
-export default function CountrySelectorWithModal() {
+
+export default function CountrySelectorWithDrawer() {
   const router = useRouter();
   const { corridor, category, search } = router.query;
 
@@ -20,39 +21,29 @@ export default function CountrySelectorWithModal() {
     name: string;
     code: string;
   } | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
+
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const [searchInput, setSearchInput] = useState('');
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     async function fetchCountries() {
       try {
         const API_URL = process.env.NEXT_PUBLIC_REST_API_ENDPOINT;
-        if (!API_URL) {
-          throw new Error("NEXT_PUBLIC_REST_API_ENDPOINT n'est pas défini !");
-        }
+        if (!API_URL) throw new Error('API endpoint manquant');
 
         const res = await fetch(`${API_URL}/countries`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
 
         if (!res.ok) {
-          // Log le contenu brut pour comprendre
           const text = await res.text();
-          throw new Error(`Erreur HTTP ${res.status} : ${text}`);
-        }
-
-        const contentType = res.headers.get('content-type');
-        if (!contentType?.includes('application/json')) {
-          const text = await res.text();
-          throw new Error('Réponse non JSON : ' + text.slice(0, 200));
+          throw new Error(text);
         }
 
         const data = await res.json();
         setCountries(data);
-        //console.log("data", data)
-        // sélection auto
+
         if (router.query.countries_id) {
           const found = data.find(
             (c: any) => c.id === Number(router.query.countries_id),
@@ -61,8 +52,8 @@ export default function CountrySelectorWithModal() {
         } else {
           setSelectedCountry(data[0]);
         }
-      } catch (error) {
-        console.error('Country loading error:', error);
+      } catch (e) {
+        console.error(e);
       } finally {
         setLoading(false);
       }
@@ -81,63 +72,73 @@ export default function CountrySelectorWithModal() {
     code: string;
   }) => {
     setSelectedCountry(country);
-    setModalOpen(false);
+    setDrawerOpen(false);
     setSearchInput('');
 
-    // Construire la query avec le bon paramètre : countries_id
     const query: any = {
       ...(corridor ? { corridor } : {}),
       ...(category ? { category } : {}),
       ...(search ? { search } : {}),
-      countries_id: country.id, // 👈 Ici on utilise bien l'id, pas le code
+      countries_id: country.id,
     };
 
-    // Redirection vers la page produits avec la bonne query
     MySwal.fire({
       icon: 'info',
       html: `
-            <div style="
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 10px;
-                font-size: 16px;
-                font-weight: 500;
-                line-height: 1.4;
-            ">
-                <span>Pavillon</span>
-                <img 
-                src="https://flagcdn.com/w40/${country.code.toLowerCase()}.png" 
-                alt="${country.name}" 
-                width="24" 
-                height="16" 
-                style="border-radius: 2px; box-shadow: 0 0 2px rgba(0,0,0,0.2);" 
-                />
-                <span>${country.name} selectionné</span>
-            </div>
-            `,
+  <div style="
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 15px;
+    text-align: center;
+  ">
+    <span>Pavillon</span>
+    <img 
+      src="https://flagcdn.com/w40/${country.code.toLowerCase()}.png" 
+      width="24"
+      height="16"
+      style="border-radius:2px"
+    />
+    <strong>${country.name}</strong>
+    <span>sélectionné</span>
+  </div>
+`,
 
-      imageAlt: 'Custom image',
-      confirmButtonText: 'Visitez ce pavillon.',
-      cancelButtonText: 'Non merci',
+      confirmButtonText: 'Visiter le pavillon',
       showCancelButton: true,
+    }).then((r) => {
+      if (r.isConfirmed) {
+        router.push({ pathname: '/products/forcategory', query });
+      }
+    });
+  };
+
+  /* 🔥 NOUVEL AJOUT : SweetAlert AVANT ouverture du drawer */
+  const handleOpenSelector = () => {
+    MySwal.fire({
+      icon: 'info',
+      title: 'Pavillons',
+      text: 'Souhaitez-vous en savoir plus ou visiter les pavillons disponibles ?',
+      confirmButtonText: 'Visiter les pavillons',
+      cancelButtonText: 'En savoir plus',
+      showCancelButton: true,
+      reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        router.push({
-          pathname: '/products/forcategory',
-          query,
-        });
+        setDrawerOpen(true);
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        router.push('/pavillons');
       }
     });
   };
 
   return (
     <>
-      {/* Bouton avec le drapeau du pays sélectionné */}
+      {/* Trigger */}
       <button
-        onClick={() => setModalOpen(true)}
-        className="mt-0 flex items-center gap-2 px-3 py-1 text-white text-sm font-medium text-dark-800 rounded dark:bg-dark-300 dark:text-white dark:border-dark-500"
-        style={{ width: '40px', height: '15px' }}
+        onClick={handleOpenSelector}
+        className="flex items-center gap-1 rounded-full border border-neutral-700 bg-neutral-900 px-2 py-1 hover:bg-neutral-800 transition"
       >
         {selectedCountry && (
           <>
@@ -145,108 +146,100 @@ export default function CountrySelectorWithModal() {
               src={`https://flagcdn.com/w40/${selectedCountry.code.toLowerCase()}.png`}
               alt={selectedCountry.name}
               width={20}
-              height={15}
+              height={14}
               className="rounded-sm"
             />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-[11px] h-[11px]"
-              viewBox="0 0 24 24"
-              fill="white"
-            >
+            <svg width="10" height="10" fill="white" viewBox="0 0 24 24">
               <path d="M6.5 9.5 12 15l5.5-5.5h-11Z" />
             </svg>
           </>
         )}
       </button>
 
-      {modalOpen && (
+      {drawerOpen && (
         <ModalPortal>
           <div
-            className="fixed inset-0  flex items-center justify-center z-[9999]"
+            className="fixed inset-0 z-[9998] bg-black/60 backdrop-blur-sm"
             onClick={() => {
-              setModalOpen(false);
+              setDrawerOpen(false);
               setSearchInput('');
             }}
-          >
-            <div
-              className="bg-white dark:bg-dark-300 rounded shadow-lg max-w-xs w-full p-4"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <h3 className="text-lg font-semibold mb-4 text-dark-800 dark:text-white relative">
-                <p className="flex items-center gap-2 text-lg font-semibold text-gray-800">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6 text-blue-600"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M3.75 3.75L10.5 3.75M3.75 3.75L3.75 20.25M3.75 3.75L20.25 3.75M20.25 3.75L20.25 16.5M20.25 16.5L14.25 16.5M20.25 16.5L10.5 3.75"
-                    />
-                  </svg>
-                  Explorer le pavillon du pays
-                </p>
-                <span
-                  className="absolute top-0 right-0 cursor-pointer text-pink-500 text-xl"
-                  onClick={() => {
-                    setModalOpen(false);
-                    setSearchInput('');
-                  }}
-                >
-                  ×
-                </span>
-              </h3>
+          />
 
-              {/* Champ de recherche */}
+          <div className="fixed top-0 right-0 z-[9999] h-full w-[340px] bg-neutral-950 border-l border-neutral-800 shadow-2xl animate-slide-in-right">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-neutral-800">
+              <h3 className="text-white text-lg font-semibold">
+                Sélection du pavillon
+              </h3>
+              <button
+                onClick={() => {
+                  setDrawerOpen(false);
+                  setSearchInput('');
+                }}
+                className="text-neutral-400 hover:text-white text-xl"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="p-4">
               <input
                 type="text"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Rechercher un pays..."
-                className="w-full mb-4 px-3 py-2 border border-pink-200 rounded text-dark-800 dark:text-white dark:bg-dark-400 dark:border-dark-500 focus:outline-none focus:ring-2 focus:ring-pink-300"
+                className="w-full rounded-md bg-neutral-900 border border-neutral-700 px-3 py-2 text-sm text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-pink-500"
                 autoFocus
               />
+            </div>
 
-              {/* Liste des pays */}
-              <ul className="max-h-60 overflow-auto">
-                {loading ? (
-                  <li className="px-3 py-2 text-sm text-center text-gray-500 dark:text-gray-400">
-                    Chargement...
-                  </li>
-                ) : filteredCountries.length > 0 ? (
-                  filteredCountries.map((country) => (
-                    <li
-                      key={country.id}
-                      onClick={() => handleSelectCountry(country)}
-                      className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-dark-800 hover:bg-pink-100 dark:text-white dark:hover:bg-dark-600 cursor-pointer rounded"
-                    >
-                      <Image
-                        src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
-                        alt={country.name}
-                        width={20}
-                        height={15}
-                        className="rounded-sm"
-                      />
-                      <span>{country.name}</span>
-                    </li>
-                  ))
-                ) : (
-                  <li className="px-3 py-2 text-sm text-center text-gray-500 dark:text-gray-400">
-                    Aucun résultat
-                  </li>
-                )}
-              </ul>
+            <div className="px-2 pb-4 overflow-y-auto h-[calc(100%-140px)]">
+              {loading ? (
+                <p className="text-center text-neutral-500 text-sm mt-4">
+                  Chargement...
+                </p>
+              ) : filteredCountries.length ? (
+                filteredCountries.map((country) => (
+                  <div
+                    key={country.id}
+                    onClick={() => handleSelectCountry(country)}
+                    className="flex items-center gap-3 px-4 py-3 rounded-md cursor-pointer hover:bg-neutral-800 transition"
+                  >
+                    <Image
+                      src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
+                      alt={country.name}
+                      width={22}
+                      height={15}
+                      className="rounded-sm"
+                    />
+                    <span className="text-sm text-white font-medium">
+                      {country.name}
+                    </span>
+                  </div>
+                ))
+              ) : (
+                <p className="text-center text-neutral-500 text-sm">
+                  Aucun résultat
+                </p>
+              )}
             </div>
           </div>
         </ModalPortal>
       )}
+
+      <style jsx global>{`
+        @keyframes slide-in-right {
+          from {
+            transform: translateX(100%);
+          }
+          to {
+            transform: translateX(0);
+          }
+        }
+        .animate-slide-in-right {
+          animation: slide-in-right 0.25s ease-out forwards;
+        }
+      `}</style>
     </>
   );
 }
-
-
