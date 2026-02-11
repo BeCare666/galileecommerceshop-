@@ -1,12 +1,10 @@
 "use client";
-
+import productPlaceholderxVC from '@/assets/logo/logo_white.png';
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import {
-    X,
     PackageSearch,
-    Store,
     Map,
     Files,
     ShieldCheck,
@@ -21,9 +19,11 @@ import {
     Twitter,
     BadgeDollarSign,
     Building2,
+    Store, X,
+    Globe,
 } from "lucide-react";
-import { useRef } from "react";
-
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from "react-dom";
 /* -------------------------------------------------------------------------- */
 /*                                   TYPES                                    */
 /* -------------------------------------------------------------------------- */
@@ -85,7 +85,18 @@ export default function PremiumDrawer({
     router,
 }: PremiumDrawerProps) {
     const drawerRef = useRef<HTMLDivElement>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
+    // Ferme le dropdown si clic en dehors.
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setOpenMarches(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
     return (
         <AnimatePresence>
             {drawerOpen && (
@@ -116,7 +127,7 @@ export default function PremiumDrawer({
                         {/* HEADER */}
                         <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
                             <Image
-                                src={productPlaceholderx}
+                                src={productPlaceholderxVC}
                                 alt="Logo"
                                 width={160}
                                 height={80}
@@ -141,7 +152,9 @@ export default function PremiumDrawer({
                             />
 
                             {/* Marchés */}
-                            <div>
+
+                            <div className="relative">
+
                                 <button
                                     onClick={() => setOpenMarches(!openMarches)}
                                     className="w-full text-left flex items-center justify-between text-white/90 hover:text-white transition"
@@ -156,20 +169,80 @@ export default function PremiumDrawer({
                                             }`}
                                     />
                                 </button>
+                                {openMarches &&
+                                    createPortal(
+                                        <>
+                                            {/* BACKDROP */}
+                                            <div
+                                                className="fixed inset-0 bg-black/60 backdrop-blur-md z-[9998] animate-fadeIn"
+                                                onClick={() => setOpenMarches(false)}
+                                            />
 
-                                <AnimatePresence>
-                                    {openMarches && (
-                                        <motion.ul
-                                            initial={{ opacity: 0, y: -6 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            exit={{ opacity: 0, y: -6 }}
-                                            className="mt-3 ml-8 space-y-3"
-                                        >
-                                            <DrawerItemSmall href="/produits" label="Produits" />
-                                            <DrawerItemSmall href="/services" label="Services" />
-                                        </motion.ul>
+                                            {/* MODAL */}
+                                            <div className="fixed inset-0 flex items-center justify-center z-[9999] px-4">
+                                                <div
+                                                    ref={dropdownRef}
+                                                    className="relative w-full max-w-md rounded-2xl 
+                       bg-gradient-to-b from-[#222034] to-[#0d0d14]
+                       border border-white/10
+                       shadow-2xl shadow-black/50
+                       p-6 animate-scaleIn"
+                                                    onClick={(e) => e.stopPropagation()}
+                                                >
+                                                    {/* Close Button */}
+                                                    <button
+                                                        onClick={() => setOpenMarches(false)}
+                                                        className="absolute top-4 right-4 text-gray-400 hover:text-white transition"
+                                                    >
+                                                        <X size={20} />
+                                                    </button>
+
+                                                    {/* Title */}
+                                                    <h2 className="text-xl font-semibold text-white mb-6 text-center">
+                                                        Choisir un marché
+                                                    </h2>
+
+                                                    {/* Options */}
+                                                    <div className="space-y-3">
+                                                        <Link
+                                                            href="/products/forcategory?shop_id=30001"
+                                                            onClick={() => setOpenMarches(false)}
+                                                            className="flex items-center gap-3 p-4 rounded-xl 
+                           bg-white/5 hover:bg-white/10
+                           border border-white/10
+                           transition-all duration-300 group"
+                                                        >
+                                                            <Store className="text-pink-400 group-hover:scale-110 transition" size={20} />
+                                                            <div>
+                                                                <p className="text-white font-medium">Galilé Market</p>
+                                                                <p className="text-gray-400 text-sm">
+                                                                    Marché officiel GalileeCommerce
+                                                                </p>
+                                                            </div>
+                                                        </Link>
+
+                                                        <Link
+                                                            href="/products/forcategory"
+                                                            onClick={() => setOpenMarches(false)}
+                                                            className="flex items-center gap-3 p-4 rounded-xl 
+                           bg-white/5 hover:bg-white/10
+                           border border-white/10
+                           transition-all duration-300 group"
+                                                        >
+                                                            <Globe className="text-blue-400 group-hover:scale-110 transition" size={20} />
+                                                            <div>
+                                                                <p className="text-white font-medium">Global Market</p>
+                                                                <p className="text-gray-400 text-sm">
+                                                                    Marché international
+                                                                </p>
+                                                            </div>
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </>,
+                                        document.body
                                     )}
-                                </AnimatePresence>
                             </div>
 
                             <DrawerItem

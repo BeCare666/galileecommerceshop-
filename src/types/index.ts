@@ -163,6 +163,7 @@ export interface Attachment {
   thumbnail: string;
   __typename?: string;
   url?: string; // Optional for backward compatibility
+
 }
 
 export interface Shop {

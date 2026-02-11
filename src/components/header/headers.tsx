@@ -20,8 +20,8 @@ import withReactContent from 'sweetalert2-react-content';
 import HeaderMenu from "./headerMenu";
 import { useRouter } from 'next/router';
 import routes from '@/config/routes';
-import { Globe, Sparkles } from 'lucide-react';
-
+import { Globe, Sparkles, Store, X } from 'lucide-react';
+import { createPortal } from "react-dom";
 export default function GalileeHeader() {
   const [query, setQuery] = useState('');
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -250,7 +250,7 @@ export default function GalileeHeader() {
   return (
     <>
       <header
-        className={`w-full sticky top-0 z-50 transition-colors duration-300 h-[140px] md:h-[210px] transition-none mb-[0px] md:mb-[12px]
+        className={`w-full sticky top-0 z-40 transition-colors duration-300 h-[140px] md:h-[210px] transition-none mb-[0px] md:mb-[12px]
        ${isHoverCategories || showSearch ? 'bg-white text-black' : 'bg-gray-900 text-white'}`}
       >
         {' '}
@@ -486,40 +486,95 @@ export default function GalileeHeader() {
               <Link href="/suivi_orders" className="inline-block px-2 py-1 rounded transition-colors text-white">
                 Suivi des commandes
               </Link>
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setOpenMarches((prev) => !prev);
-                }}
-                className="inline-block px-2 py-1 rounded transition-colors text-white"
-              >
-                Marchés <span className={`ml-1 transition-transform ${openMarches ? "rotate-180" : ""}`}>▼</span>
-              </button>
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setOpenMarches(true)}
+                  className="inline-flex items-center gap-1 px-2 py-1 rounded transition-colors text-white hover:text-pink-400"
+                >
+                  Global Market
+                  <span className={`transition-transform ${openMarches ? "rotate-180" : ""}`}>
+                    ▼
+                  </span>
+                </button>
 
-              {openMarches && (
-                <div className="absolute top-full left-0 mt-1 w-48 bg-white text-black rounded shadow-lg z-50">
-                  <ul className="py-2">
-                    <li>
-                      <Link
-                        href="/produits"
-                        className="block px-4 py-2 hover:bg-gray-100"
+                {openMarches &&
+                  createPortal(
+                    <>
+                      {/* BACKDROP */}
+                      <div
+                        className="fixed inset-0 bg-black/60 backdrop-blur-md z-[9998] animate-fadeIn"
                         onClick={() => setOpenMarches(false)}
-                      >
-                        Produits
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/services"
-                        className="block px-4 py-2 hover:bg-gray-100"
-                        onClick={() => setOpenMarches(false)}
-                      >
-                        Services
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              )}
+                      />
+
+                      {/* MODAL */}
+                      <div className="fixed inset-0 flex items-center justify-center z-[9999] px-4">
+                        <div
+                          ref={dropdownRef}
+                          className="relative w-full max-w-md rounded-2xl 
+                       bg-gradient-to-b from-[#222034] to-[#0d0d14]
+                       border border-white/10
+                       shadow-2xl shadow-black/50
+                       p-6 animate-scaleIn"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {/* Close Button */}
+                          <button
+                            onClick={() => setOpenMarches(false)}
+                            className="absolute top-4 right-4 text-gray-400 hover:text-white transition"
+                          >
+                            <X size={20} />
+                          </button>
+
+                          {/* Title */}
+                          <h2 className="text-xl font-semibold text-white mb-6 text-center">
+                            Choisir un marché
+                          </h2>
+
+                          {/* Options */}
+                          <div className="space-y-3">
+                            <Link
+                              href="/products/forcategory?shop_id=30001"
+                              onClick={() => setOpenMarches(false)}
+                              className="flex items-center gap-3 p-4 rounded-xl 
+                           bg-white/5 hover:bg-white/10
+                           border border-white/10
+                           transition-all duration-300 group"
+                            >
+                              <Store className="text-pink-400 group-hover:scale-110 transition" size={20} />
+                              <div>
+                                <p className="text-white font-medium">Galilé Market</p>
+                                <p className="text-gray-400 text-sm">
+                                  Marché officiel GalileeCommerce
+                                </p>
+                              </div>
+                            </Link>
+
+                            <Link
+                              href="/products/forcategory"
+                              onClick={() => setOpenMarches(false)}
+                              className="flex items-center gap-3 p-4 rounded-xl 
+                           bg-white/5 hover:bg-white/10
+                           border border-white/10
+                           transition-all duration-300 group"
+                            >
+                              <Globe className="text-blue-400 group-hover:scale-110 transition" size={20} />
+                              <div>
+                                <p className="text-white font-medium">Global Market</p>
+                                <p className="text-gray-400 text-sm">
+                                  Marché international
+                                </p>
+                              </div>
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </>,
+                    document.body
+                  )}
+              </div>
+
+
 
               <Link href="#" className="inline-block px-2 py-1 flex items-center rounded transition-colors text-white">
                 Pavillons
@@ -786,20 +841,20 @@ export default function GalileeHeader() {
                   <ul className="py-2">
                     <li>
                       <Link
-                        href="/produits"
+                        href="/products/forcategory?shop_id=30001"
                         className="block px-4 py-2 hover:bg-gray-100"
                         onClick={() => setOpenMarches(false)}
                       >
-                        Produits
+                        Galilé Market
                       </Link>
                     </li>
                     <li>
                       <Link
-                        href="/services"
+                        href="/products/forcategory"
                         className="block px-4 py-2 hover:bg-gray-100"
                         onClick={() => setOpenMarches(false)}
                       >
-                        Services
+                        Global Market
                       </Link>
                     </li>
                   </ul>
@@ -924,6 +979,7 @@ export default function GalileeHeader() {
         </div>
       )}
         */}
+
         {/* Mobile Drawer */}
         {
           drawerOpen && (
@@ -940,6 +996,7 @@ export default function GalileeHeader() {
                 setMapIsOk={setMapIsOk}
                 CountrySelector={CountrySelector}
                 productPlaceholderx={productPlaceholderx}
+
                 router={router}
               />
 
@@ -947,6 +1004,7 @@ export default function GalileeHeader() {
           )
         }
       </header >
+
       {mounted && isHoverCategoriesx && (
         <div className={` grid grid-cols-4 w-full text-white z-100 mt-[9px]
          ${isHoverCategories ? 'block bg-white text-black' : ''}`}
