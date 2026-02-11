@@ -1,12 +1,14 @@
-import { useEffect } from "react";
-import { useRouter } from "next/router";
+import { GetStaticProps } from "next";
 
 export default function TagsIndex() {
-    const router = useRouter();
-
-    useEffect(() => {
-        router.replace("/");
-    }, []);
-
     return null;
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+    return {
+        redirect: {
+            destination: "/",
+            permanent: false,
+        },
+    };
+};
