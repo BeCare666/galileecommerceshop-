@@ -1,14 +1,5 @@
-import { GetStaticProps } from "next";
-
 export default function TagsIndex() {
-    return null;
+    return (
+        <meta httpEquiv="refresh" content="0; url=/" />
+    );
 }
-
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-    return {
-        redirect: {
-            destination: locale ? `/${locale}` : "/",
-            permanent: false,
-        },
-    };
-};
