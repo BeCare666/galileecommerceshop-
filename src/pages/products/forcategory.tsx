@@ -5,12 +5,13 @@ import axios from 'axios';
 import Card from '@/components/product/card';
 import Layout from '@/layouts/_layout';
 import type { GetStaticProps } from 'next';
-import CategoryFilter from '@/components/product/category-filter';
+import ProductsUltraPremiumFilter from '@/components/filter/filter';
 import Seo from '@/layouts/_seo';
 import routes from '@/config/routes';
 import { getAuthToken, removeAuthToken } from '../../data/client/token.utils';
 import Image from '@/components/ui/image';
-const token = getAuthToken(); // 🔁 Remplace par ton token
+import {CheckCircle, XCircle} from 'lucide-react'
+
 var pays =
   [
     {
@@ -4664,7 +4665,47 @@ type Product = {
 const LIMIT = 20;
 
 export default function ProductsPage() {
-  const router = useRouter();
+const router = useRouter();
+const token = getAuthToken(); // 🔁 Remplace par ton token
+const [isInitializing, setIsInitializing] = useState(true);
+const detectUserCountry = async (): Promise<string | null> => {
+  try {
+    const res = await fetch('https://ipapi.co/json/');
+    const data = await res.json();
+
+    const userCode = data?.country_code; // ex: BJ, FR, US
+
+    if (!userCode) return null;
+
+    const found = pays.find(
+      (p) => p.code.toUpperCase() === userCode.toUpperCase()
+    );
+
+    return found ? String(found.id) : null;
+  } catch (e) {
+    console.error('Country detect failed', e);
+    return null;
+  }
+};
+useEffect(() => {
+  if (!router.isReady) return;
+
+  const { countries_id } = router.query;
+
+  if (!countries_id) {
+    detectUserCountry().then((detectedId) => {
+      if (!detectedId) return;
+
+      router.replace({
+        pathname: router.pathname,
+        query: {
+          ...router.query,
+          countries_id: detectedId,
+        },
+      });
+    });
+  }
+}, [router.isReady]);
 
   const {
     corridor_id,
@@ -4721,6 +4762,7 @@ export default function ProductsPage() {
       );
       setHasMore(fetchedProducts.length === LIMIT);
       setOffset((prev) => prev + fetchedProducts.length);
+      setIsInitializing(false);
     } catch (e) {
       console.error(e);
       setError('Error loading products.');
@@ -4735,6 +4777,7 @@ export default function ProductsPage() {
     sous_categories_id,
     sub_categories_id,
     search,
+    is_origin,
     offset,
     hasMore,
   ]);
@@ -4751,6 +4794,7 @@ export default function ProductsPage() {
     sous_categories_id,
     sub_categories_id,
     search,
+    is_origin, // ← ajoute ça
   ]);
 
   useEffect(() => {
@@ -4785,7 +4829,7 @@ export default function ProductsPage() {
     };
   }, [loading, hasMore, fetchProducts]);
   async function handleProductorigincheck() {
-    router.push(`/forcategory?countries_id=${countryId}&is_origin=true`);
+    router.push(`/products/forcategory?countries_id=${countryId}&is_origin=true`);
   }
   const country = pays.find((p) => p.id === Number(countryId));
 
@@ -4798,6 +4842,7 @@ export default function ProductsPage() {
         description="Explore our products by category."
         url={routes.productscategory}
       />
+      <ProductsUltraPremiumFilter />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {products.map((product: any) => (
           <Card key={product.id} product={product} />
@@ -4856,62 +4901,39 @@ export default function ProductsPage() {
         </div>
       )}
 
-      {!hasMore && !loading && products.length > 0 && (
-        <div className="flex flex-col items-center justify-center my-8 space-y-3 text-gray-500">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-12 w-12"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-label="No more products icon"
-            role="img"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M5 13l4 4L19 7"
-            />
-          </svg>
-          <p className="text-lg font-semibold">Plus aucun produit.</p>
-        </div>
-      )}
+{!hasMore && !loading && products.length > 0 && (
+  <div className="flex flex-col items-center justify-center my-12 space-y-4 text-gray-400 dark:text-gray-500">
+    {/* Icône moderne Lucide */}
+    <CheckCircle className="h-14 w-14 text-brand-500 animate-bounce" />
 
-      {!loading && products.length === 0 && !error && (
-        <div
-          className="flex flex-col items-center justify-center h-screen text-gray-500"
-          onClick={() => router.push('/products/forcategory')}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-12 w-12"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-label="No products found icon"
-            role="img"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M8 16l-4-4m0 0l4-4m-4 4h12"
-            />
-            <circle
-              cx="11"
-              cy="11"
-              r="8"
-              stroke="currentColor"
-              strokeWidth="2"
-            />
-          </svg>
-          <p className="text-lg font-semibold mt-3 text-center">
-            Aucun produit ne correspond à ces filtres.
-          </p>
-        </div>
-      )}
-      <div className="fixed top-1/2 right-1 transform -translate-y-1/2 z-50">
+    <p className="text-xl font-semibold text-gray-200 dark:text-gray-100">
+      Plus aucun produit
+    </p>
+    <p className="text-sm text-gray-400 dark:text-gray-400">
+      Vous avez atteint la fin de la liste.
+    </p>
+  </div>
+)}
+
+
+{!loading && products.length === 0 && !error && (
+  <div
+    className="flex flex-col items-center justify-center h-screen space-y-4 cursor-pointer"
+    onClick={() => router.push('/products/forcategory')}
+  >
+    {/* Icône Lucide moderne */}
+    <XCircle className="h-20 w-20 text-red-500 dark:text-red-400 animate-pulse" />
+
+    <p className="text-2xl font-bold text-gray-100 dark:text-gray-50 text-center">
+      Aucun produit ne correspond à ces filtres
+    </p>
+    <p className="text-sm text-gray-400 dark:text-gray-400 text-center">
+      Cliquez ici pour revenir à tous les produits
+    </p>
+  </div>
+)}
+
+      <div className="hidden fixed top-1/2 right-1 transform -translate-y-1/2 z-50">
         <button
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
@@ -4978,6 +5000,33 @@ export default function ProductsPage() {
           }
         `}</style>
       </div>
+      {isInitializing && (
+  <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white">
+    <div className="flex space-x-2">
+      <span className="dot animate-bounce bg-pink-500 w-3 h-3 rounded-full"></span>
+      <span className="dot animate-bounce animation-delay-200 bg-pink-500 w-3 h-3 rounded-full"></span>
+      <span className="dot animate-bounce animation-delay-400 bg-pink-500 w-3 h-3 rounded-full"></span>
+    </div>
+    <p className="mt-4 text-lg font-semibold text-gray-700">Chargement...</p>
+
+    <style jsx>{`
+      .animate-bounce {
+        animation: bounce 0.6s infinite alternate;
+      }
+      .animation-delay-200 {
+        animation-delay: 0.2s;
+      }
+      .animation-delay-400 {
+        animation-delay: 0.4s;
+      }
+      @keyframes bounce {
+        from { transform: translateY(0); }
+        to { transform: translateY(-10px); }
+      }
+    `}</style>
+  </div>
+)}
+
     </>
   );
 }

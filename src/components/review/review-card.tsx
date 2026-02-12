@@ -21,7 +21,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
   const { openModal } = useModalAction();
   const { t } = useTranslation('common');
   const { createFeedback } = useCreateFeedback();
-  const { isAuthorized } = useMe();
+  const { isAuthorized, me } = useMe();
 
   const {
     id,
@@ -34,18 +34,26 @@ export default function ReviewCard({ review }: ReviewCardProps) {
     positive_feedbacks_count,
     my_feedback,
   } = review;
+//console.log('isAuthorized dans ReviewCard:', me);
 
-  function feedback(value: { positive: boolean } | { negative: boolean }) {
-    if (!isAuthorized) {
-      openModal('LOGIN_VIEW');
-      return;
-    }
-    createFeedback({
-      model_id: id,
-      model_type: 'Review',
-      ...value,
-    });
+function feedback(value: { positive?: boolean; negative?: boolean }) {
+  if (!isAuthorized) {
+    openModal('LOGIN_VIEW');
+    return;
   }
+
+  // Assure-toi que le review contient product_id
+  const payload = {
+    model_id: id,
+    model_type: 'Review',
+    product_id: review.product.id, // 🔹 obligatoire
+    ...value,
+  };
+
+  console.log('Payload corrigé envoyé au back:', payload);
+  createFeedback(payload);
+}
+
 
   function openAbuseReportModal() {
     if (!isAuthorized) {
@@ -94,7 +102,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
                 onClick={() => handleImageClick(idx)}
               >
                 <Image
-                  src={photo.thumbnail ?? placeholder}
+                  src={user?.profile?.avatar?.thumbnail}
                   alt={user.name ?? ''}
                   className="inline-flex object-cover"
                   fill

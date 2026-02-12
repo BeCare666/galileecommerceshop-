@@ -18,7 +18,7 @@ const AverageRatings: React.FC<AverageRatingsProps> = ({
   if (!ratingCount) return null;
   return (
     <div className="flex w-[calc(100%+32px)] flex-col divide-y divide-light-500 border-t border-b border-light-500 px-4 py-6 ltr:-ml-4 rtl:-mr-4 dark:divide-dark-400 dark:border-dark-400 sm:flex-row sm:items-center sm:space-x-7 sm:divide-y-0 sm:divide-x sm:py-7 md:w-full md:space-x-12 md:border-t-0 md:border-b-0 md:py-0 md:px-0 ltr:md:ml-0 rtl:md:mr-0">
-      <div className="w-full pb-4 sm:w-auto sm:pb-0">
+      <div className=" w-full pb-4 sm:w-auto sm:pb-0">
         <RatingsBadge rating={ratings} className="mb-5" variant="large" />
         <p className="text-13px dark:text-light-600">
           <span>

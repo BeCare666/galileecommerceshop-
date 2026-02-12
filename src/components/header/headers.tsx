@@ -53,7 +53,7 @@ export default function GalileeHeader() {
     }
     setIsHoverCategoriesx(true);
   };
-  const isHomePage = router.pathname === '/';
+ 
   const navMainRef = useRef<HTMLDivElement | null>(null);
   const navStickyRef = useRef<HTMLDivElement | null>(null);
   const scrollNav = (direction: 'left' | 'right') => {
@@ -246,52 +246,62 @@ export default function GalileeHeader() {
   }
   // Empêche le rendu SSR pour éviter l’hydration error
   const mounted = useMounted();
-  //if (!mounted) return null;
+  if (!mounted) return null;
+  const isHomePage = router.pathname === '/';
+const isProductsPage = router.pathname.startsWith('/products');
+
+// Toutes les routes qui ne doivent pas afficher le header
+if (!isHomePage || isProductsPage) {
+  return null;
+}
   return (
     <>
+   
       <header
         className={`w-full sticky top-0 z-40 transition-colors duration-300 h-[140px] md:h-[210px] transition-none mb-[0px] md:mb-[12px]
        ${isHoverCategories || showSearch ? 'bg-white text-black' : 'bg-gray-900 text-white'}`}
       >
         {' '}
         {/* Top bar */}
-        {isHomePage && (
-          <div
-            className={`w-full 
-    ${isHoverCategories || showSearch ? 'hidden' : 'block bg-pink-700 text-white'}`}
-          >
-            <div
-              className="
-        max-w-7xl mx-auto
-        flex items-center justify-between
-        flex-nowrap
-        px-4 py-2
-      "
-            >
+      {isHomePage && (
 
-              {/* Message gauche  Le leader africain de l&apos;e-commerce */}
-              <div className="flex items-center gap-2 flex-shrink-0 whitespace-nowrap">
-                <Globe className="w-4 h-4 md:w-5 md:h-5 text-white/90" />
-                <span className="text-[10px] md:text-base font-medium">
-                  Le leader de l&apos;e-commerce
-                </span>
+
+              <div
+                className={`w-full 
+          ${isHoverCategories || showSearch ? 'hidden' : 'block bg-pink-700 text-white'}`}
+              >
+                <div
+                  className="
+              max-w-7xl mx-auto
+              flex items-center justify-between
+              flex-nowrap
+              px-4 py-2
+            "
+                >
+
+                  {/* Message gauche  Le leader africain de l&apos;e-commerce */}
+                  <div className="flex items-center gap-2 flex-shrink-0 whitespace-nowrap">
+                    <Globe className="w-4 h-4 md:w-5 md:h-5 text-white/90" />
+                    <span className="text-[10px] md:text-base font-medium">
+                      Le leader de l&apos;e-commerce
+                    </span>
+                  </div>
+
+                  {/* Message droite Acheter n&apos;a jamais été aussi simple */}
+                  <div className="flex items-center gap-2 flex-shrink-0 whitespace-nowrap">
+                    <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-white/90" />
+                    <span className="text-[10px] md:text-base font-medium">
+                      Acheter n&apos;est jamais simple
+                    </span>
+                  </div>
+
+                </div>
               </div>
 
-              {/* Message droite Acheter n&apos;a jamais été aussi simple */}
-              <div className="flex items-center gap-2 flex-shrink-0 whitespace-nowrap">
-                <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-white/90" />
-                <span className="text-[10px] md:text-base font-medium">
-                  Acheter n&apos;est jamais simple
-                </span>
-              </div>
-
-            </div>
-          </div>
-        )}
+      )}
 
 
-
-        <div className="max-w-[1780px] px-3 lg:py-3 md:py-3 flex items-center justify-between">
+        <div className="max-w-[1780px] px-3 lg:py-3 md:py-3 flex items-center justify-between mt-5">
           {/* Logo + desktop nav */}
           <div className="flex items-center gap-5">
 

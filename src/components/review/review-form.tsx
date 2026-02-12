@@ -49,21 +49,39 @@ export default function ReviewForm() {
       },
     }
   );
-  const { mutate: updateReview, isLoading: updating } = useMutation(
-    client.reviews.update,
-    {
-      onSuccess: () => {
-        toast.success(t('text-review-updated'));
-        closeModal();
-      },
-      onError: (error: any) => {
-        setServerError(error?.response?.data);
-      },
-      onSettled: () => {
-        queryClient.invalidateQueries(API_ENDPOINTS.ORDERS_DOWNLOADS);
-      },
-    }
-  );
+const { mutate: updateReview, isLoading: updating } = useMutation(
+  client.reviews.update,
+  {
+    onSuccess: () => {
+      toast.success(t('text-review-updated'));
+      closeModal();
+    },
+    onError: (error: any) => {
+      // 1️⃣ Backend peut renvoyer un objet { message, code, ... }
+      const msg =
+        error?.response?.data?.message ||
+        'Une erreur est survenue, veuillez réessayer';
+
+      // 2️⃣ Afficher toast pour l’utilisateur
+      //toast.error(msg);
+
+      // 3️⃣ Optionnel: mettre l’erreur dans l’état pour la Form
+      setServerError(error?.response?.data);
+
+      // 4️⃣ Si le backend renvoie un code spécifique, tu peux gérer des cas spéciaux
+      if (error?.response?.data?.code === 'ALREADY_REVIEWED') {
+        console.log('L’utilisateur a déjà soumis un commentaire');
+      }
+      if (error?.response?.data?.code === 'FILE_REQUIRED') {
+        console.log('L’utilisateur doit ajouter un fichier');
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(API_ENDPOINTS.ORDERS_DOWNLOADS);
+    },
+  }
+);
+
 
   const onSubmit = (
     values: Omit<CreateReviewInput, 'product_id' | 'shop_id' | 'order_id'>
@@ -87,85 +105,94 @@ export default function ReviewForm() {
     });
   };
 
-  return (
-    <div className="flex h-full min-h-screen w-screen flex-col justify-center bg-light text-left dark:bg-dark-250 xs:h-auto xs:min-h-0 xs:max-w-[400px] md:max-w-[590px] md:rounded-md lg:max-w-[650px]">
-      <h3 className="mb-2 pl-6 pr-6 text-center text-base font-medium tracking-[-0.3px] text-dark dark:text-light xs:mb-0 xs:border-b xs:border-dark/10 xs:py-4 xs:pr-10 xs:text-left xs:dark:border-light/10 md:py-5 md:pl-7 lg:py-6 lg:pr-16">
+return (
+  <div className="flex h-full min-h-screen w-screen items-center justify-center bg-dark-900 text-light px-4 sm:px-6 lg:px-8">
+    <div className="w-full max-w-md bg-dark-800 rounded-2xl shadow-xl p-8 md:p-10 transition-all duration-300 hover:shadow-2xl">
+      <h3 className="mb-6 text-center text-2xl font-semibold tracking-tight text-light">
         {t('text-make-review')}
       </h3>
-      <div className="p-7">
-        <Form<Omit<CreateReviewInput, 'product_id' | 'shop_id' | 'order_id'>>
-          onSubmit={onSubmit}
-          validationSchema={reviewFormSchema}
-          serverError={serverError}
-          useFormProps={{
-            defaultValues: {
-              rating: data?.my_review?.rating ?? 0,
-              comment: data?.my_review?.comment ?? '',
-              photos: data?.my_review?.photos ?? [],
-            },
-          }}
-        >
-          {({ register, control, formState: { errors }, getValues }) => (
-            <>
-              <div className="mb-5">
-                <label className="block cursor-pointer pb-1 text-13px font-normal text-dark/70 dark:text-light/70">
-                  {t('text-rating-title')}
-                </label>
-                <div className="w-auto">
-                  <RateInput
-                    control={control}
-                    name="rating"
-                    defaultValue={0}
-                    style={{ fontSize: 30 }}
-                    allowClear={false}
-                  />
-                  {errors?.rating && (
-                    <p className="my-2 text-xs text-red-500">
-                      {errors?.rating?.message}
-                    </p>
-                  )}
-                </div>
-              </div>
 
-              <TextArea
-                label={t('text-comment-label')}
-                {...register('comment')}
-                className="mb-5"
-                error={errors?.comment?.message}
-              />
-
-              <div className="mb-8">
-                <Controller
-                  name="photos"
+      <Form<Omit<CreateReviewInput, 'product_id' | 'shop_id' | 'order_id'>>
+        onSubmit={onSubmit}
+        validationSchema={reviewFormSchema}
+        serverError={serverError}
+        useFormProps={{
+          defaultValues: {
+            rating: data?.my_review?.rating ?? 0,
+            comment: data?.my_review?.comment ?? '',
+            photos: data?.my_review?.photos ?? [],
+          },
+        }}
+      >
+        {({ register, control, formState: { errors } }) => (
+          <>
+            {/* ⭐ Rating */}
+            <div className="mb-6">
+              <label className="block mb-2 text-sm font-medium text-light/70">
+                {t('text-rating-title')}
+              </label>
+              <div className="flex items-center">
+                <RateInput
                   control={control}
-                  render={({ field: { ref, ...rest } }) => (
-                    <div className="sm:col-span-2">
-                      <span className="block cursor-pointer pb-2.5 text-13px font-normal text-dark/70 dark:text-light/70">
-                        {t('text-input-attachment')}
-                      </span>
-                      <div className="text-xs">
-                        <Uploader multiple={true} {...rest} />
-                      </div>
-                    </div>
-                  )}
+                  name="rating"
+                  defaultValue={0}
+                  style={{ fontSize: 36 }}
+                  allowClear={false}
                 />
+                {errors?.rating && (
+                  <span className="ml-3 text-xs text-red-500">
+                    {errors?.rating?.message}
+                  </span>
+                )}
               </div>
+            </div>
 
-              <div className="mt-8">
-                <Button
-                  className="text-sm"
-                  isLoading={creating || updating}
-                  disabled={creating || updating}
-                >
-                  {isEmpty(data?.my_review)
-                    ? t('text-write-review')
-                    : t('text-update-review')}
-                </Button>
-              </div>
-            </>
-          )}
-        </Form>
-      </div>
+            {/* ⭐ Comment */}
+            <TextArea
+              label={t('text-comment-label')}
+              {...register('comment')}
+              className="mb-6 bg-dark-700 border border-dark-600 text-light placeholder-light/50 rounded-lg p-3 focus:border-brand focus:ring-1 focus:ring-brand transition-all duration-200"
+              error={errors?.comment?.message}
+            />
+
+            {/* ⭐ File Uploader (hidden for now, ready for future use) */}
+            <div className="mb-6 hidden">
+              <Controller
+                name="photos"
+                control={control}
+                render={({ field: { ref, ...rest } }) => (
+                  <div>
+                    <span className="block mb-2 text-sm text-light/70">
+                      {t('text-input-attachment')}
+                    </span>
+                    <Uploader multiple={true} {...rest} />
+                  </div>
+                )}
+              />
+            </div>
+
+            {/* ⭐ Submit Button */}
+            <Button
+              className="w-full text-sm py-3 rounded-xl bg-gradient-to-r from-brand-light to-brand-dark text-dark font-semibold shadow-md hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              isLoading={creating || updating}
+              disabled={creating || updating}
+            >
+              {isEmpty(data?.my_review)
+                ? t('text-write-review')
+                : t('text-update-review')}
+            </Button>
+
+            {/* ⭐ Server Error */}
+            {serverError && (
+              <p className="mt-4 text-center text-xs text-red-400">
+                {serverError?.message || 'Une erreur est survenue.'}
+              </p>
+            )}
+          </>
+        )}
+      </Form>
     </div>
-  );
+  </div>
+);
+
 }

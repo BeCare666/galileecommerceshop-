@@ -61,20 +61,22 @@ export default function CategoryMegaMenu() {
     }
   }
 
-  async function loadSubSubCategories(subCategoryId: number) {
-    try {
-      const res = await fetch(
-        `${API_BASE}/subcategories/bycategory?categories_id=${subCategoryId}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      if (!res.ok) throw new Error('Failed to load subsubcategories');
-      const payload = await res.json();
-      return payload?.data ?? [];
-    } catch (err) {
-      console.error(err);
-      return [];
-    }
+async function loadSubSubCategories(subCategoryId: number) {
+  try {
+    const res = await fetch(
+      `${API_BASE}/subcategories/bycategory?categories_id=${subCategoryId}`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    if (res.status === 404) return []; // <- 404 renvoie tableau vide
+    if (!res.ok) throw new Error(`Erreur API: ${res.status}`);
+    const payload = await res.json();
+    return payload?.data ?? [];
+  } catch (err) {
+    console.error(err);
+    return [];
   }
+}
+
 
   function toggleSet(setState: React.Dispatch<React.SetStateAction<Set<number>>>, value: number) {
     setState(prev => {
@@ -127,7 +129,7 @@ export default function CategoryMegaMenu() {
     document.addEventListener('mousedown', onDocClick);
     return () => document.removeEventListener('mousedown', onDocClick);
   }, []);
-
+//const isProductsPage = router.pathname.startsWith('/products');
   return (
     <div ref={containerRef} className="relative z-50">
       {/* Bouton */}
@@ -177,7 +179,7 @@ export default function CategoryMegaMenu() {
             {/* Sub-subcategories */}
             {subSubCategories && (
               <ul className="flex-1 space-y-2 overflow-y-auto">
-                {subSubCategories.map((subSub) => (
+                {subSubCategories?.length > 0 && subSubCategories.map((subSub) => (
                   <li key={subSub.id} className="flex items-center gap-2 px-4 py-3 rounded hover:bg-pink-100 cursor-pointer transition"
                     onClick={() => handleSubSubCategoryClick(subSub.id)}
                   >
@@ -200,18 +202,25 @@ export default function CategoryMegaMenu() {
                   {/* Catégorie */}
                   <div className="flex items-center justify-between px-4 py-3 rounded hover:bg-pink-100 cursor-pointer transition"
                     onClick={async () => {
+                      console.log("Clicked categoryId:", cat.id);
                       const newSet = new Set(openCategories);
                       if (newSet.has(cat.id)) {
                         newSet.delete(cat.id);
                       } else {
                         newSet.add(cat.id);
+                        setSelectedCategory(cat.id);                  // <- ici
+                        setSelectedSubCategories(new Set());          // <- reset subCategories
+                        setSelectedSubSubCategories(new Set());       // <- reset subSubCategories
+
                         if (!mobileSubCategories[cat.id]) {
                           const subs = await loadSubCategories(cat.id);
+                          console.log("Loaded subCategories:", subs); // <-- log
                           setMobileSubCategories(prev => ({ ...prev, [cat.id]: subs }));
                         }
                       }
                       setOpenCategories(newSet);
                     }}
+
                   >
                     <div className="flex items-center gap-2">
                       <img src={cat.icon || '/placeholder-icon.png'} alt={cat.name} className="w-6 h-6" />
@@ -227,26 +236,30 @@ export default function CategoryMegaMenu() {
                       return (
                         <div key={sub.id} className="ml-6 flex flex-col">
                           <div className="flex items-center justify-between px-4 py-2 rounded hover:bg-pink-100 cursor-pointer transition"
-                            onClick={async () => {
-                              const newSet = new Set(openSubCategories);
-                              if (newSet.has(sub.id)) {
-                                newSet.delete(sub.id);
-                              } else {
-                                newSet.add(sub.id);
-                                if (!mobileSubSubCategories[sub.id]) {
-                                  const subSubs = await loadSubSubCategories(sub.id);
-                                  setMobileSubSubCategories(prev => ({ ...prev, [sub.id]: subSubs }));
-                                }
+                          onClick={async () => {
+                            const newSet = new Set(openSubCategories);
+                            if (newSet.has(sub.id)) {
+                              newSet.delete(sub.id);
+                            } else {
+                              newSet.add(sub.id);
+                              toggleSet(setSelectedSubCategories, sub.id);    // <- ajoute le subId au selectedSubCategories
+                              if (!mobileSubSubCategories[sub.id]) {
+                                console.log("Loading subSubCategories for subId:", sub.id); // <-- log
+                                const subSubs = await loadSubSubCategories(sub.id);
+                                console.log("Loaded subSubCategories:", subSubs); // <-- log
+                                setMobileSubSubCategories(prev => ({ ...prev, [sub.id]: subSubs }));
                               }
-                              setOpenSubCategories(newSet);
-                            }}
+                            }
+                            setOpenSubCategories(newSet);
+                          }}
+
                           >
                             <span>{sub.name}</span>
                             <span>{isSubOpen ? '▴' : '▾'}</span>
                           </div>
 
                           {/* Sub-sub-catégories */}
-                          {isSubOpen &&
+                          {isSubOpen && mobileSubSubCategories[sub.id]?.length > 0 &&
                             mobileSubSubCategories[sub.id]?.map((subSub) => (
                               <div key={subSub.id} className="ml-6 flex items-center justify-between px-4 py-2 rounded hover:bg-pink-100 cursor-pointer transition"
                                 onClick={() => handleSubSubCategoryClick(subSub.id)}
@@ -265,7 +278,7 @@ export default function CategoryMegaMenu() {
             })}
           </div>
 
-          {/* Bouton Appliquer */}
+          {/* Bouton Appliquer isProductsPage*/}
           <button
             className="fixed bottom-4 right-4 w-[120px] h-[48px] bg-pink-500 text-white rounded hover:scale-105 transition flex items-center justify-center shadow-lg"
             onClick={applyFilter}

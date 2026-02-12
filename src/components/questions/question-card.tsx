@@ -33,11 +33,17 @@ export default function QuestionCard({ question }: QuestionCardProps) {
       openModal('LOGIN_VIEW');
       return;
     }
-    createFeedback({
-      model_id: id,
-      model_type: 'Question',
-      ...value,
-    });
+    console.log('QUESTION OBJECT:', question);
+
+const payload = {
+  model_id: id,
+  model_type: 'Question',
+  product_id: question.product?.id ?? question.product_id,
+  ...value,
+};
+
+console.log('Payload corrigé envoyé au back:', payload);
+createFeedback(payload);
   }
 
   return (

@@ -1,3 +1,5 @@
+import ReviewForm from '@/components/review/review-form';
+import { useModalAction } from '@/components/modal-views/context';
 import ReviewCard from '@/components/review/review-card';
 import Pagination from '@/components/ui/pagination';
 import { useState } from 'react';
@@ -6,16 +8,12 @@ import { useRouter } from 'next/router';
 import { useReviews } from '@/data/review';
 import { useTranslation } from 'next-i18next';
 
-type ProductReviewsProps = {
-  className?: any;
-  productId: string;
-  productType?: string;
-};
-
 const ProductReviews: React.FC<ProductReviewsProps> = ({ productId }) => {
   const { query } = useRouter();
   const { text, ...restQuery } = query;
   const [page, setPage] = useState(1);
+  const { openModal } = useModalAction();
+  const { t } = useTranslation('common');
 
   const { reviews, paginatorInfo } = useReviews({
     product_id: productId,
@@ -24,64 +22,46 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId }) => {
     ...restQuery,
   });
 
-  function onPagination(current: number) {
-    setPage(current);
-  }
-  const { t } = useTranslation('common');
+  const onPagination = (current: number) => setPage(current);
+
+  const handleOpenReviewForm = () => {
+    openModal('REVIEW_RATING', {
+      product_id: productId,
+      shop_id: reviews?.[0]?.shop_id, // ou passer le shopId connu
+      order_id: null, // si tu veux lier à une commande spécifique
+      my_review: reviews?.find(r => r.user_id === 'currentUserId'), // si l’utilisateur a déjà review
+    });
+  };
+
   return (
     <div className="block">
-      <div className="flex w-[calc(100%+32px)] flex-col justify-between border-b border-light-500 px-4 py-5 ltr:-ml-4 rtl:-mr-4 dark:border-dark-400 sm:flex-row sm:items-center sm:py-4 md:w-full md:px-0 ltr:md:ml-0 rtl:md:mr-0">
-        <h2 className="text-sm tracking-tight text-dark dark:text-light">
-          {t('text-product-reviews')} (
-          {
-            //@ts-ignore
-            paginatorInfo?.total ?? 0
-          }
-          )
+      <div className="flex justify-between items-center border-b border-light-500 px-4 py-5 dark:border-dark-400">
+        <h2 className="text-sm font-semibold text-dark dark:text-light">
+          {t('text-product-reviews')} ({paginatorInfo?.total ?? 0})
         </h2>
-        <div className="flex items-center pt-2.5 sm:pt-0">
-          <span className="mr-2 sm:hidden">Sort By :</span>
+        <div className="flex items-center gap-3">
           <Sorting />
+          <button
+            onClick={handleOpenReviewForm}
+            className="rounded-xl bg-gradient-to-r from-indigo-600 to-fuchsia-600 px-4 py-2 text-white text-sm font-semibold shadow-lg hover:scale-105 transition"
+          >
+            {t('text-write-review')}
+          </button>
         </div>
       </div>
 
       {reviews?.length !== 0 ? (
-        <div className="block">
-          <div className="block">
-            {reviews?.map((review: any) => (
-              <ReviewCard key={`review-no-${review?.id}`} review={review} />
-            ))}
-          </div>
+        <div className="mt-5 space-y-4">
+          {reviews.map(review => (
+            <ReviewCard key={review.id} review={review} />
+          ))}
 
-          {/* Pagination */}
           {paginatorInfo && (
-            <div className="flex flex-col items-center justify-between space-y-1 border-t border-light-500 py-5 dark:border-dark-400 md:flex-row md:space-y-0 md:py-3">
-              <div className="text-13px text-dark-700 dark:text-light-900 md:mt-2">
-                {t('text-page')}{' '}
-                {
-                  //@ts-ignore
-                  paginatorInfo.currentPage
-                }{' '}
-                {t('text-of')}{' '}
-                {Math.ceil(
-                  //@ts-ignore
-                  paginatorInfo.total / paginatorInfo.perPage
-                )}
-              </div>
-
+            <div className="flex justify-center mt-5">
               <Pagination
-                total={
-                  //@ts-ignore
-                  paginatorInfo.total
-                }
-                current={
-                  //@ts-ignore
-                  paginatorInfo.currentPage
-                }
-                pageSize={
-                  //@ts-ignore
-                  paginatorInfo.perPage
-                }
+                total={paginatorInfo.total}
+                current={paginatorInfo.currentPage}
+                pageSize={paginatorInfo.perPage}
                 onChange={onPagination}
                 showTitle={false}
               />
