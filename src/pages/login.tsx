@@ -128,13 +128,13 @@ export default function LoginPage() {
                             </motion.button>
                         </motion.div>
                         <AuthSwitch mode="login" />
-                        <motion.div variants={fieldVariants} className="flex items-center gap-3 pt-2">
+                        <motion.div variants={fieldVariants} className="hidden flex items-center gap-3 pt-2">
                             <div className="flex-grow h-px bg-gray-200" />
                             <div className="text-sm text-gray-500">ou</div>
                             <div className="flex-grow h-px bg-gray-200" />
                         </motion.div>
 
-                        <motion.div variants={fieldVariants} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <motion.div variants={fieldVariants} className="hidden grid grid-cols-1 sm:grid-cols-2 gap-3">
                             {/* Google (use a small inline SVG for Google mark) */}
                             <button
                                 type="button"

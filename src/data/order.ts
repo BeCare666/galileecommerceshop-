@@ -53,6 +53,41 @@ export function useOrders(options?: OrderQueryOptions) {
 }
 
 // -------------------------
+// useMyOrders (orders de l'utilisateur connecté)
+// -------------------------
+export function useMyOrders(options?: OrderQueryOptions) {
+  const formattedOptions = { ...options };
+
+  const {
+    data,
+    isLoading,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+  } = useInfiniteQuery<OrderPaginator, Error>(
+    [API_ENDPOINTS.USER_ORDERS, formattedOptions],
+    ({ queryKey, pageParam }) =>
+      client.orders.myOrders(Object.assign({}, queryKey[1], pageParam)),
+    {
+      getNextPageParam: ({ current_page, last_page }) =>
+        last_page > current_page && { page: current_page + 1 },
+    },
+  );
+
+  return {
+    myOrders: data?.pages.flatMap((page) => page.data) ?? [],
+    isLoading,
+    error,
+    hasNextPage,
+    isFetching,
+    isLoadingMore: isFetchingNextPage,
+    loadMore: () => fetchNextPage(),
+  };
+}
+
+// -------------------------
 // useDownloadableProductOrders
 // -------------------------
 export function useDownloadableProductOrders(options?: OrderQueryOptions) {

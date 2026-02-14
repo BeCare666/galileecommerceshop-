@@ -53,7 +53,7 @@ export default function GalileeHeader() {
     }
     setIsHoverCategoriesx(true);
   };
- 
+
   const navMainRef = useRef<HTMLDivElement | null>(null);
   const navStickyRef = useRef<HTMLDivElement | null>(null);
   const scrollNav = (direction: 'left' | 'right') => {
@@ -87,6 +87,8 @@ export default function GalileeHeader() {
     //setIsHoverCategoriesx(true);
     setIsHoverCategories(true)
   };
+
+
   const MySwal = withReactContent(Swal);
   const handleMouseLeaveNox = () => {
     timeoutRef.current = setTimeout(() => {
@@ -98,6 +100,50 @@ export default function GalileeHeader() {
   const [openMarches, setOpenMarches] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // Function to controle MySwal.fire
+  const become_seller = () => {
+    if (isAuthorized) {
+      router.push('/become_seller/become_seller');
+    } else {
+      MySwal.fire({
+        icon: 'info',
+        title: 'Devenir fournisseur',
+        text: 'Souhaitez-vous en savoir plus ou devenir fournisseur ?',
+        confirmButtonText: 'Devenir fournisseur',
+        cancelButtonText: 'En savoir plus',
+        showCancelButton: true,
+        reverseButtons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.push('/become_seller/become_seller');
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          router.push('/become-seller');
+        }
+      });
+    }
+  }
+  // Function to controle MySwal.fire
+  const visiteCorridors = () => {
+    if (isAuthorized) {
+      router.push('/corridors_');
+    } else {
+      MySwal.fire({
+        icon: 'info',
+        title: 'Corridors',
+        text: 'Souhaitez-vous en savoir plus ou visiter les corridors ?',
+        confirmButtonText: 'Visiter les corridors',
+        cancelButtonText: 'En savoir plus',
+        showCancelButton: true,
+        reverseButtons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.push('/corridors_');
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          router.push('/corridors');
+        }
+      });
+    }
+  }
   // Ferme le dropdown si clic en dehors.
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -248,57 +294,57 @@ export default function GalileeHeader() {
   const mounted = useMounted();
   if (!mounted) return null;
   const isHomePage = router.pathname === '/';
-const isProductsPage = router.pathname.startsWith('/products');
+  const isProductsPage = router.pathname.startsWith('/products');
 
-// Toutes les routes qui ne doivent pas afficher le header
-if (!isHomePage || isProductsPage) {
-  return null;
-}
+  // Toutes les routes qui ne doivent pas afficher le header
+  if (!isHomePage || isProductsPage) {
+    return null;
+  }
   return (
     <>
-   
+
       <header
         className={`w-full sticky top-0 z-40 transition-colors duration-300 h-[140px] md:h-[210px] transition-none mb-[0px] md:mb-[12px]
        ${isHoverCategories || showSearch ? 'bg-white text-black' : 'bg-gray-900 text-white'}`}
       >
         {' '}
         {/* Top bar */}
-      {isHomePage && (
+        {isHomePage && (
 
 
-              <div
-                className={`w-full 
+          <div
+            className={`w-full 
           ${isHoverCategories || showSearch ? 'hidden' : 'block bg-pink-700 text-white'}`}
-              >
-                <div
-                  className="
+          >
+            <div
+              className="
               max-w-7xl mx-auto
               flex items-center justify-between
               flex-nowrap
               px-4 py-2
             "
-                >
+            >
 
-                  {/* Message gauche  Le leader africain de l&apos;e-commerce */}
-                  <div className="flex items-center gap-2 flex-shrink-0 whitespace-nowrap">
-                    <Globe className="w-4 h-4 md:w-5 md:h-5 text-white/90" />
-                    <span className="text-[10px] md:text-base font-medium">
-                      Le leader de l&apos;e-commerce
-                    </span>
-                  </div>
-
-                  {/* Message droite Acheter n&apos;a jamais été aussi simple */}
-                  <div className="flex items-center gap-2 flex-shrink-0 whitespace-nowrap">
-                    <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-white/90" />
-                    <span className="text-[10px] md:text-base font-medium">
-                      Acheter n&apos;est jamais simple
-                    </span>
-                  </div>
-
-                </div>
+              {/* Message gauche  Le leader africain de l&apos;e-commerce */}
+              <div className="flex items-center gap-2 flex-shrink-0 whitespace-nowrap">
+                <Globe className="w-4 h-4 md:w-5 md:h-5 text-white/90" />
+                <span className="text-[10px] md:text-base font-medium">
+                  Le leader de l&apos;e-commerce
+                </span>
               </div>
 
-      )}
+              {/* Message droite Acheter n&apos;a jamais été aussi simple */}
+              <div className="flex items-center gap-2 flex-shrink-0 whitespace-nowrap">
+                <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-white/90" />
+                <span className="text-[10px] md:text-base font-medium">
+                  Acheter n&apos;est jamais simple
+                </span>
+              </div>
+
+            </div>
+          </div>
+
+        )}
 
 
         <div className="max-w-[1780px] px-3 lg:py-3 md:py-3 flex items-center justify-between mt-5">
@@ -598,23 +644,7 @@ if (!isHomePage || isProductsPage) {
               >
                 <button
                   type="button"
-                  onClick={() => {
-                    MySwal.fire({
-                      icon: 'info',
-                      title: 'Corridors',
-                      text: 'Souhaitez-vous en savoir plus ou visiter les corridors ?',
-                      confirmButtonText: 'Visiter les corridors',
-                      cancelButtonText: 'En savoir plus',
-                      showCancelButton: true,
-                      reverseButtons: true,
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        router.push('/corridors_');
-                      } else if (result.dismiss === Swal.DismissReason.cancel) {
-                        router.push('/corridors');
-                      }
-                    });
-                  }}
+                  onClick={visiteCorridors}
                   className="inline-block px-2 py-1 rounded transition-colors text-white hover:bg-white/10"
                 >
                   Corridors
@@ -646,23 +676,7 @@ if (!isHomePage || isProductsPage) {
               <Link href="#" className="inline-block px-2 py-1 rounded transition-colors text-white">
                 <button
                   type="button"
-                  onClick={() => {
-                    MySwal.fire({
-                      icon: 'info',
-                      title: 'Devenir fournisseur',
-                      text: 'Souhaitez-vous en savoir plus ou devenir fournisseur ?',
-                      confirmButtonText: 'Devenir fournisseur',
-                      cancelButtonText: 'En savoir plus',
-                      showCancelButton: true,
-                      reverseButtons: true,
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        router.push('//become_seller/become_seller');
-                      } else if (result.dismiss === Swal.DismissReason.cancel) {
-                        router.push('/become-seller');
-                      }
-                    });
-                  }}
+                  onClick={become_seller}
                   className="inline-block px-2 py-1 rounded transition-colors text-white hover:bg-white/10"
                 >
                   Devenir fournisseur
@@ -887,23 +901,7 @@ if (!isHomePage || isProductsPage) {
               >
                 <button
                   type="button"
-                  onClick={() => {
-                    MySwal.fire({
-                      icon: 'info',
-                      title: 'Corridors',
-                      text: 'Souhaitez-vous en savoir plus ou visiter les corridors ?',
-                      confirmButtonText: 'Visiter les corridors',
-                      cancelButtonText: 'En savoir plus',
-                      showCancelButton: true,
-                      reverseButtons: true,
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        router.push('/corridors_');
-                      } else if (result.dismiss === Swal.DismissReason.cancel) {
-                        router.push('/corridors');
-                      }
-                    });
-                  }}
+                  onClick={visiteCorridors}
                   className="inline-block px-2 py-1 rounded transition-colors text-white hover:bg-white/10"
                 >
                   Corridors

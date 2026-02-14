@@ -5,14 +5,14 @@ import { useRouter } from 'next/router';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { getAuthToken } from '../../data/client/token.utils';
-
+import { useMe } from '@/data/user';
 const token = getAuthToken();
 const MySwal = withReactContent(Swal);
 
 export default function CountrySelectorWithDrawer() {
   const router = useRouter();
   const { corridor, category, search } = router.query;
-
+  const { isAuthorized } = useMe();
   const [countries, setCountries] = useState<
     { id: number; name: string; code: string }[]
   >([]);
@@ -116,21 +116,26 @@ export default function CountrySelectorWithDrawer() {
 
   /* 🔥 NOUVEL AJOUT : SweetAlert AVANT ouverture du drawer */
   const handleOpenSelector = () => {
-    MySwal.fire({
-      icon: 'info',
-      title: 'Pavillons',
-      text: 'Souhaitez-vous en savoir plus ou visiter les pavillons disponibles ?',
-      confirmButtonText: 'Visiter les pavillons',
-      cancelButtonText: 'En savoir plus',
-      showCancelButton: true,
-      reverseButtons: true,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        setDrawerOpen(true);
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        router.push('/pavillons');
-      }
-    });
+    if (isAuthorized) {
+      setDrawerOpen(true);
+    } else {
+      MySwal.fire({
+        icon: 'info',
+        title: 'Pavillons',
+        text: 'Souhaitez-vous en savoir plus ou visiter les pavillons disponibles ?',
+        confirmButtonText: 'Visiter les pavillons',
+        cancelButtonText: 'En savoir plus',
+        showCancelButton: true,
+        reverseButtons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setDrawerOpen(true);
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          router.push('/pavillons');
+        }
+      });
+    }
+
   };
 
   return (

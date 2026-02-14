@@ -94,11 +94,11 @@ const ProfilePage: NextPageWithLayout = () => {
                 name="profile.avatar"
                 control={control}
                 render={({ field: { ref, ...rest } }) => (
-                  <div className="sm:col-span-2">
+                  <div className="hidden sm:col-span-2">
                     <span className="block cursor-pointer pb-2.5 font-normal text-dark/70 dark:text-light/70">
                       {t('text-profile-avatar')}
                     </span>
-                    <div className="hidden text-xs">
+                    <div className=" text-xs">
                       <Uploader {...rest} multiple={false} />
                     </div>
                   </div>

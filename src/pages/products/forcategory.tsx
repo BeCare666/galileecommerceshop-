@@ -10,7 +10,7 @@ import Seo from '@/layouts/_seo';
 import routes from '@/config/routes';
 import { getAuthToken, removeAuthToken } from '../../data/client/token.utils';
 import Image from '@/components/ui/image';
-import {CheckCircle, XCircle} from 'lucide-react'
+import { CheckCircle, XCircle } from 'lucide-react'
 
 var pays =
   [
@@ -4665,47 +4665,47 @@ type Product = {
 const LIMIT = 20;
 
 export default function ProductsPage() {
-const router = useRouter();
-const token = getAuthToken(); // 🔁 Remplace par ton token
-const [isInitializing, setIsInitializing] = useState(true);
-const detectUserCountry = async (): Promise<string | null> => {
-  try {
-    const res = await fetch('https://ipapi.co/json/');
-    const data = await res.json();
+  const router = useRouter();
+  const token = getAuthToken(); // 🔁 Remplace par ton token
+  const [isInitializing, setIsInitializing] = useState(true);
+  const detectUserCountry = async (): Promise<string | null> => {
+    try {
+      const res = await fetch('https://ipapi.co/json/');
+      const data = await res.json();
 
-    const userCode = data?.country_code; // ex: BJ, FR, US
+      const userCode = data?.country_code; // ex: BJ, FR, US
 
-    if (!userCode) return null;
+      if (!userCode) return null;
 
-    const found = pays.find(
-      (p) => p.code.toUpperCase() === userCode.toUpperCase()
-    );
+      const found = pays.find(
+        (p) => p.code.toUpperCase() === userCode.toUpperCase()
+      );
 
-    return found ? String(found.id) : null;
-  } catch (e) {
-    console.error('Country detect failed', e);
-    return null;
-  }
-};
-useEffect(() => {
-  if (!router.isReady) return;
+      return found ? String(found.id) : null;
+    } catch (e) {
+      console.error('Country detect failed', e);
+      return null;
+    }
+  };
+  useEffect(() => {
+    if (!router.isReady) return;
 
-  const { countries_id } = router.query;
+    const { countries_id } = router.query;
 
-  if (!countries_id) {
-    detectUserCountry().then((detectedId) => {
-      if (!detectedId) return;
+    if (!countries_id) {
+      detectUserCountry().then((detectedId) => {
+        if (!detectedId) return;
 
-      router.replace({
-        pathname: router.pathname,
-        query: {
-          ...router.query,
-          countries_id: detectedId,
-        },
+        router.replace({
+          pathname: router.pathname,
+          query: {
+            ...router.query,
+            countries_id: detectedId,
+          },
+        });
       });
-    });
-  }
-}, [router.isReady]);
+    }
+  }, [router.isReady]);
 
   const {
     corridor_id,
@@ -4829,11 +4829,18 @@ useEffect(() => {
     };
   }, [loading, hasMore, fetchProducts]);
   async function handleProductorigincheck() {
-    router.push(`/products/forcategory?countries_id=${countryId}&is_origin=true`);
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        countries_id: countryId,
+        is_origin: true,
+      },
+    });
   }
   const country = pays.find((p) => p.id === Number(countryId));
 
-  if (!country) return <span>Pays inconnu</span>;
+  //if (!country) return <span>Pays inconnu</span>;
 
   return (
     <>
@@ -4901,37 +4908,37 @@ useEffect(() => {
         </div>
       )}
 
-{!hasMore && !loading && products.length > 0 && (
-  <div className="flex flex-col items-center justify-center my-12 space-y-4 text-gray-400 dark:text-gray-500">
-    {/* Icône moderne Lucide */}
-    <CheckCircle className="h-14 w-14 text-brand-500 animate-bounce" />
+      {!hasMore && !loading && products.length > 0 && (
+        <div className="flex flex-col items-center justify-center my-12 space-y-4 text-gray-400 dark:text-gray-500">
+          {/* Icône moderne Lucide */}
+          <CheckCircle className="h-14 w-14 text-brand-500 animate-bounce" />
 
-    <p className="text-xl font-semibold text-gray-200 dark:text-gray-100">
-      Plus aucun produit
-    </p>
-    <p className="text-sm text-gray-400 dark:text-gray-400">
-      Vous avez atteint la fin de la liste.
-    </p>
-  </div>
-)}
+          <p className="text-xl font-semibold text-gray-200 dark:text-gray-100">
+            Plus aucun produit
+          </p>
+          <p className="text-sm text-gray-400 dark:text-gray-400">
+            Vous avez atteint la fin de la liste.
+          </p>
+        </div>
+      )}
 
 
-{!loading && products.length === 0 && !error && (
-  <div
-    className="flex flex-col items-center justify-center h-screen space-y-4 cursor-pointer"
-    onClick={() => router.push('/products/forcategory')}
-  >
-    {/* Icône Lucide moderne */}
-    <XCircle className="h-20 w-20 text-red-500 dark:text-red-400 animate-pulse" />
+      {!loading && products.length === 0 && !error && (
+        <div
+          className="flex flex-col items-center justify-center h-screen space-y-4 cursor-pointer"
+          onClick={() => router.push('/products/forcategory')}
+        >
+          {/* Icône Lucide moderne */}
+          <XCircle className="h-20 w-20 text-red-500 dark:text-red-400 animate-pulse" />
 
-    <p className="text-2xl font-bold text-gray-100 dark:text-gray-50 text-center">
-      Aucun produit ne correspond à ces filtres
-    </p>
-    <p className="text-sm text-gray-400 dark:text-gray-400 text-center">
-      Cliquez ici pour revenir à tous les produits
-    </p>
-  </div>
-)}
+          <p className="text-2xl font-bold text-gray-100 dark:text-gray-50 text-center">
+            Aucun produit ne correspond à ces filtres
+          </p>
+          <p className="text-sm text-gray-400 dark:text-gray-400 text-center">
+            Cliquez ici pour revenir à tous les produits
+          </p>
+        </div>
+      )}
 
       <div className="hidden fixed top-1/2 right-1 transform -translate-y-1/2 z-50">
         <button
@@ -4967,20 +4974,25 @@ useEffect(() => {
                 fontFamily: '"Segoe UI Emoji", "Apple Color Emoji", sans-serif',
               }}
             >
-              Made in
-              {country.flag_url ? (
-                <Image
-                  src={country.flag_url}
-                  alt={`Drapeau ${country.name}`}
-                  width={24}
-                  height={16}
-                  className="ml-2"
-                />
-              ) : (
-                <div>Image non disponible</div>
+              {country && (
+                <>
+                  Made in
+                  {country.flag_url ? (
+                    <Image
+                      src={country.flag_url}
+                      alt={`Drapeau ${country.name}`}
+                      width={24}
+                      height={16}
+                      className="ml-2"
+                    />
+                  ) : (
+                    <div>Image non disponible</div>
+                  )}
+
+                  <p className="ml-2">{country.name}</p>
+                </>
               )}
 
-              <p className="ml-2">{country.name}</p>
             </span>
           </span>
         </button>
@@ -5001,15 +5013,15 @@ useEffect(() => {
         `}</style>
       </div>
       {isInitializing && (
-  <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white">
-    <div className="flex space-x-2">
-      <span className="dot animate-bounce bg-pink-500 w-3 h-3 rounded-full"></span>
-      <span className="dot animate-bounce animation-delay-200 bg-pink-500 w-3 h-3 rounded-full"></span>
-      <span className="dot animate-bounce animation-delay-400 bg-pink-500 w-3 h-3 rounded-full"></span>
-    </div>
-    <p className="mt-4 text-lg font-semibold text-gray-700">Chargement...</p>
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white">
+          <div className="flex space-x-2">
+            <span className="dot animate-bounce bg-pink-500 w-3 h-3 rounded-full"></span>
+            <span className="dot animate-bounce animation-delay-200 bg-pink-500 w-3 h-3 rounded-full"></span>
+            <span className="dot animate-bounce animation-delay-400 bg-pink-500 w-3 h-3 rounded-full"></span>
+          </div>
+          <p className="mt-4 text-lg font-semibold text-gray-700">Chargement...</p>
 
-    <style jsx>{`
+          <style jsx>{`
       .animate-bounce {
         animation: bounce 0.6s infinite alternate;
       }
@@ -5024,8 +5036,8 @@ useEffect(() => {
         to { transform: translateY(-10px); }
       }
     `}</style>
-  </div>
-)}
+        </div>
+      )}
 
     </>
   );

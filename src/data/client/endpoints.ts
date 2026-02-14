@@ -12,6 +12,7 @@ export const API_ENDPOINTS = {
   SHOPS: '/shops',
   TOP_SHOPS: '/top-shops',
   ORDERS: '/orders',
+  USER_ORDERS: '/orders/my-orders',
   ORDERS_CHECKOUT_VERIFY: 'orders/checkout/verify',
   ORDERS_DOWNLOADS: '/downloads',
   GENERATE_DOWNLOADABLE_PRODUCT_LINK: '/downloads/digital-file',
