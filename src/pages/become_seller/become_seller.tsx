@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import Firstimage from "@/assets/images/ge-ambassador/formulaireimage.png";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
@@ -51,7 +52,7 @@ type FormValues = {
     zip?: string;
     city?: string;
     country?: string;
-
+    vendor_type?: string;
     cover_image_url?: string | null;
     logo_image_url?: string | null;
 
@@ -198,11 +199,13 @@ export default function RegisterShopPage() {
                 description: data.description,
                 contact: data.contact,
                 website: data.website,
+                vendor_type: data.vendor_type ?? null,
                 address: {
                     street_address: data.street_address ?? null,
                     zip: data.zip ?? null,
                     city: data.city ?? null,
                     country: data.country ?? null,
+
                 },
                 location: null,
                 cover_image: data.cover_image_url ? { url: data.cover_image_url } : null,
@@ -275,26 +278,31 @@ export default function RegisterShopPage() {
     );
 
     return (
-        <div className="min-h-screen md:h-[100vh] lg:h-[100vh] bg-gradient-to-br from-white to-slate-50 flex items-center justify-center">
+        <div className="min-h-screen md:h-[100vh] lg:h-[100vh] bg-[#e26060] flex items-center justify-center">
             <div className="w-full  grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 {/* LEFT HERO **/}
-                <aside className="lg:col-span-5 bg-gradient-to-b from-indigo-700 via-indigo-600 to-indigo-500 text-white md:rounded-[5px] lg:rounded-[5px] overflow-hidden shadow-[5px] relative">
+                <aside className="lg:col-span-5  text-white  md:rounded-[5px] lg:rounded-[5px] overflow-hidden shadow-[5px] relative">
                     <div className="p-8 md:p-10 flex flex-col h-full">
                         <div className="flex items-start gap-4">
                             <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
                                 <Shield size={20} />
                             </div>
                             <div>
-                                <h2 className="text-xl font-extrabold leading-tight">Devenir fournisseur GalileeCommerce</h2>
-                                <p className="text-sm opacity-90 mt-1">Inscrivez-vous et lancez votre B space en quelques minutes. Paiements sécurisés.</p>
+                                <h3 className="text-xl font-extrabold leading-tight">Devenez fournisseur sur Galilé E-commerce et développez votre entreprise à l’échelle africaine et mondiale
+                                </h3>
+                                <p className="text-sm opacity-90 mt-1">Rejoignez la plus grande plateforme de commerce en ligne en Afrique
+                                </p>
                             </div>
                         </div>
 
                         <div className="mt-6 flex-1 flex flex-col justify-center">
                             {/* fonctionnelle image à gauche */}
-                            <div className="rounded-2xl overflow-hidden border border-white/10 shadow-lg">
+                            <div className=" overflow-hidden ">
                                 {/* utilisation d'une image externe pour être fonctionnelle sans config domains — fallback de qualité */}
+                                <Image src={Firstimage} alt="Devenir vendeur sur Galilé E-commerce" className="w-full h-56 object-cover" />
+                                {/* fonctionnelle image à gauche 
                                 <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=2f3b3a3f6b1c9b2a7f4a" alt="hero" className="w-full h-56 object-cover" />
+                                */}
                             </div>
 
                             <div className="mt-6 grid gap-3">
@@ -325,15 +333,15 @@ export default function RegisterShopPage() {
                 </aside>
 
                 {/* RIGHT FORM */}
-                <main className="lg:col-span-7 bg-white md:rounded-[5px] lg:rounded-[5px] shadow-[5px] p-6 md:p-8 border border-slate-100">
+                <main className="lg:col-span-7 bg-[#e26060] md:rounded-[5px] lg:rounded-[5px] shadow-[5px] p-6 md:p-8 border border-slate-100">
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                         <div className="flex items-center justify-between mb-8">
                             {/* LEFT TITLE */}
                             <div>
                                 <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
-                                    Créer votre compte
+                                    Créez votre compte
                                 </h1>
-                                <p className="text-sm text-slate-500 mt-1">
+                                <p className="text-white text-slate-500 mt-1">
                                     4 étapes — simple et rapide
                                 </p>
                             </div>
@@ -397,7 +405,7 @@ export default function RegisterShopPage() {
                                 <motion.div key="s1" variants={containerVariants} initial="hidden" animate="show" exit="hidden" className="space-y-4 md:h-[55vh] overflow-y-auto overflow-x-hidden scrollbar-hide">
                                     {stepField(
                                         <>
-                                            <FloatingInput id="shop_name" label="Nom de votre B space" icon={<Store size={16} />} error={errors.shop_name?.message} {...register("shop_name", { required: "Nom de votre B space requis" })} />
+                                            <FloatingInput id="shop_name" label="Nom de votre B space (Votre boutique en ligne) " icon={<Store size={16} />} error={errors.shop_name?.message} {...register("shop_name", { required: "Nom de votre B space requis" })} />
 
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                                 <FloatingInput id="website" label="Site web (optionnel)" icon={<Globe size={16} />} {...register("website")} />
@@ -407,7 +415,7 @@ export default function RegisterShopPage() {
 
                                             <div>
                                                 <label className="block text-xs mb-2 text-slate-500">Courte description</label>
-                                                <textarea {...register("description")} placeholder="Parlez brièvement de votre B space" className="w-full min-h-[90px] px-4 py-3 rounded-2xl border border-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-100 resize-none" />
+                                                <textarea {...register("description")} placeholder="Décrivez brièvement de votre B space" className="form-textarea-epure w-full min-h-[90px] px-4 py-3 rounded-2xl border border-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-100 resize-none" />
                                             </div>
 
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -415,7 +423,7 @@ export default function RegisterShopPage() {
                                                 <div className="flex flex-col">
                                                     <label className="text-xs text-slate-500 mb-2 block">Cover</label>
 
-                                                    <div className="rounded-2xl border border-dashed border-slate-200 p-4 bg-white flex flex-col flex-1">
+                                                    <div className="form-textarea-epure rounded-2xl border border-dashed border-slate-200 p-4 bg-[rgba(236, 102, 102, 0.9)] flex flex-col flex-1">
 
                                                         {/* PREVIEW */}
                                                         {coverPreview ? (
@@ -425,7 +433,7 @@ export default function RegisterShopPage() {
                                                                 className="w-full h-44 md:h-40 object-cover rounded-xl"
                                                             />
                                                         ) : (
-                                                            <div className="flex flex-col flex-1 items-center justify-center py-6">
+                                                            <div className="form-textarea-epure flex flex-col flex-1 items-center justify-center py-6">
                                                                 <ImageIcon className="w-6 h-6 text-slate-400" />
                                                                 <p className="text-xs text-slate-400 mt-2 text-center">
                                                                     Importer une image ou coller une URL
@@ -441,14 +449,14 @@ export default function RegisterShopPage() {
                                                                     type="file"
                                                                     accept="image/*"
                                                                     onChange={onCoverChange}
-                                                                    className="hidden"
+                                                                    className="hidden form-input-epure"
                                                                 />
                                                             </label>
 
                                                             <input
                                                                 {...register("cover_image_url")}
                                                                 placeholder="ou coller une URL"
-                                                                className="px-3 py-2 rounded-xl border border-slate-200 text-sm"
+                                                                className="form-input-epure px-3 py-2 rounded-xl border border-slate-200 text-sm"
                                                                 onBlur={(e) => setValue("cover_image_url", e.target.value)}
                                                             />
                                                         </div>
@@ -459,7 +467,7 @@ export default function RegisterShopPage() {
                                                 <div className="flex flex-col">
                                                     <label className="text-xs text-slate-500 mb-2 block">Logo</label>
 
-                                                    <div className="rounded-2xl border border-dashed border-slate-200 p-4 bg-white flex flex-col flex-1">
+                                                    <div className="rounded-2xl border border-dashed border-slate-200 p-4 bg-[rgba(236, 102, 102, 0.9)] flex flex-col flex-1">
 
                                                         {/* PREVIEW */}
                                                         {logoPreview ? (
@@ -485,14 +493,14 @@ export default function RegisterShopPage() {
                                                                     type="file"
                                                                     accept="image/*"
                                                                     onChange={onLogoChange}
-                                                                    className="hidden"
+                                                                    className="hidden form-input-epure"
                                                                 />
                                                             </label>
 
                                                             <input
                                                                 {...register("logo_image_url")}
                                                                 placeholder="ou coller une URL"
-                                                                className="px-3 py-2 rounded-xl border border-slate-200 text-sm"
+                                                                className="form-input-epure px-3 py-2 rounded-xl border border-slate-200 text-sm"
                                                                 onBlur={(e) => setValue("logo_image_url", e.target.value)}
                                                             />
                                                         </div>
@@ -500,7 +508,7 @@ export default function RegisterShopPage() {
                                                 </div>
                                             </div>
                                             {/* ───────────────────────  Adresse du magasin  ─────────────────────── */}
-                                            <div className="p-5 rounded-2xl border bg-white shadow-sm mt-8">
+                                            <div className="p-5 rounded-2xl border bg-[rgba(236, 102, 102, 0.9)] shadow-sm mt-8">
                                                 <h2 className="text-lg font-semibold text-slate-800 flex items-center gap-2 mb-4">
                                                     <MapPin className="w-5 h-5 text-slate-500" />
                                                     Adresse de votre entreprise
@@ -514,7 +522,7 @@ export default function RegisterShopPage() {
                                                         <input
                                                             {...register("street_address")}
                                                             placeholder="Rue, avenue, bâtiment…"
-                                                            className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:border-slate-400 focus:outline-none"
+                                                            className="form-input-epure w-full px-3 py-2 rounded-lg border border-slate-200 focus:border-slate-400 focus:outline-none"
                                                         />
                                                     </div>
 
@@ -524,7 +532,7 @@ export default function RegisterShopPage() {
                                                         <input
                                                             {...register("zip")}
                                                             placeholder="Ex : 75000"
-                                                            className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:border-slate-400 focus:outline-none"
+                                                            className="form-input-epure w-full px-3 py-2 rounded-lg border border-slate-200 focus:border-slate-400 focus:outline-none"
                                                         />
                                                     </div>
 
@@ -534,7 +542,7 @@ export default function RegisterShopPage() {
                                                         <input
                                                             {...register("city")}
                                                             placeholder="Ex : Paris"
-                                                            className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:border-slate-400 focus:outline-none"
+                                                            className="form-input-epure w-full px-3 py-2 rounded-lg border border-slate-200 focus:border-slate-400 focus:outline-none"
                                                         />
                                                     </div>
 
@@ -544,8 +552,27 @@ export default function RegisterShopPage() {
                                                         <input
                                                             {...register("country")}
                                                             placeholder="Ex : France"
-                                                            className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:border-slate-400 focus:outline-none"
+                                                            className="form-input-epure w-full px-3 py-2 rounded-lg border border-slate-200 focus:border-slate-400 focus:outline-none"
                                                         />
+                                                    </div>
+                                                    <div className="md:col-span-2">
+                                                        <label className="block text-xs text-slate-500 mb-1">
+                                                            Quel type de fournisseur êtes-vous ?
+                                                        </label>
+
+                                                        <select
+                                                            {...register("vendor_type", { required: true })}
+                                                            className="form-input-epure px-4 py-3 rounded-2xl border w-full bg-rgba(236, 102, 102, 0.9)"
+                                                            defaultValue=""
+                                                        >
+                                                            <option value="" disabled>
+                                                                Sélectionnez un type
+                                                            </option>
+                                                            <option value="manufacturer">Fabricant</option>
+                                                            <option value="service_provider">Fournisseur de services</option>
+                                                            <option value="distributor">Distributeur</option>
+                                                            <option value="individual">Particulier</option>
+                                                        </select>
                                                     </div>
 
                                                 </div>
@@ -565,8 +592,8 @@ export default function RegisterShopPage() {
                                             <h3 className="text-sm font-medium text-slate-700">Documents d'entreprise</h3>
                                             <div className="space-y-3">
                                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                                                    <input id="docType" placeholder="Type (ex: business_license)" className="px-3 py-2 rounded-lg border" />
-                                                    <input id="docUrl" placeholder="URL du document" className="px-3 py-2 rounded-lg border" />
+                                                    <input id="docType" placeholder="Type (ex: business_license)" className="form-input-epure px-3 py-2 rounded-lg border" />
+                                                    <input id="docUrl" placeholder="URL du document" className="form-input-epure px-3 py-2 rounded-lg border" />
                                                     <button type="button" onClick={() => {
                                                         const t = (document.getElementById("docType") as HTMLInputElement).value || "business_license";
                                                         const u = (document.getElementById("docUrl") as HTMLInputElement).value;
@@ -637,9 +664,9 @@ export default function RegisterShopPage() {
 
                                             <h3 className="text-sm font-medium text-slate-700 mt-4">Informations bancaires</h3>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                                <input placeholder="Titulaire du compte" className="px-4 py-3 rounded-2xl border" {...register("bank_account_name")} />
-                                                <input placeholder="Numéro de compte" className="px-4 py-3 rounded-2xl border" {...register("bank_account_number")} />
-                                                <input placeholder="IBAN (optionnel)" className="px-4 py-3 rounded-2xl border md:col-span-2" {...register("bank_iban")} />
+                                                <input placeholder="Titulaire du compte" className="form-input-epure px-4 py-3 rounded-2xl border" {...register("bank_account_name")} />
+                                                <input placeholder="Numéro de compte" className="form-input-epure px-4 py-3 rounded-2xl border" {...register("bank_account_number")} />
+                                                <input placeholder="IBAN (optionnel)" className="form-input-epure px-4 py-3 rounded-2xl border md:col-span-2" {...register("bank_iban")} />
                                             </div>
                                         </>
                                     )}
@@ -660,7 +687,7 @@ export default function RegisterShopPage() {
                                         Vérifiez vos informations
                                     </h3>
 
-                                    <div className="rounded-3xl bg-white border border-slate-200 shadow-sm p-6 space-y-6">
+                                    <div className="rounded-3xl bg-[rgba(236, 102, 102, 0.9)] border border-slate-200 shadow-sm p-6 space-y-6">
 
                                         {/* IDENTITÉ */}
                                         <div className="space-y-4">
@@ -786,7 +813,61 @@ export default function RegisterShopPage() {
                     </form>
                 </main>
             </div>
+            <style jsx global>{`
+  /* ───────── Inputs et Textareas ───────── */
+  input.form-input-epure,
+  textarea.form-textarea-epure {
+     
+    border: 1px solid #ee727c; /* slate-200 */
+    background-color: rgba(236, 102, 102, 0.9); /* semi-transparent */
+    color: white; /* slate-800 */
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+  }
+
+  input.form-input-epure::placeholder,
+  textarea.form-textarea-epure::placeholder {
+    color: white; /* slate-400 */
+  }
+
+  input.form-input-epure:focus,
+  textarea.form-textarea-epure:focus {
+    outline: none;
+    border-color: #f472b6; /* pink-300 */
+    box-shadow: 0 0 0 2px rgba(251, 207, 232, 0.5); /* pink-200 ring */
+    background-color: #e45f5f; /* plus opaque au focus */
+  }
+
+  textarea.form-textarea-epure {
+    resize: none; /* désactive le redimensionnement */
+  }
+
+  /* ───────── Uploaders / Zones de preview ───────── */
+  .upload-zone {
+    border: 1px dashed #cbd5e1; /* slate-300 */
+    border-radius: 1rem;
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+  }
+label {
+color:white !important;
+}
+  .upload-zone:hover {
+    border-color: #f472b6; /* pink-300 */
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+
+  /* ───────── Scrollbar invisible pour les steps scrollables ───────── */
+  
+  
+`}</style>
+
         </div>
+
     );
 }
 
@@ -805,7 +886,7 @@ const FloatingInput = React.forwardRef<HTMLInputElement, any>(
                     id={id}
                     type={type}
                     {...rest}          // <-- RHF events connectés correctement
-                    className={`w-full pl-12 pr-4 py-3 rounded-2xl border border-slate-100 
+                    className={`w-full pl-12 pr-4 py-3 rounded-2xl border border-slate-100 form-input-epure
             focus:ring-2 focus:ring-indigo-100 outline-none 
             ${error ? "ring-pink-200" : ""}`}
                     placeholder={label}
@@ -839,7 +920,7 @@ const MediaPreview = ({ label, src }: { label: string; src: string }) => (
         <img
             src={src}
             alt={label}
-            className="w-full h-32 object-cover rounded-2xl border shadow-sm bg-white"
+            className="w-full h-32 object-cover rounded-2xl border shadow-sm bg-[rgba(236, 102, 102, 0.9)]"
         />
     </div>
 );
