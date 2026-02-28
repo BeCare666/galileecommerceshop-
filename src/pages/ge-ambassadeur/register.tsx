@@ -1,190 +1,312 @@
+"use client";
+
 import React, { useState } from "react";
 import Image from "next/image";
-import { motion, Variants } from "framer-motion";
-import { Mail, Lock, Eye, EyeOff, User, Facebook } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { signIn } from "next-auth/react";
-import { useMutation } from "react-query";
+import Firstimage from "@/assets/images/ge-ambassador/ambassadeur.png";
+import axios from "axios";
 import toast from "react-hot-toast";
-import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
+import {
+    User,
+    Mail,
+    Lock,
+    Globe,
+    Check,
+    ArrowRight,
+    ArrowLeft,
+    Shield,
+} from "lucide-react";
 
-import client from "@/data/client"; // ton client API
-import AuthSwitch from "@/components/authswish/authswish";
+/* ───────────────── Types ───────────────── */
 
-type FormValues = { name: string; email: string; password: string };
-
-const containerVariants: Variants = {
-    hidden: {},
-    visible: {
-        transition: { staggerChildren: 0.08, delayChildren: 0.06 },
-    },
+type FormValues = {
+    name: string;
+    email: string;
+    password: string;
+    ambassador_type: string;
+    activity_domain: string;
+    network_description: string;
+    coverage_area: string;
 };
 
-const fieldVariants: Variants = {
-    hidden: { opacity: 0, y: 12 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
+const STEPS = ["Compte", "Profil Ambassador", "Révision"];
+
+/* ───────────────── Animations ───────────────── */
+
+const containerVariants = {
+    hidden: { opacity: 0, y: 8 },
+    show: { opacity: 1, y: 0, transition: { staggerChildren: 0.04 } },
 };
 
-export default function RegisterPage() {
+const fieldVariants = {
+    hidden: { opacity: 0, y: 8 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.28 } },
+};
+
+/* ───────────────── Page ───────────────── */
+
+export default function RegisterAmbassadorPage() {
+    const {
+        register,
+        handleSubmit,
+        getValues,
+        formState: { errors },
+    } = useForm<FormValues>();
+
+    const [step, setStep] = useState(0);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
-    const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
-    const [showPassword, setShowPassword] = useState(false);
 
-    // --------------------
-    // Mutation REGISTER
-    // --------------------
-    const { mutate: registerUser, isLoading } = useMutation(client.users.register, {
-        onSuccess: (data: any) => {
-            toast.success("Inscription réussie ! Vérifiez votre email.");
-            router.push("/smsafterregister/smsafterregister");
-        },
-        onError: (err: any) => {
-            let msg = "Une erreur est survenue";
-            if (err?.response?.data?.message) msg = err.response.data.message;
-            toast.error(msg);
-        },
-    });
+    const canNext = () => {
+        if (step === 0)
+            return !!(getValues("name") && getValues("email") && getValues("password"));
+        if (step === 1)
+            return !!(
+                getValues("ambassador_type") &&
+                getValues("activity_domain") &&
+                getValues("network_description")
+            );
+        return true;
+    };
 
-    const onSubmit = (d: FormValues) => {
-        registerUser(d);
+    const goNext = () => {
+        if (!canNext()) {
+            toast.error("Veuillez compléter les champs requis");
+            return;
+        }
+        setStep((s) => Math.min(s + 1, STEPS.length - 1));
+    };
+
+    const goPrev = () => setStep((s) => Math.max(s - 1, 0));
+
+    const onSubmit = async (data: FormValues) => {
+        setIsSubmitting(true);
+
+        try {
+            const endpoint = `${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/register-ambassador`;
+            if (!endpoint) throw new Error("API non configurée");
+
+            await axios.post(endpoint, data);
+
+            toast.success("Inscription Ambassador envoyée ✨");
+            router.replace("/ge-ambassadeur/ambassadeur_end");
+        } catch (err: any) {
+            toast.error(err?.response?.data?.message || "Erreur lors de l'inscription");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
-        <div className="min-h-screen flex">
-            {/* Left Section */}
-            <div className="w-full md:w-1/2 flex items-center justify-center p-8" style={{ minHeight: "100vh" }}>
-                <div className="w-full max-w-lg">
-                    <div className="mb-8">
-                        <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">
-                            Créer un compte sur <span className="text-pink-500 block">Galileecommerce</span>
-                        </h1>
-                        <p className="mt-2 text-sm text-gray-600 max-w-md hidden">
-                            Inscription rapide — démarrez votre expérience
-                        </p>
+        <div className="min-h-screen bg-[#e26060] flex items-center justify-center">
+            <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+                {/* LEFT */}
+                <aside className="lg:col-span-5 text-white p-8">
+                    <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
+                            <Shield />
+                        </div>
+                        <div>
+                            <h3 className="text-xl font-extrabold">Devenez GE Ambassadeur</h3>
+                            <p className="text-sm opacity-90">
+                                Représentez Galilée Ecommerce dans votre réseau
+                            </p>
+                        </div>
                     </div>
 
-                    <motion.form
-                        onSubmit={handleSubmit(onSubmit)}
-                        className="space-y-4 bg-white/60 p-6 rounded-2xl shadow-lg backdrop-blur-md border border-gray-100"
-                        variants={containerVariants}
-                        initial="hidden"
-                        animate="visible"
-                    >
-                        {/* NAME */}
-                        <motion.div variants={fieldVariants}>
-                            <label className="relative block">
-                                <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                                <input
-                                    type="text"
-                                    placeholder="Nom complet"
-                                    {...register("name", { required: "Nom requis" })}
-                                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-gray-200 focus:ring-2 focus:ring-pink-100 outline-none"
-                                />
-                            </label>
-                            {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
-                        </motion.div>
+                    <Image
+                        src={Firstimage}
+                        alt="GE Ambassador"
+                        className="rounded-xl mt-3"
+                    />
+                </aside>
 
-                        {/* EMAIL */}
-                        <motion.div variants={fieldVariants}>
-                            <label className="relative block">
-                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                                <input
-                                    type="email"
-                                    placeholder="Adresse email"
-                                    {...register("email", { required: "Email requis" })}
-                                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-gray-200 focus:ring-2 focus:ring-pink-100 outline-none"
-                                />
-                            </label>
-                            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
-                        </motion.div>
+                {/* RIGHT */}
+                <main className="lg:col-span-7 p-8">
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 
-                        {/* PASSWORD */}
-                        <motion.div variants={fieldVariants}>
-                            <label className="relative block">
-                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                                <input
-                                    type={showPassword ? "text" : "password"}
-                                    placeholder="Mot de passe"
-                                    {...register("password", { required: "Mot de passe requis" })}
-                                    className="w-full pl-12 pr-12 py-3 rounded-xl bg-white border border-gray-200 focus:ring-2 focus:ring-blue-100 outline-none"
-                                />
+                        <div className="flex justify-between mb-[80px] ">
+                            {STEPS.map((label, i) => (
+                                <div
+                                    key={i}
+                                    className={`flex-1 text-center py-2 rounded-xl font-semibold ${i === step
+                                        ? "bg-white/20 text-white"
+                                        : "text-white/50"
+                                        }`}
+                                >
+                                    {label}
+                                </div>
+                            ))}
+                        </div>
+
+                        <AnimatePresence mode="wait" >
+
+                            {/* STEP 0 */}
+                            {step === 0 && (
+                                <motion.div
+                                    key="s0"
+                                    variants={containerVariants}
+                                    initial="hidden"
+                                    animate="show"
+                                    exit="hidden"
+                                    className="space-y-4"
+                                >
+                                    <FloatingInput
+                                        label="Nom complet"
+                                        icon={<User size={16} />}
+                                        {...register("name", { required: true })}
+                                    />
+
+                                    <FloatingInput
+                                        label="Email"
+                                        icon={<Mail size={16} />}
+                                        {...register("email", { required: true })}
+                                    />
+
+                                    <FloatingInput
+                                        label="Mot de passe"
+                                        type="password"
+                                        icon={<Lock size={16} />}
+                                        {...register("password", { required: true })}
+                                    />
+                                </motion.div>
+                            )}
+
+                            {/* STEP 1 */}
+                            {step === 1 && (
+                                <motion.div
+                                    key="s1"
+                                    variants={containerVariants}
+                                    initial="hidden"
+                                    animate="show"
+                                    exit="hidden"
+                                    className="space-y-4"
+                                >
+                                    <select
+                                        {...register("ambassador_type", { required: true })}
+                                        className="form-input-epure w-full px-4 py-3 rounded-2xl"
+                                    >
+                                        <option value="" className="text-gray-500">Type d’ambassadeur</option>
+                                        <option value="individual" className="text-gray-500">Individuel</option>
+                                        <option value="community" className="text-gray-500">Communautaire</option>
+                                        <option value="professional" className="text-gray-500">Professionnel</option>
+                                    </select>
+
+                                    <FloatingInput
+                                        label="Domaine d’activité"
+                                        icon={<Globe size={16} />}
+                                        {...register("activity_domain", { required: true })}
+                                    />
+
+                                    <textarea
+                                        {...register("network_description", { required: true })}
+                                        placeholder="Description de votre réseau"
+                                        className="form-textarea-epure w-full min-h-[100px] px-4 py-3 rounded-2xl"
+                                    />
+
+                                    <FloatingInput
+                                        label="Zone de couverture"
+                                        icon={<Globe size={16} />}
+                                        {...register("coverage_area")}
+                                    />
+                                </motion.div>
+                            )}
+
+                            {/* STEP 2 */}
+                            {step === 2 && (
+                                <motion.div
+                                    key="s2"
+                                    variants={containerVariants}
+                                    initial="hidden"
+                                    animate="show"
+                                    exit="hidden"
+                                    className="space-y-4"
+                                >
+                                    <p className="text-white">
+                                        <strong>Nom :</strong> {getValues("name")}
+                                    </p>
+                                    <p className="text-white">
+                                        <strong>Email :</strong> {getValues("email")}
+                                    </p>
+                                    <p className="text-white">
+                                        <strong>Type :</strong> {getValues("ambassador_type")}
+                                    </p>
+                                </motion.div>
+                            )}
+
+                        </AnimatePresence>
+
+                        {/* NAV */}
+                        <div className="flex justify-between">
+                            {step > 0 && (
                                 <button
                                     type="button"
-                                    onClick={() => setShowPassword(s => !s)}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                                    onClick={goPrev}
+                                    className="flex items-center gap-2 text-white font-semibold"
                                 >
-                                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                                    <ArrowLeft /> Précédent
                                 </button>
-                            </label>
-                            {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
-                        </motion.div>
+                            )}
 
-                        {/* SUBMIT */}
-                        <motion.div variants={fieldVariants}>
-                            <motion.button
-                                whileTap={{ scale: 0.995 }}
-                                type="submit"
-                                disabled={isLoading}
-                                className={`w-full py-3 rounded-xl bg-gradient-to-r from-pink-500 to-blue-500 text-white font-semibold shadow-lg hover:brightness-95 transition ${isLoading ? "cursor-not-allowed opacity-70" : ""
-                                    }`}
-                            >
-                                {isLoading ? "Création..." : "Créer mon compte"}
-                            </motion.button>
-                        </motion.div>
-
-                        <AuthSwitch mode="register" />
-
-                        {/* SEPARATOR */}
-                        <motion.div variants={fieldVariants} className="hidden flex items-center gap-3 pt-2">
-                            <div className="flex-grow h-px bg-gray-200" />
-                            <div className="text-sm text-gray-500">ou</div>
-                            <div className="flex-grow h-px bg-gray-200" />
-                        </motion.div>
-
-                        {/* SOCIAL LOGIN */}
-                        <motion.div variants={fieldVariants} className="hidden grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <button
-                                type="button"
-                                onClick={() => signIn("google", { callbackUrl: "/" })}
-                                className="flex items-center justify-center gap-3 py-2 rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition"
-                            >
-                                <span className="w-5 h-5">{/* Google SVG */}</span>
-                                <span className="text-sm font-medium text-gray-700">Continuer avec Google</span>
-                            </button>
-
-                            <button
-                                type="button"
-                                onClick={() => signIn("facebook", { callbackUrl: "/" })}
-                                className="flex items-center justify-center gap-3 py-2 rounded-xl bg-[#1877F2] text-white shadow-sm hover:brightness-95 transition"
-                            >
-                                <Facebook size={18} />
-                                <span className="text-sm font-medium">Continuer avec Facebook </span>
-                            </button>
-                        </motion.div>
-
-                        <motion.p variants={fieldVariants} className="text-xs text-gray-500 text-center pt-2">
-                            En créant un compte, vous acceptez nos conditions d'utilisation.
-                        </motion.p>
-                    </motion.form>
-                </div>
+                            {step < STEPS.length - 1 ? (
+                                <button
+                                    type="button"
+                                    onClick={goNext}
+                                    className="flex items-center gap-2 bg-white/20 text-white px-4 py-2 rounded-xl font-semibold"
+                                >
+                                    Suivant <ArrowRight />
+                                </button>
+                            ) : (
+                                <button
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                    className="flex items-center gap-2 bg-white/20 text-white px-4 py-2 rounded-xl font-semibold"
+                                >
+                                    {isSubmitting ? "Envoi..." : "Valider"} <Check />
+                                </button>
+                            )}
+                        </div>
+                    </form>
+                </main>
             </div>
 
-            {/* Right Image Section */}
-            <div className="hidden md:flex w-1/2 items-center justify-center relative" style={{ minHeight: "100vh" }}>
-                <div className="absolute inset-8 rounded-[5px] overflow-hidden bg-gradient-to-b from-pink-50 to-white shadow-[5px] border border-white/30">
-                    <Image
-                        src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1400"
-                        alt="Hero"
-                        layout="fill"
-                        objectFit="cover"
-                        priority
-                    />
-                    <div className="absolute left-8 bottom-8 bg-white/80 rounded-xl p-4 shadow-lg max-w-xs backdrop-blur-sm">
-                        <h4 className="text-lg font-semibold text-gray-900">Bienvenue sur Galileecommerce</h4>
-                        <p className="text-sm text-gray-600 mt-1">La marketplace qui fait vendre.</p>
-                    </div>
-                </div>
-            </div>
+            {/* ──────────────── Styles ──────────────── */}
+            <style>{`
+                .form-input-epure, .form-textarea-epure {
+                    background: transparent;
+                    border: 1px solid rgba(255,255,255,0.3);
+                    color: white;
+                    outline: none;
+                    transition: border 0.2s;
+                }
+                .form-input-epure:focus, .form-textarea-epure:focus {
+                    border-color: white;
+                }
+            `}</style>
         </div>
     );
 }
+
+/* ───────────────── Helpers ───────────────── */
+
+const FloatingInput = React.forwardRef<HTMLInputElement, any>(
+    ({ label, icon, type = "text", ...rest }, ref) => (
+        <div className="relative">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white">
+                {icon}
+            </div>
+            <input
+                ref={ref}
+                type={type}
+                {...rest}
+                placeholder={label}
+                className="form-input-epure w-full pl-12 pr-4 py-3 rounded-2xl"
+            />
+        </div>
+    )
+);
+
+FloatingInput.displayName = "FloatingInput";

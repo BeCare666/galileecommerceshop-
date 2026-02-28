@@ -122,6 +122,27 @@ export default function GalileeHeader() {
       });
     }
   }
+  const become_ambassador = () => {
+    if (isAuthorized) {
+      router.push('/ge-ambassadeur/register');
+    } else {
+      MySwal.fire({
+        icon: 'info',
+        title: 'Devenir ambassadeur',
+        text: 'Souhaitez-vous en savoir plus ou devenir ambassadeur ?',
+        confirmButtonText: 'Devenir ambassadeur',
+        cancelButtonText: 'En savoir plus',
+        showCancelButton: true,
+        reverseButtons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.push('/ge-ambassadeur/register');
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          router.push('/ge-ambassador');
+        }
+      });
+    }
+  }
   // Function to controle MySwal.fire
   const visiteCorridors = () => {
     if (isAuthorized) {
@@ -683,8 +704,14 @@ export default function GalileeHeader() {
                 </button>
 
               </Link>
-              <Link href="/ge-ambassador" className="inline-block px-2 py-1 rounded transition-colors text-white">
-                Devenir Ambassadeur
+              <Link href="#" className="inline-block px-2 py-1 rounded transition-colors text-white">
+                <button
+                  type="button"
+                  onClick={become_ambassador}
+                  className="inline-block px-2 py-1 rounded transition-colors text-white hover:bg-white/10"
+                >
+                  Devenir ambassadeur
+                </button>
               </Link>
 
               {/* A propos */}
