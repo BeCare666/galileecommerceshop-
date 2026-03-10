@@ -131,7 +131,7 @@ export default function RegisterAmbassadorPage() {
                 </aside>
 
                 {/* RIGHT */}
-                <main className="lg:col-span-7 lg:p-8 pl-8 pr-8 pt-0">
+                <main className="lg:col-span-7 lg:p-8 pl-8 pr-8 pt-0 pb-8">
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
 
                         {/* STEPPER */}
