@@ -422,7 +422,6 @@ export default function RegisterShopPage() {
                                                 {/* COVER */}
                                                 <div className="flex flex-col">
                                                     <label className="text-xs text-slate-500 mb-2 block">Cover</label>
-
                                                     <div className="form-textarea-epure rounded-2xl border border-dashed border-slate-200 p-4 bg-[rgba(236, 102, 102, 0.9)] flex flex-col flex-1">
 
                                                         {/* PREVIEW */}
@@ -434,8 +433,8 @@ export default function RegisterShopPage() {
                                                             />
                                                         ) : (
                                                             <div className="form-textarea-epure flex flex-col flex-1 items-center justify-center py-6">
-                                                                <ImageIcon className="w-6 h-6 text-slate-400" />
-                                                                <p className="text-xs text-slate-400 mt-2 text-center">
+                                                                <ImageIcon className="w-6 h-6 text-slate-400 text-white" />
+                                                                <p className="text-xs text-slate-400 mt-2 text-center text-white">
                                                                     Importer une image ou coller une URL
                                                                 </p>
                                                             </div>
@@ -477,9 +476,9 @@ export default function RegisterShopPage() {
                                                                 className="w-full h-44 md:h-40 object-cover rounded-xl"
                                                             />
                                                         ) : (
-                                                            <div className="flex flex-col flex-1 items-center justify-center py-6">
-                                                                <ImageIcon className="w-6 h-6 text-slate-400" />
-                                                                <p className="text-xs text-slate-400 mt-2 text-center">
+                                                            <div className="flex flex-col flex-1 items-center justify-center py-6 text-white">
+                                                                <ImageIcon className="w-6 h-6 text-slate-400 text-white" />
+                                                                <p className="text-xs text-slate-400 mt-2 text-center text-white">
                                                                     Importer un logo ou coller une URL
                                                                 </p>
                                                             </div>
@@ -509,8 +508,8 @@ export default function RegisterShopPage() {
                                             </div>
                                             {/* ───────────────────────  Adresse du magasin  ─────────────────────── */}
                                             <div className="p-5 rounded-2xl border bg-[rgba(236, 102, 102, 0.9)] shadow-sm mt-8">
-                                                <h2 className="text-lg font-semibold text-slate-800 flex items-center gap-2 mb-4">
-                                                    <MapPin className="w-5 h-5 text-slate-500" />
+                                                <h2 className="text-white text-lg font-semibold text-slate-800 flex items-center gap-2 mb-4">
+                                                    <MapPin className="w-5 h-5 text-slate-500 text-white" />
                                                     Adresse de votre entreprise
                                                 </h2>
 
@@ -705,7 +704,7 @@ export default function RegisterShopPage() {
                                         {/* BUSINESS */}
                                         <div className="space-y-4">
                                             <h4 className="flex items-center gap-2 text-sm font-semibold text-slate-700 uppercase tracking-wide">
-                                                <Store className="w-4 h-4 text-slate-500" />
+                                                <Store className="w-4 h-4 text-slate-500 text-white" />
                                                 Business
                                             </h4>
 
