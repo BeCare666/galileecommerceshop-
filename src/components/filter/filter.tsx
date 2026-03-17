@@ -1,14 +1,14 @@
 'use client';
 
 import CountrySelector from '@/components/country-selector/country-selector';
-import CategoryMegaMenu from '@/components/category-ega-enu/category-ega-enu';
+import CategoryMegaMenu from '@/components/category-ega-enu/categorydrawer';
 import { Search, Filter, X, Check } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { useState, useEffect, useRef, useCallback } from 'react';
 
-interface ProductsUltraPremiumFilterProps {}
+interface ProductsUltraPremiumFilterProps { }
 
-export default function ProductsUltraPremiumFilter({}: ProductsUltraPremiumFilterProps) {
+export default function ProductsUltraPremiumFilter({ }: ProductsUltraPremiumFilterProps) {
   const router = useRouter();
 
   const [search, setSearch] = useState('');
@@ -106,7 +106,7 @@ export default function ProductsUltraPremiumFilter({}: ProductsUltraPremiumFilte
 
           {/* SEARCH */}
           <div className="relative flex-1 group">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-blue-600 transition-colors"/>
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-blue-600 transition-colors" />
             <input
               value={search}
               onChange={(e) => handleSearchChange(e.target.value)}

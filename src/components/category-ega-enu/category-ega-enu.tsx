@@ -61,21 +61,21 @@ export default function CategoryMegaMenu() {
     }
   }
 
-async function loadSubSubCategories(subCategoryId: number) {
-  try {
-    const res = await fetch(
-      `${API_BASE}/subcategories/bycategory?categories_id=${subCategoryId}`,
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
-    if (res.status === 404) return []; // <- 404 renvoie tableau vide
-    if (!res.ok) throw new Error(`Erreur API: ${res.status}`);
-    const payload = await res.json();
-    return payload?.data ?? [];
-  } catch (err) {
-    console.error(err);
-    return [];
+  async function loadSubSubCategories(subCategoryId: number) {
+    try {
+      const res = await fetch(
+        `${API_BASE}/subcategories/bycategory?categories_id=${subCategoryId}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (res.status === 404) return []; // <- 404 renvoie tableau vide
+      if (!res.ok) throw new Error(`Erreur API: ${res.status}`);
+      const payload = await res.json();
+      return payload?.data ?? [];
+    } catch (err) {
+      console.error(err);
+      return [];
+    }
   }
-}
 
 
   function toggleSet(setState: React.Dispatch<React.SetStateAction<Set<number>>>, value: number) {
@@ -108,17 +108,25 @@ async function loadSubSubCategories(subCategoryId: number) {
     toggleSet(setSelectedSubSubCategories, subSubId);
   }
 
-  function applyFilter() {
-    const query: string[] = [];
-    if (selectedCategory) query.push(`categories_id=${selectedCategory}`);
-    if (selectedSubCategories.size)
-      query.push(`sous_categories_id=${Array.from(selectedSubCategories).join(',')}`);
-    if (selectedSubSubCategories.size)
-      query.push(`sub_categories_id=${Array.from(selectedSubSubCategories).join(',')}`);
-    const queryString = query.join('&');
-    router.push(`/products/forcategory?${queryString}`);
-    setOpenMenu(false);
-  }
+function applyFilter() {
+  const filters = {
+    categories_id: selectedCategory || null,
+    sous_categories_id: selectedSubCategories.size
+      ? Array.from(selectedSubCategories)
+      : [],
+    sub_categories_id: selectedSubSubCategories.size
+      ? Array.from(selectedSubSubCategories)
+      : [],
+  };
+
+  // stocker
+  sessionStorage.setItem("productFilters", JSON.stringify(filters));
+
+  // navigation simple
+  router.push("/products/forcategory");
+
+  setOpenMenu(false);
+}
 
   // Close menu on outside click
   useEffect(() => {
@@ -129,7 +137,7 @@ async function loadSubSubCategories(subCategoryId: number) {
     document.addEventListener('mousedown', onDocClick);
     return () => document.removeEventListener('mousedown', onDocClick);
   }, []);
-//const isProductsPage = router.pathname.startsWith('/products');
+  //const isProductsPage = router.pathname.startsWith('/products');
   return (
     <div ref={containerRef} className="relative z-50">
       {/* Bouton */}
@@ -236,22 +244,22 @@ async function loadSubSubCategories(subCategoryId: number) {
                       return (
                         <div key={sub.id} className="ml-6 flex flex-col">
                           <div className="flex items-center justify-between px-4 py-2 rounded hover:bg-pink-100 cursor-pointer transition"
-                          onClick={async () => {
-                            const newSet = new Set(openSubCategories);
-                            if (newSet.has(sub.id)) {
-                              newSet.delete(sub.id);
-                            } else {
-                              newSet.add(sub.id);
-                              toggleSet(setSelectedSubCategories, sub.id);    // <- ajoute le subId au selectedSubCategories
-                              if (!mobileSubSubCategories[sub.id]) {
-                                console.log("Loading subSubCategories for subId:", sub.id); // <-- log
-                                const subSubs = await loadSubSubCategories(sub.id);
-                                console.log("Loaded subSubCategories:", subSubs); // <-- log
-                                setMobileSubSubCategories(prev => ({ ...prev, [sub.id]: subSubs }));
+                            onClick={async () => {
+                              const newSet = new Set(openSubCategories);
+                              if (newSet.has(sub.id)) {
+                                newSet.delete(sub.id);
+                              } else {
+                                newSet.add(sub.id);
+                                toggleSet(setSelectedSubCategories, sub.id);    // <- ajoute le subId au selectedSubCategories
+                                if (!mobileSubSubCategories[sub.id]) {
+                                  console.log("Loading subSubCategories for subId:", sub.id); // <-- log
+                                  const subSubs = await loadSubSubCategories(sub.id);
+                                  console.log("Loaded subSubCategories:", subSubs); // <-- log
+                                  setMobileSubSubCategories(prev => ({ ...prev, [sub.id]: subSubs }));
+                                }
                               }
-                            }
-                            setOpenSubCategories(newSet);
-                          }}
+                              setOpenSubCategories(newSet);
+                            }}
 
                           >
                             <span>{sub.name}</span>

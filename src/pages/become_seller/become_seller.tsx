@@ -323,7 +323,7 @@ export default function RegisterShopPage() {
         const done = i < step;
         return (
             <div className="flex items-center gap-3">
-                <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold ${done ? "bg-emerald-500 text-white" : active ? "btn-galilee text-white shadow" : "bg-slate-100 text-slate-500"}`}>
+                <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold ${done ? "bg-emerald-500 textwhiteclass" : active ? "btn-galilee textwhiteclass shadow" : "bg-slate-100 text-slate-500"}`}>
                     {done ? <CircleCheck size={14} /> : i + 1}
                 </div>
                 <div className={`hidden md:block text-xs ${active ? "text-slate-900 font-medium" : "text-slate-500"}`}>{STEPS[i]}</div>
@@ -341,7 +341,7 @@ export default function RegisterShopPage() {
         <div className="min-h-screen md:h-[100vh] lg:h-[100vh] bg-[#07131F] flex items-center justify-center">
             <div className="w-full  grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 {/* LEFT HERO **/}
-                <aside className="lg:h-[100vh] lg:col-span-6 text-white md:rounded-[5px] lg:rounded-[5px] overflow-hidden shadow-[5px] relative">
+                <aside className="lg:h-[100vh] lg:col-span-6 textwhiteclass md:rounded-[5px] lg:rounded-[5px] overflow-hidden shadow-[5px] relative">
 
                     {/* Background image */}
                     <Image
@@ -430,10 +430,10 @@ export default function RegisterShopPage() {
                         <div className="flex items-center justify-between mb-8">
                             {/* LEFT TITLE */}
                             <div>
-                                <h1 className="text-3xl font-bold text-slate-900 tracking-tight text-white">
+                                <h1 className="text-3xl font-bold text-slate-900 tracking-tight textwhiteclass">
                                     Créez votre compte
                                 </h1>
-                                <p className="text-white text-slate-500 mt-1">
+                                <p className="textwhiteclass text-slate-500 mt-1">
                                     4 étapes — simple et rapide
                                 </p>
                             </div>
@@ -454,9 +454,9 @@ export default function RegisterShopPage() {
                                                 w-9 h-9 rounded-full flex items-center justify-center border text-sm font-medium
                                                 transition-all duration-300
                                                 ${isActive
-                                                        ? "btn-galilee text-white border-slate-900 shadow-[0_0_10px_rgba(0,0,0,0.15)]"
+                                                        ? "btn-galilee textwhiteclass border-slate-900 shadow-[0_0_10px_rgba(0,0,0,0.15)]"
                                                         : isDone
-                                                            ? "btn-galilee text-white border-indigo-600"
+                                                            ? "btn-galilee textwhiteclass border-indigo-600"
                                                             : "border-indigo-600 text-slate-400 bg-white"
                                                     }
                                             `}
@@ -468,7 +468,7 @@ export default function RegisterShopPage() {
                                 </div>
 
                                 {/* MOBILE */}
-                                <div className="md:hidden text-xs text-slate-500 text-white">
+                                <div className="md:hidden text-xs text-slate-500 textwhiteclass">
                                     Étape <span className="text-slate-900 font-semibold">{step + 1}</span>
                                     / {STEPS.length}
                                 </div>
@@ -482,12 +482,12 @@ export default function RegisterShopPage() {
                                 <motion.div key="s0" variants={containerVariants} initial="hidden" animate="show" exit="hidden" className="space-y-4 md:h-[55vh] overflow-y-auto overflow-x-hidden scrollbar-hide ">
                                     {stepField(
                                         <>
-                                            <FloatingInput id="name" label="Nom complet" icon={<User size={16} className="text-white" />} error={errors.name?.message} {...register("name", { required: "Nom requis" })} />
+                                            <FloatingInput id="name" label="Nom complet" icon={<User size={16} className="textwhiteclass" />} error={errors.name?.message} {...register("name", { required: "Nom requis" })} />
 
 
-                                            <FloatingInput id="email" label="Email" icon={<Mail size={16} className="text-white" />} error={errors.email?.message} {...register("email", { required: "Email requis", pattern: { value: /\S+@\S+\.\S+/, message: "Email invalide" } })} />
+                                            <FloatingInput id="email" label="Email" icon={<Mail size={16} className="textwhiteclass" />} error={errors.email?.message} {...register("email", { required: "Email requis", pattern: { value: /\S+@\S+\.\S+/, message: "Email invalide" } })} />
 
-                                            <FloatingInput id="password" label="Mot de passe" type="password" icon={<Lock size={16} className="text-white" />} error={errors.password?.message} {...register("password", { required: "Mot de passe requis", minLength: { value: 6, message: "6 caractères minimum" } })} />
+                                            <FloatingInput id="password" label="Mot de passe" type="password" icon={<Lock size={16} className="textwhiteclass" />} error={errors.password?.message} {...register("password", { required: "Mot de passe requis", minLength: { value: 6, message: "6 caractères minimum" } })} />
                                         </>
                                     )}
                                 </motion.div>
@@ -498,16 +498,16 @@ export default function RegisterShopPage() {
                                 <motion.div key="s1" variants={containerVariants} initial="hidden" animate="show" exit="hidden" className="space-y-4 md:h-[65vh] overflow-y-auto overflow-x-hidden scrollbar-hide">
                                     {stepField(
                                         <>
-                                            <FloatingInput id="shop_name" label="Nom de votre B space (Votre boutique en ligne) " icon={<Store size={16} className="text-white" />} error={errors.shop_name?.message} {...register("shop_name", { required: "Nom de votre B space requis" })} />
+                                            <FloatingInput id="shop_name" label="Nom de votre B space (Votre boutique en ligne) " icon={<Store size={16} className="textwhiteclass" />} error={errors.shop_name?.message} {...register("shop_name", { required: "Nom de votre B space requis" })} />
 
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                                <FloatingInput id="website" label="Site web" icon={<Globe size={16} className="text-white" />} error={errors.website?.message} {...register("website", { required: "le site est requis" })} />
+                                                <FloatingInput id="website" label="Site web" icon={<Globe size={16} className="textwhiteclass" />} error={errors.website?.message} {...register("website", { required: "le site est requis" })} />
 
                                                 <FloatingInput
                                                     id="contact"
                                                     type="tel"
                                                     label="Téléphone"
-                                                    icon={<Phone size={16} className="text-white" />}
+                                                    icon={<Phone size={16} className="textwhiteclass" />}
                                                     error={errors.contact?.message}
                                                     {...register("contact", {
                                                         required: "Le contact est requis",
@@ -540,8 +540,8 @@ export default function RegisterShopPage() {
                                                             />
                                                         ) : (
                                                             <div className="form-textarea-epure flex flex-col flex-1 items-center justify-center py-6">
-                                                                <ImageIcon className="w-6 h-6 text-slate-400 text-white" />
-                                                                <p className="text-xs text-slate-400 mt-2 text-center text-white">
+                                                                <ImageIcon className="w-6 h-6 text-slate-400 textwhiteclass" />
+                                                                <p className="text-xs text-slate-400 mt-2 text-center textwhiteclass">
                                                                     Importer une image ou coller une URL
                                                                 </p>
                                                             </div>
@@ -584,9 +584,9 @@ export default function RegisterShopPage() {
                                                                 className="w-full h-44 md:h-40 object-cover rounded-xl"
                                                             />
                                                         ) : (
-                                                            <div className="flex flex-col flex-1 items-center justify-center py-6 text-white">
-                                                                <ImageIcon className="w-6 h-6 text-slate-400 text-white" />
-                                                                <p className="text-xs text-slate-400 mt-2 text-center text-white">
+                                                            <div className="flex flex-col flex-1 items-center justify-center py-6 textwhiteclass">
+                                                                <ImageIcon className="w-6 h-6 text-slate-400 textwhiteclass" />
+                                                                <p className="text-xs text-slate-400 mt-2 text-center textwhiteclass">
                                                                     Importer un logo ou coller une URL
                                                                 </p>
                                                             </div>
@@ -617,8 +617,8 @@ export default function RegisterShopPage() {
                                             </div>
                                             {/* ───────────────────────  Adresse du magasin  ─────────────────────── */}
                                             <div className="p-5 rounded-[5px] border glass-card shadow-sm mt-8">
-                                                <h2 className="text-white text-lg font-semibold text-slate-800 flex items-center gap-2 mb-4">
-                                                    <MapPin className="w-5 h-5 text-slate-500 text-white" />
+                                                <h2 className="textwhiteclass text-lg font-semibold text-slate-800 flex items-center gap-2 mb-4">
+                                                    <MapPin className="w-5 h-5 text-slate-500 textwhiteclass" />
                                                     Adresse de votre entreprise
                                                 </h2>
 
@@ -702,7 +702,7 @@ export default function RegisterShopPage() {
                                 <motion.div key="s2" variants={containerVariants} initial="hidden" animate="show" exit="hidden" className="space-y-4 md:h-[55vh] overflow-y-auto overflow-x-hidden scrollbar-hide">
                                     {stepField(
                                         <>
-                                            <h3 className="text-sm font-medium text-slate-700 text-white">Documents d'entreprise</h3>
+                                            <h3 className="text-sm font-medium text-slate-700 textwhiteclass">Documents d'entreprise</h3>
                                             <div className="space-y-3">
                                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                                                     <input id="docType" placeholder="Type (ex: business_license)" className="form-input-epure px-3 py-2 rounded-lg border" />
@@ -714,7 +714,7 @@ export default function RegisterShopPage() {
                                                         addDocUrl(t, u);
                                                         (document.getElementById("docType") as HTMLInputElement).value = "";
                                                         (document.getElementById("docUrl") as HTMLInputElement).value = "";
-                                                    }} className="px-4 py-2 rounded-lg btn-galilee text-white">Ajouter</button>
+                                                    }} className="px-4 py-2 rounded-lg btn-galilee textwhiteclass">Ajouter</button>
                                                 </div>
 
                                                 <div className="flex flex-col md:flex-row gap-4 w-full">
@@ -734,8 +734,8 @@ export default function RegisterShopPage() {
                                                             hover:border-[#FF6EA9] hover:bg-[#FF6EA9]/5">
                                                             <Inbox className="w-8 h-8 text-[#FF6EA9]" />
                                                             <div>
-                                                                <div className="text-sm font-semibold text-white">Pièce d'identité</div>
-                                                                <div className="text-xs text-slate-500 text-white">JPEG / PNG</div>
+                                                                <div className="text-sm font-semibold textwhiteclass">Pièce d'identité</div>
+                                                                <div className="text-xs text-slate-500 textwhiteclass">JPEG / PNG</div>
                                                             </div>
                                                         </div>
                                                     </label>
@@ -755,8 +755,8 @@ export default function RegisterShopPage() {
                                                         hover:border-[#FF6EA9] hover:bg-[#FF6EA9]/5">
                                                             <FileText className="w-8 h-8 text-[#FF6EA9]" />
                                                             <div>
-                                                                <div className="text-sm font-semibold text-white">Registre de commerce</div>
-                                                                <div className="text-xs text-slate-500 text-white">PDF ou image</div>
+                                                                <div className="text-sm font-semibold textwhiteclass">Registre de commerce</div>
+                                                                <div className="text-xs text-slate-500 textwhiteclass">PDF ou image</div>
                                                             </div>
                                                         </div>
                                                     </label>
@@ -777,7 +777,7 @@ export default function RegisterShopPage() {
                                                 </div>
                                             </div>
 
-                                            <h3 className="text-sm font-medium text-slate-700 mt-4 text-white">Informations bancaires</h3>
+                                            <h3 className="text-sm font-medium text-slate-700 mt-4 textwhiteclass">Informations bancaires</h3>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                                 <input placeholder="Titulaire du compte" className="form-input-epure px-4 py-3 rounded-[5px] border" {...register("bank_account_name", { required: "Le nom du compte est requis" })} />
                                                 {errors.bank_account_name && (
@@ -803,9 +803,9 @@ export default function RegisterShopPage() {
                                     initial="hidden"
                                     animate="show"
                                     exit="hidden"
-                                    className="space-y-6 md:h-[55vh] overflow-y-auto overflow-x-hidden scrollbar-hide text-white"
+                                    className="space-y-6 md:h-[55vh] overflow-y-auto overflow-x-hidden scrollbar-hide textwhiteclass"
                                 >
-                                    <h3 className="text-xl font-semibold text-slate-800 tracking-tight text-white">
+                                    <h3 className="text-xl font-semibold text-slate-800 tracking-tight textwhiteclass">
                                         Vérifiez vos informations
                                     </h3>
 
@@ -813,12 +813,12 @@ export default function RegisterShopPage() {
 
                                         {/* IDENTITÉ */}
                                         <div className="space-y-4">
-                                            <h4 className="flex items-center gap-2 text-sm font-semibold text-slate-700 uppercase text-white tracking-wide">
-                                                <User className="w-4 h-4 text-slate-500 text-white" />
+                                            <h4 className="flex items-center gap-2 text-sm font-semibold text-slate-700 uppercase textwhiteclass tracking-wide">
+                                                <User className="w-4 h-4 text-slate-500 textwhiteclass" />
                                                 Identité
                                             </h4>
 
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm textwhiteclass">
                                                 <InfoLine label="Nom" value={getValues("name")} />
                                                 <InfoLine label="Email" value={getValues("email")} />
                                             </div>
@@ -826,12 +826,12 @@ export default function RegisterShopPage() {
 
                                         {/* BUSINESS */}
                                         <div className="space-y-4">
-                                            <h4 className="flex items-center gap-2 text-sm font-semibold text-slate-700 uppercase text-white tracking-wide">
-                                                <Store className="w-4 h-4 text-slate-500 text-white" />
+                                            <h4 className="flex items-center gap-2 text-sm font-semibold text-slate-700 uppercase textwhiteclass tracking-wide">
+                                                <Store className="w-4 h-4 text-slate-500 textwhiteclass" />
                                                 Business
                                             </h4>
 
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm textwhiteclass">
                                                 <InfoLine label="B Space" value={getValues("shop_name")} />
                                                 <InfoLine label="Contact" value={getValues("contact") ?? ""} />
                                                 <InfoLine
@@ -844,12 +844,12 @@ export default function RegisterShopPage() {
 
                                         {/* IMAGES */}
                                         <div className="space-y-4">
-                                            <h4 className="flex items-center text-white gap-2 text-sm font-semibold text-slate-700 uppercase tracking-wide">
-                                                <ImageIcon className="w-4 h-4 text-slate-500 text-white" />
+                                            <h4 className="flex items-center textwhiteclass gap-2 text-sm font-semibold text-slate-700 uppercase tracking-wide">
+                                                <ImageIcon className="w-4 h-4 text-slate-500 textwhiteclass" />
                                                 Médias
                                             </h4>
 
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-white">
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 textwhiteclass">
 
                                                 {getValues("cover_image_url") && (
                                                     <MediaPreview
@@ -870,8 +870,8 @@ export default function RegisterShopPage() {
 
                                         {/* DOCUMENTS */}
                                         <div className="space-y-4">
-                                            <h4 className="flex items-center gap-2 text-sm font-semibold text-slate-700 uppercase tracking-wide text-white">
-                                                <FileText className="w-4 h-4 text-slate-500 text-white" />
+                                            <h4 className="flex items-center gap-2 text-sm font-semibold text-slate-700 uppercase tracking-wide textwhiteclass">
+                                                <FileText className="w-4 h-4 text-slate-500 textwhiteclass" />
                                                 Documents
                                             </h4>
 
@@ -879,11 +879,11 @@ export default function RegisterShopPage() {
                                                 {(getValues("documents") || []).map((d: DocItem, i: number) => (
                                                     <li
                                                         key={i}
-                                                        className="text-white flex items-center justify-between bg-[rgba(0,0,0,0.4)] rounded-xl border p-3 hover:bg-slate-100 transition"
+                                                        className="textwhiteclass flex items-center justify-between bg-[rgba(0,0,0,0.4)] rounded-xl border p-3 hover:bg-slate-100 transition"
                                                     >
-                                                        <div className="flex items-center gap-3 text-white">
-                                                            <File className="w-4 h-4 text-slate-600 text-white" />
-                                                            <span className="font-medium text-slate-700 text-white">
+                                                        <div className="flex items-center gap-3 textwhiteclass">
+                                                            <File className="w-4 h-4 text-slate-600 textwhiteclass" />
+                                                            <span className="font-medium text-slate-700 textwhiteclass">
                                                                 {d.type}
                                                             </span>
                                                         </div>
@@ -891,7 +891,7 @@ export default function RegisterShopPage() {
                                                         <a
                                                             href={d.url}
                                                             target="_blank"
-                                                            className="text-xs text-blue-600 hover:text-blue-800 underline text-white"
+                                                            className="text-xs text-blue-600 hover:text-blue-800 underline textwhiteclass"
                                                         >
                                                             Voir le fichier
                                                         </a>
@@ -910,7 +910,7 @@ export default function RegisterShopPage() {
                         <div className="flex items-center justify-between gap-3">
                             <div className="flex items-center gap-3">
                                 {step > 0 && (
-                                    <button type="button" onClick={goPrev} className="inline-flex items-center gap-2 px-4 py-2 rounded-[5px] border hover:bg-white/110 text-white">
+                                    <button type="button" onClick={goPrev} className="inline-flex items-center gap-2 px-4 py-2 rounded-[5px] border hover:bg-white/110 textwhiteclass">
                                         <ArrowLeft size={16} /> Précédent
                                     </button>
                                 )}
@@ -918,11 +918,11 @@ export default function RegisterShopPage() {
 
                             <div className="flex items-center gap-3">
                                 {step < STEPS.length - 1 ? (
-                                    <button type="button" onClick={goNext} className="inline-flex items-center gap-2 px-6 py-3 rounded-[5px!important] btn-galilee text-white font-medium hover:brightness-95">
+                                    <button type="button" onClick={goNext} className="inline-flex items-center gap-2 px-6 py-3 rounded-[5px!important] btn-galilee textwhiteclass font-medium hover:brightness-95">
                                         Suivant <ArrowRight size={16} />
                                     </button>
                                 ) : (
-                                    <button type="submit" disabled={isSubmitting} className="inline-flex items-center gap-2 px-6 py-3 rounded-[5px] bg-gradient-to-r from-indigo-600 to-pink-500 text-white font-medium shadow-lg">
+                                    <button type="submit" disabled={isSubmitting} className="inline-flex items-center gap-2 px-6 py-3 rounded-[5px] bg-gradient-to-r from-indigo-600 to-pink-500 textwhiteclass font-medium shadow-lg">
                                         {isSubmitting ? "Envoi..." : "Valider"} <CircleCheck size={16} />
                                     </button>
                                 )}
@@ -930,7 +930,7 @@ export default function RegisterShopPage() {
                         </div>
 
                         {uploading && (
-                            <div className="mt-2 text-xs text-slate-500 text-white">Upload en cours: {uploadProgress}%</div>
+                            <div className="mt-2 text-xs text-slate-500 textwhiteclass">Upload en cours: {uploadProgress}%</div>
                         )}
                     </form>
                 </main>
@@ -938,16 +938,16 @@ export default function RegisterShopPage() {
             <style jsx global>{`
 
 /* ============================= */
-/* CHARTE GALILEE DARK PREMIUM */
+/* CHARTE GALILEE DARK BLUE PREMIUM */
 /* ============================= */
 
 :root {
-  --galilee-bg: #07131F;
-  --galilee-card: rgba(0,0,0,0.45);
-  --galilee-border: rgba(255,255,255,0.1);
+  --galilee-bg:   #1763AB; /* #071A2F bleu foncé plus riche */
+  --galilee-card: rgba(10, 25, 47, 0.65);
+  --galilee-border: rgba(255,255,255,0.08);
   --galilee-text: #ffffff;
-  --galilee-text-soft: #D1D5DB;
-  --galilee-accent: #FF7A2D;
+  --galilee-text-soft: #CBD5E1;
+  --galilee-accent: #E4127A; /* pink */
 }
 
 /* PAGE BACKGROUND */
@@ -965,7 +965,7 @@ textarea.form-textarea-epure,
 select.form-input-epure {
 
   border: 1px solid var(--galilee-border);
-  background: rgba(0,0,0,0.4);
+  background: rgba(15, 35, 60, 0.6); /* bleu foncé */
   color: var(--galilee-text);
   font-size: 0.875rem;
   transition: all .25s ease;
@@ -982,7 +982,7 @@ select.form-input-epure:focus {
 
   outline: none;
   border-color: var(--galilee-accent);
-  box-shadow: 0 0 0 2px rgba(255,122,45,.25);
+  box-shadow: 0 0 0 2px rgba(236,72,153,.25);
 }
 
 /* ============================= */
@@ -991,7 +991,7 @@ select.form-input-epure:focus {
 
 .glass-card{
   background: var(--galilee-card);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
   border: 1px solid var(--galilee-border);
   border-radius: 1rem;
 }
@@ -1004,7 +1004,7 @@ select.form-input-epure:focus {
 
   border: 1px dashed var(--galilee-border);
   border-radius: 1rem;
-  background: rgba(0,0,0,0.35);
+  background: rgba(15, 35, 60, 0.5);
   padding: 1rem;
 
   transition: all .25s ease;
@@ -1013,7 +1013,7 @@ select.form-input-epure:focus {
 .upload-zone:hover {
 
   border-color: var(--galilee-accent);
-  background: rgba(0,0,0,0.5);
+  background: rgba(15, 35, 60, 0.7);
 }
 
 /* ============================= */
@@ -1039,9 +1039,13 @@ label{
   transition:all .25s ease;
 }
 
+.textwhiteclass{
+  color:white
+}
+
 .btn-galilee:hover{
 
-  background:#ff8b48;
+  background:#F472B6; /* pink-400 */
   transform:scale(1.03);
 }
 
@@ -1072,6 +1076,7 @@ label{
 .animate-fadeIn{
   animation:fadeIn .25s ease;
 }
+
 `}</style>
 
         </div>
@@ -1131,7 +1136,7 @@ const FloatingInput = React.forwardRef<HTMLInputElement, any>(
 
                 <div className="min-h-[18px] mt-1">
                     {showError && (
-                        <p className="text-pink-600 text-xs">
+                        <p className="text-[#E4127A] text-xs">
                             {error}
                         </p>
                     )}
@@ -1153,8 +1158,8 @@ const InfoLine = ({
     full?: boolean;
 }) => (
     <div className={`${full ? "md:col-span-2" : ""}`}>
-        <p className="text-[13px] text-slate-500 font-medium text-white">{label}</p>
-        <p className="text-slate-800 font-semibold mt-0.5 text-white">{value || "-"}</p>
+        <p className="text-[13px] text-slate-500 font-medium textwhiteclass">{label}</p>
+        <p className="text-slate-800 font-semibold mt-0.5 textwhiteclass">{value || "-"}</p>
     </div>
 );
 

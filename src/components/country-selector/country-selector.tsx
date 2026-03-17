@@ -109,7 +109,8 @@ export default function CountrySelectorWithDrawer() {
       showCancelButton: true,
     }).then((r) => {
       if (r.isConfirmed) {
-        router.push({ pathname: '/products/forcategory', query });
+        localStorage.setItem('selectedCountry', country.id.toString());
+        router.push('/products/forcategory');
       }
     });
   };
