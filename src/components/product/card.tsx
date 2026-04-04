@@ -4730,7 +4730,7 @@ export default function Card({ product }: { product: Product }) {
                   console.log('Open modal slug:', slug);
                   openModal('PRODUCT_DETAILS', { slug });
                 }}
-                className=" bg-white border border-gray-200 rounded-md w-10 h-10 flex items-center justify-center shadow hover:bg-pink-50 transition group-hover:scale-110"
+                className="hidden bg-white border border-gray-200 rounded-md w-10 h-10 flex items-center justify-center shadow hover:bg-pink-50 transition group-hover:scale-110"
               >
                 <EyeIcon className="h-5 w-5 text-pink-500" />
               </button>

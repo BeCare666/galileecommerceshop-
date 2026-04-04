@@ -380,7 +380,6 @@ export default function RegisterAmbassadorPage() {
 
             {/* ──────────────── Styles ──────────────── */}
             <style jsx global>{`
-
  .form-input-epure,
 .form-textarea-epure {
   width:100%;
@@ -416,7 +415,7 @@ font-weight: 4px !important;
 margin-top: 5px!important;
 margin-bottom: 5px!important;
 }
-`}</style>
+            `}</style>
         </div>
     );
 }

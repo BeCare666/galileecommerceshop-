@@ -53,7 +53,7 @@ export default function ProductInformation({
           {dayjs(created_at).format('MMM D, YYYY')}
         </span>
       </div>
-      <div className="flex items-start text-dark dark:text-light">
+      <div className="hidden flex items-start text-dark dark:text-light">
         <strong className="flex w-36 flex-shrink-0 items-center font-normal text-dark-600 dark:text-light-600">
           <span className="w-8 flex-shrink-0 text-dark-900 dark:text-light-900">
             {getIcon({
