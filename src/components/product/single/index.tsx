@@ -487,14 +487,13 @@ const Single: React.FC<SingleProps> = ({ product }) => {
   const API_BASE = `${API_URL}`;
   const token = getAuthToken();
   //if (!token) router.push('/login');
-  useEffect(() => {
+  //useEffect(() => {
+  //}, [token, router]);
+  const handleInquiry = async (data: any) => {
+    const toastId = toast.loading('Envoi de la demande...');
     if (!token) {
       router.push('/login');
     }
-  }, [token, router]);
-  const handleInquiry = async (data: any) => {
-    const toastId = toast.loading('Envoi de la demande...');
-
     try {
       const res = await fetch(`${API_BASE}/inquiries`, {
         method: 'POST',
@@ -876,7 +875,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
 
                     {/* Buttons    */}
                     <div className="space-y-2">
-                      {!isCategorie ? (
+                      {isCategorie ? (
                         <button onClick={handleSubmit} className="w-full bg-[#E4127A] hover:bg-orange-500 text-white font-bold py-2.5 rounded-lg transition text-sm">
                           Envoyer une demande
                         </button>
@@ -1244,7 +1243,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
 
                   {/* Buttons    */}
                   <div className="space-y-2">
-                    {!isCategorie ? (
+                    {isCategorie ? (
                       <button onClick={handleSubmit} className="w-full bg-[#E4127A] hover:bg-orange-500 text-white font-bold py-2.5 rounded-lg transition text-sm">
                         Envoyer une demande
                       </button>

@@ -28,6 +28,23 @@ export default function PremiumDrawer({
     const { openModal } = useModalAction();
     const { isAuthorized } = useMe();
     const { addItemToCart } = useCart();
+    {/*  onClick={() => {
+    addItemToCart({
+      id: String(product.id),
+      name: product.name,
+      slug: product.slug,
+      image: product.image?.url,
+      price: unitPrice,
+      quantity,
+      stock: product.quantity,
+      unit: product.unit,
+      shop: {
+        slug: product.shop.slug,
+        name: product.shop.name,
+      },
+      language: product.language,
+    });
+  }}*/}
     const handleOpenQuestion = () => {
         if (!isAuthorized) {
             openModal('LOGIN_VIEW');
@@ -220,7 +237,7 @@ export default function PremiumDrawer({
                     </div>
 
 
-                    {!isCategorie ? (
+                    {isCategorie ? (
                         <button
                             onClick={handleSubmit}
                             className="w-full bg-[#E4127A]  hover:bg-orange-500 text-white py-3 rounded-full font-semibold transition"
@@ -243,23 +260,7 @@ export default function PremiumDrawer({
                                 const { onClick, isLoading, disabled, price } = params;
                                 return (
                                     <button
-                                        onClick={() => {
-                                            addItemToCart({
-                                                id: String(product.id),
-                                                name: product.name,
-                                                slug: product.slug,
-                                                image: product.image?.url,
-                                                price: unitPrice,
-                                                quantity,
-                                                stock: product.quantity,
-                                                unit: product.unit,
-                                                shop: {
-                                                    slug: product.shop.slug,
-                                                    name: product.shop.name,
-                                                },
-                                                language: product.language,
-                                            });
-                                        }}
+                                        onClick={onClick}
                                         disabled={disabled}
                                         className="flex items-center justify-center w-full bg-[#E4127A] hover:bg-orange-500 text-white font-bold py-2.5 rounded-lg transition text-sm"
                                     >
