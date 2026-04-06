@@ -486,7 +486,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
   if (!API_URL) throw new Error("NEXT_PUBLIC_REST_API_ENDPOINT n'est pas défini !");
   const API_BASE = `${API_URL}`;
   const token = getAuthToken();
-  //if (!token) router.push('/login');
+  //if (!token) router.push('/login'); changer
   //useEffect(() => {
   //}, [token, router]);
   const handleInquiry = async (data: any) => {
