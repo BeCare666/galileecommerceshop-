@@ -1,26 +1,31 @@
 import placeholder from '@/assets/images/placeholders/product.svg';
 import Certificat from '@/assets/images/certificat.svg';
+import Verified from '@/assets/images/verified.svg';
 import { motion } from 'framer-motion';
 import ProductDetailsPaper from '@/components/product/product-details-paper';
 import ProductInformation from '@/components/product/product-information';
 import ProductSocialShare from '@/components/product/product-social-share';
+import ProductDrawer from '@/components/product/single/premiumDrawer';
 import ProductQuestions from '@/components/questions/product-questions';
 import AverageRatings from '@/components/review/average-ratings';
 import ProductReviews from '@/components/review/product-reviews';
 import Image from '@/components/ui/image';
+import { getAuthToken, removeAuthToken } from '@/data/client/token.utils';
 import { LongArrowIcon } from '@/components/icons/long-arrow-icon';
+import AddToCart from '@/components/cart/add-to-cart';
 import routes from '@/config/routes';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { useState } from 'react';
-import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ZoomIn, ShieldCheck, Lock, CreditCard } from 'lucide-react';
 import Footer from '@/components/footer/footer';
 import { Product } from '@/types';
 import { isEmpty } from 'lodash';
 import { useSanitizeContent } from '@/lib/sanitize-content';
-
-
+import toast from 'react-hot-toast';
+import { useState, useEffect } from "react";
+import { useModalAction } from '@/components/modal-views/context';
+import { useMe } from '@/data/user';
 type SingleProps = {
   product: Product;
 };
@@ -46,6 +51,7 @@ const staggerContainer = {
     },
   },
 };
+
 
 function SpecGrid({ specs }: any) {
   return (
@@ -338,13 +344,218 @@ function CertificateBadge({ cert, onClick }: any) {
     </button>
   );
 }
+function VisaLogo() {
+  return (
+    <svg viewBox="0 0 48 32" className="h-4 w-9" aria-label="Visa">
+      <rect width="48" height="32" rx="6" fill="#1434CB" />
+      <text
+        x="50%"
+        y="52%"
+        textAnchor="middle"
+        dominantBaseline="middle"
+        fontFamily="Arial, Helvetica, sans-serif"
+        fontWeight="800"
+        fontSize="14"
+        fill="#fff"
+      >
+        VISA
+      </text>
+    </svg>
+  );
+}
 
+function MastercardLogo() {
+  return (
+    <svg viewBox="0 0 48 32" className="h-4 w-9" aria-label="Mastercard">
+      <rect width="48" height="32" rx="6" fill="#fff" stroke="#e5e7eb" />
+      <circle cx="20" cy="16" r="8" fill="#EB001B" />
+      <circle cx="28" cy="16" r="8" fill="#F79E1B" />
+    </svg>
+  );
+}
+
+function AmexLogo() {
+  return (
+    <svg viewBox="0 0 48 32" className="h-4 w-9" aria-label="American Express">
+      <rect width="48" height="32" rx="6" fill="#2E77BC" />
+      <text
+        x="50%"
+        y="52%"
+        textAnchor="middle"
+        dominantBaseline="middle"
+        fontFamily="Arial, Helvetica, sans-serif"
+        fontWeight="800"
+        fontSize="10"
+        fill="#fff"
+      >
+        AMEX
+      </text>
+    </svg>
+  );
+}
+
+function DiscoverLogo() {
+  return (
+    <svg viewBox="0 0 48 32" className="h-4 w-9" aria-label="Discover">
+      <rect width="48" height="32" rx="6" fill="#fff" stroke="#e5e7eb" />
+      <path d="M32 8c0 8-8 8-8 16h16c0-8-8-8-8-16z" fill="#ff7a00" />
+      <text
+        x="13"
+        y="19"
+        fontFamily="Arial, Helvetica, sans-serif"
+        fontWeight="800"
+        fontSize="8"
+        fill="#111827"
+      >
+        DISCOVER
+      </text>
+    </svg>
+  );
+}
+
+function PayPalLogo() {
+  return (
+    <svg viewBox="0 0 48 32" className="h-4 w-9" aria-label="PayPal">
+      <rect width="48" height="32" rx="6" fill="#fff" stroke="#e5e7eb" />
+      <path d="M16 22h7.5c4 0 6.5-2.2 6.5-5.4 0-3.1-2.5-4.6-6.3-4.6H19l-.8 4.6h4.6c1.2 0 2 .5 2 1.4 0 1.2-1.2 2-2.8 2H18l-2 2z" fill="#003087" />
+      <path d="M18 22l2-12h6.1c3.7 0 6.3 1.5 6.3 4.6 0 .4 0 .8-.1 1.1 0 0-1.9-2.1-5.2-2.1H22.5l-.7 4.1h4.6c1.6 0 2.7.7 2.7 1.9 0 .5-.1 1-.3 1.4H18z" fill="#009cde" opacity="0.9" />
+    </svg>
+  );
+}
+function ProductSpecs() {
+  const data = [
+    { label: 'Utilisation', value: 'Atelier, usine', label2: 'Matériel', value2: 'Acier' },
+    { label: 'Type de produit', value: 'Structure en acier', label2: 'Garantie', value2: '1 AN' },
+    {
+      label: 'Service après - vente',
+      value: 'Support technique en ligne, Installation sur site, Formation sur place',
+      label2: 'Solution de projet Capacité',
+      value2: '3D modèle conception',
+    },
+    { label: 'Style de conception', value: 'Moderne', label2: 'Application', value2: 'Entrepôt, Atelier' },
+    { label: "Point d'origine", value: 'Liaoning, China', label2: 'Marque nom', value2: 'SYLY' },
+    { label: 'Numéro de Type', value: 'Q235B Q355B', label2: 'Product name', value2: 'Warehouse Workshop Prefab Metal Buildings' },
+    { label: 'Certificate', value: 'ISO9001:2008', label2: 'Color', value2: 'Optional' },
+  ];
+
+  return (
+    <div className="mt-6">
+      <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+        Caractéristiques du produit
+      </h2>
+
+      <div className="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
+        {data.map((row, index) => (
+          <div
+            key={index}
+            className={`grid grid-cols-2 md:grid-cols-4 ${index % 2 === 0
+              ? 'bg-gray-50 dark:bg-white/5'
+              : 'bg-white dark:bg-[#0B0B0C]'
+              }`}
+          >
+            {/* Col 1 */}
+            <div className="p-3 text-xs text-gray-500 dark:text-gray-400 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800">
+              {row.label}
+            </div>
+
+            <div className="p-3 text-sm font-medium text-gray-900 dark:text-white border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800">
+              {row.value}
+            </div>
+
+            {/* Col 2 */}
+            <div className="p-3 text-xs text-gray-500 dark:text-gray-400 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800">
+              {row.label2}
+            </div>
+
+            <div className="p-3 text-sm font-medium text-gray-900 dark:text-white border-b md:border-b-0 border-gray-200 dark:border-gray-800">
+              {row.value2}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 const Single: React.FC<SingleProps> = ({ product }) => {
   const { t } = useTranslation('common');
   const router = useRouter();
   const [selectedImageIdx, setSelectedImageIdx] = useState(0);
   const [selectedCertIdx, setSelectedCertIdx] = useState<number | null>(null);
+  const [open, setOpen] = useState(false);
+  const API_URL = process.env.NEXT_PUBLIC_REST_API_ENDPOINT;
+  if (!API_URL) throw new Error("NEXT_PUBLIC_REST_API_ENDPOINT n'est pas défini !");
+  const API_BASE = `${API_URL}`;
+  const token = getAuthToken();
+  //if (!token) router.push('/login');
+  useEffect(() => {
+    if (!token) {
+      router.push('/login');
+    }
+  }, [token, router]);
+  const handleInquiry = async (data: any) => {
+    const toastId = toast.loading('Envoi de la demande...');
 
+    try {
+      const res = await fetch(`${API_BASE}/inquiries`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) {
+        throw new Error('Erreur serveur');
+      }
+
+      toast.success('Demande envoyée au fournisseur ✅', {
+        id: toastId,
+      });
+
+    } catch (error) {
+      console.error(error);
+
+      toast.error('Échec de l’envoi ❌', {
+        id: toastId,
+      });
+    }
+  };
+  // ✅ SUBMIT
+  const handleSubmit = () => {
+    const sizeSelected = product.unit;
+    const payload = {
+      product_id: product.id,
+      product_name: product.name,
+      shop_id: product.shop_id,
+
+      quantity: 1,
+      unit: product.unit,
+      unit_price: product.sale_price / product.unit,
+      total: product.sale_price,
+
+      selected_options: {
+        size: product.sale_price / sizeSelected,
+      },
+    };
+
+    handleInquiry(payload);
+    //onClose();
+  };
+  const { openModal } = useModalAction();
+  const { isAuthorized } = useMe();
+
+  const handleOpenQuestion = () => {
+    if (!isAuthorized) {
+      openModal('LOGIN_VIEW');
+      return;
+    }
+
+    openModal('QUESTION_FORM', {
+      product_id: product?.id,
+      shop_id: product?.shop?.id,
+    });
+  };
   const {
     id,
     name,
@@ -361,7 +572,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
     type,
     video,
   } = product;
-
+  console.log(product);
   const previews = getPreviews(gallery, image);
   const content = useSanitizeContent({ description: description });
   const [zoomStyle, setZoomStyle] = useState({ transformOrigin: 'center' })
@@ -383,10 +594,27 @@ const Single: React.FC<SingleProps> = ({ product }) => {
   const productSpecs = [
     { label: 'Type', value: type?.name || 'N/A' },
     { label: 'SKU', value: product?.sku || 'N/A' },
-    { label: 'Certification', value: product?.shop?.documents?.commerce_register ? '✓ Certifié' : 'Non certifié' },
+    {
+      label: 'Certification', value: product?.shop?.documents?.commerce_register ? 'Non certifié' : `<div className="text-gray-600 dark:text-gray-400 text-xs mt-2">
+                        <Image
+                          alt="Verified"
+                          className="w-20 h-50 object-contain"
+                          src={Verified}
+                          width={20}
+                          height={50}
+                        />
+
+                      </div>`
+    },
     { label: 'Localisation', value: `${product?.shop?.address?.city}` },
   ];
+  const verifiedIsCategorie = ['2', '300', '1', '9', '15', '16'];
 
+  const isCategorie = product.categories.some((cat: any) =>
+    verifiedIsCategorie.includes(String(cat.categories_id))
+  );
+
+  //console.log('isCategorie', isCategorie);
   const certificates = [
     {
       badgeIcon: 'https://s.alicdn.com/@sc04/kf/H4d63ce257be542828ef4196e9c3d45cdw.png',
@@ -460,7 +688,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
               <div className="flex gap-6">
 
                 {/* Thumbnails verticales */}
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 hidden lg:flex">
                   {allMedia.map((media: any, idx: number) => (
                     <motion.button
                       key={idx}
@@ -524,7 +752,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                   </button>
 
                   {/* ACTIONS */}
-                  <div className="absolute top-3 right-3 flex gap-2 z-20 opacity-0 group-hover:opacity-100">
+                  <div className="hidden absolute top-3 right-3 flex gap-2 z-20 opacity-0 group-hover:opacity-100">
                     <button className="p-2 rounded-full bg-white shadow">♡</button>
                     <button className="p-2 rounded-full bg-white shadow">⛶</button>
                   </div>
@@ -541,16 +769,250 @@ const Single: React.FC<SingleProps> = ({ product }) => {
               {/* Description Section */}
               {content ? (
                 <div className="space-y-2">
-                  <h1 className='font-bold text-gray-900 dark:text-white uppercase tracking-wide'>{product.name} </h1>
-                  <h3 className="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wide">Description</h3>
-                  <div className="text-xs text-gray-700 dark:text-gray-300 line-clamp-6 leading-relaxed">
-                    {content.replace(/<[^>]*>/g, '').substring(0, 1000000000)}...
-                  </div>
+                  <h1 className="font-bold text-gray-900 dark:text-white uppercase tracking-wide">
+                    {product.name}
+                  </h1>
+
+                  <h3 className="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wide">
+                    Description
+                  </h3>
+
+                  <div
+                    className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed prose max-w-none"
+                    dangerouslySetInnerHTML={{ __html: content }}
+                  />
                 </div>
               ) : null}
+              {/* RIGHT - Pricing Sidebar (Sticky) */}
+              <div className="lg:col-span-1 lg:hidden">
+                <motion.div
+                  variants={fadeInBottom}
+                  initial="hidden"
+                  animate="show"
+                  className="sticky top-6 space-y-4"
+                >
+                  {/* Price Card */}
+                  <div className="bg-white dark:bg-neutral-900 rounded-lg p-4">
+                    {/* Prix */}
+                    <div className="pb-4 mb-4 border-b border-gray-200 dark:border-neutral-700">
+                      {product?.sale_price ? (
+                        <div className="space-y-1">
+                          <div className="text-xs text-gray-600 dark:text-gray-400">Prix</div>
+                          <div className="flex items-baseline gap-2">
+                            <span className="hidden text-xs text-gray-600">$</span>
+                            <span className="text-2xl font-bold text-[#E4127A]">
+                              {product.sale_price} $ / {product.unit} unité(s)
+                            </span>
 
+                          </div>
+                          <span className="text-xs line-through text-gray-400">
+                            {product.price} $ / {product.unit} unité(s)
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="space-y-1">
+                          <div className="text-xs text-gray-600 dark:text-gray-400">Prix</div>
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-2xl font-bold text-gray-900 dark:text-white">
+                              {product.price}
+                            </span>
+                            <span className="text-xs text-gray-600">$</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Taille */}
+                    <div className="pb-4 mb-4 border-b border-gray-200 dark:border-neutral-700">
+                      <div className="text-xs font-semibold text-gray-900 dark:text-white mb-2">Taille</div>
+                      <button onClick={() => setOpen(true)} className="px-3 py-2 rounded-lg border border-gray-300 dark:border-neutral-700 text-xs font-medium text-gray-700 dark:text-gray-300 hover:border-gray-400">
+                        Customized
+                      </button>
+                    </div>
+
+                    {/* Disponibilité */}
+                    <div className="pb-4 mb-4 border-b border-gray-200 dark:border-neutral-700">
+                      <div className="text-xs font-semibold text-gray-900 dark:text-white mb-2">Disponibilité</div>
+                      <div className="flex items-center gap-1">
+                        <span className={`w-2 h-2 rounded-full ${product?.in_stock ? 'bg-green-500' : 'bg-red-500'}`} />
+                        <span className={`text-xs font-medium ${product?.in_stock ? 'text-green-600' : 'text-[#E4127A]'}`}>
+                          {product?.in_stock ? 'En stock' : 'Indisponible'}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Fournisseur Status */}
+                    <div className="pb-4 mb-4 border-b border-gray-200 dark:border-neutral-700">
+                      <div className="text-xs font-semibold text-gray-900 dark:text-white mb-2">Fournisseur</div>
+                      <div className="flex items-center gap-1">
+                        <span className={`w-2 h-2 rounded-full ${product?.shop?.is_active ? 'bg-blue-500' : 'bg-red-500'}`} />
+                        <span className={`text-xs font-medium ${product?.shop?.is_active ? 'text-blue-600' : 'text-[#E4127A]'}`}>
+                          {product?.shop?.is_active ? 'Actif' : 'Suspendu'}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Shop Info */}
+                    <div className="pb-4 mb-4 border-b border-gray-200 dark:border-neutral-700 text-xs">
+                      <div className="text-gray-600 dark:text-gray-400 mb-1 font-semibold">Fournisseur</div>
+                      <Link
+                        href={routes.shopUrl(product?.shop?.slug)}
+                        className="text-blue-600 dark:text-blue-400 font-semibold hover:underline text-xs block"
+                      >
+                        {product?.shop?.name}
+                      </Link>
+                      <div className="text-gray-600 dark:text-gray-400 text-xs mt-2">
+                        <Image
+                          alt="Verified"
+                          className="w-20 h-50 object-contain"
+                          src={Verified}
+                          width={20}
+                          height={50}
+                        />
+
+                      </div>
+                      <div className="hidden text-gray-600 dark:text-gray-400 text-xs">2 ans · 🇨🇳 CN</div>
+                    </div>
+
+                    {/* Buttons    */}
+                    <div className="space-y-2">
+                      {!isCategorie ? (
+                        <button onClick={handleSubmit} className="w-full bg-[#E4127A] hover:bg-orange-500 text-white font-bold py-2.5 rounded-lg transition text-sm">
+                          Envoyer une demande
+                        </button>
+                      ) : (
+                        <AddToCart
+                          item={{
+                            ...product,
+                            id: String(product.id), // 🛠️ forcer id en string
+                          }}
+                          renderButton={(params: {
+                            onClick: () => void;
+                            isLoading: boolean;
+                            disabled: boolean;
+                            success: boolean;
+                            price?: string;
+                          }) => {
+                            const { onClick, isLoading, disabled, price } = params;
+                            return (
+                              <button
+                                onClick={onClick}
+                                disabled={disabled}
+                                className="flex items-center justify-center w-full bg-[#E4127A] hover:bg-orange-500 text-white font-bold py-2.5 rounded-lg transition text-sm"
+                              >
+                                <svg
+                                  width="22"
+                                  height="22"
+                                  fill="white"
+                                  viewBox="0 0 24 24"
+                                  className="text-pink-500"
+                                >
+                                  <path
+                                    d="M6 6h15l-1.5 9h-13z"
+                                    stroke="currentColor"
+                                    strokeWidth="1.5"
+                                  />
+                                  <circle cx="9" cy="20" r="1" fill="white" />
+                                  <circle cx="18" cy="20" r="1" fill="wite" />
+                                </svg>
+                                <span> Ajouter au panier</span>
+                              </button>
+                            );
+                          }}
+                        />
+                      )}
+
+                      <button onClick={handleOpenQuestion} className="w-full border border-gray-300 dark:border-neutral-700 text-gray-900 dark:text-gray-100 font-semibold py-2.5 rounded-lg hover:bg-gray-50 dark:hover:bg-neutral-900 transition text-sm">
+                        Discuter ici
+                      </button>
+                    </div>
+                    { /** protect**/}
+                    <div className="mt-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0B0B0C] shadow-sm overflow-hidden">
+
+                      {/* Header */}
+                      <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-800">
+                        <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
+                          Protection des commandes galileecommerce.com
+                        </h3>
+                        <ChevronRight className="w-4 h-4 text-gray-400" />
+                      </div>
+
+                      {/* Content */}
+                      <div className="p-4 space-y-5">
+
+                        {/* Paiements sécurisés */}
+                        <div className="flex gap-3">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-50 dark:bg-green-500/10">
+                            <CreditCard className="w-5 h-5 text-green-600 dark:text-green-400" />
+                          </div>
+
+                          <div>
+                            <div className="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                              Paiements sécurisés
+
+                              {/* Fake logos (tu peux remplacer par images réelles) */}
+                              <div className="flex gap-1 ml-2">
+                                <div className="flex items-center gap-3">
+                                  <div className="flex items-center gap-2">
+                                    <div className=" overflow-hidden shadow-sm ring-1 ring-gray-200 bg-white">
+                                      <VisaLogo />
+                                    </div>
+                                    <div className=" overflow-hidden shadow-sm ring-1 ring-gray-200 bg-white">
+                                      <MastercardLogo />
+                                    </div>
+                                    <div className=" overflow-hidden shadow-sm ring-1 ring-gray-200 bg-white">
+                                      <AmexLogo />
+                                    </div>
+                                    <div className=" overflow-hidden shadow-sm ring-1 ring-gray-200 bg-white">
+                                      <DiscoverLogo />
+                                    </div>
+                                    <div className=" overflow-hidden shadow-sm ring-1 ring-gray-200 bg-white">
+                                      <PayPalLogo />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">
+                              Chaque paiement effectué sur galileecommerce.com est sécurisé grâce
+                              à un cryptage SSL avancé et des normes PCI DSS.
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Protection remboursement */}
+                        <div className="flex gap-3">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 dark:bg-blue-500/10">
+                            <ShieldCheck className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                          </div>
+
+                          <div>
+                            <div className="text-sm font-semibold text-gray-900 dark:text-white">
+                              Protection de remboursement
+                            </div>
+
+                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">
+                              Obtenez un remboursement si votre commande n'est pas expédiée,
+                              introuvable ou arrive avec des problèmes liés au produit.
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Footer */}
+                        <div className="text-[11px] text-gray-400 dark:text-gray-500 pt-2 border-t border-gray-100 dark:border-gray-800">
+                          Seules les commandes passées et payées via galileecommerce.com sont
+                          protégées gratuitement par notre garantie commerciale.
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
               {/* Caractéristiques Section */}
-              <div className="space-y-2 hidden">
+              <ProductSpecs />
+              <div className="hidden space-y-2 ">
                 <h3 className="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wide">Caractéristiques</h3>
                 <SpecGrid specs={productSpecs} />
               </div>
@@ -587,24 +1049,49 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                 onClose={() => setSelectedCertIdx(null)}
               />
 
+
               {/* Protection Section */}
-              <div className="space-y-2">
-                <h3 className="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wide">Protection</h3>
-                <div className="text-xs space-y-3 text-gray-700 dark:text-gray-300">
-                  <div className="flex gap-2 items-start">
-                    <span className="text-lg">✓</span>
+              <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0B0B0C] p-4 shadow-sm">
+                <h3 className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wide mb-4">
+                  Protection
+                </h3>
+
+                <div className="space-y-3">
+
+                  {/* Paiement sécurisé */}
+                  <div className="group flex items-start gap-3 p-3 rounded-xl transition-all duration-300 hover:bg-gray-50 dark:hover:bg-white/5">
+
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-black/5 dark:bg-white/10">
+                      <Lock className="w-5 h-5 text-green dark:text-white" />
+                    </div>
+
                     <div>
-                      <div className="font-semibold text-gray-900 dark:text-white">Paiements sécurisés</div>
-                      <p className="text-gray-600 dark:text-gray-400 text-xs">Cryptage SSL</p>
+                      <div className="text-sm font-semibold text-gray-900 dark:text-white">
+                        Paiements sécurisés
+                      </div>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        Cryptage SSL & protection des données
+                      </p>
                     </div>
                   </div>
-                  <div className="flex gap-2 items-start">
-                    <span className="text-lg">🛡️</span>
+
+                  {/* Protection acheteur */}
+                  <div className="group flex items-start gap-3 p-3 rounded-xl transition-all duration-300 hover:bg-gray-50 dark:hover:bg-white/5">
+
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-black/5 dark:bg-white/10">
+                      <ShieldCheck className="w-5 h-5 text-green dark:text-white" />
+                    </div>
+
                     <div>
-                      <div className="font-semibold text-gray-900 dark:text-white">Protection acheteur</div>
-                      <p className="text-gray-600 dark:text-gray-400 text-xs">Remboursement garanti</p>
+                      <div className="text-sm font-semibold text-gray-900 dark:text-white">
+                        Protection acheteur
+                      </div>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        Remboursement garanti en cas de problème
+                      </p>
                     </div>
                   </div>
+
                 </div>
               </div>
 
@@ -655,6 +1142,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                   <ProductQuestions
                     productId={product?.id}
                     shopId={product?.shop?.id}
+                    onAskQuestion={handleOpenQuestion}
                   />
                 </motion.div>
               </div>
@@ -664,7 +1152,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
             </div>
 
             {/* RIGHT - Pricing Sidebar (Sticky) */}
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-1 hidden lg:block ">
               <motion.div
                 variants={fadeInBottom}
                 initial="hidden"
@@ -679,13 +1167,14 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                       <div className="space-y-1">
                         <div className="text-xs text-gray-600 dark:text-gray-400">Prix</div>
                         <div className="flex items-baseline gap-2">
+                          <span className="hidden text-xs text-gray-600">$</span>
                           <span className="text-2xl font-bold text-[#E4127A]">
-                            {product.sale_price}
+                            {product.sale_price} $ / {product.unit} unité(s)
                           </span>
-                          <span className="text-xs text-gray-600">FCFA</span>
+
                         </div>
                         <span className="text-xs line-through text-gray-400">
-                          {product.price} FCFA
+                          {product.price} $ / {product.unit} unité(s)
                         </span>
                       </div>
                     ) : (
@@ -695,7 +1184,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                           <span className="text-2xl font-bold text-gray-900 dark:text-white">
                             {product.price}
                           </span>
-                          <span className="text-xs text-gray-600">FCFA</span>
+                          <span className="text-xs text-gray-600">$</span>
                         </div>
                       </div>
                     )}
@@ -704,7 +1193,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                   {/* Taille */}
                   <div className="pb-4 mb-4 border-b border-gray-200 dark:border-neutral-700">
                     <div className="text-xs font-semibold text-gray-900 dark:text-white mb-2">Taille</div>
-                    <button className="px-3 py-2 rounded-lg border border-gray-300 dark:border-neutral-700 text-xs font-medium text-gray-700 dark:text-gray-300 hover:border-gray-400">
+                    <button onClick={() => setOpen(true)} className="px-3 py-2 rounded-lg border border-gray-300 dark:border-neutral-700 text-xs font-medium text-gray-700 dark:text-gray-300 hover:border-gray-400">
                       Customized
                     </button>
                   </div>
@@ -720,9 +1209,9 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                     </div>
                   </div>
 
-                  {/* Vendeur Status */}
+                  {/* Fournisseur Status */}
                   <div className="pb-4 mb-4 border-b border-gray-200 dark:border-neutral-700">
-                    <div className="text-xs font-semibold text-gray-900 dark:text-white mb-2">Vendeur</div>
+                    <div className="text-xs font-semibold text-gray-900 dark:text-white mb-2">Fournisseur</div>
                     <div className="flex items-center gap-1">
                       <span className={`w-2 h-2 rounded-full ${product?.shop?.is_active ? 'bg-blue-500' : 'bg-red-500'}`} />
                       <span className={`text-xs font-medium ${product?.shop?.is_active ? 'text-blue-600' : 'text-[#E4127A]'}`}>
@@ -733,25 +1222,157 @@ const Single: React.FC<SingleProps> = ({ product }) => {
 
                   {/* Shop Info */}
                   <div className="pb-4 mb-4 border-b border-gray-200 dark:border-neutral-700 text-xs">
-                    <div className="text-gray-600 dark:text-gray-400 mb-1 font-semibold">Vendeur</div>
+                    <div className="text-gray-600 dark:text-gray-400 mb-1 font-semibold">Fournisseur</div>
                     <Link
                       href={routes.shopUrl(product?.shop?.slug)}
                       className="text-blue-600 dark:text-blue-400 font-semibold hover:underline text-xs block"
                     >
                       {product?.shop?.name}
                     </Link>
-                    <div className="text-gray-600 dark:text-gray-400 text-xs mt-2">✓ Verified Fabricant</div>
-                    <div className="text-gray-600 dark:text-gray-400 text-xs">2 ans · 🇨🇳 CN</div>
+                    <div className="text-gray-600 dark:text-gray-400 text-xs mt-2">
+                      <Image
+                        alt="Verified"
+                        className="w-20 h-50 object-contain"
+                        src={Verified}
+                        width={20}
+                        height={50}
+                      />
+
+                    </div>
+                    <div className="hidden text-gray-600 dark:text-gray-400 text-xs">2 ans · 🇨🇳 CN</div>
                   </div>
 
-                  {/* Buttons */}
+                  {/* Buttons    */}
                   <div className="space-y-2">
-                    <button className="w-full bg-[#E4127A] hover:bg-red-700 text-white font-bold py-2.5 rounded-lg transition text-sm">
-                      Envoyer une demande
-                    </button>
-                    <button className="w-full border border-gray-300 dark:border-neutral-700 text-gray-900 dark:text-gray-100 font-semibold py-2.5 rounded-lg hover:bg-gray-50 dark:hover:bg-neutral-900 transition text-sm">
+                    {!isCategorie ? (
+                      <button onClick={handleSubmit} className="w-full bg-[#E4127A] hover:bg-orange-500 text-white font-bold py-2.5 rounded-lg transition text-sm">
+                        Envoyer une demande
+                      </button>
+                    ) : (
+                      <AddToCart
+                        item={{
+                          ...product,
+                          id: String(product.id), // 🛠️ forcer id en string
+                        }}
+                        renderButton={(params: {
+                          onClick: () => void;
+                          isLoading: boolean;
+                          disabled: boolean;
+                          success: boolean;
+                          price?: string;
+                        }) => {
+                          const { onClick, isLoading, disabled, price } = params;
+                          return (
+                            <button
+                              onClick={onClick}
+                              disabled={disabled}
+                              className="flex items-center justify-center w-full bg-[#E4127A] hover:bg-orange-500 text-white font-bold py-2.5 rounded-lg transition text-sm"
+                            >
+                              <svg
+                                width="22"
+                                height="22"
+                                fill="white"
+                                viewBox="0 0 24 24"
+                                className="text-pink-500"
+                              >
+                                <path
+                                  d="M6 6h15l-1.5 9h-13z"
+                                  stroke="currentColor"
+                                  strokeWidth="1.5"
+                                />
+                                <circle cx="9" cy="20" r="1" fill="white" />
+                                <circle cx="18" cy="20" r="1" fill="wite" />
+                              </svg>
+                              <span> Ajouter au panier</span>
+                            </button>
+                          );
+                        }}
+                      />
+                    )}
+                    <button onClick={handleOpenQuestion} className="w-full border border-gray-300 dark:border-neutral-700 text-gray-900 dark:text-gray-100 font-semibold py-2.5 rounded-lg hover:bg-gray-50 dark:hover:bg-neutral-900 transition text-sm">
                       Discuter ici
                     </button>
+                  </div>
+                  { /** protect**/}
+                  <div className="mt-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0B0B0C] shadow-sm overflow-hidden">
+
+                    {/* Header */}
+                    <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-800">
+                      <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
+                        Protection des commandes galileecommerce.com
+                      </h3>
+                      <ChevronRight className="w-4 h-4 text-gray-400" />
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-4 space-y-5">
+
+                      {/* Paiements sécurisés */}
+                      <div className="flex gap-3">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-50 dark:bg-green-500/10">
+                          <CreditCard className="w-5 h-5 text-green-600 dark:text-green-400" />
+                        </div>
+
+                        <div>
+                          <div className="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                            Paiements sécurisés
+
+                            {/* Fake logos (tu peux remplacer par images réelles) */}
+                            <div className="flex gap-1 ml-2">
+                              <div className="flex items-center gap-3">
+                                <div className="flex items-center gap-2">
+                                  <div className=" overflow-hidden shadow-sm ring-1 ring-gray-200 bg-white">
+                                    <VisaLogo />
+                                  </div>
+                                  <div className=" overflow-hidden shadow-sm ring-1 ring-gray-200 bg-white">
+                                    <MastercardLogo />
+                                  </div>
+                                  <div className=" overflow-hidden shadow-sm ring-1 ring-gray-200 bg-white">
+                                    <AmexLogo />
+                                  </div>
+                                  <div className=" overflow-hidden shadow-sm ring-1 ring-gray-200 bg-white">
+                                    <DiscoverLogo />
+                                  </div>
+                                  <div className=" overflow-hidden shadow-sm ring-1 ring-gray-200 bg-white">
+                                    <PayPalLogo />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">
+                            Chaque paiement effectué sur galileecommerce.com est sécurisé grâce
+                            à un cryptage SSL avancé et des normes PCI DSS.
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Protection remboursement */}
+                      <div className="flex gap-3">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 dark:bg-blue-500/10">
+                          <ShieldCheck className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                        </div>
+
+                        <div>
+                          <div className="text-sm font-semibold text-gray-900 dark:text-white">
+                            Protection de remboursement
+                          </div>
+
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">
+                            Obtenez un remboursement si votre commande n'est pas expédiée,
+                            introuvable ou arrive avec des problèmes liés au produit.
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Footer */}
+                      <div className="text-[11px] text-gray-400 dark:text-gray-500 pt-2 border-t border-gray-100 dark:border-gray-800">
+                        Seules les commandes passées et payées via galileecommerce.com sont
+                        protégées gratuitement par notre garantie commerciale.
+                      </div>
+
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -759,6 +1380,12 @@ const Single: React.FC<SingleProps> = ({ product }) => {
           </div>
         </div>
       </div>
+      <ProductDrawer
+        open={open}
+        onClose={() => setOpen(false)}
+        product={product}
+        onSubmit={handleInquiry}
+      />
       <Footer />
     </>
   );

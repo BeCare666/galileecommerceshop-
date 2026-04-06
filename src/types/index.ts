@@ -465,6 +465,11 @@ export interface Product {
   rating?: number; // ⭐ On ajoute cette propriété ici
   shop_slug?: string;
   shop_name?: string;
+  commerce_register?: string;
+  sku?: string;
+  unit?: string;
+  categories: Category[];
+  category_id?: string;
 }
 
 export interface CountryData {

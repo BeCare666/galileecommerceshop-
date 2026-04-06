@@ -13,6 +13,7 @@ type ProductQuestionsProps = {
   className?: any;
   productId: string;
   shopId: string;
+  onAskQuestion?: () => void;
 };
 
 const ProductQuestions: React.FC<ProductQuestionsProps> = ({
@@ -39,7 +40,12 @@ const ProductQuestions: React.FC<ProductQuestionsProps> = ({
     setPage(current);
   }
 
+
   const openQuestionModal = () => {
+    if (onAskQuestion) {
+      onAskQuestion(); // 👈 utilise le parent si fourni
+      return;
+    }
     if (!isAuthorized) {
       openModal('LOGIN_VIEW');
       return;
@@ -58,16 +64,19 @@ const ProductQuestions: React.FC<ProductQuestionsProps> = ({
           }
           )
         </h2>
-        <div className="mt-4 inline-flex flex-col-reverse items-start gap-2.5 sm:mt-0 sm:flex-col sm:items-end ltr:sm:pl-2 rtl:sm:pr-2 md:flex-row">
-          <div className="min-w-full sm:min-w-[280px]">
+        <div className="mt-4 flex items-center justify-between gap-3 sm:mt-0">
+
+          <div className="flex-1 max-w-[320px]">
             <QuestionSearch label="Search" />
           </div>
+
           <button
-            className="grow-0 rounded-md bg-brand px-5 py-3 text-13px font-semibold leading-5 text-light transition-colors hover:bg-brand-dark"
+            className="rounded-xl bg-brand px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-brand-dark transition"
             onClick={openQuestionModal}
           >
             {t('text-ask-question')}
           </button>
+
         </div>
       </div>
       {questions?.length !== 0 ? (
