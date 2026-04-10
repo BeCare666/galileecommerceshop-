@@ -1,3 +1,4 @@
+
 import placeholder from '@/assets/images/placeholders/product.svg';
 import Certificat from '@/assets/images/certificat.svg';
 import Verified from '@/assets/images/verified.svg';
@@ -16,7 +17,7 @@ import AddToCart from '@/components/cart/add-to-cart';
 import routes from '@/config/routes';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { useMemo, useCallback } from "react";
+import { useMemo } from "react";
 import Link from 'next/link';
 import {
   ChevronLeft, ZoomIn, ChevronDown,
@@ -684,7 +685,7 @@ function ProductInfoSection({
                 {openx ? (
                   <ChevronUp className="w-5 h-5 text-gray-600" />
                 ) : (
-                  <ChevronDown className="w-5 h-5 text-gray-600" onClick={() => setOpenx(!openx)} />
+                  <ChevronDown className="w-5 h-5 text-gray-600" onClick={() => setOpenx(openx)} />
                 )}
               </button>
 
@@ -844,7 +845,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
   const [selectedImageIdx, setSelectedImageIdx] = useState(0);
   const [selectedCertIdx, setSelectedCertIdx] = useState<number | null>(null);
   const [open, setOpen] = useState(false);
-  const [cashOpen, setCashOpen] = useState(true);
+  const [cashOpen, setCashOpen] = useState(false);
   const API_URL = process.env.NEXT_PUBLIC_REST_API_ENDPOINT;
   if (!API_URL) throw new Error("NEXT_PUBLIC_REST_API_ENDPOINT n'est pas défini !");
   const API_BASE = `${API_URL}`;
@@ -919,6 +920,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
       shop_id: product?.shop?.id,
     });
   };
+
   const {
     id,
     name,
@@ -1031,33 +1033,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
       ],
     },
   ];
-  function getMembershipDuration(createdAt: string): string {
-    const createdDate = new Date(createdAt);
-    const now = new Date();
 
-    // Différence totale en millisecondes
-    const diffMs = now.getTime() - createdDate.getTime();
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24)); // total jours
-    const diffMonths = (now.getFullYear() - createdDate.getFullYear()) * 12 + (now.getMonth() - createdDate.getMonth());
-    const diffYears = now.getFullYear() - createdDate.getFullYear();
-
-    // Ajustement pour l'anniversaire
-    const hasHadAnniversary =
-      now.getMonth() > createdDate.getMonth() ||
-      (now.getMonth() === createdDate.getMonth() && now.getDate() >= createdDate.getDate());
-    const years = hasHadAnniversary ? diffYears : diffYears - 1;
-
-    if (years > 0) {
-      return years === 1 ? "1 an" : `${years} ans`;
-    } else if (diffMonths > 0) {
-      return diffMonths === 1 ? "1 mois" : `${diffMonths} mois`;
-    } else {
-      return diffDays <= 1 ? "1 jour" : `${diffDays} jours`;
-    }
-  }
-
-  // Exemple d'utilisation
-  const duration = useMemo(() => getMembershipDuration(product.created_at), [product.created_at]);
   return (
     <>
       {/*bg-black/5*/}
@@ -1084,7 +1060,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                   {/* Logo */}
                   <div className="w-12 h-12 bg-white rounded flex items-center justify-center overflow-hidden">
                     <Image
-                      src={product?.logo_url || '/logo.png'} // remplace par ton image
+                      src={'/logo.png'} // remplace par ton image
                       alt="logo"
                       className="object-contain w-full h-full"
                       width={20}
@@ -1101,7 +1077,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                       </span>
 
                       <span className="text-xs text-gray-500">
-                        {product.country} · {duration} sur galileecommerce.com.
+                        {product.country}
                       </span>
                     </div>
 
@@ -1157,7 +1133,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                 {/* Image principale */}
 
                 <motion.div
-
+                  onMouseMove={handleMouseMove}
                   className="relative w-full  aspect-[4/3] overflow-hidden  bg-gray-100 group"
                 >
                   <Image
@@ -1166,7 +1142,6 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                     src={allMedia[selectedImageIdx]?.url ?? placeholder}
                     className="object-cover transition-transform duration-300 group-hover:scale-150"
                     style={zoomStyle}
-                    onMouseMove={handleMouseMove}
                   />
 
                   {/* NAVIGATION */}
@@ -1178,7 +1153,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                     }
                     className="absolute left-3 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-white shadow hover:scale-110"
                   >
-                    <ChevronLeft className="w-4 h-4 text-gray-400" />
+                    ←
                   </button>
 
                   <button
@@ -1189,7 +1164,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                     }
                     className="absolute right-3 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-white shadow hover:scale-110"
                   >
-                    <ChevronRight className="w-4 h-4 text-gray-400" />
+                    →
                   </button>
 
                   {/* ACTIONS */}
@@ -1475,12 +1450,12 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                     />
                   </span>
                 </div>
-                <div className="grid grid-cols-3 gap-3" onClick={() => setCashOpen(false)}>
+                <div className="grid grid-cols-3 gap-3">
                   {certificates.map((cert, idx) => (
                     <CertificateBadge
                       key={idx}
                       cert={cert}
-                      onClick={() => setSelectedCertIdx(idx)}
+                      onClick={() => setSelectedCertIdx(null)}
                     />
                   ))}
                 </div>
@@ -1519,10 +1494,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
               <CertificateModal
                 cert={selectedCertIdx !== null ? certificates[selectedCertIdx] : null}
                 isOpen={selectedCertIdx !== null}
-                onClose={() => {
-                  setSelectedCertIdx(null);
-                  setCashOpen(true);
-                }}
+                onClose={() => setSelectedCertIdx(null)}
               />
 
 
@@ -1856,29 +1828,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
             </div>
           </div>
         </div>
-        {cashOpen && (
-          <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 px-3 py-2 md:hidden">
-            <div className="flex items-center gap-3">
 
-              {/* Bouton gauche */}
-              <button className="flex flex-col items-center justify-center text-xs text-gray-700 min-w-[70px]">
-                <Store className="w-5 h-5 mb-1" />
-                <span className="text-[11px]">La boutique</span>
-              </button>
-
-              {/* Bouton centre */}
-              <button onClick={handleOpenQuestion} className="flex-1 h-10 rounded-full border border-gray-300 text-gray-800 text-sm font-medium bg-white hover:bg-gray-50 transition">
-                Discuter en ligne
-              </button>
-
-              {/* Bouton droite */}
-              <button onClick={handleSubmit} className="flex-1 h-10 rounded-full bg-orange-600 text-white text-sm font-semibold hover:bg-orange-700 transition">
-                Demander
-              </button>
-
-            </div>
-          </div>
-        )}
 
       </div>
       <ProductDrawer
@@ -1901,3 +1851,4 @@ const Single: React.FC<SingleProps> = ({ product }) => {
 };
 
 export default Single;
+

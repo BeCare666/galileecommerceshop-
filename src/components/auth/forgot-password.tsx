@@ -11,17 +11,17 @@ import Input from '@/components/ui/forms/input';
 import Password from '@/components/ui/forms/password';
 import Button from '@/components/ui/button';
 import { useModalAction } from '@/components/modal-views/context';
-import { RegisterBgPattern } from '@/components/auth/register-bg-pattern';
+import client from '@/data/client';
+import { useMutation } from 'react-query';
+import { useState } from 'react';
+import { useTranslation } from 'next-i18next';
+
 import {
   StateMachineProvider,
   createStore,
   useStateMachine,
   GlobalState,
 } from 'little-state-machine';
-import client from '@/data/client';
-import { useMutation } from 'react-query';
-import { useState } from 'react';
-import { useTranslation } from 'next-i18next';
 
 const emailFormValidation = yup.object().shape({
   email: yup.string().email().required(),
@@ -33,6 +33,9 @@ const passwordFormValidation = yup.object().shape({
   password: yup.string().required(),
 });
 
+/* =========================
+   EMAIL FORM
+========================= */
 function EmailForm({
   email,
   serverError,
@@ -46,68 +49,62 @@ function EmailForm({
 }) {
   const { t } = useTranslation('common');
   const { openModal } = useModalAction();
-  return (
-    <div className="bg-light px-6 pt-10 pb-8 dark:bg-dark-300 sm:px-8 lg:p-12">
 
-      <div className="relative z-10 flex items-center">
-        <div className="w-full shrink-0 text-left md:w-[380px]">
-          <div className="flex flex-col pb-5 text-center lg:pb-9 xl:pb-10 xl:pt-2">
-            <h2 className="text-lg font-medium tracking-[-0.3px] text-dark dark:text-light lg:text-xl">
-              {t('text-reset-password')}
-            </h2>
-            <div className="mt-1.5 text-13px leading-6 tracking-[0.2px] dark:text-light-900 lg:mt-2.5 xl:mt-3">
-              {t('text-reset-password-title')}
-            </div>
-          </div>
-          <Form<ForgetPasswordInput>
-            onSubmit={onSubmit}
-            useFormProps={{
-              defaultValues: { email },
-            }}
-            serverError={serverError}
-            validationSchema={emailFormValidation}
-            className="text-left"
-          >
-            {({ register, formState: { errors } }) => (
-              <>
-                <Input
-                  label="contact-us-email-field"
-                  type="email"
-                  {...register('email')}
-                  error={errors.email?.message && 'text-email-notice'}
-                />
-                <Button
-                  type="submit"
-                  className="!mt-5 w-full text-sm tracking-[0.2px] lg:!mt-6"
-                  isLoading={isLoading}
-                  disabled={isLoading}
-                >
-                  {t('text-reset-password-submit')}
-                </Button>
-              </>
-            )}
-          </Form>
-          <div className="relative mt-10 flex items-center justify-center border-t border-light-500 text-13px dark:border-dark-600">
-            <span className="absolute inline-flex bg-light px-2 pb-0.5 dark:bg-dark-300">
-              {t('text-or')}
-            </span>
-          </div>
-          <div className="pt-7 text-center text-13px">
-            {t('text-back-to')}{' '}
-            <button
-              type="button"
-              className="font-semibold text-brand hover:text-dark-400 hover:dark:text-light-500"
-              onClick={() => openModal('LOGIN_VIEW')}
+  return (
+    <div className="space-y-5">
+      <div className="text-center mb-6">
+        <h2 className="text-xl font-bold text-gray-900">
+          Réinitialiser le mot de passe
+        </h2>
+        <p className="text-sm text-gray-500 mt-2">
+          Entrez votre email pour recevoir un code
+        </p>
+      </div>
+
+      <Form<ForgetPasswordInput>
+        onSubmit={onSubmit}
+        useFormProps={{ defaultValues: { email } }}
+        serverError={serverError}
+        validationSchema={emailFormValidation}
+      >
+        {({ register, formState: { errors } }) => (
+          <>
+            <Input
+              label="Email"
+              type="email"
+              {...register('email')}
+              error={errors.email?.message && 'Email invalide'}
+              inputClassName="bg-white/80 border-gray-200 focus:ring-2 focus:ring-pink-200 rounded-xl"
+            />
+
+            <Button
+              type="submit"
+              className="w-full mt-5 py-3 rounded-xl bg-gradient-to-r from-pink-500 to-indigo-500 hover:opacity-90"
+              isLoading={isLoading}
+              disabled={isLoading}
             >
-              {t('text-login')}
-            </button>
-          </div>
-        </div>
+              Envoyer le code
+            </Button>
+          </>
+        )}
+      </Form>
+
+      <div className="text-center text-sm text-gray-500 pt-4">
+        Retour à{' '}
+        <button
+          className="text-pink-600 font-semibold hover:underline"
+          onClick={() => openModal('LOGIN_VIEW')}
+        >
+          connexion
+        </button>
       </div>
     </div>
   );
 }
 
+/* =========================
+   TOKEN FORM
+========================= */
 function TokenForm({
   token,
   message,
@@ -115,138 +112,119 @@ function TokenForm({
   onSubmit,
   isLoading,
   onBack,
-}: {
-  token: string;
-  message: string | null;
-  serverError: { token?: string } | null;
-  onSubmit: SubmitHandler<Pick<VerifyForgetPasswordTokenInput, 'token'>>;
-  isLoading: boolean;
-  onBack: () => void;
-}) {
+}: any) {
   return (
-    <div className="px-6 pt-10 pb-8 sm:px-8 lg:p-12">
+    <div className="space-y-5">
+      <div className="text-center mb-6">
+        <h2 className="text-xl font-bold text-gray-900">
+          Vérification du code
+        </h2>
+        <p className="text-sm text-gray-500 mt-2">
+          Entrez le code reçu par email
+        </p>
+      </div>
 
-      <div className="relative z-10">
-        {message && (
-          <div className="flex flex-col pb-5 text-center lg:pb-9 xl:pb-10 xl:pt-2">
-            <h2 className="text-lg font-medium tracking-[-0.3px] text-dark dark:text-light lg:text-xl">
-              Vérifiez votre boîte mail
-            </h2>
-            <div className="mt-1.5 text-13px leading-6 tracking-[0.2px] dark:text-light-900 lg:mt-2.5 xl:mt-3">
-              Nous vous avons envoyé un code pour réinitialiser votre mot de passe.
+      <Form
+        onSubmit={onSubmit}
+        useFormProps={{ defaultValues: { token } }}
+        validationSchema={tokenFormValidation}
+        serverError={serverError}
+      >
+        {({ register, formState: { errors } }) => (
+          <>
+            <Input
+              label="Code"
+              {...register('token')}
+              error={errors.token?.message && 'Code invalide'}
+              inputClassName="bg-white/80 border-gray-200 focus:ring-2 focus:ring-pink-200 rounded-xl"
+            />
+
+            <div className="grid grid-cols-2 gap-3 mt-5">
+              <Button type="button" variant="outline" onClick={onBack}>
+                Retour
+              </Button>
+              <Button
+                type="submit"
+                isLoading={isLoading}
+                className="bg-gradient-to-r from-pink-500 to-indigo-500"
+              >
+                Vérifier
+              </Button>
             </div>
-          </div>
+          </>
         )}
-        <Form<Pick<VerifyForgetPasswordTokenInput, 'token'>>
-          onSubmit={onSubmit}
-          useFormProps={{
-            defaultValues: { token },
-          }}
-          validationSchema={tokenFormValidation}
-          serverError={serverError}
-        >
-          {({ register, formState: { errors } }) => (
-            <div className="w-full xs:w-[380px]">
-              <Input
-                label="Enter Token"
-                {...register('token')}
-                error={errors.token?.message && 'Invalid token'}
-                className="text-left"
-              />
-              <div className="mt-7 grid grid-cols-2 gap-5 text-13px">
-                <Button type="reset" variant="outline" onClick={onBack}>
-                  Retour
-                </Button>
-                <Button
-                  type="submit"
-                  isLoading={isLoading}
-                  disabled={isLoading}
-                >
-                  Vérifier le code
-                </Button>
-              </div>
-            </div>
-          )}
-        </Form>
-      </div>
+      </Form>
     </div>
   );
 }
 
-function PasswordForm({
-  onSubmit,
-  isLoading,
-  onBack,
-}: {
-  onSubmit: SubmitHandler<Pick<ResetPasswordInput, 'password'>>;
-  isLoading: boolean;
-  onBack: () => void;
-}) {
+/* =========================
+   PASSWORD FORM
+========================= */
+function PasswordForm({ onSubmit, isLoading, onBack }: any) {
   return (
-    <div className="px-6 pt-10 pb-8 sm:px-8 lg:p-12 bg-white">
-
-      <div className="relative z-10">
-        <div className="flex flex-col pb-5 text-center lg:pb-9 xl:pb-10 xl:pt-2">
-          <h2 className="text-lg font-medium tracking-[-0.3px] text-dark dark:text-light lg:text-xl">
-            Réinitialiser le mot de passe
-          </h2>
-          <div className="mt-1.5 text-13px leading-6 tracking-[0.2px] dark:text-light-900 lg:mt-2.5 xl:mt-3">
-            Vous êtes presque prêt à réinitialiser votre mot de passe
-          </div>
-        </div>
-        <Form<Pick<ResetPasswordInput, 'password'>>
-          onSubmit={onSubmit}
-          useFormProps={{
-            defaultValues: { password: '' },
-          }}
-          validationSchema={passwordFormValidation}
-        >
-          {({ register, formState: { errors } }) => (
-            <div className="w-full xs:w-[380px]">
-              <Password
-                label="Nouveau mot de passe"
-                {...register('password')}
-                error={errors.password?.message}
-                className="text-left"
-              />
-              <div className="mt-7 grid grid-cols-2 gap-5 text-13px">
-                <Button type="reset" variant="outline" onClick={onBack}>
-                  Retour
-                </Button>
-                <Button
-                  type="submit"
-                  isLoading={isLoading}
-                  disabled={isLoading}
-                >
-                  Enyover
-                </Button>
-              </div>
-            </div>
-          )}
-        </Form>
+    <div className="space-y-5">
+      <div className="text-center mb-6">
+        <h2 className="text-xl font-bold text-gray-900">
+          Nouveau mot de passe
+        </h2>
+        <p className="text-sm text-gray-500 mt-2">
+          Choisissez un mot de passe sécurisé
+        </p>
       </div>
+
+      <Form
+        onSubmit={onSubmit}
+        useFormProps={{ defaultValues: { password: '' } }}
+        validationSchema={passwordFormValidation}
+      >
+        {({ register, formState: { errors } }) => (
+          <>
+            <Password
+              label="Mot de passe"
+              {...register('password')}
+              error={errors.password?.message}
+              inputClassName="bg-white/80 border-gray-200 focus:ring-2 focus:ring-pink-200 rounded-xl"
+            />
+
+            <div className="grid grid-cols-2 gap-3 mt-5">
+              <Button type="button" variant="outline" onClick={onBack}>
+                Retour
+              </Button>
+              <Button
+                type="submit"
+                isLoading={isLoading}
+                className="bg-gradient-to-r from-pink-500 to-indigo-500"
+              >
+                Réinitialiser
+              </Button>
+            </div>
+          </>
+        )}
+      </Form>
     </div>
   );
 }
 
+/* =========================
+   MAIN STEPS
+========================= */
 function RenderFormSteps() {
   const { openModal } = useModalAction();
   const [message, setMessage] = useState<string | null>(null);
-  const [error, setError] = useState<{ token?: string; email?: string } | null>(
-    null
-  );
+  const [error, setError] = useState<any>(null);
+
   const { mutate: forgotPassword, isLoading } = useMutation(
     client.users.forgotPassword
   );
   const { mutate: verifyForgotPasswordToken, isLoading: verifying } =
     useMutation(client.users.verifyForgotPasswordToken);
-  const { mutate: resetPassword, isLoading: resetting } = useMutation(
-    client.users.resetPassword
-  );
-  // use hook for getting form state and actions
+  const { mutate: resetPassword, isLoading: resetting } =
+    useMutation(client.users.resetPassword);
+
   const { state, actions } = useStateMachine({ updateFormState });
 
-  const emailFormHandle: SubmitHandler<ForgetPasswordInput> = ({ email }) => {
+  const emailFormHandle = ({ email }: ForgetPasswordInput) => {
     forgotPassword(
       { email },
       {
@@ -256,39 +234,13 @@ function RenderFormSteps() {
             return;
           }
           setMessage(data.message);
-          actions.updateFormState({
-            email,
-            step: 'Token',
-          });
+          actions.updateFormState({ email, step: 'Token' });
         },
       }
     );
   };
 
-  const passwordFormHandle: SubmitHandler<
-    Pick<ResetPasswordInput, 'password'>
-  > = ({ password }) => {
-    resetPassword(
-      { password, token: state.token, email: state.email },
-      {
-        onSuccess: (res) => {
-          if (res.success) {
-            actions.updateFormState({
-              ...initialState,
-            });
-            toast.success(<b>Mot de passe réinitialisé avec succès !</b>, {
-              className: '-mt-10 xs:mt-0',
-            });
-            openModal('LOGIN_VIEW');
-          }
-        },
-      }
-    );
-  };
-
-  const tokenFormHandle: SubmitHandler<
-    Pick<VerifyForgetPasswordTokenInput, 'token'>
-  > = ({ token }) => {
+  const tokenFormHandle = ({ token }: any) => {
     verifyForgotPasswordToken(
       { token, email: state.email },
       {
@@ -297,72 +249,96 @@ function RenderFormSteps() {
             setError({ token: res.message });
             return;
           }
-          actions.updateFormState({
-            step: 'Password',
-            token,
-          });
+          actions.updateFormState({ step: 'Password', token });
         },
       }
     );
   };
-  function backToPreviousStep(step: GlobalState['step']) {
-    actions.updateFormState({
-      step,
-    });
-  }
+
+  const passwordFormHandle = ({ password }: any) => {
+    resetPassword(
+      { password, token: state.token, email: state.email },
+      {
+        onSuccess: (res) => {
+          if (res.success) {
+            actions.updateFormState({ ...initialState });
+            toast.success('Mot de passe réinitialisé !');
+            openModal('LOGIN_VIEW');
+          }
+        },
+      }
+    );
+  };
+
+  const back = (step: GlobalState['step']) => {
+    actions.updateFormState({ step });
+  };
+
   return (
-    <div className='bg-white'>
-      {state.step === 'Email' && (
-        <EmailForm
-          email={state.email}
-          onSubmit={emailFormHandle}
-          serverError={error}
-          isLoading={isLoading}
-        />
-      )}
-      {state.step === 'Token' && (
-        <TokenForm
-          token={state.token}
-          onSubmit={tokenFormHandle}
-          message={message}
-          serverError={error}
-          isLoading={verifying}
-          onBack={() => backToPreviousStep('Email')}
-        />
-      )}
-      {state.step === 'Password' && (
-        <PasswordForm
-          onSubmit={passwordFormHandle}
-          isLoading={resetting}
-          onBack={() => backToPreviousStep('Token')}
-        />
-      )}
-    </ div>
+    <div className="min-h-[70vh] flex bg-gradient-to-br from-slate-50 via-white to-pink-50">
+
+      {/* LEFT */}
+      <div className="w-full flex items-center justify-center px-6 py-12">
+        <div className="w-full max-w-md">
+
+          {/* CARD */}
+          <div className="bg-white/70 backdrop-blur-xl border border-white/40 shadow-xl rounded-2xl p-6">
+
+            {state.step === 'Email' && (
+              <EmailForm
+                email={state.email}
+                onSubmit={emailFormHandle}
+                serverError={error}
+                isLoading={isLoading}
+              />
+            )}
+
+            {state.step === 'Token' && (
+              <TokenForm
+                token={state.token}
+                message={message}
+                onSubmit={tokenFormHandle}
+                serverError={error}
+                isLoading={verifying}
+                onBack={() => back('Email')}
+              />
+            )}
+
+            {state.step === 'Password' && (
+              <PasswordForm
+                onSubmit={passwordFormHandle}
+                isLoading={resetting}
+                onBack={() => back('Token')}
+              />
+            )}
+          </div>
+        </div>
+      </div>
+
+    </div>
   );
 }
 
+/* =========================
+   STATE MACHINE
+========================= */
 const initialState: GlobalState = {
   step: 'Email',
   email: '',
   password: '',
   token: '',
 };
-//@ts-ignore
+
 createStore(initialState);
 
-const updateFormState = (
-  state: typeof initialState,
-  payload: {
-    step: 'Email' | 'Token' | 'Password' | 'Success' | 'Error';
-    [key: string]: string;
-  }
-) => {
-  return {
-    ...state,
-    ...payload,
-  };
-};
+const updateFormState = (state: any, payload: any) => ({
+  ...state,
+  ...payload,
+});
 
+/* =========================
+   EXPORT
+========================= */
 export default function ForgotUserPassword() {
   return (
     <StateMachineProvider>

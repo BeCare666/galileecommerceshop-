@@ -12,7 +12,7 @@ const ProductPage: NextPageWithLayout<
 };
 
 ProductPage.getLayout = function getLayout(page) {
-  return <Layout>{page}</Layout>;
+  return <Layout>{page}</Layout >;
 };
 
 export default ProductPage;

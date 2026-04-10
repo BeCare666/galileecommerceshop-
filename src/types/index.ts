@@ -441,6 +441,8 @@ export interface Product {
   orders_count: number;
   total_downloads: number;
   image: Attachment;
+  logo_url: string;
+  country: string;
   gallery: Attachment[];
   shop: Shop;
   created_at: string;

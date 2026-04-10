@@ -5,7 +5,7 @@ import Homepage2 from "@/assets/images/homepage2.png";
 import Link from 'next/link';
 export default function Hero() {
     return (
-        <section className="relative  w-full mt-0 pb-7 lg:pb-10 lg:pt-10 md:pb-8 ">
+        <section className="relative  w-full mt-0 pb-7 lg:pb-10 lg:pt-2 md:pb-8 ">
             {/* Background image h-[80vh]*/}
             <Image
                 src={Homepage1}

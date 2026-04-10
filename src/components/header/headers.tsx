@@ -321,12 +321,13 @@ export default function GalileeHeader() {
   // Toutes les routes qui ne doivent pas afficher le header
   //if (!isHomePage || isProductsPage) {
   //  return null;
+
   //}
   return (
     <>
 
       <header
-        className={`w-full sticky top-0 z-40 transition-colors duration-300  transition-none mb-[0px] md:mb-[12px]
+        className={`w-full sticky top-0 z-40 transition-colors duration-300  transition-none mb-[0px]
        ${isHoverCategories || showSearch || isProductsPage ? 'bg-white text-black' : 'bg-gray-900 text-white'}`}
       >
         {' '}

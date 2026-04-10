@@ -16,6 +16,10 @@ export default function BottomNavigation() {
   const [open, setOpen] = useState(false);
   const { openDrawer } = useDrawer();
   const [mapIsOk, setMapIsOk] = useState(false);
+  const isProductsPage = router.pathname.startsWith('/products');
+  if (isProductsPage) {
+    return null; // Ne pas afficher la navigation inférieure sur les pages de produits
+  }
   return (
     <nav className="sticky bottom-0 z-30 grid h-20 w-full auto-cols-fr grid-flow-col items-center bg-light py-2 text-center dark:bg-dark-250 sm:hidden">
       <Button

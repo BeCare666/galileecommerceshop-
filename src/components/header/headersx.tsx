@@ -325,7 +325,7 @@ export default function GalileeHeader() {
         <>
 
             <header
-                className={`w-full sticky top-0 z-40 transition-colors duration-300  transition-none mb-[0px] md:mb-[12px]
+                className={`w-full sticky top-0 z-40 transition-colors duration-300  transition-none  
        ${isHoverCategories || showSearch ? 'bg-white text-black' : 'bg-gray-900 text-white'}`}
             >
                 {' '}
