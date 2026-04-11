@@ -353,6 +353,27 @@ function CertificateBadge({ cert, onClick }: any) {
     </button>
   );
 }
+function CertificateBadgeheader({ cert, onClick }: any) {
+  return (
+    <button
+      onClick={onClick}
+      className="flex flex-col items-center justify-center gap-2 p-3 rounded-lg bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900 hover:bg-blue-100 dark:hover:bg-blue-950/40 transition text-center h-full"
+    >
+      <div className="relative w-5 h-5">
+        <Image
+          alt={cert?.label}
+          fill
+          quality={100}
+          src={cert?.badgeIcon}
+          className="object-contain"
+        />
+      </div>
+      <span className="hidden text-xs font-semibold text-gray-700 dark:text-gray-300">
+        {cert?.label}
+      </span>
+    </button>
+  );
+}
 function VisaLogo() {
   return (
     <svg viewBox="0 0 48 32" className="h-4 w-9" aria-label="Visa">
@@ -606,6 +627,7 @@ function ProductInfoSection({
   unit,
   isCategorie,
   rating_count,
+  onSelectCertificate, // 👈 AJOUT
 }: {
   isCategorie?: boolean;
   name?: string;
@@ -614,6 +636,7 @@ function ProductInfoSection({
   unit?: string;
   rating_count?: number;
   onOpenDrawer: () => void;
+  onSelectCertificate: (idx: number) => void; // 👈 AJOUT
 }) {
   const [openx, setOpenx] = useState(true);
   const [shareOpen, setShareOpen] = useState(false);
@@ -623,7 +646,57 @@ function ProductInfoSection({
     window.open(url, '_blank');
     setShareOpen(false);
   };
-
+  //console.log('isCategorie', isCategorie);
+  const certificates = [
+    {
+      badgeIcon: 'https://s.alicdn.com/@sc04/kf/H4d63ce257be542828ef4196e9c3d45cdw.png',
+      label: 'CSA',
+      description: 'Conforme en mat...',
+      type: 'CSA',
+      certificateType: 'Autorisé par le fabricant',
+      validityPeriod: '25/04/2025 - 24/05/2026',
+      certificationAuthority: 'Canadian Standards Association',
+      applicableSectors: 'Fabrication de produits de soudage',
+      applicableRegions: 'Marché canadien et nord-américain',
+      certificationNorms: 'Normes telles que « W471 » (structures en acier) et « W59 » (procédés de soudage) de l\'Association canadienne de normalisation (CSA)',
+      advantages: 'Démontrer que les produits respectent des normes rigoureuses en matière de qualité et de sécurité de la soudure',
+      images: [
+        'https://sc04.alicdn.com/kf/H23a933f51d434bc782389c7a91ef6b3bz.jpg',
+      ],
+    },
+    {
+      badgeIcon: 'https://s.alicdn.com/@sc04/kf/Hdbbb6a106e8d4515be692063768d8fd4J.png',
+      label: 'CE',
+      description: 'Conforme aux nor...',
+      type: 'CE',
+      certificateType: 'Autorisé par le fabricant',
+      validityPeriod: '25/04/2025 - 24/05/2026',
+      certificationAuthority: 'European Commission',
+      applicableSectors: 'Fabrication de produits de soudage',
+      applicableRegions: 'Marché européen',
+      certificationNorms: 'Conformité européenne EN ISO',
+      advantages: 'Accès au marché européen et reconnaissance internationale',
+      images: [
+        'https://sc04.alicdn.com/kf/H4900deeef2a64f67bbe85e6175d14fb27.png',
+      ],
+    },
+    {
+      badgeIcon: 'https://s.alicdn.com/@sc04/kf/H01e7137dcba34b9a9182d0fd0aa347f8L.png',
+      label: 'CWB',
+      description: 'Excellence en sou...',
+      type: 'CWB',
+      certificateType: 'Autorisé par le fabricant',
+      validityPeriod: '25/04/2025 - 24/05/2026',
+      certificationAuthority: 'Canadian Welding Bureau',
+      applicableSectors: 'Fabrication de produits de soudage',
+      applicableRegions: 'Marché nord-américain',
+      certificationNorms: 'Normes CWB AWS D1.1/D1.5',
+      advantages: 'Excellence en soudage et qualification professionnelle',
+      images: [
+        'https://sc04.alicdn.com/kf/H9015e98f1148421ea0a874ee3f4d2a52p.jpg',
+      ],
+    },
+  ];
   const currentUrl =
     typeof window !== 'undefined'
       ? encodeURIComponent(window.location.href)
@@ -665,15 +738,20 @@ function ProductInfoSection({
                 {rating_count === 0 ? 'Aucun avis pour l\'instant' : `${rating_count} avis`}
               </p>
 
-              {/* BADGE CERTIFIÉ */}
-              <Link href="#target-component" scroll={false} className="inline-flex items-center gap-2 bg-gray-100 px-3 py-1.5 mt-2 rounded">
-                <ShieldCheck className="w-4 h-4 text-gray-600" />
-                <BadgeCheck className="w-4 h-4 text-gray-600" />
+              {/* BADGE CERTIFIÉ Link href="#target-component" scroll={false}*/}
+              <div className="inline-flex items-center gap-2 bg-gray-100 px-3 py-1.5 mt-2 rounded">
+                {certificates.map((cert, idx) => (
+                  <CertificateBadgeheader
+                    key={idx}
+                    cert={cert}
+                    onClick={() => onSelectCertificate(idx)}
+                  />
+                ))}
                 <span className="text-sm text-orange-600 font-medium">
                   certifié
                 </span>
                 <ChevronRight className="w-4 h-4 text-orange-600" />
-              </Link>
+              </div>
 
             </div>
 
@@ -1206,7 +1284,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                   </div>
                 </motion.div>
               </div>
-              <ProductInfoSection onOpenDrawer={() => setOpen(true)} name={product.name} price={product.price} sale_price={product.sale_price} unit={product.unit} isCategorie={isCategorie} />
+              <ProductInfoSection onOpenDrawer={() => setOpen(true)} name={product.name} price={product.price} sale_price={product.sale_price} unit={product.unit} isCategorie={isCategorie} onSelectCertificate={setSelectedCertIdx} />
               {/* Description Section */}
               {content ? (
                 <div className="space-y-2">
