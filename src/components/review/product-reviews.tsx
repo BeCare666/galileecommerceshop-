@@ -23,7 +23,8 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId }) => {
   });
 
   const onPagination = (current: number) => setPage(current);
-
+  console.log('reviews', reviews.length);
+  localStorage.setItem('reviewsinstorage', reviews.length.toString());
   const handleOpenReviewForm = () => {
     openModal('REVIEW_RATING', {
       product_id: productId,

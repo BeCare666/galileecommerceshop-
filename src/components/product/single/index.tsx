@@ -627,7 +627,9 @@ function ProductInfoSection({
   unit,
   isCategorie,
   rating_count,
-  onSelectCertificate, // 👈 AJOUT
+  reviewsinstorage,
+  onSelectCertificate,
+  onCloseCash,
 }: {
   isCategorie?: boolean;
   name?: string;
@@ -635,8 +637,10 @@ function ProductInfoSection({
   sale_price?: number;
   unit?: string;
   rating_count?: number;
+  reviewsinstorage?: string;
   onOpenDrawer: () => void;
   onSelectCertificate: (idx: number) => void; // 👈 AJOUT
+  onCloseCash: () => void;
 }) {
   const [openx, setOpenx] = useState(true);
   const [shareOpen, setShareOpen] = useState(false);
@@ -735,11 +739,11 @@ function ProductInfoSection({
               )}
 
               <p className="text-sm text-gray-500 mt-2">
-                {rating_count === 0 ? 'Aucun avis pour l\'instant' : `${rating_count} avis`}
+                1 avis
               </p>
 
-              {/* BADGE CERTIFIÉ Link href="#target-component" scroll={false}*/}
-              <div className="inline-flex items-center gap-2 bg-gray-100 px-3 py-1.5 mt-2 rounded">
+              {/*BADGE CERTIFIÉ Link href="#target-component" scroll={false}*/}
+              <div onClick={onCloseCash} className="inline-flex items-center gap-2 bg-gray-100 px-3 py-1.5 mt-2 rounded">
                 {certificates.map((cert, idx) => (
                   <CertificateBadgeheader
                     key={idx}
@@ -924,6 +928,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
   const [open, setOpen] = useState(false);
   const [cashOpen, setCashOpen] = useState(true);
   const API_URL = process.env.NEXT_PUBLIC_REST_API_ENDPOINT;
+  const reviewsinstorage = localStorage.getItem('reviewsinstorage');
   if (!API_URL) throw new Error("NEXT_PUBLIC_REST_API_ENDPOINT n'est pas défini !");
   const API_BASE = `${API_URL}`;
   const token = getAuthToken();
@@ -1284,7 +1289,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                   </div>
                 </motion.div>
               </div>
-              <ProductInfoSection onOpenDrawer={() => setOpen(true)} name={product.name} price={product.price} sale_price={product.sale_price} unit={product.unit} isCategorie={isCategorie} onSelectCertificate={setSelectedCertIdx} />
+              <ProductInfoSection onOpenDrawer={() => setOpen(true)} name={product.name} price={product.price} sale_price={product.sale_price} unit={product.unit} isCategorie={isCategorie} onSelectCertificate={setSelectedCertIdx} onCloseCash={() => setCashOpen(false)} />
               {/* Description Section */}
               {content ? (
                 <div className="space-y-2">
