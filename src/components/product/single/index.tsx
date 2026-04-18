@@ -1,3 +1,4 @@
+import React from "react";
 import placeholder from '@/assets/images/placeholders/product.svg';
 import Certificat from '@/assets/images/certificat.svg';
 import Verified from '@/assets/images/verified.svg';
@@ -274,7 +275,7 @@ function CertificateModal({ cert, isOpen, onClose }: any) {
                   Période de validité
                 </label>
                 <p className="text-sm text-gray-900 dark:text-white">
-                  {cert?.validityPeriod || '25/04/2025 - 24/05/2026'}
+                  {cert?.validityPeriod || '25/04/2025 - 24/05/2027'}
                 </p>
               </div>
 
@@ -452,131 +453,102 @@ function PayPalLogo() {
     </svg>
   );
 }
-function ProductPrepair() {
-  const data = [
-    { label: 'vente Unités', value: 'Article unique' },
-  ]
+function ProductPrepair({ data }: { data: any[] }) {
   return (
     <div className="mt-6">
-      <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-        Emballage et livraison
-      </h2>
-
-      <div className="border border-gray-200 dark:border-gray-800  overflow-hidden">
-        {data.map((row, index) => (
-          <div
-            key={index}
-            className={`grid grid-cols-2 md:grid-cols-4 ${index % 2 === 0
-              ? 'bg-gray-50 dark:bg-white/5'
-              : 'bg-white dark:bg-[#0B0B0C]'
-              }`}
-          >
-            {/* Col 1 */}
-            <div className="p-3 text-xs text-gray-500 dark:text-gray-400 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800">
-              {row.label}
-            </div>
-
-            <div className="p-3 text-sm font-medium text-gray-900 dark:text-white border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800">
-              {row.value}
-            </div>
-
-
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-function ProductTimeShipping() {
-  const data = [
-    { label: 'Quantité (mètre carré)', value: 'Article unique', value2: '> 1 000' },
-    { label: 'Durée estimée (jours)', value: '45', value2: 'À négocier' },
-  ]
-  return (
-    <div className="mt-6">
-      <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-        Délai de préparartion de la commande
-      </h2>
-
-      <div className="border border-gray-200 dark:border-gray-800  overflow-hidden">
-        {data.map((row, index) => (
-          <div
-            key={index}
-            className={`grid grid-cols-2 md:grid-cols-4 ${index % 2 === 0
-              ? 'bg-gray-50 dark:bg-white/5'
-              : 'bg-white dark:bg-[#0B0B0C]'
-              }`}
-          >
-            {/* Col 1 */}
-            <div className="p-3 text-xs text-gray-500 dark:text-gray-400 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800">
-              {row.label}
-            </div>
-
-            <div className="p-3 text-sm font-medium text-gray-900 dark:text-white border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800">
-              {row.value}
-            </div>
-
-            <div className="p-3 text-sm font-medium text-gray-900 dark:text-white border-b md:border-b-0 border-gray-200 dark:border-gray-800">
-              {row.value2}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-function ProductSpecs() {
-  const data = [
-    { label: 'Utilisation', value: 'Atelier, usine', label2: 'Matériel', value2: 'Acier' },
-    { label: 'Type de produit', value: 'Structure en acier', label2: 'Garantie', value2: '1 AN' },
-    {
-      label: 'Service après - vente',
-      value: 'Support technique en ligne, Installation sur site, Formation sur place',
-      label2: 'Solution de projet Capacité',
-      value2: '3D modèle conception',
-    },
-    { label: 'Style de conception', value: 'Moderne', label2: 'Application', value2: 'Entrepôt, Atelier' },
-    { label: "Point d'origine", value: 'Liaoning, China', label2: 'Marque nom', value2: 'SYLY' },
-    { label: 'Numéro de Type', value: 'Q235B Q355B', label2: 'Product name', value2: 'Warehouse Workshop Prefab Metal Buildings' },
-    { label: 'Certificat', value: 'ISO9001:2008', label2: 'Couleur', value2: 'Facultatif' },
-    { label: 'Toiture', value: "Panneau sandwich. Tôle d'acier simple", label2: 'Panne', value2: 'Profilé en acier CZ' },
-    { label: 'Traitement de surface', value: 'Peinture antirouille', label2: 'Durée de vie', value2: '50 ans' },
-    { label: 'Porte', value: 'porte roulante ou porte à panneaux sandwich', label2: 'Fenêtre', value2: 'Fenêtre en PVC' },
-    { label: 'Résistant au vent', value: '200 km/h', label2: 'Couleur', value2: 'Facultatif' },
-  ];
-
-  return (
-    <div className="mt-6">
-      <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+      <h2 className="text-lg font-semibold mb-4">
         Caractéristiques du produit
       </h2>
 
-      <div className="border border-gray-200 dark:border-gray-800  overflow-hidden">
-        {data.map((row, index) => (
+      <div className="border border-gray-200 dark:border-gray-800">
+        {data.map((row, rowIndex) => (
           <div
-            key={index}
-            className={`grid grid-cols-2 md:grid-cols-4 ${index % 2 === 0
-              ? 'bg-gray-50 dark:bg-white/5'
-              : 'bg-white dark:bg-[#0B0B0C]'
+            key={rowIndex}
+            className={`grid ${row.length === 1
+              ? 'grid-cols-2'
+              : row.length === 2
+                ? 'grid-cols-2 md:grid-cols-4'
+                : 'grid-cols-2 md:grid-cols-6'
               }`}
           >
-            {/* Col 1 */}
-            <div className="p-3 text-xs text-gray-500 dark:text-gray-400 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800">
-              {row.label}
-            </div>
+            {row.map((item: any, i: number) => (
+              <React.Fragment key={i}>
+                <div className="p-3 text-xs text-gray-500 border">
+                  {item.label}
+                </div>
+                <div className="p-3 text-sm font-medium border">
+                  {item.value}
+                </div>
+              </React.Fragment>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+function ProductTimeShipping({ data }: { data: any[] }) {
+  return (
+    <div className="mt-6">
+      <h2 className="text-lg font-semibold mb-4">
+        Caractéristiques du produit
+      </h2>
 
-            <div className="p-3 text-sm font-medium text-gray-900 dark:text-white border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800">
-              {row.value}
-            </div>
+      <div className="border border-gray-200 dark:border-gray-800">
+        {data.map((row, rowIndex) => (
+          <div
+            key={rowIndex}
+            className={`grid ${row.length === 1
+              ? 'grid-cols-2'
+              : row.length === 2
+                ? 'grid-cols-2 md:grid-cols-4'
+                : 'grid-cols-2 md:grid-cols-6'
+              }`}
+          >
+            {row.map((item: any, i: number) => (
+              <React.Fragment key={i}>
+                <div className="p-3 text-xs text-gray-500 border">
+                  {item.label}
+                </div>
+                <div className="p-3 text-sm font-medium border">
+                  {item.value}
+                </div>
+              </React.Fragment>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+function ProductSpecs({ data }: { data: any[] }) {
+  return (
+    <div className="mt-6">
+      <h2 className="text-lg font-semibold mb-4">
+        Caractéristiques du produit
+      </h2>
 
-            {/* Col 2 */}
-            <div className="p-3 text-xs text-gray-500 dark:text-gray-400 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800">
-              {row.label2}
-            </div>
-
-            <div className="p-3 text-sm font-medium text-gray-900 dark:text-white border-b md:border-b-0 border-gray-200 dark:border-gray-800">
-              {row.value2}
-            </div>
+      <div className="border border-gray-200 dark:border-gray-800">
+        {data.map((row, rowIndex) => (
+          <div
+            key={rowIndex}
+            className={`grid ${row.length === 1
+              ? 'grid-cols-2'
+              : row.length === 2
+                ? 'grid-cols-2 md:grid-cols-4'
+                : 'grid-cols-2 md:grid-cols-6'
+              }`}
+          >
+            {row.map((item: any, i: number) => (
+              <React.Fragment key={i}>
+                <div className="p-3 text-xs text-gray-500 border">
+                  {item.label}
+                </div>
+                <div className="p-3 text-sm font-medium border">
+                  {item.value}
+                </div>
+              </React.Fragment>
+            ))}
           </div>
         ))}
       </div>
@@ -658,7 +630,7 @@ function ProductInfoSection({
       description: 'Conforme en mat...',
       type: 'CSA',
       certificateType: 'Autorisé par le fabricant',
-      validityPeriod: '25/04/2025 - 24/05/2026',
+      validityPeriod: '25/04/2025 - 24/05/2027',
       certificationAuthority: 'Canadian Standards Association',
       applicableSectors: 'Fabrication de produits de soudage',
       applicableRegions: 'Marché canadien et nord-américain',
@@ -674,7 +646,7 @@ function ProductInfoSection({
       description: 'Conforme aux nor...',
       type: 'CE',
       certificateType: 'Autorisé par le fabricant',
-      validityPeriod: '25/04/2025 - 24/05/2026',
+      validityPeriod: '25/04/2025 - 24/05/2027',
       certificationAuthority: 'European Commission',
       applicableSectors: 'Fabrication de produits de soudage',
       applicableRegions: 'Marché européen',
@@ -690,7 +662,7 @@ function ProductInfoSection({
       description: 'Excellence en sou...',
       type: 'CWB',
       certificateType: 'Autorisé par le fabricant',
-      validityPeriod: '25/04/2025 - 24/05/2026',
+      validityPeriod: '25/04/2025 - 24/05/2027',
       certificationAuthority: 'Canadian Welding Bureau',
       applicableSectors: 'Fabrication de produits de soudage',
       applicableRegions: 'Marché nord-américain',
@@ -988,6 +960,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
     handleInquiry(payload);
     //onClose();
   };
+
   const { openModal } = useModalAction();
   const { isAuthorized } = useMe();
 
@@ -1017,6 +990,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
     commerce_register,
     logo_url,
     country,
+    table_content,
     tags,
     type,
     video,
@@ -1035,12 +1009,41 @@ const Single: React.FC<SingleProps> = ({ product }) => {
       transformOrigin: `${x}% ${y}%`,
     });
   };
+  function parseSpecsTable(html: string) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    const rows = Array.from(doc.querySelectorAll('tr'));
+
+    return rows.map((row) => {
+      const cells = Array.from(row.querySelectorAll('th, td'))
+        .map((cell) => cell.textContent?.trim() || '')
+        .filter(Boolean);
+
+      const pairs: { label: string; value: string }[] = [];
+
+      for (let i = 0; i < cells.length; i += 2) {
+        pairs.push({
+          label: cells[i] || '',
+          value: cells[i + 1] || '',
+        });
+      }
+
+      return pairs;
+    });
+  }
+  const html = `${product.table_content}`; // ton HTML
+  const html1 = `${product.embaEditor}`; // ton HTML
+  const html2 = `${product.timeOutEditor}`; // ton HTML
+  const datatable_content = parseSpecsTable(html);
+  const embaEditor = parseSpecsTable(html1);
+  const timeOutEditor = parseSpecsTable(html2);
   const allMedia = [
     ...previews.map((img: any) => ({ type: 'image', url: img?.url ?? placeholder, id: img?.id })),
     ...(video?.length ? video.map((item: any) => ({ type: 'video', url: item.url, id: item.id })) : []),
   ];
 
-  const productSpecs = [
+  {/*  const productSpecs = [
     { label: 'Type', value: type?.name || 'N/A' },
     { label: 'SKU', value: product?.sku || 'N/A' },
     {
@@ -1056,7 +1059,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
           </div>`
     },
     { label: 'Localisation', value: `${product?.shop?.address?.city}` },
-  ];
+  ];*/}
   const verifiedIsCategorie = ['2', '300', '1', '9', '15', '16'];
 
   const isCategorie = product.categories.some((cat: any) =>
@@ -1071,7 +1074,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
       description: 'Conforme en mat...',
       type: 'CSA',
       certificateType: 'Autorisé par le fabricant',
-      validityPeriod: '25/04/2025 - 24/05/2026',
+      validityPeriod: '25/04/2025 - 24/05/2027',
       certificationAuthority: 'Canadian Standards Association',
       applicableSectors: 'Fabrication de produits de soudage',
       applicableRegions: 'Marché canadien et nord-américain',
@@ -1087,7 +1090,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
       description: 'Conforme aux nor...',
       type: 'CE',
       certificateType: 'Autorisé par le fabricant',
-      validityPeriod: '25/04/2025 - 24/05/2026',
+      validityPeriod: '25/04/2025 - 24/05/2027',
       certificationAuthority: 'European Commission',
       applicableSectors: 'Fabrication de produits de soudage',
       applicableRegions: 'Marché européen',
@@ -1103,7 +1106,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
       description: 'Excellence en sou...',
       type: 'CWB',
       certificateType: 'Autorisé par le fabricant',
-      validityPeriod: '25/04/2025 - 24/05/2026',
+      validityPeriod: '25/04/2025 - 24/05/2027',
       certificationAuthority: 'Canadian Welding Bureau',
       applicableSectors: 'Fabrication de produits de soudage',
       applicableRegions: 'Marché nord-américain',
@@ -1535,15 +1538,10 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                 </motion.div>
               </div>
               {/* Caractéristiques Section */}
-              <ProductSpecs />
-              <ProductPrepair />
+              <ProductSpecs data={datatable_content} />
+              <ProductPrepair data={embaEditor} />
               <div id="target-component"></div>
-              <ProductTimeShipping />
-              <div className="hidden space-y-2 ">
-                <h3 className="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wide">Caractéristiques</h3>
-                <SpecGrid specs={productSpecs} />
-              </div>
-
+              <ProductTimeShipping data={timeOutEditor} />
               {/* Certifications Section */}
               <div className="space-y-3" >
                 <div className="flex items-center gap-2">

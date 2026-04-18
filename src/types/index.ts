@@ -435,6 +435,9 @@ export interface Product {
   name: string;
   slug: string;
   description: string;
+  table_content?: string;
+  embaEditor?: string;
+  timeOutEditor?: string;
   price: number;
   countries_id: number;
   sale_price: number;
