@@ -4764,10 +4764,19 @@ export default function Card({ product }: { product: Product }) {
 
                 {/* Pricing */}
                 <div className="flex items-center gap-2">
-                    <span className="text-base font-bold text-pink-600">
-                        $ {sale_price}{' '}
-                    </span>
-                    <span className="text-gray-400 line-through text-sm">$ {price}</span>
+                    {sale_price ? (
+                        <>
+                            <span className="text-base font-bold text-pink-600">
+                                $ {sale_price}{' '}
+                            </span>
+                            <span className="text-gray-400 line-through text-sm">$ {price}</span>
+                        </>
+                    ) : (
+                        <span className="text-base font-bold text-pink-600">
+                            Prix à négocier
+                        </span>
+                    )}
+
                     <span
                         className="flex items-center text-gray-400  text-sm"
                         style={{

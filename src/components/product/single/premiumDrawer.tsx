@@ -169,7 +169,7 @@ export default function PremiumDrawer({
                                     </div>
 
                                     <div className="text-xs text-gray-500 mt-1">
-                                        / {unit} unités
+                                        {unit} unités
                                     </div>
 
                                     {active && (

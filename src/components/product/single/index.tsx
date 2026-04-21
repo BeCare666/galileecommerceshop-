@@ -679,7 +679,7 @@ function ProductInfoSection({
             <div>
               <div className="text-lg font-semibold">Prix négociable</div>
               <div className="text-sm text-gray-600">
-                / {unit} {isCategorie ? "mètre carré" : "unité(s)"}
+                Le prix sera défini avec le fournisseur après la prise de contact.{' '}
               </div>
             </div>
           ) : (
@@ -692,7 +692,7 @@ function ProductInfoSection({
                       {sale_price.toLocaleString()} $
                     </div>
                     <div className="text-sm text-gray-600">
-                      {unit} {isCategorie ? "mètre carré" : "unité(s)"}
+                      {unit} {isCategorie}
                     </div>
                   </div>
 
@@ -701,7 +701,7 @@ function ProductInfoSection({
                       {price?.toLocaleString()} $
                     </div>
                     <div className="text-sm text-gray-600 line-through">
-                      {unit} {isCategorie ? "mètre carré" : "unité(s)"}
+                      {unit} {isCategorie}
                     </div>
                   </div>
                 </>
@@ -712,7 +712,7 @@ function ProductInfoSection({
                     {price?.toLocaleString()} $
                   </div>
                   <div className="text-sm text-gray-600">
-                    {unit} {isCategorie ? "mètre carré" : "unité(s)"}
+                    {unit} {isCategorie}
                   </div>
                 </div>
               )}
@@ -1373,7 +1373,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                               <>
                                 <span className="hidden text-xs text-gray-600">$</span>
                                 <span className="text-2xl font-bold text-[#E4127A]">
-                                  {product.sale_price} $ / {product.unit} unité(s)
+                                  {product.sale_price} $  {product.unit} unité(s)
                                 </span>
                               </>
 
@@ -1388,7 +1388,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                           {!product.negotiable_price ? (
                             <>
                               <span className="text-xs line-through text-gray-400">
-                                {product.price} $ / {product.unit} unité(s)
+                                {product.price} $  {product.unit} unité(s)
                               </span>
                             </>
 
@@ -1818,13 +1818,13 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                               <div className="flex items-baseline gap-2">
                                 <span className="text-xl font-bold text-[#E4127A]">
                                   {product.sale_price} $ / {product.unit}{" "}
-                                  {isCategorie ? "mètre carré" : "unité(s)"}
+                                  {isCategorie}
                                 </span>
                               </div>
 
                               <span className="text-xs line-through text-gray-400">
                                 {product.price} $ / {product.unit}{" "}
-                                {isCategorie ? "mètre carré" : "unité(s)"}
+                                {isCategorie}
                               </span>
                             </>
                           ) : (
@@ -1832,7 +1832,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                             <div className="flex items-baseline gap-2">
                               <span className="text-xl font-bold text-gray-900 dark:text-white">
                                 {product.price} $ / {product.unit}{" "}
-                                {isCategorie ? "mètre carré" : "unité(s)"}
+                                {isCategorie}
                               </span>
                             </div>
                           )}
