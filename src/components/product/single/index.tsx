@@ -2,6 +2,7 @@ import React from "react";
 import placeholder from '@/assets/images/placeholders/product.svg';
 import Certificat from '@/assets/images/certificat.svg';
 import Verified from '@/assets/images/verified.svg';
+import Notverified from '@/assets/images/notverified.png';
 import { motion } from 'framer-motion';
 import ProductDetailsPaper from '@/components/product/product-details-paper';
 import ProductInformation from '@/components/product/product-information';
@@ -245,7 +246,7 @@ function CertificateModal({ cert, isOpen, onClose }: any) {
           {/* Right - Certificate Details */}
           <div className="space-y-6">
             {/* Tabs */}
-            <div className="flex gap-2 border-b border-gray-200 dark:border-neutral-700">
+            <div className="flex gap-2 border-b border-gray-200 dark:border-neutral-700 hidden">
               {['CSA', 'CE', 'CWB'].map((tab) => (
                 <button
                   key={tab}
@@ -457,7 +458,7 @@ function ProductPrepair({ data }: { data: any[] }) {
   return (
     <div className="mt-6">
       <h2 className="text-lg font-semibold mb-4">
-        Caractéristiques du produit
+        Délai de préparation de la commande
       </h2>
 
       <div className="border border-gray-200 dark:border-gray-800">
@@ -491,7 +492,7 @@ function ProductTimeShipping({ data }: { data: any[] }) {
   return (
     <div className="mt-6">
       <h2 className="text-lg font-semibold mb-4">
-        Caractéristiques du produit
+        Emballage et livraison
       </h2>
 
       <div className="border border-gray-200 dark:border-gray-800">
@@ -591,6 +592,37 @@ function WhatsappIcon(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+const transformCertificates = (certData: any) => {
+  if (!certData) return [];
+
+  const all = [
+    ...(certData.supplier || []),
+    ...(certData.product || []),
+  ];
+
+  return all.map((cert: any) => ({
+    badgeIcon: cert.badgeIcon,
+    label: cert.label,
+    description: cert.description || cert.label,
+    type: cert.type,
+    certificateType:
+      cert.certificateScope === "supplier"
+        ? "Certificat fournisseur"
+        : "Certificat produit",
+    validityPeriod: cert.validityPeriod,
+    certificationAuthority: cert.certificationAuthority || "N/A",
+    applicableSectors: cert.applicableSectors || "N/A",
+    applicableRegions: cert.applicableRegions || "N/A",
+    certificationNorms: cert.certificationNorms || "N/A",
+    advantages: cert.advantages || cert.label,
+    images:
+      cert.images?.length > 0
+        ? cert.images
+        : cert.media?.url
+          ? [cert.media.url]
+          : [],
+  }));
+};
 function ProductInfoSection({
   onOpenDrawer,
   name,
@@ -600,8 +632,11 @@ function ProductInfoSection({
   isCategorie,
   rating_count,
   reviewsinstorage,
+  certificates,
   onSelectCertificate,
   onCloseCash,
+  total_reviews,
+  negotiable_price,
 }: {
   isCategorie?: boolean;
   name?: string;
@@ -613,6 +648,9 @@ function ProductInfoSection({
   onOpenDrawer: () => void;
   onSelectCertificate: (idx: number) => void; // 👈 AJOUT
   onCloseCash: () => void;
+  certificates: any[];
+  total_reviews?: number;
+  negotiable_price?: boolean;
 }) {
   const [openx, setOpenx] = useState(true);
   const [shareOpen, setShareOpen] = useState(false);
@@ -623,56 +661,7 @@ function ProductInfoSection({
     setShareOpen(false);
   };
   //console.log('isCategorie', isCategorie);
-  const certificates = [
-    {
-      badgeIcon: 'https://s.alicdn.com/@sc04/kf/H4d63ce257be542828ef4196e9c3d45cdw.png',
-      label: 'CSA',
-      description: 'Conforme en mat...',
-      type: 'CSA',
-      certificateType: 'Autorisé par le fabricant',
-      validityPeriod: '25/04/2025 - 24/05/2027',
-      certificationAuthority: 'Canadian Standards Association',
-      applicableSectors: 'Fabrication de produits de soudage',
-      applicableRegions: 'Marché canadien et nord-américain',
-      certificationNorms: 'Normes telles que « W471 » (structures en acier) et « W59 » (procédés de soudage) de l\'Association canadienne de normalisation (CSA)',
-      advantages: 'Démontrer que les produits respectent des normes rigoureuses en matière de qualité et de sécurité de la soudure',
-      images: [
-        'https://sc04.alicdn.com/kf/H23a933f51d434bc782389c7a91ef6b3bz.jpg',
-      ],
-    },
-    {
-      badgeIcon: 'https://s.alicdn.com/@sc04/kf/Hdbbb6a106e8d4515be692063768d8fd4J.png',
-      label: 'CE',
-      description: 'Conforme aux nor...',
-      type: 'CE',
-      certificateType: 'Autorisé par le fabricant',
-      validityPeriod: '25/04/2025 - 24/05/2027',
-      certificationAuthority: 'European Commission',
-      applicableSectors: 'Fabrication de produits de soudage',
-      applicableRegions: 'Marché européen',
-      certificationNorms: 'Conformité européenne EN ISO',
-      advantages: 'Accès au marché européen et reconnaissance internationale',
-      images: [
-        'https://sc04.alicdn.com/kf/H4900deeef2a64f67bbe85e6175d14fb27.png',
-      ],
-    },
-    {
-      badgeIcon: 'https://s.alicdn.com/@sc04/kf/H01e7137dcba34b9a9182d0fd0aa347f8L.png',
-      label: 'CWB',
-      description: 'Excellence en sou...',
-      type: 'CWB',
-      certificateType: 'Autorisé par le fabricant',
-      validityPeriod: '25/04/2025 - 24/05/2027',
-      certificationAuthority: 'Canadian Welding Bureau',
-      applicableSectors: 'Fabrication de produits de soudage',
-      applicableRegions: 'Marché nord-américain',
-      certificationNorms: 'Normes CWB AWS D1.1/D1.5',
-      advantages: 'Excellence en soudage et qualification professionnelle',
-      images: [
-        'https://sc04.alicdn.com/kf/H9015e98f1148421ea0a874ee3f4d2a52p.jpg',
-      ],
-    },
-  ];
+
   const currentUrl =
     typeof window !== 'undefined'
       ? encodeURIComponent(window.location.href)
@@ -684,14 +673,23 @@ function ProductInfoSection({
         {/* PRIX */}{/* PRIX */}
 
         <div className="bg-gray-200  p-4  mt-4 flex justify-between">
-          <div>
-            <div className="text-lg font-semibold">{sale_price?.toLocaleString()} $</div>
-            <div className="text-sm text-gray-600">{unit} {`${isCategorie ? 'mètre carré' : 'unité(s) '}`} </div>
-          </div>
-          <div>
-            <div className="text-lg font-semibold line-through">{price?.toLocaleString()} $</div>
-            <div className="text-sm text-gray-600 line-through">{unit} {`${isCategorie ? 'mètre carré' : 'unité(s) '}`}</div>
-          </div>
+          {negotiable_price ? (
+            <div>
+              <div className="text-lg font-semibold">Prix négociable</div>
+              <div className="text-sm text-gray-600">  / {unit} {`${isCategorie ? 'mètre carré' : 'unité(s) '}`} </div>
+            </div>
+          ) : (
+            <>
+              <div>
+                <div className="text-lg font-semibold">{sale_price?.toLocaleString()} $</div>
+                <div className="text-sm text-gray-600">{unit} {`${isCategorie ? 'mètre carré' : 'unité(s) '}`} </div>
+              </div>
+              <div>
+                <div className="text-lg font-semibold line-through">{price?.toLocaleString()} $</div>
+                <div className="text-sm text-gray-600 line-through">{unit} {`${isCategorie ? 'mètre carré' : 'unité(s) '}`}</div>
+              </div>
+            </>
+          )}
         </div>
 
         {/* HEADER */}
@@ -710,24 +708,39 @@ function ProductInfoSection({
                 </h2>
               )}
 
-              <p className="text-sm text-gray-500 mt-2">
-                1 avis
+              <p className="text-sm text-gray-500 mt-2 hidden">
+                {total_reviews} avis
               </p>
 
               {/*BADGE CERTIFIÉ Link href="#target-component" scroll={false}*/}
-              <div onClick={onCloseCash} className="inline-flex items-center gap-2 bg-gray-100 px-3 py-1.5 mt-2 rounded">
+              {certificates.length > 0 ? (
+                <div onClick={onCloseCash} className="inline-flex items-center gap-2 bg-gray-100 px-3 py-1.5 mt-2 rounded">
+                  {certificates.map((cert, idx) => (
+                    <CertificateBadgeheader
+                      key={idx}
+                      cert={cert}
+                      onClick={() => onSelectCertificate(idx)}
+                    />
+                  ))}
+                  <span className="text-sm text-orange-600 font-medium">
+                    certifié
+                  </span>
+                  <ChevronRight className="w-4 h-4 text-orange-600" />
+                </div>
+              ) : (<div onClick={onCloseCash} className="inline-flex items-center gap-2 bg-gray-100 px-3 py-1.5 mt-2 rounded">
                 {certificates.map((cert, idx) => (
                   <CertificateBadgeheader
                     key={idx}
                     cert={cert}
-                    onClick={() => onSelectCertificate(idx)}
+
                   />
                 ))}
-                <span className="text-sm text-orange-600 font-medium">
-                  certifié
+                <span className="text-sm text-red font-medium">
+                  Non certifié
                 </span>
                 <ChevronRight className="w-4 h-4 text-orange-600" />
-              </div>
+              </div>)}
+
 
             </div>
 
@@ -1067,56 +1080,36 @@ const Single: React.FC<SingleProps> = ({ product }) => {
   );
 
   //console.log('isCategorie', isCategorie);
-  const certificates = [
-    {
-      badgeIcon: 'https://s.alicdn.com/@sc04/kf/H4d63ce257be542828ef4196e9c3d45cdw.png',
-      label: 'CSA',
-      description: 'Conforme en mat...',
-      type: 'CSA',
-      certificateType: 'Autorisé par le fabricant',
-      validityPeriod: '25/04/2025 - 24/05/2027',
-      certificationAuthority: 'Canadian Standards Association',
-      applicableSectors: 'Fabrication de produits de soudage',
-      applicableRegions: 'Marché canadien et nord-américain',
-      certificationNorms: 'Normes telles que « W471 » (structures en acier) et « W59 » (procédés de soudage) de l\'Association canadienne de normalisation (CSA)',
-      advantages: 'Démontrer que les produits respectent des normes rigoureuses en matière de qualité et de sécurité de la soudure',
-      images: [
-        'https://sc04.alicdn.com/kf/H23a933f51d434bc782389c7a91ef6b3bz.jpg',
-      ],
-    },
-    {
-      badgeIcon: 'https://s.alicdn.com/@sc04/kf/Hdbbb6a106e8d4515be692063768d8fd4J.png',
-      label: 'CE',
-      description: 'Conforme aux nor...',
-      type: 'CE',
-      certificateType: 'Autorisé par le fabricant',
-      validityPeriod: '25/04/2025 - 24/05/2027',
-      certificationAuthority: 'European Commission',
-      applicableSectors: 'Fabrication de produits de soudage',
-      applicableRegions: 'Marché européen',
-      certificationNorms: 'Conformité européenne EN ISO',
-      advantages: 'Accès au marché européen et reconnaissance internationale',
-      images: [
-        'https://sc04.alicdn.com/kf/H4900deeef2a64f67bbe85e6175d14fb27.png',
-      ],
-    },
-    {
-      badgeIcon: 'https://s.alicdn.com/@sc04/kf/H01e7137dcba34b9a9182d0fd0aa347f8L.png',
-      label: 'CWB',
-      description: 'Excellence en sou...',
-      type: 'CWB',
-      certificateType: 'Autorisé par le fabricant',
-      validityPeriod: '25/04/2025 - 24/05/2027',
-      certificationAuthority: 'Canadian Welding Bureau',
-      applicableSectors: 'Fabrication de produits de soudage',
-      applicableRegions: 'Marché nord-américain',
-      certificationNorms: 'Normes CWB AWS D1.1/D1.5',
-      advantages: 'Excellence en soudage et qualification professionnelle',
-      images: [
-        'https://sc04.alicdn.com/kf/H9015e98f1148421ea0a874ee3f4d2a52p.jpg',
-      ],
-    },
-  ];
+  const certificates = product?.certificates
+    ? [
+      ...(product.certificates.supplier || []),
+      ...(product.certificates.product || []),
+    ].map((cert: any) => ({
+      badgeIcon: cert.badgeIcon,
+      label: cert.label,
+      description: cert.description || cert.label,
+      type: cert.type,
+      certificateType:
+        cert.certificateScope === "supplier"
+          ? "Certificat fournisseur"
+          : "Certificat produit",
+      validityPeriod: cert.validityPeriod,
+      certificationAuthority: cert.certificationAuthority || "N/A",
+      applicableSectors: cert.applicableSectors || "N/A",
+      applicableRegions: cert.applicableRegions || "N/A",
+      certificationNorms: cert.certificationNorms || "N/A",
+      advantages: cert.advantages || cert.label,
+      images:
+        cert.images?.length > 0
+          ? cert.images
+          : cert.media?.url
+            ? [cert.media.url]
+            : [],
+    }))
+    : [];
+
+
+
   function getMembershipDuration(createdAt: string): string {
     const createdDate = new Date(createdAt);
     const now = new Date();
@@ -1170,7 +1163,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                   {/* Logo */}
                   <div className="w-12 h-12 bg-white rounded flex items-center justify-center overflow-hidden">
                     <Image
-                      src={product?.logo_url || '/logo.png'} // remplace par ton image
+                      src={product?.logo_url || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf1fiSQO7JfDw0uv1Ae_Ye-Bo9nhGNg27dwg&s'} // remplace par ton image
                       alt="logo"
                       className="object-contain w-full h-full"
                       width={20}
@@ -1193,7 +1186,6 @@ const Single: React.FC<SingleProps> = ({ product }) => {
 
                     {/* Stats */}
                     <div className="text-xs text-gray-600 mt-1 flex items-center gap-4">
-                      <span> (1 commentaire(s) )</span>
                       <span>Temps de réponse ≤ 3h</span>
                       <span>Taux de livraison dans les délais ≥ 100%</span>
                     </div>
@@ -1202,13 +1194,26 @@ const Single: React.FC<SingleProps> = ({ product }) => {
 
                 {/* RIGHT */}
                 <div className="absolute top-0 right-0 flex items-center gap-2 text-blue-600 text-sm font-medium bg-white px-3 py-1  mb-43">
-                  <span><Image
-                    src={Verified} // remplace par ton image
-                    alt="logo"
-                    className="object-contain w-full h-full"
-                    width={50}
-                    height={50}
-                  /></span>
+                  <span>
+                    {certificates.length > 0 ? (
+                      <Image
+                        src={Verified} // remplace par ton image
+                        alt="logo"
+                        className="object-contain w-full h-full"
+                        width={50}
+                        height={50}
+                      />
+                    ) : (
+                      <Image
+                        src={Notverified} // remplace par ton image
+                        alt="logo"
+                        className="object-contain w-full h-full"
+                        width={50}
+                        height={50}
+                      />
+                    )}
+
+                  </span>
                 </div>
               </div>
               <div className="flex gap-6">
@@ -1292,7 +1297,15 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                   </div>
                 </motion.div>
               </div>
-              <ProductInfoSection onOpenDrawer={() => setOpen(true)} name={product.name} price={product.price} sale_price={product.sale_price} unit={product.unit} isCategorie={isCategorie} onSelectCertificate={setSelectedCertIdx} onCloseCash={() => setCashOpen(false)} />
+              <ProductInfoSection
+                onOpenDrawer={() => setOpen(true)} name={product.name}
+                price={product.price} sale_price={product.sale_price} unit={product.unit}
+                isCategorie={isCategorie} onSelectCertificate={setSelectedCertIdx}
+                onCloseCash={() => setCashOpen(false)}
+                certificates={transformCertificates(product.certificates)} // 🔥 ICI
+                total_reviews={total_reviews}
+                negotiable_price={product.negotiable_price}
+              />
               {/* Description Section */}
               {content ? (
                 <div className="space-y-2">
@@ -1325,25 +1338,56 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                       {product?.sale_price ? (
                         <div className="space-y-1">
                           <div className="text-xs text-gray-600 dark:text-gray-400">Prix</div>
+
                           <div className="flex items-baseline gap-2">
-                            <span className="hidden text-xs text-gray-600">$</span>
-                            <span className="text-2xl font-bold text-[#E4127A]">
-                              {product.sale_price} $ / {product.unit} unité(s)
-                            </span>
+                            {!product.negotiable_price ? (
+                              <>
+                                <span className="hidden text-xs text-gray-600">$</span>
+                                <span className="text-2xl font-bold text-[#E4127A]">
+                                  {product.sale_price} $ / {product.unit} unité(s)
+                                </span>
+                              </>
+
+                            ) : (
+                              <span className="text-2xl font-bold text-[#E4127A]">
+                                A negocier
+                              </span>
+                            )}
+
 
                           </div>
-                          <span className="text-xs line-through text-gray-400">
-                            {product.price} $ / {product.unit} unité(s)
-                          </span>
+                          {!product.negotiable_price ? (
+                            <>
+                              <span className="text-xs line-through text-gray-400">
+                                {product.price} $ / {product.unit} unité(s)
+                              </span>
+                            </>
+
+                          ) : (
+                            <span className="text-xs text-gray-400">
+                              Le prix est à negocier
+                            </span>
+                          )}
+
                         </div>
                       ) : (
                         <div className="space-y-1">
                           <div className="text-xs text-gray-600 dark:text-gray-400">Prix</div>
                           <div className="flex items-baseline gap-2">
-                            <span className="text-2xl font-bold text-gray-900 dark:text-white">
-                              {product.price}
-                            </span>
-                            <span className="text-xs text-gray-600">$</span>
+                            {!product.negotiable_price ? (
+                              <>
+                                <span className="text-2xl font-bold text-gray-900 dark:text-white">
+                                  {product.price}
+                                </span>
+                                <span className="text-xs text-gray-600">$</span>
+                              </>
+
+                            ) : (
+                              <span className="text-xs text-gray-400">
+                                Le prix est à negocier
+                              </span>
+                            )}
+
                           </div>
                         </div>
                       )}
@@ -1725,15 +1769,32 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                       <div className="space-y-1">
                         <div className="text-2xl text-gray-600 dark:text-gray-400 font-bold">Prix</div>
                         <div className="flex items-baseline gap-2">
-                          <span className="hidden text-xs text-gray-600">$</span>
-                          <span className="text-xl font-bold text-[#E4127A]">
-                            {product.sale_price} $ / {product.unit} {`${isCategorie ? 'mètre carré' : 'unité(s) '}`}
-                          </span>
+                          {!product.negotiable_price ? (
+                            <>
+                              <span className="hidden text-xs text-gray-600">$</span>
+                              <span className="text-xl font-bold text-[#E4127A]">
+                                {product.sale_price} $ / {product.unit} {`${isCategorie ? 'mètre carré' : 'unité(s) '}`}
+                              </span>
+                            </>
 
+                          ) : (
+                            <span className="text-2xl font-bold text-[#E4127A]">
+                              A negocier
+                            </span>
+                          )}
                         </div>
-                        <span className="text-xs line-through text-gray-400">
-                          {product.price} $ / {product.unit} {`${isCategorie ? 'mètre carré' : 'unité(s) '}`}
-                        </span>
+                        {!product.negotiable_price ? (
+
+                          <span className="text-xs line-through text-gray-400">
+                            {product.price} $ / {product.unit} {`${isCategorie ? 'mètre carré' : 'unité(s) '}`}
+                          </span>
+                        ) : (
+                          <span className="text-xs text-gray-400">
+                            Le prix est à negocier
+                          </span>
+                        )
+                        }
+
                       </div>
                     ) : (
                       <div className="space-y-1">
@@ -1783,18 +1844,29 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                     <div className="text-gray-600 dark:text-gray-400 mb-1 font-semibold">Fournisseur</div>
                     <Link
                       href={routes.shopUrl(product?.shop?.slug)}
-                      className="text-blue-600 dark:text-blue-400 font-semibold hover:underline text-xs block"
+                      className="text-blue-600 dark:text-blue-400 font-semibold hover:underline text-xs block hidden"
                     >
                       {product?.shop?.name}
                     </Link>
                     <div className="text-gray-600 dark:text-gray-400 text-xs mt-2">
-                      <Image
-                        alt="Verified"
-                        className="w-20 h-50 object-contain"
-                        src={Verified}
-                        width={20}
-                        height={50}
-                      />
+                      {certificates.length > 0 ? (
+                        <Image
+                          alt="Verified"
+                          className="w-20 h-50 object-contain"
+                          src={Verified}
+                          width={20}
+                          height={50}
+                        />
+                      ) : (
+                        <Image
+                          alt="Verified"
+                          className="w-5 h-8 object-contain"
+                          src={Notverified}
+                          width={5}
+                          height={8}
+                        />
+                      )}
+
 
                     </div>
                     <div className="hidden text-gray-600 dark:text-gray-400 text-xs">2 ans · 🇨🇳 CN</div>

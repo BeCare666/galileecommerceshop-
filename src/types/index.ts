@@ -164,6 +164,7 @@ export interface Attachment {
   __typename?: string;
   url?: string; // Optional for backward compatibility
 
+
 }
 
 export interface Shop {
@@ -429,7 +430,32 @@ export interface RatingCount {
   rating: number;
   total: number;
 }
+interface CertificateItem {
+  media_id: number;
+  certificateScope: "supplier" | "product";
+  badgeIcon: string;
+  label: string;
+  description: string | null;
+  type: string;
+  certificateType: string;
+  validityPeriod: string;
+  certificationAuthority: string | null;
+  applicableSectors: string | null;
+  applicableRegions: string | null;
+  certificationNorms: string | null;
+  advantages: string | null;
+  images: string[];
+  media: {
+    url: string;
+    mime_type: string;
+    original_name: string;
+  };
+}
 
+interface CertificatesGroup {
+  supplier: CertificateItem[];
+  product: CertificateItem[];
+}
 export interface Product {
   id: string;
   name: string;
@@ -448,6 +474,7 @@ export interface Product {
   country: string;
   gallery: Attachment[];
   shop: Shop;
+  certificates: CertificatesGroup; // 
   created_at: string;
   updated_at: string;
   preview_url: string;
@@ -461,6 +488,7 @@ export interface Product {
     id: string;
     name: string;
   };
+  negotiable_price: boolean;
   language: string;
   in_stock: number;
   is_external: boolean;

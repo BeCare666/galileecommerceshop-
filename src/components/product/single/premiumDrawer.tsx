@@ -185,9 +185,15 @@ export default function PremiumDrawer({
                         <h3 className="text-sm font-semibold mb-3">Quantité</h3>
 
                         <div className="flex items-center justify-between mt-3">
-                            <span className="text-sm text-gray-500">
-                                {selectedSize.price.toLocaleString()} $ / {unit} unités
-                            </span>
+                            {product.negotiable_price ? (
+                                <span className="text-sm text-gray-500">
+                                    Prix à négocier
+                                </span>
+                            ) : (
+                                <span className="text-sm text-gray-500">
+                                    {selectedSize.price.toLocaleString()} $ / {unit} unités
+                                </span>
+                            )}
 
                             <div className="flex items-center border rounded-full overflow-hidden shadow-sm">
                                 <button
@@ -231,9 +237,15 @@ export default function PremiumDrawer({
                 <div className="border-t p-6 space-y-4 bg-white">
                     <div className="flex justify-between text-sm font-semibold">
                         <span>Sous-total</span>
-                        <span className="text-lg">
-                            {total.toLocaleString()} $
-                        </span>
+                        {product.negotiable_price ? (
+                            <span className="text-lg">
+                                Prix à négocier
+                            </span>
+                        ) : (
+                            <span className="text-lg">
+                                {total.toLocaleString()} $
+                            </span>
+                        )}
                     </div>
 
 
