@@ -672,24 +672,53 @@ function ProductInfoSection({
       <div className="bg-[#f5f5f5]">
         {/* PRIX */}{/* PRIX */}
 
-        <div className="bg-gray-200  p-4  mt-4 flex justify-between">
+        <div className="bg-gray-200 p-4 mt-4 flex justify-between">
+
+          {/* 🔥 CAS 1 : PRIX NÉGOCIABLE */}
           {negotiable_price ? (
             <div>
               <div className="text-lg font-semibold">Prix négociable</div>
-              <div className="text-sm text-gray-600">  / {unit} {`${isCategorie ? 'mètre carré' : 'unité(s) '}`} </div>
+              <div className="text-sm text-gray-600">
+                / {unit} {isCategorie ? "mètre carré" : "unité(s)"}
+              </div>
             </div>
           ) : (
             <>
-              <div>
-                <div className="text-lg font-semibold">{sale_price?.toLocaleString()} $</div>
-                <div className="text-sm text-gray-600">{unit} {`${isCategorie ? 'mètre carré' : 'unité(s) '}`} </div>
-              </div>
-              <div>
-                <div className="text-lg font-semibold line-through">{price?.toLocaleString()} $</div>
-                <div className="text-sm text-gray-600 line-through">{unit} {`${isCategorie ? 'mètre carré' : 'unité(s) '}`}</div>
-              </div>
+              {/* 🔥 CAS 2 : PROMO */}
+              {sale_price ? (
+                <>
+                  <div>
+                    <div className="text-lg font-semibold text-[#E4127A]">
+                      {sale_price.toLocaleString()} $
+                    </div>
+                    <div className="text-sm text-gray-600">
+                      {unit} {isCategorie ? "mètre carré" : "unité(s)"}
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="text-lg font-semibold line-through text-gray-500">
+                      {price?.toLocaleString()} $
+                    </div>
+                    <div className="text-sm text-gray-600 line-through">
+                      {unit} {isCategorie ? "mètre carré" : "unité(s)"}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                /* 🔥 CAS 3 : PRIX NORMAL */
+                <div>
+                  <div className="text-lg font-semibold">
+                    {price?.toLocaleString()} $
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    {unit} {isCategorie ? "mètre carré" : "unité(s)"}
+                  </div>
+                </div>
+              )}
             </>
           )}
+
         </div>
 
         {/* HEADER */}
@@ -1765,48 +1794,53 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                 <div className="bg-white dark:bg-neutral-900 rounded-lg p-4">
                   {/* Prix */}
                   <div className="pb-4 mb-4 border-b border-gray-200 dark:border-neutral-700">
-                    {product?.sale_price ? (
-                      <div className="space-y-1">
-                        <div className="text-2xl text-gray-600 dark:text-gray-400 font-bold">Prix</div>
-                        <div className="flex items-baseline gap-2">
-                          {!product.negotiable_price ? (
+
+                    <div className="space-y-1">
+                      <div className="text-2xl text-gray-600 dark:text-gray-400 font-bold">
+                        Prix
+                      </div>
+
+                      {/* 🔥 CAS 1 : PRIX NÉGOCIABLE */}
+                      {product.negotiable_price ? (
+                        <>
+                          <div className="text-2xl font-bold text-[#E4127A]">
+                            À négocier
+                          </div>
+                          <span className="text-xs text-gray-400">
+                            Le prix sera défini avec le fournisseur
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          {/* 🔥 CAS 2 : PROMO */}
+                          {product.sale_price ? (
                             <>
-                              <span className="hidden text-xs text-gray-600">$</span>
-                              <span className="text-xl font-bold text-[#E4127A]">
-                                {product.sale_price} $ / {product.unit} {`${isCategorie ? 'mètre carré' : 'unité(s) '}`}
+                              <div className="flex items-baseline gap-2">
+                                <span className="text-xl font-bold text-[#E4127A]">
+                                  {product.sale_price} $ / {product.unit}{" "}
+                                  {isCategorie ? "mètre carré" : "unité(s)"}
+                                </span>
+                              </div>
+
+                              <span className="text-xs line-through text-gray-400">
+                                {product.price} $ / {product.unit}{" "}
+                                {isCategorie ? "mètre carré" : "unité(s)"}
                               </span>
                             </>
-
                           ) : (
-                            <span className="text-2xl font-bold text-[#E4127A]">
-                              A negocier
-                            </span>
+                            /* 🔥 CAS 3 : PRIX NORMAL */
+                            <div className="flex items-baseline gap-2">
+                              <span className="text-xl font-bold text-gray-900 dark:text-white">
+                                {product.price} $ / {product.unit}{" "}
+                                {isCategorie ? "mètre carré" : "unité(s)"}
+                              </span>
+                            </div>
                           )}
-                        </div>
-                        {!product.negotiable_price ? (
+                        </>
+                      )}
 
-                          <span className="text-xs line-through text-gray-400">
-                            {product.price} $ / {product.unit} {`${isCategorie ? 'mètre carré' : 'unité(s) '}`}
-                          </span>
-                        ) : (
-                          <span className="text-xs text-gray-400">
-                            Le prix est à negocier
-                          </span>
-                        )
-                        }
+                    </div>
 
-                      </div>
-                    ) : (
-                      <div className="space-y-1">
-                        <div className="text-xs text-gray-600 dark:text-gray-400">Prix</div>
-                        <div className="flex items-baseline gap-2">
-                          <span className="text-2xl font-bold text-gray-900 dark:text-white">
-                            {product.price}
-                          </span>
-                          <span className="text-xs text-gray-600">$</span>
-                        </div>
-                      </div>
-                    )}
                   </div>
 
                   {/* Taille */}
