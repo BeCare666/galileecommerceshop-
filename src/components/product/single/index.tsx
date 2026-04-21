@@ -1207,9 +1207,9 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                       <Image
                         src={Notverified} // remplace par ton image
                         alt="logo"
-                        className="object-contain w-full h-full"
-                        width={50}
-                        height={50}
+                        className="object-contain w-8 h-12"
+                        width={8}
+                        height={12}
                       />
                     )}
 
@@ -1860,10 +1860,10 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                       ) : (
                         <Image
                           alt="Verified"
-                          className="w-5 h-8 object-contain"
+                          className="w-20 h-50 object-contain"
                           src={Notverified}
-                          width={5}
-                          height={8}
+                          width={20}
+                          height={50}
                         />
                       )}
 
