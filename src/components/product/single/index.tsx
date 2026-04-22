@@ -691,7 +691,7 @@ function ProductInfoSection({
                     <div className="text-lg font-semibold text-[#E4127A]">
                       {sale_price.toLocaleString()} $
                     </div>
-                    <div className="text-sm text-gray-600">
+                    <div className="text-sm text-gray-600 hidden">
                       {unit} {isCategorie}
                     </div>
                   </div>
@@ -700,7 +700,7 @@ function ProductInfoSection({
                     <div className="text-lg font-semibold line-through text-gray-500">
                       {price?.toLocaleString()} $
                     </div>
-                    <div className="text-sm text-gray-600 line-through">
+                    <div className="text-sm text-gray-600 line-through hidden">
                       {unit} {isCategorie}
                     </div>
                   </div>
@@ -2050,7 +2050,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
               {/* Bouton gauche */}
               <button className="flex flex-col items-center justify-center text-xs text-gray-700 min-w-[70px]">
                 <Store className="w-5 h-5 mb-1" />
-                <span className="text-[11px]">La boutique</span>
+                <span className="text-[11px]">Le B space</span>
               </button>
 
               {/* Bouton centre */}
