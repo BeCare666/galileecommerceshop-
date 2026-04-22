@@ -191,7 +191,7 @@ export default function PremiumDrawer({
                                 </span>
                             ) : (
                                 <span className="text-sm text-gray-500">
-                                    {selectedSize.price.toLocaleString()} $ / {unit} unités
+                                    {selectedSize.price.toLocaleString()}
                                 </span>
                             )}
 
@@ -228,7 +228,45 @@ export default function PremiumDrawer({
                         </h3>
                         <p className="text-sm text-gray-600 leading-relaxed">
                             Les frais et délais de livraison sont négociables.
-                            Contactez le fournisseur pour finaliser votre commande.
+                            Pour finaliser votre commande, contactez{" "}
+                            <span className="font-semibold text-black">GaliléeCommerce</span>{" "}
+                            en cliquant sur{" "}
+                            <a
+                                href={`mailto:marketplace@galileecommerce.com?subject=Demande%20de%20commande%20-%20${encodeURIComponent(
+                                    product.name
+                                )}&body=${encodeURIComponent(
+                                    `Bonjour,
+
+                                Je souhaite obtenir plus d'informations concernant ce produit :
+
+                                - Nom du produit : ${product.name}
+                                - Quantité : ${quantity}
+                                - Option sélectionnée : ${selectedSize.label}
+                                - Prix estimé : ${product.negotiable_price ? "À négocier" : total + " $"
+                                    }
+
+                                Merci de me recontacter pour finaliser la commande.
+
+                                Cordialement`
+                                )}`}
+                                className="inline-flex items-center gap-1 text-[#E4127A] font-medium hover:underline"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="w-4 h-4"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M16 12H8m8 0l-4 4m4-4l-4-4M4 6h16M4 18h16"
+                                    />
+                                </svg>
+                                envoyer un email
+                            </a>.
                         </p>
                     </div>
                 </div>
