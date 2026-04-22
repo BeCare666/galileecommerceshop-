@@ -679,7 +679,7 @@ function ProductInfoSection({
             <div>
               <div className="text-lg font-semibold">Prix négociable</div>
               <div className="text-sm text-gray-600">
-                Le prix sera défini avec le fournisseur après la prise de contact.{' '}
+                Le prix sera défini avec le Galiléecommerce après la prise de contact.{' '}
               </div>
             </div>
           ) : (
@@ -813,11 +813,43 @@ function ProductInfoSection({
           <div className="text-lg font-semibold mb-3">Expédition</div>
 
           <div className="bg-gray-100 rounded-xl p-4 text-sm text-gray-600 leading-relaxed">
-            Frais d'expédition indisponible.{' '}
-            <span className="underline font-medium">
-              Contacter le Fournisseur
-            </span>{' '}
-            pour discuter des options d'expédition.
+            <a
+              href={`mailto:marketplace@galileecommerce.com?subject=Demande%20d'expédition%20-%20${encodeURIComponent(
+                name || ''
+              )}&body=${encodeURIComponent(
+                `Bonjour,
+
+              Je souhaite obtenir des informations concernant l'expédition de ce produit :
+
+              - Produit : ${name}
+              - Prix : ${negotiable_price
+                  ? 'À négocier'
+                  : (sale_price || price)?.toLocaleString() + ' $'
+                }
+              - Unité : ${unit}
+
+              Merci de me communiquer les options de livraison, délais et coûts.
+
+              Cordialement`
+              )}`}
+              className="inline-flex items-center gap-1 underline font-medium text-[#E4127A] hover:opacity-80"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M16 12H8m8 0l-4 4m4-4l-4-4"
+                />
+              </svg>
+              Contacter GaliléeCommerce
+            </a>
           </div>
         </div>
 
@@ -1807,7 +1839,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                             À négocier
                           </div>
                           <span className="text-xs text-gray-400">
-                            Le prix sera défini avec le fournisseur
+                            Le prix sera défini avec le Galiléecommerce après votre demande
                           </span>
                         </>
                       ) : (
