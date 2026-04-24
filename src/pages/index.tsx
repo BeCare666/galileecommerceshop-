@@ -122,16 +122,16 @@ const Home: NextPageWithLayout = () => {
         Offre Limitée
       </TitleComponent>
       <LimitedOffer />
-      <TitleComponent subtitle="Découvrez comment ça marche chez galileecommerce">
-        Comment ça marche ?
-      </TitleComponent>
-      <Howtowork />
       <TitleComponent subtitle="Voici nos meilleurs produits en promotion">
         Promotions
       </TitleComponent>
       <PromoBannier />
       <Services />
-      {/**  <TitleComponent subtitle="Découvrez nos produits les plus populaires">
+      {/**   <TitleComponent subtitle="Découvrez comment ça marche chez galileecommerce">
+        Comment ça marche ?
+      </TitleComponent>
+      <Howtowork />
+      <TitleComponent subtitle="Découvrez nos produits les plus populaires">
         Meilleures Ventes
       </TitleComponent>
       <BestHomeSellers />
