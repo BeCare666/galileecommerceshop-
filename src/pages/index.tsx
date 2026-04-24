@@ -9,6 +9,7 @@ import HomePage from '@/components/home-page/homepage';
 import FreeShipping from '@/components/free-shipping/suiteabout';
 import LimitedOffer from '@/components/limited-offer/limited-offer';
 import PromoBannier from '@/components/promo-bannier/promo-bannier';
+import PromoDrawer from '@/components/promo-bannier/phonePromoDrawer';
 import TitleComponent from '@/components/title-component/title-component';
 import BestHomeSellers from '@/components/best-home-sellers/best-home-sellers';
 import type { GetStaticProps } from 'next';
@@ -170,7 +171,7 @@ const Home: NextPageWithLayout = () => {
         <span className="text-gray-700 font-medium">Nos Corridors</span>
 
       </button>
-
+      <PromoDrawer />
       {/** Uncomment the line below to enable the promotional slider */}
       {/**<PromotionalSlider /> 
         <Modal

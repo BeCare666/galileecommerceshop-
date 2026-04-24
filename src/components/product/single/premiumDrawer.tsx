@@ -56,7 +56,7 @@ export default function PremiumDrawer({
             shop_id: product?.shop?.id,
         });
     };
-    const verifiedIsCategorie = ['2', '300', '1', '9', '15', '16'];
+    const verifiedIsCategorie = ['2', '300', '1', '9', '15', '16', '1', '4'];
 
     const isCategorie = product.categories.some((cat: any) =>
         verifiedIsCategorie.includes(String(cat.categories_id))

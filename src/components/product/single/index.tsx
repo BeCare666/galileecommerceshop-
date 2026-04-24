@@ -1132,9 +1132,9 @@ const Single: React.FC<SingleProps> = ({ product }) => {
 
           </div>`
     },
-    { label: 'Localisation', value: `${product?.shop?.address?.city}` },
+    { label: 'Localisation', value: `${product?.shop?.address?.city}` "1",  "4", "9", "15", },
   ];*/}
-  const verifiedIsCategorie = ['2', '300', '1', '9', '15', '16'];
+  const verifiedIsCategorie = ['2', '300', '1', '9', '15', '16', '1', '4'];
 
   const isCategorie = product.categories.some((cat: any) =>
     verifiedIsCategorie.includes(String(cat.categories_id))
