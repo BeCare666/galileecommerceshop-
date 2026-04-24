@@ -679,7 +679,7 @@ function ProductInfoSection({
             <div>
               <div className="text-lg font-semibold">Prix négociable</div>
               <div className="text-sm text-gray-600">
-                Le prix sera défini avec le Galiléecommerce après la prise de contact.{' '}
+                Contactez-nous pour une offre personnalisée {' '}
               </div>
             </div>
           ) : (
@@ -810,7 +810,7 @@ function ProductInfoSection({
 
         {/* EXPÉDITION */}
         <div className="bg-white px-4 py-4">
-          <div className="text-lg font-semibold mb-3">Expédition</div>
+          <div className="text-lg font-semibold mb-3">Commandez maintenant ! </div>
 
           <div className="bg-gray-100 rounded-xl p-4 text-sm text-gray-600 leading-relaxed">
             <a
@@ -848,7 +848,7 @@ function ProductInfoSection({
                   d="M16 12H8m8 0l-4 4m4-4l-4-4"
                 />
               </svg>
-              Contacter GaliléeCommerce
+              Contacter Galiléecommerce
             </a>
           </div>
         </div>
@@ -1839,7 +1839,7 @@ const Single: React.FC<SingleProps> = ({ product }) => {
                             À négocier
                           </div>
                           <span className="text-xs text-gray-400">
-                            Le prix sera défini avec le Galiléecommerce après votre demande
+                            Contactez-nous pour une offre personnalisée
                           </span>
                         </>
                       ) : (

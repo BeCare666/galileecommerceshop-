@@ -229,7 +229,7 @@ export default function PremiumDrawer({
                         <p className="text-sm text-gray-600 leading-relaxed">
                             Les frais et délais de livraison sont négociables.
                             Pour finaliser votre commande, contactez{" "}
-                            <span className="font-semibold text-black">GaliléeCommerce</span>{" "}
+                            <span className="font-semibold text-black">Galiléecommerce</span>{" "}
                             en cliquant sur{" "}
                             <a
                                 href={`mailto:marketplace@galileecommerce.com?subject=Demande%20de%20commande%20-%20${encodeURIComponent(
